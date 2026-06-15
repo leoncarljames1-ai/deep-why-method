@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beliefs Library</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E;
+    --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF;
+    --light-blue: #A2B4C2; --white: #FFFFFF;
+  }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--white); letter-spacing: 0.02em; }
+  .progress-wrap { background: var(--navy); padding: 0 24px 16px; }
+  .progress-track { height: 2px; background: rgba(255,255,255,0.15); border-radius: 2px; }
+  .progress-fill { height: 2px; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
+  .progress-label { font-size: 11px; color: var(--light-blue); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .content { padding: 32px 24px 100px; max-width: 640px; margin: 0 auto; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 500; color: var(--navy); line-height: 1.2; margin-bottom: 20px; }
+  p { font-size: 15px; color: #3a3a44; margin-bottom: 14px; line-height: 1.75; }
+  p:last-of-type { margin-bottom: 0; }
+  .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+  .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; }
+  .note { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .note p { font-size: 13px; color: var(--navy); margin: 0; }
+  .divider { height: 1px; background: var(--grey); margin: 28px 0; }
+  .field-group { margin-bottom: 20px; }
+  .field-label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; }
+  .field-sub { display: block; font-size: 13px; color: #888; margin-bottom: 10px; font-style: italic; letter-spacing: 0; text-transform: none; font-weight: 400; }
+  textarea, input[type="text"] { width: 100%; border: 1.5px solid var(--grey); border-radius: 8px; padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 15px; color: var(--charcoal); background: var(--white); resize: none; transition: border-color 0.2s; -webkit-appearance: none; }
+  textarea:focus, input[type="text"]:focus { outline: none; border-color: var(--navy); }
+  textarea { min-height: 90px; }
+  textarea.short { min-height: 60px; }
+  .why-chain { margin: 16px 0; }
+  .why-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .why-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 14px; font-family: 'Jost', sans-serif; }
+  .why-row textarea { flex: 1; min-height: 56px; }
+  .score-wrap { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .score-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--grey); background: var(--white); font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; color: #888; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
+  .score-btn.selected { background: var(--navy); border-color: var(--navy); color: var(--white); }
+  .phase-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 18px; }
+  .phase-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: block; }
+  .prompt { background: var(--navy); color: var(--white); padding: 18px 20px; border-radius: 10px; margin: 16px 0 12px; }
+  .prompt p { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--white); margin: 0; line-height: 1.4; }
+  .cognition-section { margin-bottom: 24px; }
+  .cognition-section-title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--grey); }
+  .cognition-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0ede8; cursor: pointer; transition: background 0.15s; }
+  .cognition-item:last-child { border-bottom: none; }
+  .cognition-item:hover { background: #f5f2ed; margin: 0 -8px; padding: 12px 8px; border-radius: 6px; }
+  .cognition-item.selected { background: #EEF3F7; margin: 0 -8px; padding: 12px 8px; border-radius: 6px; }
+  .cognition-select { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--grey); margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .cognition-item.selected .cognition-select { background: var(--navy); border-color: var(--navy); }
+  .cognition-item.selected .cognition-select::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--white); display: block; }
+  .cognition-text { flex: 1; }
+  .cognition-neg { font-size: 14px; color: var(--charcoal); font-weight: 400; display: block; margin-bottom: 2px; }
+  .cognition-pos { font-size: 12px; color: var(--light-blue); display: block; }
+  .selected-display { background: var(--navy); border-radius: 10px; padding: 16px 18px; margin: 16px 0; }
+  .selected-display-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .selected-display-neg { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--white); font-style: italic; }
+  .anchor-bar { background: rgba(22,62,91,0.06); border-left: 3px solid var(--gold-mid); padding: 10px 16px; }
+  .anchor-bar-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; margin-bottom: 3px; font-family: 'Jost', sans-serif; }
+  .anchor-bar-text { font-size: 13px; color: var(--navy); font-style: italic; font-family: 'Cormorant Garamond', serif; line-height: 1.4; }
+  .copy-box { background: var(--white); border: 1.5px solid var(--grey); border-radius: 10px; padding: 20px; margin: 16px 0; position: relative; }
+  .copy-box-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 12px; font-weight: 500; }
+  .copy-btn { position: absolute; top: 16px; right: 16px; background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 6px 12px; font-size: 11px; font-family: 'Jost', sans-serif; cursor: pointer; letter-spacing: 0.08em; }
+  .copy-content { font-size: 14px; color: var(--charcoal); line-height: 1.8; white-space: pre-wrap; word-break: break-word; }
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-primary:active { background: #0f2e44; }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .start-screen { min-height: 100vh; display: flex; flex-direction: column; }
+  .start-hero { background: var(--navy); padding: 48px 24px 40px; text-align: center; }
+  .start-hero .eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .start-hero h1 { color: var(--white); font-size: 38px; margin-bottom: 12px; }
+  .start-hero p { color: var(--light-blue); font-size: 15px; max-width: 320px; margin: 0 auto; }
+  .start-body { padding: 32px 24px 120px; max-width: 640px; margin: 0 auto; width: 100%; }
+  .route-card { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; padding: 22px 20px; margin-bottom: 14px; cursor: pointer; transition: all 0.2s; }
+  .route-card:hover, .route-card.selected { border-color: var(--navy); background: #f0f4f7; }
+  .route-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 4px; }
+  .route-card-sub { font-size: 13px; color: #888; }
+  .complete-hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 60px 24px 48px; text-align: center; }
+  .complete-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+  .complete-icon svg { width: 28px; height: 28px; }
+  .complete-hero h1 { color: var(--white); font-size: 32px; margin-bottom: 10px; }
+  .complete-hero p { color: var(--light-blue); max-width: 300px; margin: 0 auto; }
+  .mt-4 { margin-top: 16px; }
+  .mb-2 { margin-bottom: 8px; }
+  .text-small { font-size: 13px; color: #888; }
+  .step-label { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; }
+  .belief-display { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--navy); background: var(--white); border: 1.5px solid var(--grey); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 0: START -->
+<div id="s0" class="screen active">
+  <div class="start-screen">
+    <div class="start-hero">
+      <div class="eyebrow">Leon James</div>
+      <h1>The Beliefs Library</h1>
+      <p>Deeper work. Choose a belief, follow it down, step into who you are without it.</p>
+    </div>
+    <div class="start-body">
+      <p style="margin-bottom:20px; color:#555;">Choose where you want to start today.</p>
+      <div class="route-card" id="route-cognition" onclick="selectRoute('cognition')">
+        <div class="route-card-title">Start with a belief</div>
+        <div class="route-card-sub">Choose from the expanded belief list covering relationships, money, identity, body, sexuality and more.</div>
+      </div>
+      <div class="route-card" id="route-problem" onclick="selectRoute('problem')">
+        <div class="route-card-title">Start with a problem</div>
+        <div class="route-card-sub">A specific behaviour, event, or situation that is still sitting with you. Start from that.</div>
+      </div>
+      <div class="instruction mt-4">
+        <p>Close your eyes before each question and feel the answer before you type. This works on what you feel, not what you reason through.</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-primary" onclick="startMethod()">Begin</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: BELIEF LIST -->
+<div id="s1" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 1</div><div class="header-title">Find Your Belief</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:10%"></div></div><div class="progress-label">Read slowly. Tap the one that lands in your body.</div></div>
+  <div class="content">
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Relationships / People</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am too much for people','I am the right amount for the right people')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am too much for people</span><span class="cognition-pos">I am the right amount for the right people</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I always end up alone','I am capable of real connection')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I always end up alone</span><span class="cognition-pos">I am capable of real connection</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I push people away','I can let people in')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I push people away</span><span class="cognition-pos">I can let people in</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not worth staying for','I am worth staying for')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not worth staying for</span><span class="cognition-pos">I am worth staying for</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot be truly known','I can be known and still be loved')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot be truly known</span><span class="cognition-pos">I can be known and still be loved</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'People always leave','There are people who stay')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">People always leave</span><span class="cognition-pos">There are people who stay</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I have to earn love','I am worthy of love as I am')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I have to earn love</span><span class="cognition-pos">I am worthy of love as I am</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot open up','I can choose to open up safely')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot open up</span><span class="cognition-pos">I can choose to open up safely</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am better off alone','I deserve genuine connection')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am better off alone</span><span class="cognition-pos">I deserve genuine connection</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Money / Abundance</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I do not deserve to be wealthy','I deserve to be financially free')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I do not deserve to be wealthy</span><span class="cognition-pos">I deserve to be financially free</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Money is hard to come by','Money can flow to me when I am aligned')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Money is hard to come by</span><span class="cognition-pos">Money can flow to me when I am aligned</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am bad with money','I can learn to handle money well')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am bad with money</span><span class="cognition-pos">I can learn to handle money well</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Wanting money makes me selfish','Wanting financial security is healthy')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Wanting money makes me selfish</span><span class="cognition-pos">Wanting financial security is healthy</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not the kind of person who succeeds financially','I am capable of financial success')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not the kind of person who succeeds financially</span><span class="cognition-pos">I am capable of financial success</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I will never have enough','I can build a life of enough')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I will never have enough</span><span class="cognition-pos">I can build a life of enough</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Rich people are greedy','Wealth and integrity can coexist')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Rich people are greedy</span><span class="cognition-pos">Wealth and integrity can coexist</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Career / Purpose</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not good enough to succeed at this','I am capable of succeeding at this')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not good enough to succeed at this</span><span class="cognition-pos">I am capable of succeeding at this</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Who am I to do this','I have as much right to do this as anyone')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Who am I to do this</span><span class="cognition-pos">I have as much right to do this as anyone</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I will be found out eventually','I have real value to offer')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I will be found out eventually</span><span class="cognition-pos">I have real value to offer</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I always self-sabotage','I can follow through on what matters')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I always self-sabotage</span><span class="cognition-pos">I can follow through on what matters</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not as capable as people think','I am more capable than I give myself credit for')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not as capable as people think</span><span class="cognition-pos">I am more capable than I give myself credit for</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am stuck and it will not change','I can create change from where I am')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am stuck and it will not change</span><span class="cognition-pos">I can create change from where I am</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I do not deserve this opportunity','I deserve to take this opportunity')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I do not deserve this opportunity</span><span class="cognition-pos">I deserve to take this opportunity</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Self-Trust / Decisions</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I always make the wrong choice','I can trust myself to choose')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I always make the wrong choice</span><span class="cognition-pos">I can trust myself to choose</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot trust my own judgement','My judgement is worth trusting')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot trust my own judgement</span><span class="cognition-pos">My judgement is worth trusting</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I need others to tell me what to do','I can make my own decisions')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I need others to tell me what to do</span><span class="cognition-pos">I can make my own decisions</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I will regret whatever I choose','I can make peace with my choices')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I will regret whatever I choose</span><span class="cognition-pos">I can make peace with my choices</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Worth / Visibility</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I do not deserve to take up space','I have every right to take up space')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I do not deserve to take up space</span><span class="cognition-pos">I have every right to take up space</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'My opinion does not matter','My opinion is worth hearing')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">My opinion does not matter</span><span class="cognition-pos">My opinion is worth hearing</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not interesting enough','I have something worth saying')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not interesting enough</span><span class="cognition-pos">I have something worth saying</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I have nothing valuable to say','What I have to say has value')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I have nothing valuable to say</span><span class="cognition-pos">What I have to say has value</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Identity as a Man</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am weak','I am stronger than I know')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am weak</span><span class="cognition-pos">I am stronger than I know</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not a real man','I define what it means to be a man')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not a real man</span><span class="cognition-pos">I define what it means to be a man</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I do not know who I am','I am finding out who I am and that is enough')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I do not know who I am</span><span class="cognition-pos">I am finding out who I am and that is enough</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I have to be strong all the time','I am allowed to feel and still be strong')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I have to be strong all the time</span><span class="cognition-pos">I am allowed to feel and still be strong</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot show vulnerability','Vulnerability is not weakness')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot show vulnerability</span><span class="cognition-pos">Vulnerability is not weakness</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am defined by what I have done','I am more than my past')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am defined by what I have done</span><span class="cognition-pos">I am more than my past</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I will never change','I am capable of real change')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I will never change</span><span class="cognition-pos">I am capable of real change</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not the kind of man who gets what he wants','I am the kind of man who goes after what he wants')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not the kind of man who gets what he wants</span><span class="cognition-pos">I am the kind of man who goes after what he wants</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Beliefs About the World</div>
+      <div class="cognition-item" onclick="selectCognition(this,'The world is not safe','I can navigate the world and find safety in it')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">The world is not safe</span><span class="cognition-pos">I can navigate the world and find safety in it</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'People cannot be trusted','There are people in this world who can be trusted')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">People cannot be trusted</span><span class="cognition-pos">There are people in this world who can be trusted</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Life is a struggle','Life can also be good')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Life is a struggle</span><span class="cognition-pos">Life can also be good</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Good things do not last','Good things can last when I build them right')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Good things do not last</span><span class="cognition-pos">Good things can last when I build them right</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I have to fight for everything','Some things can come to me without a fight')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I have to fight for everything</span><span class="cognition-pos">Some things can come to me without a fight</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'The system is against me','I can find my way within any system')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">The system is against me</span><span class="cognition-pos">I can find my way within any system</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Nothing ever works out for me','Things can and do work out for me')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Nothing ever works out for me</span><span class="cognition-pos">Things can and do work out for me</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'If something good happens something bad will follow','Good things do not have to come at a price')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">If something good happens something bad will follow</span><span class="cognition-pos">Good things do not have to come at a price</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Sexual Beliefs — Men</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not good enough in bed','I am capable of being a present and connected lover')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not good enough in bed</span><span class="cognition-pos">I am capable of being a present and connected lover</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'My sexual desires make me a bad person','My desires are human and I can relate to them with awareness')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">My sexual desires make me a bad person</span><span class="cognition-pos">My desires are human and I can relate to them with awareness</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I have no control over my urges','I can develop a different relationship with my urges')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I have no control over my urges</span><span class="cognition-pos">I can develop a different relationship with my urges</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Sex is the only way I feel wanted','I can feel wanted in ways that go beyond sex')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Sex is the only way I feel wanted</span><span class="cognition-pos">I can feel wanted in ways that go beyond sex</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I use sex to feel something','I can feel without needing sex to get there')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I use sex to feel something</span><span class="cognition-pos">I can feel without needing sex to get there</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am addicted and cannot stop','I can change my relationship with this behaviour')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am addicted and cannot stop</span><span class="cognition-pos">I can change my relationship with this behaviour</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'My sexuality is shameful','My sexuality is mine and I can own it without shame')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">My sexuality is shameful</span><span class="cognition-pos">My sexuality is mine and I can own it without shame</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot have intimacy without sex','I am capable of real intimacy')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot have intimacy without sex</span><span class="cognition-pos">I am capable of real intimacy</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Sexual Beliefs — Women</div>
+      <div class="cognition-item" onclick="selectCognition(this,'Women only want me for what I can provide','I am wanted for who I am, not just what I provide')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Women only want me for what I can provide</span><span class="cognition-pos">I am wanted for who I am, not just what I provide</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Women cannot be trusted','There are women I can trust')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Women cannot be trusted</span><span class="cognition-pos">There are women I can trust</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Women will always leave','There are women who stay')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Women will always leave</span><span class="cognition-pos">There are women who stay</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Women do not really want a good man','There are women who want exactly who I am becoming')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Women do not really want a good man</span><span class="cognition-pos">There are women who want exactly who I am becoming</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I have to perform to keep a woman interested','I can be myself and still be enough')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I have to perform to keep a woman interested</span><span class="cognition-pos">I can be myself and still be enough</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'Women are the cause of my pain','My pain comes from my wounds, not from women')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">Women are the cause of my pain</span><span class="cognition-pos">My pain comes from my wounds, not from women</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Body Image</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not attractive enough','I am attractive in my own right')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not attractive enough</span><span class="cognition-pos">I am attractive in my own right</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'My body is not good enough','My body is capable and worthy of care')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">My body is not good enough</span><span class="cognition-pos">My body is capable and worthy of care</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am too fat','My worth is not determined by my size')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am too fat</span><span class="cognition-pos">My worth is not determined by my size</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am too thin','My worth is not determined by my size')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am too thin</span><span class="cognition-pos">My worth is not determined by my size</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not strong enough','I can build strength from where I am')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not strong enough</span><span class="cognition-pos">I can build strength from where I am</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'My body lets me down','My body is doing the best it can')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">My body lets me down</span><span class="cognition-pos">My body is doing the best it can</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I hate how I look','I can build a different relationship with how I look')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I hate how I look</span><span class="cognition-pos">I can build a different relationship with how I look</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Body Image — Men</div>
+      <div class="cognition-item" onclick="selectCognition(this,'My penis is too small','My worth as a man and a lover is not determined by size')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">My penis is too small</span><span class="cognition-pos">My worth as a man and a lover is not determined by size</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am embarrassed by my body','I can learn to be at ease in my body')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am embarrassed by my body</span><span class="cognition-pos">I can learn to be at ease in my body</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot be seen naked','I can be seen and accepted as I am')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot be seen naked</span><span class="cognition-pos">I can be seen and accepted as I am</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'My body makes me undesirable','My body does not determine my desirability')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">My body makes me undesirable</span><span class="cognition-pos">My body does not determine my desirability</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not physically capable enough','I am more capable than I allow myself to believe')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not physically capable enough</span><span class="cognition-pos">I am more capable than I allow myself to believe</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Write your own</div>
+      <div style="margin-bottom:12px;">
+        <div class="field-group" style="margin-bottom:12px;">
+          <label class="field-label">My belief</label>
+          <span class="field-sub">Write a belief not listed above</span>
+          <textarea id="custom-neg" class="short" placeholder="e.g. I am too broken to be loved..." oninput="updateCustomCognition()"></textarea>
+        </div>
+        <div class="field-group" style="margin-bottom:0;">
+          <label class="field-label">The opposite belief <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:11px; color:#888;">(optional — you can write this later)</span></label>
+          <textarea id="custom-pos" class="short" placeholder="e.g. I am worthy of love as I am..." oninput="updateCustomCognition()"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s2c')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 1P: PROBLEM ENTRY -->
+<div id="s1p" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 1</div><div class="header-title">Name the Problem</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:10%"></div></div><div class="progress-label">Starting from a problem or behaviour</div></div>
+  <div class="content">
+    <div class="instruction"><p>Close your eyes. Bring the problem to mind. Feel it for a moment before you write it down.</p></div>
+    <div class="field-group mt-4">
+      <label class="field-label">My problem / behaviour / event</label>
+      <span class="field-sub">Name it in a few words</span>
+      <textarea id="p-problem" class="short" placeholder="e.g. I keep going back to the same behaviour even when I don't want to"></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Intensity score</label>
+      <span class="field-sub">How strongly does this feel right now? Tap a number.</span>
+      <div class="score-wrap">
+        <button class="score-btn" onclick="selectScore(this,0)">0</button><button class="score-btn" onclick="selectScore(this,1)">1</button><button class="score-btn" onclick="selectScore(this,2)">2</button><button class="score-btn" onclick="selectScore(this,3)">3</button><button class="score-btn" onclick="selectScore(this,4)">4</button><button class="score-btn" onclick="selectScore(this,5)">5</button><button class="score-btn" onclick="selectScore(this,6)">6</button><button class="score-btn" onclick="selectScore(this,7)">7</button><button class="score-btn" onclick="selectScore(this,8)">8</button><button class="score-btn" onclick="selectScore(this,9)">9</button><button class="score-btn" onclick="selectScore(this,10)">10</button>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">What image represents the worst part?</label>
+      <span class="field-sub">Picture the moment it felt most intense. Hold it fully, then describe it.</span>
+      <textarea id="p-image" placeholder="Describe the image or moment..."></textarea>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s2p')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 2C: WHY CHAIN (BELIEF) -->
+<div id="s2c" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 2</div><div class="header-title">The Why Chain</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:30%"></div></div><div class="progress-label">Follow it down. Feel each answer before you type.</div></div>
+  <div class="content">
+    <div id="selected-cog-display" class="selected-display mb-2">
+      <div class="selected-display-label">Your belief</div>
+      <div class="selected-display-neg" id="disp-neg">...</div>
+    </div>
+    <div class="instruction"><p>Close your eyes. Hold the belief. Ask "why is this true?" Feel the answer, then type it. Ask why again. Stop when you hit something raw that needs no further question. If the answer becomes about someone else, stop there too.</p></div>
+    <div class="why-chain">
+      <div class="why-row"><div class="why-num">1</div><div style="flex:1;"><textarea class="short" id="why1" placeholder="Why..."></textarea><div style="font-size:12px; font-style:italic; color:var(--light-blue); margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div></div></div>
+      <div class="why-row"><div class="why-num">2</div><textarea class="short" id="why2" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">3</div><textarea class="short" id="why3" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">4</div><textarea class="short" id="why4" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">5</div><textarea class="short" id="why5" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">6</div><textarea class="short" id="why6" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">7</div><textarea class="short" id="why7" placeholder="Why... (keep going if more is there)"></textarea></div>
+    </div>
+    <div class="note"><p>Stop when the answer needs no further question. If it points at someone else, stop and move on.</p></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s1')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s3c')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 2P: WHY CHAIN (PROBLEM) -->
+<div id="s2p" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 3</div><div class="header-title">The Why Chain</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:30%"></div></div><div class="progress-label">Follow it down. Feel each answer before you type.</div></div>
+  <div class="anchor-bar" id="anchor-2p" style="display:none;"><div class="anchor-bar-label">Holding</div><div class="anchor-bar-text" id="anchor-2p-text"></div></div>
+  <div class="content">
+    <div class="instruction"><p>Hold the image of the worst part of the problem. Ask "why does this affect me?" Feel the answer, then type it. Stop when it goes raw or points at someone else.</p></div>
+    <div class="why-chain">
+      <div class="why-row"><div class="why-num">1</div><div style="flex:1;"><textarea class="short" id="pwhy1" placeholder="Why..."></textarea><div style="font-size:12px; font-style:italic; color:var(--light-blue); margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div></div></div>
+      <div class="why-row"><div class="why-num">2</div><textarea class="short" id="pwhy2" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">3</div><textarea class="short" id="pwhy3" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">4</div><textarea class="short" id="pwhy4" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">5</div><textarea class="short" id="pwhy5" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">6</div><textarea class="short" id="pwhy6" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">7</div><textarea class="short" id="pwhy7" placeholder="Why... (keep going if more is there)"></textarea></div>
+    </div>
+    <div class="note"><p>Stop when the answer needs no further question. If it points at someone else, stop and move on.</p></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s1p')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s3p')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 3C: EXIT QUESTION (BELIEF) -->
+<div id="s3c" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 3</div><div class="header-title">The Exit Question</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div><div class="progress-label">Feel your way into the answer. Do not think your way into it.</div></div>
+  <div class="anchor-bar" id="anchor-3c" style="display:none;"><div class="anchor-bar-label">Your belief</div><div class="anchor-bar-text" id="anchor-3c-text"></div></div>
+  <div class="content">
+    <div class="prompt"><p>"Who am I without this belief?"</p></div>
+    <div class="instruction"><p>Close your eyes. Hold the question. Feel what comes before you write it. If the last answer in your why chain was itself a belief, hold that one instead. Whichever has the most weight is the right one.</p></div>
+    <div class="field-group"><label class="field-label">a. Who am I without this belief?</label><textarea class="short" id="exit1" placeholder="Feel it first, then write..."></textarea></div>
+    <div class="field-group"><label class="field-label">b. Who else?</label><textarea class="short" id="exit2" placeholder="Go deeper..."></textarea></div>
+    <div class="field-group"><label class="field-label">c. What does it feel like?</label><textarea class="short" id="exit3" placeholder="Describe the feeling..."></textarea></div>
+    <div class="field-group"><label class="field-label">d. What does that feel like?</label><textarea class="short" id="exit4" placeholder="Go further into it..."></textarea></div>
+    <div class="instruction"><p>Now bring all of that together. Feel it spreading through you in every direction — in front and behind, left and right, above and below.</p></div>
+    <p class="mt-4" style="font-weight:500; color:var(--navy);">Does the belief still have weight?</p>
+    <div style="display:flex; gap:12px; margin-top:12px;">
+      <button class="btn btn-secondary" style="flex:1" onclick="goTo('s2c')">Yes, go again</button>
+      <button class="btn btn-primary" style="flex:1" onclick="goTo('s4')">No, move on</button>
+    </div>
+    <div class="note mt-4"><p>Not fully positive? Ask yourself: what would it feel like to let this go? Or: what do I need to feel right now? Feel it, then try the question again.</p></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s2c')">Back</button>
+  </div>
+</div>
+
+<!-- SCREEN 3P: EXIT QUESTION (PROBLEM) -->
+<div id="s3p" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 4</div><div class="header-title">The Exit Question</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div><div class="progress-label">Feel your way into the answer. Do not think your way into it.</div></div>
+  <div class="anchor-bar" id="anchor-3p" style="display:none;"><div class="anchor-bar-label">Holding</div><div class="anchor-bar-text" id="anchor-3p-text"></div></div>
+  <div class="content">
+    <div class="prompt"><p>"Who am I without this problem?"</p></div>
+    <div class="instruction"><p>Close your eyes. Hold the question. Feel what comes before you write it.</p></div>
+    <div class="field-group"><label class="field-label">a. Who am I without this problem?</label><textarea class="short" id="pexit1" placeholder="Feel it first, then write..."></textarea></div>
+    <div class="field-group"><label class="field-label">b. Who else?</label><textarea class="short" id="pexit2" placeholder="Go deeper..."></textarea></div>
+    <div class="field-group"><label class="field-label">c. What does it feel like?</label><textarea class="short" id="pexit3" placeholder="Describe the feeling..."></textarea></div>
+    <div class="field-group"><label class="field-label">d. What does that feel like?</label><textarea class="short" id="pexit4" placeholder="Go further into it..."></textarea></div>
+    <div class="instruction"><p>Now bring all of that together. Feel it spreading through you in every direction — in front and behind, left and right, above and below.</p></div>
+    <p class="mt-4" style="font-weight:500; color:var(--navy);">Does the problem still have weight?</p>
+    <div style="display:flex; gap:12px; margin-top:12px;">
+      <button class="btn btn-secondary" style="flex:1" onclick="goTo('s2p')">Yes, go again</button>
+      <button class="btn btn-primary" style="flex:1" onclick="goTo('s4')">No, move on</button>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s2p')">Back</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: FUTURE IDENTITY — PHASE A -->
+<div id="s4" class="screen">
+  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase A — Enter the Scene</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">Step into who you are without it</div></div>
+  <div class="content">
+    <div class="phase-badge"><span></span>Phase A</div>
+    <div class="field-group">
+      <label class="field-label" id="phase-a-cog-label">My positive belief</label>
+      <span class="field-sub" id="phase-a-cog-sub">The opposite of what you started with. Read it, feel it, then continue.</span>
+      <div id="pos-cog-display" style="background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--navy); font-style:italic; display:none;"></div>
+      <textarea id="pos-cog-input" class="short" placeholder="Write your positive belief here..." oninput="onPosCogInput()" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--navy); display:none;"></textarea>
+    </div>
+    <div class="instruction"><p><span class="step-label">A</span> &nbsp;Think of a future or goal where this belief is fully alive in you. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
+    <div class="instruction"><p><span class="step-label">B</span> &nbsp;Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p></div>
+    <div class="field-group mt-4"><label class="field-label">What does it feel like?</label><textarea class="short" id="fi-feel" placeholder="Stay in it. Describe what you feel as him..."></textarea></div>
+    <div class="prompt"><p id="affirm-prompt">"I am [your positive belief]."</p></div>
+    <p class="text-small" style="margin-top:8px;">Say it out loud. See it as true. Feel it as known, not hoped for.</p>
+    <div class="field-group mt-4"><label class="field-label">Where do you feel it in your body?</label><textarea class="short" id="fi-body" placeholder="Chest, stomach, shoulders — wherever it lands..."></textarea></div>
+    <div class="note mt-4"><p>If anything negative interrupts: ask "what do I need to feel right now?" Feel it. Reinforce it. Return to the scene.</p></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo(state.route === 'cognition' ? 's3c' : 's3p')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s5')">Continue to Phase B</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: FUTURE IDENTITY — PHASE B -->
+<div id="s5" class="screen">
+  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase B — Build the Conviction</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:78%"></div></div><div class="progress-label">Amplify it. Let it grow.</div></div>
+  <div class="content">
+    <div class="phase-badge"><span></span>Phase B</div>
+    <div class="prompt"><p id="why-am-i-prompt">"Why do I believe this?"</p></div>
+    <div class="instruction"><p><span class="step-label">A</span> &nbsp;See yourself as this. It might be a memory, a future version of you, or simply an image that comes. Whatever arises, stay with it. Amplify the feeling.</p></div>
+    <div class="field-group"><label class="field-label" id="why-am-i-label">Why is this true for me?</label><textarea id="fi-why" placeholder="What comes when you see yourself as this..."></textarea></div>
+    <div class="divider"></div>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:16px;">B &nbsp;Step out of the scene.</p>
+    <div class="field-group"><label class="field-label">What has this already cost me?</label><span class="field-sub">Let this land fully. Feel the real cost.</span><textarea id="fi-cost1" placeholder="What has it cost you..."></textarea></div>
+    <div class="field-group"><label class="field-label">What will it keep costing me if I do not change this now?</label><span class="field-sub">Let this land fully before moving on.</span><textarea id="fi-cost2" placeholder="What will it keep costing you..."></textarea></div>
+    <div class="instruction"><p><span class="step-label">C</span> &nbsp;Close your eyes. What becomes possible when this belief is fully yours? See it, hear it, feel it. This is not a writing question. Feel the answer. Then continue.</p></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s4')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s6')">Continue to Phase C</button>
+  </div>
+</div>
+
+<!-- SCREEN 6: FUTURE IDENTITY — PHASE C -->
+<div id="s6" class="screen">
+  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase C — Ground and Rehearse</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:90%"></div></div><div class="progress-label">Every action you take from here deepens the conviction</div></div>
+  <div class="content">
+    <div class="phase-badge"><span></span>Phase C</div>
+    <div class="field-group"><label class="field-label">What do I want to move towards?</label><textarea class="short" id="fi-towards" placeholder="Name it..."></textarea></div>
+    <div class="field-group"><label class="field-label">First action, and when?</label><span class="field-sub">Be specific. A real action, a real time.</span><textarea class="short" id="fi-action" placeholder="e.g. I will message X on Tuesday morning..."></textarea></div>
+    <div class="field-group"><label class="field-label">What will make this first action easier?</label><span class="field-sub">Remove the friction before it appears.</span><textarea class="short" id="fi-easier" placeholder="What removes the resistance..."></textarea></div>
+    <div class="field-group"><label class="field-label">What standards do I need to set?</label><span class="field-sub">How you show up, what you allow, what you no longer accept.</span><textarea class="short" id="fi-standards" placeholder="The standards I am holding myself to..."></textarea></div>
+    <div class="divider"></div>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">A &nbsp;Return to the scene.</p>
+    <div id="phase-c-cog" style="font-family:'Cormorant Garamond',serif; font-size:20px; font-style:italic; color:var(--navy); background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; margin-bottom:16px;"></div>
+    <div class="instruction"><p>Read the belief above and your first action. Close your eyes. Step back into the scene. See yourself living from this. This is who you are.</p></div>
+    <div class="divider"></div>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">B &nbsp;Test it.</p>
+    <div class="instruction"><p>Bring in a real obstacle. Something that could actually get in the way. See it clearly. Feel the weight of it. Now see yourself choosing to move through it anyway. Run it twice. Return to your future scene. End on success.</p></div>
+    <div class="field-group mt-4"><label class="field-label">The obstacle I rehearsed moving through</label><textarea class="short" id="fi-obstacle" placeholder="Name the obstacle you tested..."></textarea></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s5')">Back</button>
+    <button class="btn btn-gold" onclick="goTo('s7')">Complete the session</button>
+  </div>
+</div>
+
+<!-- SCREEN 7: COMPLETE + SUMMARY -->
+<div id="s7" class="screen">
+  <div class="complete-hero">
+    <div class="complete-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#163E5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+    <h1>Session complete.</h1>
+    <p>Take one slow breath. Notice how you feel in your body right now.</p>
+  </div>
+  <div class="content" style="padding-top:32px;">
+    <p style="margin-bottom:24px;">Your session is summarised below. Copy it to keep a record.</p>
+    <div class="copy-box">
+      <div class="copy-box-label">Your session summary</div>
+      <button class="copy-btn" onclick="copySummary()">Copy</button>
+      <div class="copy-content" id="summary-output">Generating...</div>
+    </div>
+    <div class="note mt-4"><p>If the same thing surfaces again, come back and run the method again. It will not go to the same place twice.</p></div>
+    <div style="margin-top:28px; padding:20px; background:var(--navy); border-radius:12px; text-align:center;">
+      <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">Want to go deeper?</div>
+      <p style="color:rgba(255,255,255,0.8); font-size:14px; margin-bottom:16px;">In a 1:1 session the method works differently. Someone can track what you cannot track alone.</p>
+      <a href="mailto:mindshiftingwithleon@gmail.com" style="display:inline-block; background:var(--gold); color:var(--navy); font-family:'Jost',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.08em; padding:12px 24px; border-radius:8px; text-decoration:none;">Book a conversation with Leon</a>
+    </div>
+    <button class="btn btn-secondary" style="width:100%; margin-top:16px; border:1.5px solid var(--grey);" onclick="resetAll()">Start a new session</button>
+    <button class="btn btn-secondary" style="width:100%; margin-top:10px; border:1.5px solid var(--grey);" onclick="goTo('s6')">Back to Phase C</button>
+  </div>
+</div>
+
+<script>
+  let state = { route: 'cognition', negCog: '', posCog: '', score: null };
+
+  function selectRoute(route) {
+    state.route = route;
+    document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('route-' + route).classList.add('selected');
+  }
+
+  function startMethod() {
+    goTo(state.route === 'cognition' ? 's1' : 's1p');
+  }
+
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    if (id === 's2c') updateCogDisplay();
+    if (id === 's2p') showAnchorBar('anchor-2p', 'anchor-2p-text');
+    if (id === 's3c') showBeliefAnchor();
+    if (id === 's3p') showAnchorBar('anchor-3p', 'anchor-3p-text');
+    if (id === 's4') updateFutureIdentity();
+    if (id === 's7') generateSummary();
+  }
+
+  function showBeliefAnchor() {
+    const bar = document.getElementById('anchor-3c');
+    const textEl = document.getElementById('anchor-3c-text');
+    if (bar && textEl && state.negCog) { textEl.textContent = state.negCog; bar.style.display = 'block'; }
+    else if (bar) bar.style.display = 'none';
+  }
+
+  function showAnchorBar(barId, textId) {
+    const imageField = document.getElementById('p-image');
+    const image = imageField ? imageField.value.trim() : '';
+    const bar = document.getElementById(barId);
+    const textEl = document.getElementById(textId);
+    if (image && bar && textEl) { textEl.textContent = image; bar.style.display = 'block'; }
+    else if (bar) bar.style.display = 'none';
+  }
+
+  function selectCognition(el, neg, pos) {
+    document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    state.negCog = neg;
+    state.posCog = pos;
+    const cn = document.getElementById('custom-neg');
+    const cp = document.getElementById('custom-pos');
+    if (cn) cn.value = '';
+    if (cp) cp.value = '';
+  }
+
+  function updateCustomCognition() {
+    const neg = document.getElementById('custom-neg') ? document.getElementById('custom-neg').value.trim() : '';
+    const pos = document.getElementById('custom-pos') ? document.getElementById('custom-pos').value.trim() : '';
+    if (neg) {
+      document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
+      state.negCog = neg;
+      state.posCog = pos;
+    }
+  }
+
+  function updateCogDisplay() {
+    if (state.negCog) document.getElementById('disp-neg').textContent = state.negCog;
+  }
+
+  function buildWhyPrompt(pos) {
+    const first = pos.split(';')[0].trim();
+    if (/^I am /i.test(first)) return 'Why am I ' + first.replace(/^I am /i, '') + '?';
+    if (/^I can /i.test(first)) return 'Why can I ' + first.replace(/^I can /i, '') + '?';
+    if (/^I deserve /i.test(first)) return 'Why do I deserve ' + first.replace(/^I deserve /i, '') + '?';
+    if (/^I have /i.test(first)) return 'Why do I have ' + first.replace(/^I have /i, '') + '?';
+    if (/^I now /i.test(first)) return 'Why do I now ' + first.replace(/^I now /i, '') + '?';
+    if (/^I /i.test(first)) return 'Why do I ' + first.replace(/^I /i, '') + '?';
+    if (/^My /i.test(first)) return 'Why is ' + first.toLowerCase() + '?';
+    if (/^There /i.test(first)) return 'Why do I believe ' + first.toLowerCase() + '?';
+    return 'Why is this true for me?';
+  }
+
+  function applyPosCog(pos) {
+    const affirmEl = document.getElementById('affirm-prompt');
+    const whyEl = document.getElementById('why-am-i-prompt');
+    const whyLabelEl = document.getElementById('why-am-i-label');
+    const whyPrompt = buildWhyPrompt(pos);
+    if (affirmEl) affirmEl.textContent = '"' + pos + '"';
+    if (whyEl) whyEl.textContent = '"' + whyPrompt + '"';
+    if (whyLabelEl) whyLabelEl.textContent = whyPrompt;
+    const phaseC = document.getElementById('phase-c-cog');
+    if (phaseC) phaseC.textContent = pos;
+  }
+
+  function onPosCogInput() {
+    const typed = document.getElementById('pos-cog-input').value.trim();
+    if (typed) { state.posCog = typed; applyPosCog(typed); }
+  }
+
+  function updateFutureIdentity() {
+    const pos = state.posCog;
+    const staticEl = document.getElementById('pos-cog-display');
+    const inputEl = document.getElementById('pos-cog-input');
+    const labelEl = document.getElementById('phase-a-cog-label');
+    const subEl = document.getElementById('phase-a-cog-sub');
+    const isProb = state.route === 'problem';
+    if (labelEl) labelEl.textContent = isProb ? 'Step into who you are without this problem' : 'My positive belief';
+    if (subEl) subEl.textContent = isProb ? 'You are no longer defined by it. Read this, feel it, then continue.' : 'The opposite of what you started with. Read it, feel it, then continue.';
+    if (pos) {
+      staticEl.textContent = pos; staticEl.style.display = 'block'; inputEl.style.display = 'none';
+      applyPosCog(pos);
+    } else if (isProb) {
+      const exitAns = val('pexit1') || '';
+      staticEl.style.display = 'none';
+      inputEl.placeholder = exitAns ? 'e.g. ' + exitAns + '...' : 'Write who you are without this problem...';
+      inputEl.style.display = 'block';
+      const typed = inputEl.value.trim();
+      if (typed) applyPosCog(typed);
+      else if (exitAns) applyPosCog(exitAns);
+    } else {
+      staticEl.style.display = 'none';
+      inputEl.placeholder = 'Write your positive belief here...';
+      inputEl.style.display = 'block';
+      const typed = inputEl.value.trim();
+      if (typed) applyPosCog(typed);
+    }
+  }
+
+  function selectScore(btn, num) {
+    document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.score = num;
+  }
+
+  function val(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  function generateSummary() {
+    const isProb = state.route === 'problem';
+    let lines = [];
+    lines.push('THE BELIEFS LIBRARY — SESSION SUMMARY');
+    lines.push('======================================\n');
+    if (isProb) {
+      lines.push('STARTING POINT: Problem');
+      if (val('p-problem')) lines.push('Problem: ' + val('p-problem'));
+      if (state.score !== null) lines.push('Intensity: ' + state.score + '/10');
+      if (val('p-image')) lines.push('Worst moment image: ' + val('p-image'));
+    } else {
+      lines.push('STARTING POINT: Belief');
+      if (state.negCog) lines.push('Belief: ' + state.negCog);
+      if (state.posCog) lines.push('Positive belief: ' + state.posCog);
+    }
+    lines.push('\nTHE WHY CHAIN');
+    const prefix = isProb ? 'p' : '';
+    for (let i = 1; i <= 7; i++) { const v = val(prefix + 'why' + i); if (v) lines.push(i + '. ' + v); }
+    lines.push('\nEXIT QUESTION');
+    const ep = isProb ? 'p' : '';
+    if (val(ep+'exit1')) lines.push('Who am I without this: ' + val(ep+'exit1'));
+    if (val(ep+'exit2')) lines.push('Who else: ' + val(ep+'exit2'));
+    if (val(ep+'exit3')) lines.push('What it feels like: ' + val(ep+'exit3'));
+    if (val(ep+'exit4')) lines.push('Deeper feeling: ' + val(ep+'exit4'));
+    lines.push('\nFUTURE IDENTITY');
+    if (val('fi-feel')) lines.push('In the scene: ' + val('fi-feel'));
+    if (val('fi-body')) lines.push('In my body: ' + val('fi-body'));
+    if (val('fi-why')) lines.push('Why this is true: ' + val('fi-why'));
+    if (val('fi-cost1')) lines.push('What it has cost me: ' + val('fi-cost1'));
+    if (val('fi-cost2')) lines.push('Future cost if unchanged: ' + val('fi-cost2'));
+    if (val('fi-towards')) lines.push('Moving towards: ' + val('fi-towards'));
+    if (val('fi-action')) lines.push('First action: ' + val('fi-action'));
+    if (val('fi-easier')) lines.push('What makes it easier: ' + val('fi-easier'));
+    if (val('fi-standards')) lines.push('Standards I am setting: ' + val('fi-standards'));
+    if (val('fi-obstacle')) lines.push('Obstacle rehearsed: ' + val('fi-obstacle'));
+    document.getElementById('summary-output').textContent = lines.join('\n');
+  }
+
+  function copySummary() {
+    const text = document.getElementById('summary-output').textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+    }
+  }
+
+  function resetAll() {
+    state = { route: 'cognition', negCog: '', posCog: '', score: null };
+    document.querySelectorAll('textarea').forEach(t => t.value = '');
+    document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
+    document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
+    const staticEl = document.getElementById('pos-cog-display');
+    const inputEl = document.getElementById('pos-cog-input');
+    if (staticEl) { staticEl.textContent = ''; staticEl.style.display = 'none'; }
+    if (inputEl) { inputEl.value = ''; inputEl.style.display = 'none'; }
+    goTo('s0');
+  }
+</script>
+</body>
+</html>
