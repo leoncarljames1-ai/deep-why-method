@@ -401,6 +401,8 @@
     <div class="phase-badge"><span></span>Phase C</div>
     <div class="field-group"><label class="field-label">What do I want to move towards?</label><textarea class="short" id="fi-towards" placeholder="Name it..."></textarea></div>
     <div class="field-group"><label class="field-label">First action, and when?</label><span class="field-sub">Be specific. A real action, a real time.</span><textarea class="short" id="fi-action" placeholder="e.g. I will message X on Tuesday morning..."></textarea></div>
+    <div class="field-group"><label class="field-label">What will make this first action easier?</label><span class="field-sub">Remove the friction before it appears.</span><textarea class="short" id="fi-easier" placeholder="What removes the resistance..."></textarea></div>
+    <div class="field-group"><label class="field-label">What standards do I need to set?</label><span class="field-sub">How you show up, what you allow, what you no longer accept.</span><textarea class="short" id="fi-standards" placeholder="The standards I am holding myself to..."></textarea></div>
     <div class="divider"></div>
     <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">A &nbsp;Return to the scene.</p>
     <div id="phase-c-cog" style="font-family:'Cormorant Garamond',serif; font-size:20px; font-style:italic; color:var(--navy); background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; margin-bottom:16px;"></div>
@@ -661,6 +663,8 @@
     if (val('fi-cost2')) lines.push('Future cost if unchanged: ' + val('fi-cost2'));
     if (val('fi-towards')) lines.push('Moving towards: ' + val('fi-towards'));
     if (val('fi-action')) lines.push('First action: ' + val('fi-action'));
+    if (val('fi-easier')) lines.push('What makes it easier: ' + val('fi-easier'));
+    if (val('fi-standards')) lines.push('Standards I am setting: ' + val('fi-standards'));
     if (val('fi-obstacle')) lines.push('Obstacle rehearsed: ' + val('fi-obstacle'));
     document.getElementById('summary-output').textContent = lines.join('\n');
   }
