@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Identity Upgrade</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E;
+    --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF;
+    --light-blue: #A2B4C2; --white: #FFFFFF;
+  }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 64px 24px 56px; text-align: center; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; font-family: 'Jost', sans-serif; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 500; color: var(--white); margin-bottom: 14px; line-height: 1.2; }
+  .hero p { color: var(--light-blue); font-size: 15px; max-width: 340px; margin: 0 auto; line-height: 1.7; }
+
+  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--white); }
+
+  .progress-wrap { background: var(--navy); padding: 0 24px 16px; }
+  .progress-track { height: 2px; background: rgba(255,255,255,0.15); border-radius: 2px; }
+  .progress-fill { height: 2px; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
+  .progress-label { font-size: 11px; color: var(--light-blue); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .content { padding: 36px 24px 100px; max-width: 640px; margin: 0 auto; }
+
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; color: var(--navy); line-height: 1.3; margin-bottom: 16px; }
+
+  p { font-size: 15px; color: #3a3a44; margin-bottom: 16px; line-height: 1.85; }
+
+  .section-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 20px; }
+  .section-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: block; }
+
+  .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+  .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; line-height: 1.7; }
+
+  .note { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .note p { font-size: 13px; color: var(--navy); margin: 0; line-height: 1.7; }
+
+  .divider { height: 1px; background: var(--grey); margin: 32px 0; }
+
+  .field-group { margin-bottom: 24px; }
+  .field-label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin-bottom: 6px; }
+  .field-sub { display: block; font-size: 13px; color: #888; margin-bottom: 10px; font-style: italic; }
+
+  textarea { width: 100%; border: 1.5px solid var(--grey); border-radius: 8px; padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 15px; color: var(--charcoal); background: var(--white); resize: none; transition: border-color 0.2s; -webkit-appearance: none; min-height: 90px; }
+  textarea:focus { outline: none; border-color: var(--navy); }
+  textarea.short { min-height: 64px; }
+  textarea.tall { min-height: 120px; }
+
+  .standard-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .standard-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 14px; font-family: 'Jost', sans-serif; }
+  .standard-row textarea { flex: 1; min-height: 56px; }
+
+  .area-label { font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; margin-bottom: 10px; margin-top: 24px; }
+
+  .anchor-card { background: var(--navy); border-radius: 12px; padding: 24px 22px; margin: 20px 0; }
+  .anchor-card-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; font-family: 'Jost', sans-serif; }
+  .anchor-card p { font-size: 14px; color: rgba(255,255,255,0.85); margin-bottom: 10px; line-height: 1.8; }
+  .anchor-card p:last-child { margin-bottom: 0; }
+
+  .copy-box { background: var(--white); border: 1.5px solid var(--grey); border-radius: 10px; padding: 20px; margin: 16px 0; position: relative; }
+  .copy-box-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 12px; font-weight: 500; }
+  .copy-btn { position: absolute; top: 16px; right: 16px; background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 6px 12px; font-size: 11px; font-family: 'Jost', sans-serif; cursor: pointer; letter-spacing: 0.08em; }
+  .copy-content { font-size: 14px; color: var(--charcoal); line-height: 1.8; white-space: pre-wrap; word-break: break-word; }
+
+  .complete-hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 60px 24px 48px; text-align: center; }
+  .complete-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+  .complete-icon svg { width: 28px; height: 28px; }
+  .complete-hero h1 { font-family: 'Cormorant Garamond', serif; color: var(--white); font-size: 32px; margin-bottom: 10px; }
+  .complete-hero p { color: var(--light-blue); max-width: 300px; margin: 0 auto; }
+
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .mt-4 { margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 0: INTRO -->
+<div id="s0" class="screen active">
+  <div class="hero">
+    <div class="hero-eyebrow">Leon James</div>
+    <h1>The Identity Upgrade</h1>
+    <p>You have cleared what was in the way. Now you build what replaces it. This is who you are becoming.</p>
+  </div>
+  <div class="content">
+    <p>Most people try to build a new identity on top of old beliefs. The beliefs win every time. You have already done the clearing work. That changes what this document is.</p>
+    <p>This is not wishful thinking. This is not a list of who you want to be. This is a portrait of who you already are in the process of becoming — built on cleared ground.</p>
+    <p>Work through the four sections below. Take your time with each one. Feel the answers before you write them. At the end you will have a complete identity document you can return to every day.</p>
+
+    <div class="instruction">
+      <p>This works best after a clearing session. If you have not yet used the Deep Why Method, do that first. Come back here once something has shifted.</p>
+    </div>
+
+    <div class="note">
+      <p>There are no right or wrong answers. Write what is true for you, not what sounds impressive. The more specific and honest you are, the more powerful this document becomes.</p>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-primary" onclick="goTo('s1')">Begin</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: THE PORTRAIT -->
+<div id="s1" class="screen">
+  <div class="header"><div class="header-eyebrow">Section 1 of 4</div><div class="header-title">The Portrait</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:20%"></div></div><div class="progress-label">Who you are becoming</div></div>
+  <div class="content">
+    <div class="section-badge"><span></span>The Portrait</div>
+    <p>Answer each question from the identity you are stepping into. Not who you were. Not who you are trying to be. Who you are in the process of becoming right now.</p>
+    <p>Write in the present tense. "I am..." not "I will be..."</p>
+
+    <div class="instruction">
+      <p>Close your eyes before each question. Step into your Future Identity scene for a moment. Feel it. Then write from that place.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="field-group">
+      <label class="field-label">How do you carry yourself?</label>
+      <span class="field-sub">Your presence, your posture, the energy you bring into a room.</span>
+      <textarea id="p1" class="short" placeholder="I am..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What have you stopped doing?</label>
+      <span class="field-sub">The behaviours, habits or patterns that no longer belong to this version of you.</span>
+      <textarea id="p2" class="short" placeholder="I no longer..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What do people feel when they are around you?</label>
+      <span class="field-sub">Not what they say. What they feel. The atmosphere you create.</span>
+      <textarea id="p3" class="short" placeholder="People feel..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What do you protect?</label>
+      <span class="field-sub">Your time, your peace, your values. What you will not compromise on.</span>
+      <textarea id="p4" class="short" placeholder="I protect..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What does this version of you know that the old version did not?</label>
+      <span class="field-sub">The truth you have found on the other side of the clearing work.</span>
+      <textarea id="p5" class="short" placeholder="I now know..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">How do you handle difficulty now?</label>
+      <span class="field-sub">What is different about how you meet resistance, pressure or setbacks.</span>
+      <textarea id="p6" class="short" placeholder="When things are hard, I..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">In one sentence — who are you becoming?</label>
+      <span class="field-sub">Write it bold. Write it true.</span>
+      <textarea id="p7" class="short" placeholder="I am..."></textarea>
+    </div>
+
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s2')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 2: STANDARDS -->
+<div id="s2" class="screen">
+  <div class="header"><div class="header-eyebrow">Section 2 of 4</div><div class="header-title">My Standards</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:45%"></div></div><div class="progress-label">Decisions already made</div></div>
+  <div class="content">
+    <div class="section-badge"><span></span>Standards</div>
+    <p>Standards are not goals. You do not work toward them. You decide them and then live from them. Write each one as a decision already made.</p>
+
+    <div class="instruction">
+      <p>Start each standard with "I..." and write it as already true. Not "I will" — "I do." Not "I want to" — "I am."</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="area-label">How I treat myself</div>
+    <div class="standard-row"><div class="standard-num">1</div><textarea class="short" id="st1" placeholder="I..."></textarea></div>
+    <div class="standard-row"><div class="standard-num">2</div><textarea class="short" id="st2" placeholder="I..."></textarea></div>
+
+    <div class="area-label">How I show up in relationships</div>
+    <div class="standard-row"><div class="standard-num">3</div><textarea class="short" id="st3" placeholder="I..."></textarea></div>
+    <div class="standard-row"><div class="standard-num">4</div><textarea class="short" id="st4" placeholder="I..."></textarea></div>
+
+    <div class="area-label">What I no longer accept</div>
+    <div class="standard-row"><div class="standard-num">5</div><textarea class="short" id="st5" placeholder="I no longer accept..."></textarea></div>
+    <div class="standard-row"><div class="standard-num">6</div><textarea class="short" id="st6" placeholder="I no longer accept..."></textarea></div>
+
+    <div class="area-label">How I work and show up for what matters</div>
+    <div class="standard-row"><div class="standard-num">7</div><textarea class="short" id="st7" placeholder="I..."></textarea></div>
+    <div class="standard-row"><div class="standard-num">8</div><textarea class="short" id="st8" placeholder="I..."></textarea></div>
+
+    <div class="area-label">How I speak to myself</div>
+    <div class="standard-row"><div class="standard-num">9</div><textarea class="short" id="st9" placeholder="I..."></textarea></div>
+    <div class="standard-row"><div class="standard-num">10</div><textarea class="short" id="st10" placeholder="I..."></textarea></div>
+
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s1')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s3')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 3: VISION -->
+<div id="s3" class="screen">
+  <div class="header"><div class="header-eyebrow">Section 3 of 4</div><div class="header-title">My Vision</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:70%"></div></div><div class="progress-label">Where you are going</div></div>
+  <div class="content">
+    <div class="section-badge"><span></span>Vision</div>
+    <p>This is not a goal list. It is a felt picture of your life when the work is done. Write it in present tense as if you are already there.</p>
+
+    <div class="instruction">
+      <p>Close your eyes first. See it clearly before you write. Where are you. What are you doing. Who is around you. How does your body feel in that life.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="field-group">
+      <label class="field-label">Where are you?</label>
+      <span class="field-sub">The place, the environment, what surrounds you in this life.</span>
+      <textarea id="v1" class="short" placeholder="I am living..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What are you doing?</label>
+      <span class="field-sub">Your work, your purpose, how you spend your time.</span>
+      <textarea id="v2" class="short" placeholder="I spend my time..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Who is around you?</label>
+      <span class="field-sub">The people in your life. What they are like. How you relate to them.</span>
+      <textarea id="v3" class="short" placeholder="The people in my life..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">How do you feel in this life?</label>
+      <span class="field-sub">Not achievements. The feeling of it. What it is like to wake up as this version of you.</span>
+      <textarea id="v4" class="short" placeholder="I feel..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Write your vision in full</label>
+      <span class="field-sub">Pull the four answers together into one paragraph. Present tense. Already true.</span>
+      <textarea id="v5" class="tall" placeholder="I am living..."></textarea>
+    </div>
+
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s2')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s4')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: DAILY ANCHOR -->
+<div id="s4" class="screen">
+  <div class="header"><div class="header-eyebrow">Section 4 of 4</div><div class="header-title">Daily Anchor</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:90%"></div></div><div class="progress-label">How you return to this every day</div></div>
+  <div class="content">
+    <div class="section-badge"><span></span>Daily Anchor</div>
+    <p>Identity is not built in one session. It is reinforced by small consistent returns to who you are becoming. This is your daily practice. Two anchors. Morning and evening. Nothing complicated.</p>
+
+    <div class="divider"></div>
+
+    <div class="anchor-card">
+      <div class="anchor-card-label">Morning — takes 60 seconds</div>
+      <p>Before you look at your phone, read your portrait. Say your positive cognition out loud. Close your eyes and step into your Future Identity scene for one moment. Feel it as already true. Then begin your day from that place.</p>
+    </div>
+
+    <div class="anchor-card">
+      <div class="anchor-card-label">Evening — one question</div>
+      <p>Before you sleep, ask yourself one question: Did I live from this identity today? You are not looking for perfection. You are looking for honesty. Write one line below each evening you use this.</p>
+    </div>
+
+    <div class="field-group mt-4">
+      <label class="field-label">My positive cognition</label>
+      <span class="field-sub">From your Deep Why session. This is what you say each morning.</span>
+      <textarea id="a1" class="short" placeholder="e.g. I am worthy. I am capable. I deserve good things..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">One thing I want to remember about who I am becoming</label>
+      <span class="field-sub">A single line. Something that anchors you when things get hard.</span>
+      <textarea id="a2" class="short" placeholder="When things are hard, I remember..."></textarea>
+    </div>
+
+    <div class="note">
+      <p>The identity document you have just built is not finished. It is a living document. Come back and update it as you change. What you write today will not be what you write in three months. That is the point.</p>
+    </div>
+
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s3')">Back</button>
+    <button class="btn btn-gold" onclick="goTo('s5')">Generate my document</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: COMPLETE + DOCUMENT -->
+<div id="s5" class="screen">
+  <div class="complete-hero">
+    <div class="complete-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#163E5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h1>Your identity document.</h1>
+    <p>Read this every morning. Return to it whenever you need to remember who you are.</p>
+  </div>
+  <div class="content" style="padding-top:32px;">
+    <p style="margin-bottom:24px;">Your full identity document is below. Copy it, save it, screenshot it. This is yours.</p>
+    <div class="copy-box">
+      <div class="copy-box-label">My Identity Document</div>
+      <button class="copy-btn" onclick="copyDoc()">Copy</button>
+      <div class="copy-content" id="doc-output">Generating...</div>
+    </div>
+    <div class="note mt-4">
+      <p>Come back and rebuild this whenever something significant shifts. The document should grow with you.</p>
+    </div>
+    <div style="margin-top:28px; padding:20px; background:var(--navy); border-radius:12px; text-align:center;">
+      <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">Want to go deeper?</div>
+      <p style="color:rgba(255,255,255,0.8); font-size:14px; margin-bottom:16px;">In a 1:1 session we can build this together. I can help you find what is true rather than what sounds good.</p>
+      <a href="YOUR_LINK_HERE" style="display:inline-block; background:var(--gold); color:var(--navy); font-family:'Jost',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.08em; padding:12px 24px; border-radius:8px; text-decoration:none;">Work with Me</a>
+    </div>
+    <button class="btn btn-secondary" style="width:100%; margin-top:16px; border:1.5px solid var(--grey);" onclick="resetAll()">Start again</button>
+    <button class="btn btn-secondary" style="width:100%; margin-top:10px; border:1.5px solid var(--grey);" onclick="goTo('s4')">Back</button>
+  </div>
+</div>
+
+<script>
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    if (id === 's5') generateDoc();
+  }
+
+  function val(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  function generateDoc() {
+    let lines = [];
+
+    lines.push('MY IDENTITY DOCUMENT');
+    lines.push('====================\n');
+
+    // Portrait
+    lines.push('WHO I AM BECOMING\n');
+    if (val('p1')) lines.push('How I carry myself: ' + val('p1'));
+    if (val('p2')) lines.push('What I have stopped: ' + val('p2'));
+    if (val('p3')) lines.push('What people feel around me: ' + val('p3'));
+    if (val('p4')) lines.push('What I protect: ' + val('p4'));
+    if (val('p5')) lines.push('What I now know: ' + val('p5'));
+    if (val('p6')) lines.push('How I handle difficulty: ' + val('p6'));
+    if (val('p7')) lines.push('\n' + val('p7'));
+
+    // Standards
+    lines.push('\n\nMY STANDARDS\n');
+    lines.push('How I treat myself:');
+    if (val('st1')) lines.push('  ' + val('st1'));
+    if (val('st2')) lines.push('  ' + val('st2'));
+    lines.push('\nHow I show up in relationships:');
+    if (val('st3')) lines.push('  ' + val('st3'));
+    if (val('st4')) lines.push('  ' + val('st4'));
+    lines.push('\nWhat I no longer accept:');
+    if (val('st5')) lines.push('  ' + val('st5'));
+    if (val('st6')) lines.push('  ' + val('st6'));
+    lines.push('\nHow I work and show up for what matters:');
+    if (val('st7')) lines.push('  ' + val('st7'));
+    if (val('st8')) lines.push('  ' + val('st8'));
+    lines.push('\nHow I speak to myself:');
+    if (val('st9')) lines.push('  ' + val('st9'));
+    if (val('st10')) lines.push('  ' + val('st10'));
+
+    // Vision
+    lines.push('\n\nMY VISION\n');
+    if (val('v5')) lines.push(val('v5'));
+    else {
+      if (val('v1')) lines.push(val('v1'));
+      if (val('v2')) lines.push(val('v2'));
+      if (val('v3')) lines.push(val('v3'));
+      if (val('v4')) lines.push(val('v4'));
+    }
+
+    // Daily anchor
+    lines.push('\n\nMY DAILY ANCHOR\n');
+    if (val('a1')) lines.push('Morning cognition: ' + val('a1'));
+    if (val('a2')) lines.push('What I remember: ' + val('a2'));
+    lines.push('\nMorning: Read this document. Say your cognition. 60 seconds in your Future Identity scene.');
+    lines.push('Evening: Did I live from this identity today?');
+
+    document.getElementById('doc-output').textContent = lines.join('\n');
+  }
+
+  function copyDoc() {
+    const text = document.getElementById('doc-output').textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+    }
+  }
+
+  function resetAll() {
+    document.querySelectorAll('textarea').forEach(t => t.value = '');
+    goTo('s0');
+  }
+</script>
+</body>
+</html>
