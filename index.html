@@ -241,10 +241,9 @@
     </div>
     <div class="instruction"><p>Close your eyes. Hold the cognition. Ask "why is this true?" Feel the answer, then type it. Ask why again. Stop when you hit something raw that needs no further question. If the answer becomes about someone else, stop there too.</p></div>
 
-    <div class="field-group">
-      <label class="field-label">Why can't I let this go? <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:11px; color:#888;">Optional</span></label>
-      <span class="field-sub">Before you start the why chain — sit with this question for a moment. Only answer if something comes.</span>
-      <textarea id="cant-let-go-c" class="short" placeholder="What comes up when you ask this..."></textarea>
+    <div class="quiet-prompt">
+      <div class="quiet-prompt-label">Optional — before you begin</div>
+      <div class="quiet-prompt-text">"Why can't I let this go?"</div>
     </div>
 
     <div class="why-chain">
@@ -276,10 +275,9 @@
   <div class="content">
     <div class="instruction"><p>Hold the image of the worst part of the problem. Ask "why does this affect me?" Feel the answer, then type it. Ask why again. Stop when it goes raw or points at someone else.</p></div>
 
-    <div class="field-group">
-      <label class="field-label">Why can't I let this go? <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:11px; color:#888;">Optional</span></label>
-      <span class="field-sub">Before you start the why chain — sit with this question for a moment. Only answer if something comes.</span>
-      <textarea id="cant-let-go-p" class="short" placeholder="What comes up when you ask this..."></textarea>
+    <div class="quiet-prompt">
+      <div class="quiet-prompt-label">Optional — before you begin</div>
+      <div class="quiet-prompt-text">"Why can't I let this go?"</div>
     </div>
 
     <div class="why-chain">
@@ -658,8 +656,6 @@
     }
     lines.push('\nTHE WHY CHAIN');
     const prefix = isProb ? 'p' : '';
-    const cantLetGo = isProb ? val('cant-let-go-p') : val('cant-let-go-c');
-    if (cantLetGo) lines.push('Why I can\'t let this go: ' + cantLetGo);
     for (let i = 1; i <= 7; i++) { const v = val(prefix + 'why' + i); if (v) lines.push(i + '. ' + v); }
     lines.push('\nEXIT QUESTION');
     const ep = isProb ? 'p' : '';
