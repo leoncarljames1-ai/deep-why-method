@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is OTOA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E;
+    --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF;
+    --light-blue: #A2B4C2; --white: #FFFFFF;
+  }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 64px 24px 56px; text-align: center; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; font-family: 'Jost', sans-serif; }
+  .hero-acronym { font-family: 'Cormorant Garamond', serif; font-size: 72px; font-weight: 600; color: var(--white); letter-spacing: 0.12em; margin-bottom: 8px; line-height: 1; }
+  .hero-full { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--light-blue); margin-bottom: 0; }
+
+  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--white); }
+
+  .progress-wrap { background: var(--navy); padding: 0 24px 16px; }
+  .progress-track { height: 2px; background: rgba(255,255,255,0.15); border-radius: 2px; }
+  .progress-fill { height: 2px; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
+  .progress-label { font-size: 11px; color: var(--light-blue); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .content { padding: 36px 24px 100px; max-width: 640px; margin: 0 auto; }
+
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; color: var(--navy); line-height: 1.3; margin-bottom: 20px; }
+
+  p { font-size: 15px; color: #3a3a44; margin-bottom: 18px; line-height: 1.85; }
+
+  .pull-quote { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--navy); border-left: 3px solid var(--gold); padding: 16px 20px; margin: 28px 0; line-height: 1.5; background: var(--white); border-radius: 0 8px 8px 0; }
+
+  .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 24px 0; border-radius: 0 6px 6px 0; }
+  .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; line-height: 1.7; }
+
+  .dark-card { background: linear-gradient(160deg, var(--charcoal), var(--navy)); border-radius: 12px; padding: 28px 24px; margin: 28px 0; }
+  .dark-card-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; font-family: 'Jost', sans-serif; }
+  .dark-card p { font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 14px; line-height: 1.8; }
+  .dark-card p:last-child { margin-bottom: 0; }
+
+  .practice-row { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--grey); }
+  .practice-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .practice-num { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: var(--navy); color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .practice-title { font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; }
+  .practice-body { font-size: 14px; color: #3a3a44; line-height: 1.8; }
+
+  .note { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .note p { font-size: 13px; color: var(--navy); margin: 0; line-height: 1.7; }
+
+  .divider { height: 1px; background: var(--grey); margin: 32px 0; }
+
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 0: WHAT OTOA MEANS -->
+<div id="s0" class="screen active">
+  <div class="hero">
+    <div class="hero-eyebrow">The Programme</div>
+    <div class="hero-acronym">OTOA</div>
+    <div class="hero-full">If I can overcome this, I can overcome anything.</div>
+  </div>
+  <div class="content">
+    <h2>Where it came from</h2>
+    <p>I said those words to myself in one of the darkest periods of my life. Not as a slogan. Not as something I read somewhere. As a decision.</p>
+    <p>I had been carrying something for years. A behaviour I could not stop, no matter how many times I told myself I would. I had tried willpower. I had tried therapy — forty sessions on the same problem that never moved. I had tried reasoning my way out of it, understanding it, explaining it to myself. None of it worked.</p>
+    <p>What I eventually discovered was that the behaviour was never the problem. It was what my mind had built to cope with something underneath. Something I had never felt fully. Once I found what that was and cleared it, the behaviour lost its reason to exist.</p>
+
+    <div class="pull-quote">"If I can overcome this, I can overcome anything."</div>
+
+    <p>That is the moment this programme was built from. Not a theory. A decision I made about who I was going to be on the other side of the hardest thing I had faced.</p>
+    <p>OTOA is not just the name of this programme. It is the standard you are setting by being here. You are not here to manage the problem. You are here to move through it and come out the other side knowing that you can move through anything.</p>
+    <p>That is what this work is for.</p>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-primary" onclick="goTo('s1')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: THE PHILOSOPHY -->
+<div id="s1" class="screen">
+  <div class="header"><div class="header-eyebrow">OTOA</div><div class="header-title">The Philosophy</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:50%"></div></div><div class="progress-label">What this work is actually built on</div></div>
+  <div class="content">
+    <h2>The behaviour is never the problem</h2>
+    <p>Every compulsive behaviour, every pattern you cannot break, every belief you know is not true but cannot seem to shake — none of them are the problem. They are what your mind built to cope with something it did not know how to process.</p>
+    <p>Loneliness. Anxiety. Not feeling enough. Lack of purpose. Boredom. Stress. Low self-worth. These are the drivers. The behaviour is the solution your mind found. The reason it keeps returning is that the driver has never been addressed. The mind keeps offering the same solution because the problem is still there.</p>
+
+    <div class="dark-card">
+      <div class="dark-card-label">The root principle</div>
+      <p>Clear the driver and the behaviour loses its reason to exist.</p>
+      <p>You do not need to fight it, manage it, or white-knuckle your way through it. You need to find what is underneath it and feel what has never been felt. When that happens, the mind stops needing the behaviour.</p>
+      <p>That is what every tool in this programme is designed to do.</p>
+    </div>
+
+    <p>This is why forty sessions of therapy on the same behaviour produced nothing for me. We were working on the behaviour. The moment I worked on what was underneath it, everything shifted.</p>
+    <p>The Deep Why Method finds the root by following a feeling down through a chain of questions until it reaches something raw that needs no further explanation. The Eye to Eye Method — used in 1:1 sessions — finds the belief behind the behaviour by working through three layers: what the behaviour is giving you on the surface, what you are actually craving underneath, and the original wound that was never processed.</p>
+    <p>Both methods work on the same principle. Go underneath. Clear what is there. The rest follows.</p>
+
+    <div class="instruction">
+      <p>You do not need to fully understand why it works before it works. You just need to be honest about what you feel when you answer the questions. That is the only requirement.</p>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s2')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 2: HOW TO IMPLEMENT IT -->
+<div id="s2" class="screen">
+  <div class="header"><div class="header-eyebrow">OTOA</div><div class="header-title">How to Implement It</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div><div class="progress-label">Three things that make this work in practice</div></div>
+  <div class="content">
+    <h2>Make it a practice, not a one-off</h2>
+    <p>One session of this method can shift something significant. But the men who move furthest are the ones who use it regularly, not just when something becomes unbearable.</p>
+
+    <div class="divider"></div>
+
+    <div class="practice-row">
+      <div class="practice-num">1</div>
+      <div>
+        <div class="practice-title">Use the tools when things surface</div>
+        <div class="practice-body">When a behaviour returns, when a belief makes itself known, when something happens that sits with you — do not wait until it has compounded. Open the tool and run the method on it while it is live. That is when it is most accessible and most workable. Catching things early is not weakness. It is precision.</div>
+      </div>
+    </div>
+
+    <div class="practice-row">
+      <div class="practice-num">2</div>
+      <div>
+        <div class="practice-title">The daily mindset practice</div>
+        <div class="practice-body">Each morning, before you look at your phone, take sixty seconds. Bring to mind your positive cognition from your most recent session. Say it. Feel it in your body. See yourself as that man for one moment before the day starts. You are not affirming something you hope for. You are rehearsing something you are building. That is the difference. Do this every day. It compounds.</div>
+      </div>
+    </div>
+
+    <div class="practice-row">
+      <div class="practice-num">3</div>
+      <div>
+        <div class="practice-title">Hold the standard</div>
+        <div class="practice-body">OTOA is a decision, not a feeling. There will be days where you do not feel like the man you are building. That is not a sign that the work is not working. It is a sign that the old pattern is looking for its footing. On those days, return to the method. Run it on the resistance itself. Name what you are feeling, give it an intensity score, and follow it down. The process works on everything.</div>
+      </div>
+    </div>
+
+    <div class="dark-card">
+      <div class="dark-card-label">The standard you are now holding</div>
+      <p>You are not here to feel better temporarily. You are here to become someone for whom the old pattern no longer makes sense.</p>
+      <p>That is the work. It is not always comfortable. But it is the kind of uncomfortable that produces something real on the other side.</p>
+      <p>If I can overcome this, I can overcome anything.</p>
+    </div>
+
+    <div class="note">
+      <p>Your session summaries are worth keeping. They show you where the work has gone and what has shifted. Over time they become a record of who you were becoming.</p>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s1')">Back</button>
+  </div>
+</div>
+
+<script>
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
