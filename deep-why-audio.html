@@ -1,1 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Deep Why Method — Guided Audio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E;
+    --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF;
+    --light-blue: #A2B4C2; --white: #FFFFFF;
+  }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--white); }
+  .progress-wrap { background: var(--navy); padding: 0 24px 16px; }
+  .progress-track { height: 2px; background: rgba(255,255,255,0.15); border-radius: 2px; }
+  .progress-fill { height: 2px; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
+  .progress-label { font-size: 11px; color: var(--light-blue); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .content { padding: 32px 24px 100px; max-width: 640px; margin: 0 auto; }
+  p { font-size: 15px; color: #3a3a44; margin-bottom: 14px; line-height: 1.75; }
+  .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+  .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; }
+  .note { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .note p { font-size: 13px; color: var(--navy); margin: 0; }
+  .divider { height: 1px; background: var(--grey); margin: 28px 0; }
+  .field-group { margin-bottom: 20px; }
+  .field-label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; }
+  .field-sub { display: block; font-size: 13px; color: #888; margin-bottom: 10px; font-style: italic; }
+  textarea { width: 100%; border: 1.5px solid var(--grey); border-radius: 8px; padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 15px; color: var(--charcoal); background: var(--white); resize: none; transition: border-color 0.2s; -webkit-appearance: none; min-height: 90px; }
+  textarea:focus { outline: none; border-color: var(--navy); }
+  textarea.short { min-height: 60px; }
+  .why-chain { margin: 16px 0; }
+  .why-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .why-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 14px; }
+  .why-row textarea { flex: 1; min-height: 56px; }
+  .score-wrap { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .score-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--grey); background: var(--white); font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; color: #888; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
+  .score-btn.selected { background: var(--navy); border-color: var(--navy); color: var(--white); }
+  .phase-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 18px; }
+  .phase-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: block; }
+  .prompt { background: var(--navy); color: var(--white); padding: 18px 20px; border-radius: 10px; margin: 16px 0 12px; }
+  .prompt p { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--white); margin: 0; line-height: 1.4; }
+  .selected-display { background: var(--navy); border-radius: 10px; padding: 16px 18px; margin: 16px 0; }
+  .selected-display-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .selected-display-neg { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--white); font-style: italic; }
+  .anchor-bar { background: rgba(22,62,91,0.06); border-left: 3px solid var(--gold-mid); padding: 10px 16px; }
+  .anchor-bar-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; margin-bottom: 3px; }
+  .anchor-bar-text { font-size: 13px; color: var(--navy); font-style: italic; font-family: 'Cormorant Garamond', serif; line-height: 1.4; }
+  .copy-box { background: var(--white); border: 1.5px solid var(--grey); border-radius: 10px; padding: 20px; margin: 16px 0; position: relative; }
+  .copy-box-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 12px; font-weight: 500; }
+  .copy-btn { position: absolute; top: 16px; right: 16px; background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 6px 12px; font-size: 11px; cursor: pointer; }
+  .copy-content { font-size: 14px; color: var(--charcoal); line-height: 1.8; white-space: pre-wrap; word-break: break-word; }
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .start-screen { min-height: 100vh; display: flex; flex-direction: column; }
+  .start-hero { background: var(--navy); padding: 48px 24px 40px; text-align: center; }
+  .start-hero .eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .start-hero h1 { font-family: 'Cormorant Garamond', serif; color: var(--white); font-size: 38px; margin-bottom: 12px; }
+  .start-hero p { color: var(--light-blue); font-size: 15px; max-width: 320px; margin: 0 auto; }
+  .start-body { padding: 32px 24px 120px; max-width: 640px; margin: 0 auto; width: 100%; }
+  .route-card { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; padding: 22px 20px; margin-bottom: 14px; cursor: pointer; transition: all 0.2s; }
+  .route-card:hover, .route-card.selected { border-color: var(--navy); background: #f0f4f7; }
+  .route-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 4px; }
+  .route-card-sub { font-size: 13px; color: #888; }
+  .complete-hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 60px 24px 48px; text-align: center; }
+  .complete-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+  .complete-icon svg { width: 28px; height: 28px; }
+  .complete-hero h1 { font-family: 'Cormorant Garamond', serif; color: var(--white); font-size: 32px; margin-bottom: 10px; }
+  .complete-hero p { color: var(--light-blue); max-width: 300px; margin: 0 auto; }
+  .mt-4 { margin-top: 16px; }
+  .mb-2 { margin-bottom: 8px; }
+  .text-small { font-size: 13px; color: #888; }
+  .step-label { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; }
+  .belief-display { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--navy); background: var(--white); border: 1.5px solid var(--grey); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
 
+  /* AUDIO PLAYER */
+  .audio-player {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--white);
+    border: 1.5px solid var(--grey);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 12px 0 20px;
+  }
+  .play-btn {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+  .play-btn:active { background: #0f2e44; }
+  .play-btn svg { width: 16px; height: 16px; fill: var(--gold); }
+  .play-btn.playing { background: var(--gold-mid); }
+  .audio-label {
+    font-size: 13px;
+    color: #888;
+    font-style: italic;
+    flex: 1;
+  }
+  .audio-label.active { color: var(--navy); font-style: normal; }
+
+  /* ALT PROMPTS on exit question */
+  .alt-prompts {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--grey);
+  }
+  .alt-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-mid);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .alt-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .alt-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--navy);
+    flex: 1;
+  }
+
+  .cognition-section { margin-bottom: 24px; }
+  .cognition-section-title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--grey); }
+  .cognition-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0ede8; cursor: pointer; transition: background 0.15s; }
+  .cognition-item:last-child { border-bottom: none; }
+  .cognition-item:hover { background: #f5f2ed; margin: 0 -8px; padding: 12px 8px; border-radius: 6px; }
+  .cognition-item.selected { background: #EEF3F7; margin: 0 -8px; padding: 12px 8px; border-radius: 6px; }
+  .cognition-select { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--grey); margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+  .cognition-item.selected .cognition-select { background: var(--navy); border-color: var(--navy); }
+  .cognition-item.selected .cognition-select::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--white); display: block; }
+  .cognition-text { flex: 1; }
+  .cognition-neg { font-size: 14px; color: var(--charcoal); font-weight: 400; display: block; margin-bottom: 2px; }
+  .cognition-pos { font-size: 12px; color: var(--light-blue); display: block; }
+</style>
+</head>
+<body>
+
+<!-- AUDIO BASE URL -->
+<script>
+const AUDIO_BASE = 'https://raw.githubusercontent.com/leoncarljames1-ai/deep-why-method/main/audio/';
+let currentAudio = null;
+let currentBtn = null;
+
+function playAudio(file, btn) {
+  // Stop any currently playing audio
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    if (currentBtn) {
+      currentBtn.classList.remove('playing');
+      currentBtn.innerHTML = playIcon();
+    }
+    // If tapping same button, just stop
+    if (currentBtn === btn) {
+      currentAudio = null;
+      currentBtn = null;
+      return;
+    }
+  }
+  const audio = new Audio(AUDIO_BASE + file);
+  audio.play();
+  btn.classList.add('playing');
+  btn.innerHTML = pauseIcon();
+  currentAudio = audio;
+  currentBtn = btn;
+  audio.onended = () => {
+    btn.classList.remove('playing');
+    btn.innerHTML = playIcon();
+    currentAudio = null;
+    currentBtn = null;
+  };
+}
+
+function playIcon() {
+  return '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+}
+function pauseIcon() {
+  return '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+}
+
+function audioPlayer(file, label) {
+  const id = 'btn-' + file.replace(/\./g, '-');
+  return `<div class="audio-player">
+    <button class="play-btn" id="${id}" onclick="playAudio('${file}', this)">${playIcon()}</button>
+    <span class="audio-label">${label}</span>
+  </div>`;
+}
+</script>
+
+<!-- SCREEN 0: START -->
+<div id="s0" class="screen active">
+  <div class="start-screen">
+    <div class="start-hero">
+      <div class="eyebrow">Leon James</div>
+      <h1>The Deep Why Method</h1>
+      <p>Guided audio. Press play on each step, or read and continue without it.</p>
+    </div>
+    <div class="start-body">
+      <p style="margin-bottom:20px; color:#555;">Choose where you want to start today.</p>
+      <div class="route-card" id="route-cognition" onclick="selectRoute('cognition')">
+        <div class="route-card-title">Start with a belief</div>
+        <div class="route-card-sub">Choose from the cognition list and follow it down.</div>
+      </div>
+      <div class="route-card" id="route-problem" onclick="selectRoute('problem')">
+        <div class="route-card-title">Start with a problem</div>
+        <div class="route-card-sub">A specific behaviour, event, or situation. Start from that.</div>
+      </div>
+      <div class="instruction mt-4">
+        <p>Each step has a play button. Press it to hear Leon guide you through that question. You can read instead if you prefer. The process is the same either way.</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-primary" onclick="startMethod()">Begin</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: COGNITION LIST -->
+<div id="s1" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 1</div><div class="header-title">Find Your Belief</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:10%"></div></div><div class="progress-label">Read slowly. Tap the one that lands in your body.</div></div>
+  <div class="content">
+    <script>document.write(audioPlayer('01-what-is-your-belief.mp3', 'What is your negative belief?'))</script>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Responsibility / Self-Worth</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I don\'t deserve love','I deserve love; I can have love')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I don't deserve love</span><span class="cognition-pos">I deserve love; I can have love</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am a bad person','I am a good (loving) person')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am a bad person</span><span class="cognition-pos">I am a good (loving) person</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am terrible','I am fine as I am')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am terrible</span><span class="cognition-pos">I am fine as I am</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am worthless','I am worthy; I am worthwhile')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am worthless</span><span class="cognition-pos">I am worthy; I am worthwhile</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am shameful','I am honourable')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am shameful</span><span class="cognition-pos">I am honourable</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not lovable','I am lovable')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not lovable</span><span class="cognition-pos">I am lovable</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not good enough','I am deserving; I am OK')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not good enough</span><span class="cognition-pos">I am deserving; I am OK</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I deserve only bad things','I deserve good things')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I deserve only bad things</span><span class="cognition-pos">I deserve good things</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am permanently damaged','I can be healthy')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am permanently damaged</span><span class="cognition-pos">I can be healthy</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am ugly','I am fine; I am attractive; I am lovable')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am ugly</span><span class="cognition-pos">I am fine; I am attractive; I am lovable</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am stupid','I am intelligent; I am able to learn')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am stupid</span><span class="cognition-pos">I am intelligent; I am able to learn</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am insignificant','I am significant; I am important')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am insignificant</span><span class="cognition-pos">I am significant; I am important</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am a disappointment','I am OK as I am')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am a disappointment</span><span class="cognition-pos">I am OK as I am</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I deserve to be miserable','I deserve to be happy')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I deserve to be miserable</span><span class="cognition-pos">I deserve to be happy</span></div></div>
+    </div>
+    <div class="cognition-section">
+      <div class="cognition-section-title">Safety / Vulnerability</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot trust anyone','I can choose whom I trust')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot trust anyone</span><span class="cognition-pos">I can choose whom I trust</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am in danger','It is over; I am safe now')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am in danger</span><span class="cognition-pos">It is over; I am safe now</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not safe','I am safe now')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not safe</span><span class="cognition-pos">I am safe now</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'It is not safe to feel or show emotions','I can safely feel and express my emotions')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">It is not safe to feel or show emotions</span><span class="cognition-pos">I can safely feel and express my emotions</span></div></div>
+    </div>
+    <div class="cognition-section">
+      <div class="cognition-section-title">Control / Power</div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am not in control','I am now in control')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am not in control</span><span class="cognition-pos">I am now in control</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am powerless','I now have choices')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am powerless</span><span class="cognition-pos">I now have choices</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot get what I want','I can get what I want')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot get what I want</span><span class="cognition-pos">I can get what I want</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot stand up for myself','I can make my needs known')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot stand up for myself</span><span class="cognition-pos">I can make my needs known</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot trust myself','I can learn to trust myself')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot trust myself</span><span class="cognition-pos">I can learn to trust myself</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot let it out','I can choose to let it out')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot let it out</span><span class="cognition-pos">I can choose to let it out</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I am a failure','I can succeed')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I am a failure</span><span class="cognition-pos">I can succeed</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I cannot succeed','I can succeed')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot succeed</span><span class="cognition-pos">I can succeed</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I have to be perfect','I can be myself; I can make mistakes')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I have to be perfect</span><span class="cognition-pos">I can be myself; I can make mistakes</span></div></div>
+      <div class="cognition-item" onclick="selectCognition(this,'I can\'t handle it','I can handle it')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I can't handle it</span><span class="cognition-pos">I can handle it</span></div></div>
+    </div>
+
+    <div class="cognition-section">
+      <div class="cognition-section-title">Write your own</div>
+      <div class="field-group" style="margin-bottom:12px;">
+        <label class="field-label">My belief</label>
+        <textarea id="custom-neg" class="short" placeholder="Write a belief not listed above..." oninput="updateCustomCognition()"></textarea>
+      </div>
+      <div class="field-group" style="margin-bottom:0;">
+        <label class="field-label">The opposite <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:11px; color:#888;">(optional)</span></label>
+        <textarea id="custom-pos" class="short" placeholder="Write it later in Phase A if needed..." oninput="updateCustomCognition()"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s2c')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 1P: PROBLEM ENTRY -->
+<div id="s1p" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 1</div><div class="header-title">Name the Problem</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:10%"></div></div><div class="progress-label">Starting from a problem or behaviour</div></div>
+  <div class="content">
+    <script>document.write(audioPlayer('11-what-is-your-problem.mp3', 'What is your problem, behaviour or event?'))</script>
+    <div class="field-group mt-4">
+      <label class="field-label">My problem / behaviour / event</label>
+      <textarea id="p-problem" class="short" placeholder="Name it in a few words..."></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Intensity score</label>
+      <span class="field-sub">How strongly does this feel right now?</span>
+      <div class="score-wrap">
+        <button class="score-btn" onclick="selectScore(this,0)">0</button><button class="score-btn" onclick="selectScore(this,1)">1</button><button class="score-btn" onclick="selectScore(this,2)">2</button><button class="score-btn" onclick="selectScore(this,3)">3</button><button class="score-btn" onclick="selectScore(this,4)">4</button><button class="score-btn" onclick="selectScore(this,5)">5</button><button class="score-btn" onclick="selectScore(this,6)">6</button><button class="score-btn" onclick="selectScore(this,7)">7</button><button class="score-btn" onclick="selectScore(this,8)">8</button><button class="score-btn" onclick="selectScore(this,9)">9</button><button class="score-btn" onclick="selectScore(this,10)">10</button>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">What image represents the worst part?</label>
+      <script>document.write(audioPlayer('12-worst-part.mp3', 'What image represents the worst part?'))</script>
+      <textarea id="p-image" placeholder="Describe the image or moment..."></textarea>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s2p')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 2C: WHY CHAIN (COGNITION) -->
+<div id="s2c" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 2</div><div class="header-title">The Why Chain</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:30%"></div></div><div class="progress-label">Follow it down. Feel each answer before you type.</div></div>
+  <div class="content">
+    <div id="selected-cog-display" class="selected-display mb-2">
+      <div class="selected-display-label">Your belief</div>
+      <div class="selected-display-neg" id="disp-neg">...</div>
+    </div>
+    <div class="why-chain">
+      <div class="why-row">
+        <div class="why-num">1</div>
+        <div style="flex:1;">
+          <script>document.write(audioPlayer('02-why-cant-you-let-go.mp3', 'Why can\'t you let this go?'))</script>
+          <textarea class="short" id="why1" placeholder="Why..."></textarea>
+          <div style="font-size:12px; font-style:italic; color:var(--light-blue); margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div>
+        </div>
+      </div>
+      <div class="why-row"><div class="why-num">2</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="why2" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">3</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="why3" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">4</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="why4" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">5</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="why5" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">6</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="why6" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">7</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="why7" placeholder="Why... (keep going if more is there)"></textarea></div></div>
+    </div>
+    <div class="note"><p>Stop when the answer needs no further question. If it points at someone else, stop and move on.</p></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s1')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s3c')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 2P: WHY CHAIN (PROBLEM) -->
+<div id="s2p" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 3</div><div class="header-title">The Why Chain</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:30%"></div></div><div class="progress-label">Follow it down. Feel each answer before you type.</div></div>
+  <div class="anchor-bar" id="anchor-2p" style="display:none;"><div class="anchor-bar-label">Holding</div><div class="anchor-bar-text" id="anchor-2p-text"></div></div>
+  <div class="content">
+    <div class="why-chain">
+      <div class="why-row">
+        <div class="why-num">1</div>
+        <div style="flex:1;">
+          <script>document.write(audioPlayer('13-why-does-this-affect.mp3', 'Why does this affect you?'))</script>
+          <textarea class="short" id="pwhy1" placeholder="Why..."></textarea>
+          <div style="font-size:12px; font-style:italic; color:var(--light-blue); margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div>
+        </div>
+      </div>
+      <div class="why-row"><div class="why-num">2</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="pwhy2" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">3</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="pwhy3" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">4</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="pwhy4" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">5</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="pwhy5" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">6</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="pwhy6" placeholder="Why..."></textarea></div></div>
+      <div class="why-row"><div class="why-num">7</div><div style="flex:1;"><script>document.write(audioPlayer('03-why.mp3', 'Why?'))</script><textarea class="short" id="pwhy7" placeholder="Why... (keep going if more is there)"></textarea></div></div>
+    </div>
+    <div class="note"><p>Stop when the answer needs no further question. If it points at someone else, stop and move on.</p></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s1p')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s3p')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 3C: EXIT QUESTION (COGNITION) -->
+<div id="s3c" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 3</div><div class="header-title">The Exit Question</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div><div class="progress-label">Feel your way into the answer.</div></div>
+  <div class="anchor-bar" id="anchor-3c" style="display:none;"><div class="anchor-bar-label">Your belief</div><div class="anchor-bar-text" id="anchor-3c-text"></div></div>
+  <div class="content">
+    <div class="prompt"><p>"Who am I without this belief?"</p></div>
+    <div class="field-group"><label class="field-label">a. Who am I without this belief?</label><script>document.write(audioPlayer('04-who-am-i-without.mp3', 'Who am I without this belief?'))</script><textarea class="short" id="exit1" placeholder="Feel it first, then write..."></textarea></div>
+    <div class="field-group"><label class="field-label">b. Who else?</label><script>document.write(audioPlayer('05-who-else.mp3', 'Who else?'))</script><textarea class="short" id="exit2" placeholder="Go deeper..."></textarea></div>
+    <div class="field-group"><label class="field-label">c. What does it feel like?</label><script>document.write(audioPlayer('06-what-does-it-feel-like.mp3', 'What does it feel like?'))</script><textarea class="short" id="exit3" placeholder="Describe the feeling..."></textarea></div>
+    <div class="field-group"><label class="field-label">d. What does that feel like?</label><script>document.write(audioPlayer('07-what-does-that-feel-like.mp3', 'What does that feel like?'))</script><textarea class="short" id="exit4" placeholder="Go further into it..."></textarea></div>
+    <script>document.write(audioPlayer('08-spread.mp3', 'Bring it all together...'))</script>
+    <div class="instruction"><p>Now bring all of that together. Feel it spreading through you in every direction — in front and behind, left and right, above and below.</p></div>
+    <p class="mt-4" style="font-weight:500; color:var(--navy);">Does the belief still have weight?</p>
+    <div style="display:flex; gap:12px; margin-top:12px;">
+      <button class="btn btn-secondary" style="flex:1" onclick="goTo('s2c')">Yes, go again</button>
+      <button class="btn btn-primary" style="flex:1" onclick="goTo('s4')">No, move on</button>
+    </div>
+    <div class="alt-prompts">
+      <div class="alt-label">If the belief has not fully shifted</div>
+      <div class="alt-row">
+        <button class="play-btn" onclick="playAudio('09-alt-let-go.mp3', this)"><?xml version="1.0"?><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        <span class="alt-text">"What would it feel like to let this go?"</span>
+      </div>
+      <div class="alt-row">
+        <button class="play-btn" onclick="playAudio('10-alt-need-to-feel.mp3', this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        <span class="alt-text">"What do I need to feel right now?"</span>
+      </div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s2c')">Back</button>
+  </div>
+</div>
+
+<!-- SCREEN 3P: EXIT QUESTION (PROBLEM) -->
+<div id="s3p" class="screen">
+  <div class="header"><div class="header-eyebrow">Step 4</div><div class="header-title">The Exit Question</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div><div class="progress-label">Feel your way into the answer.</div></div>
+  <div class="anchor-bar" id="anchor-3p" style="display:none;"><div class="anchor-bar-label">Holding</div><div class="anchor-bar-text" id="anchor-3p-text"></div></div>
+  <div class="content">
+    <div class="prompt"><p>"Who am I without this problem?"</p></div>
+    <div class="field-group"><label class="field-label">a. Who am I without this problem?</label><script>document.write(audioPlayer('04-who-am-i-without.mp3', 'Who am I without this problem?'))</script><textarea class="short" id="pexit1" placeholder="Feel it first, then write..."></textarea></div>
+    <div class="field-group"><label class="field-label">b. Who else?</label><script>document.write(audioPlayer('05-who-else.mp3', 'Who else?'))</script><textarea class="short" id="pexit2" placeholder="Go deeper..."></textarea></div>
+    <div class="field-group"><label class="field-label">c. What does it feel like?</label><script>document.write(audioPlayer('06-what-does-it-feel-like.mp3', 'What does it feel like?'))</script><textarea class="short" id="pexit3" placeholder="Describe the feeling..."></textarea></div>
+    <div class="field-group"><label class="field-label">d. What does that feel like?</label><script>document.write(audioPlayer('07-what-does-that-feel-like.mp3', 'What does that feel like?'))</script><textarea class="short" id="pexit4" placeholder="Go further into it..."></textarea></div>
+    <script>document.write(audioPlayer('08-spread.mp3', 'Bring it all together...'))</script>
+    <div class="instruction"><p>Now bring all of that together. Feel it spreading through you in every direction — in front and behind, left and right, above and below.</p></div>
+    <p class="mt-4" style="font-weight:500; color:var(--navy);">Does the problem still have weight?</p>
+    <div style="display:flex; gap:12px; margin-top:12px;">
+      <button class="btn btn-secondary" style="flex:1" onclick="goTo('s2p')">Yes, go again</button>
+      <button class="btn btn-primary" style="flex:1" onclick="goTo('s4')">No, move on</button>
+    </div>
+    <div class="alt-prompts">
+      <div class="alt-label">If the problem has not fully shifted</div>
+      <div class="alt-row">
+        <button class="play-btn" onclick="playAudio('09-alt-let-go.mp3', this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        <span class="alt-text">"What would it feel like to let this go?"</span>
+      </div>
+      <div class="alt-row">
+        <button class="play-btn" onclick="playAudio('10-alt-need-to-feel.mp3', this)"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        <span class="alt-text">"What do I need to feel right now?"</span>
+      </div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s2p')">Back</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: FUTURE IDENTITY — PHASE A -->
+<div id="s4" class="screen">
+  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase A — Enter the Scene</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">Step into who you are without it</div></div>
+  <div class="content">
+    <div class="phase-badge"><span></span>Phase A</div>
+    <div class="field-group">
+      <label class="field-label" id="phase-a-cog-label">My positive belief</label>
+      <span class="field-sub" id="phase-a-cog-sub">The opposite of what you started with. Read it, feel it, then continue.</span>
+      <div id="pos-cog-display" style="background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--navy); font-style:italic; display:none;"></div>
+      <textarea id="pos-cog-input" class="short" placeholder="Write your positive belief here..." oninput="onPosCogInput()" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--navy); display:none;"></textarea>
+    </div>
+    <div class="instruction"><p><span class="step-label">A</span> &nbsp;Think of a future where this belief is fully alive in you. Close your eyes and step into that scene.</p></div>
+    <script>document.write(audioPlayer('14-phase-a-scene.mp3', 'Enter the scene...'))</script>
+    <div class="instruction"><p><span class="step-label">B</span> &nbsp;Now look at the future version of you from the outside. Then step inside him. You are him now.</p></div>
+    <script>document.write(audioPlayer('15-phase-a-step-inside.mp3', 'Step inside him...'))</script>
+    <div class="field-group mt-4"><label class="field-label">What does it feel like?</label><textarea class="short" id="fi-feel" placeholder="Stay in it. Describe what you feel as him..."></textarea></div>
+    <div class="prompt"><p id="affirm-prompt">"I am [your positive belief]."</p></div>
+    <script>document.write(audioPlayer('16-phase-a-affirm.mp3', 'Say it. See it as true.'))</script>
+    <div class="field-group mt-4"><label class="field-label">Where do you feel it in your body?</label><textarea class="short" id="fi-body" placeholder="Chest, stomach, shoulders..."></textarea></div>
+    <div class="note mt-4"><p>If anything negative interrupts: ask "what do I need to feel right now?" Feel it. Reinforce it. Return to the scene.</p></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo(state.route === 'cognition' ? 's3c' : 's3p')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s5')">Continue to Phase B</button>
+  </div>
+</div>
+
+<!-- SCREEN 5: FUTURE IDENTITY — PHASE B -->
+<div id="s5" class="screen">
+  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase B — Build the Conviction</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:78%"></div></div><div class="progress-label">Amplify it. Let it grow.</div></div>
+  <div class="content">
+    <div class="phase-badge"><span></span>Phase B</div>
+    <div class="prompt"><p id="why-am-i-prompt">"Why do I believe this?"</p></div>
+    <div class="instruction"><p><span class="step-label">A</span> &nbsp;See yourself as this. Stay with whatever comes. Amplify the feeling.</p></div>
+    <script>document.write(audioPlayer('17-phase-b-why.mp3', 'See yourself as this...'))</script>
+    <div class="field-group"><label class="field-label" id="why-am-i-label">Why is this true for me?</label><textarea id="fi-why" placeholder="What comes when you see yourself as this..."></textarea></div>
+    <div class="divider"></div>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:16px;">B &nbsp;Step out of the scene.</p>
+    <script>document.write(audioPlayer('18-phase-b-cost.mp3', 'What has this already cost you?'))</script>
+    <div class="field-group"><label class="field-label">What has this already cost me?</label><span class="field-sub">Let this land fully.</span><textarea id="fi-cost1" placeholder="What has it cost you..."></textarea></div>
+    <div class="field-group"><label class="field-label">What will it keep costing me if I do not change this now?</label><textarea id="fi-cost2" placeholder="What will it keep costing you..."></textarea></div>
+    <div class="instruction"><p><span class="step-label">C</span> &nbsp;Close your eyes. What becomes possible when this belief is fully yours? Feel the answer. Then continue.</p></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s4')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s6')">Continue to Phase C</button>
+  </div>
+</div>
+
+<!-- SCREEN 6: FUTURE IDENTITY — PHASE C -->
+<div id="s6" class="screen">
+  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase C — Ground and Rehearse</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:90%"></div></div><div class="progress-label">Every action you take from here deepens the conviction</div></div>
+  <div class="content">
+    <div class="phase-badge"><span></span>Phase C</div>
+    <div class="field-group"><label class="field-label">What do I want to move towards?</label><textarea class="short" id="fi-towards" placeholder="Name it..."></textarea></div>
+    <div class="field-group"><label class="field-label">First action, and when?</label><textarea class="short" id="fi-action" placeholder="e.g. I will message X on Tuesday morning..."></textarea></div>
+    <div class="field-group"><label class="field-label">What will make this first action easier?</label><textarea class="short" id="fi-easier" placeholder="What removes the resistance..."></textarea></div>
+    <div class="field-group"><label class="field-label">What standards do I need to set?</label><textarea class="short" id="fi-standards" placeholder="The standards I am holding myself to..."></textarea></div>
+    <div class="divider"></div>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">A &nbsp;Return to the scene.</p>
+    <div id="phase-c-cog" class="belief-display" style="display:none;"></div>
+    <script>document.write(audioPlayer('19-phase-c-return.mp3', 'Return to the scene...'))</script>
+    <div class="instruction"><p>Read the belief above and your first action. Close your eyes. Step back into the scene. This is who you are.</p></div>
+    <div class="divider"></div>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">B &nbsp;Test it.</p>
+    <script>document.write(audioPlayer('20-phase-c-obstacle.mp3', 'Test it against a real obstacle...'))</script>
+    <div class="instruction"><p>Bring in a real obstacle. Feel the weight of it. Now see yourself moving through it anyway. Run it twice. Return to your future scene. End on success.</p></div>
+    <div class="field-group mt-4"><label class="field-label">The obstacle I rehearsed moving through</label><textarea class="short" id="fi-obstacle" placeholder="Name the obstacle you tested..."></textarea></div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s5')">Back</button>
+    <button class="btn btn-gold" onclick="goTo('s7')">Complete the session</button>
+  </div>
+</div>
+
+<!-- SCREEN 7: COMPLETE -->
+<div id="s7" class="screen">
+  <div class="complete-hero">
+    <div class="complete-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#163E5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+    <h1>Session complete.</h1>
+    <p>Take one slow breath. Notice how you feel in your body right now.</p>
+  </div>
+  <div class="content" style="padding-top:32px;">
+    <p style="margin-bottom:24px;">Your session is summarised below. Copy it to keep a record.</p>
+    <div class="copy-box">
+      <div class="copy-box-label">Your session summary</div>
+      <button class="copy-btn" onclick="copySummary()">Copy</button>
+      <div class="copy-content" id="summary-output">Generating...</div>
+    </div>
+    <div class="note mt-4"><p>If the same thing surfaces again, come back and run the method again. It will not go to the same place twice.</p></div>
+    <div style="margin-top:28px; padding:20px; background:var(--navy); border-radius:12px; text-align:center;">
+      <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">Want to go deeper?</div>
+      <p style="color:rgba(255,255,255,0.8); font-size:14px; margin-bottom:16px;">In a 1:1 session the method works differently. Someone can track what you cannot track alone.</p>
+      <a href="mailto:mindshiftingwithleon@gmail.com" style="display:inline-block; background:var(--gold); color:var(--navy); font-family:'Jost',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.08em; padding:12px 24px; border-radius:8px; text-decoration:none;">Work with Me</a>
+    </div>
+    <button class="btn btn-secondary" style="width:100%; margin-top:16px; border:1.5px solid var(--grey);" onclick="resetAll()">Start a new session</button>
+    <button class="btn btn-secondary" style="width:100%; margin-top:10px; border:1.5px solid var(--grey);" onclick="goTo('s6')">Back to Phase C</button>
+  </div>
+</div>
+
+<script>
+  let state = { route: 'cognition', negCog: '', posCog: '', score: null };
+
+  function selectRoute(route) {
+    state.route = route;
+    document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('route-' + route).classList.add('selected');
+  }
+
+  function startMethod() {
+    goTo(state.route === 'cognition' ? 's1' : 's1p');
+  }
+
+  function goTo(id) {
+    // Stop any playing audio when changing screen
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      if (currentBtn) { currentBtn.classList.remove('playing'); currentBtn.innerHTML = playIcon(); }
+      currentAudio = null; currentBtn = null;
+    }
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    if (id === 's2c') updateCogDisplay();
+    if (id === 's2p') showAnchorBar('anchor-2p', 'anchor-2p-text');
+    if (id === 's3c') showBeliefAnchor();
+    if (id === 's3p') showAnchorBar('anchor-3p', 'anchor-3p-text');
+    if (id === 's4') updateFutureIdentity();
+    if (id === 's7') generateSummary();
+  }
+
+  function showBeliefAnchor() {
+    const bar = document.getElementById('anchor-3c');
+    const textEl = document.getElementById('anchor-3c-text');
+    if (bar && textEl && state.negCog) { textEl.textContent = state.negCog; bar.style.display = 'block'; }
+    else if (bar) bar.style.display = 'none';
+  }
+
+  function showAnchorBar(barId, textId) {
+    const imageField = document.getElementById('p-image');
+    const image = imageField ? imageField.value.trim() : '';
+    const bar = document.getElementById(barId);
+    const textEl = document.getElementById(textId);
+    if (image && bar && textEl) { textEl.textContent = image; bar.style.display = 'block'; }
+    else if (bar) bar.style.display = 'none';
+  }
+
+  function selectCognition(el, neg, pos) {
+    document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    state.negCog = neg; state.posCog = pos;
+    const cn = document.getElementById('custom-neg');
+    const cp = document.getElementById('custom-pos');
+    if (cn) cn.value = ''; if (cp) cp.value = '';
+  }
+
+  function updateCustomCognition() {
+    const neg = document.getElementById('custom-neg') ? document.getElementById('custom-neg').value.trim() : '';
+    const pos = document.getElementById('custom-pos') ? document.getElementById('custom-pos').value.trim() : '';
+    if (neg) { document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected')); state.negCog = neg; state.posCog = pos; }
+  }
+
+  function updateCogDisplay() {
+    if (state.negCog) document.getElementById('disp-neg').textContent = state.negCog;
+  }
+
+  function buildWhyPrompt(pos) {
+    const first = pos.split(';')[0].trim();
+    if (/^I am /i.test(first)) return 'Why am I ' + first.replace(/^I am /i, '') + '?';
+    if (/^I can /i.test(first)) return 'Why can I ' + first.replace(/^I can /i, '') + '?';
+    if (/^I deserve /i.test(first)) return 'Why do I deserve ' + first.replace(/^I deserve /i, '') + '?';
+    if (/^I now /i.test(first)) return 'Why do I now ' + first.replace(/^I now /i, '') + '?';
+    if (/^I have /i.test(first)) return 'Why do I have ' + first.replace(/^I have /i, '') + '?';
+    if (/^I /i.test(first)) return 'Why do I ' + first.replace(/^I /i, '') + '?';
+    return 'Why is this true for me?';
+  }
+
+  function applyPosCog(pos) {
+    const affirmEl = document.getElementById('affirm-prompt');
+    const whyEl = document.getElementById('why-am-i-prompt');
+    const whyLabelEl = document.getElementById('why-am-i-label');
+    const whyPrompt = buildWhyPrompt(pos);
+    if (affirmEl) affirmEl.textContent = '"' + pos + '"';
+    if (whyEl) whyEl.textContent = '"' + whyPrompt + '"';
+    if (whyLabelEl) whyLabelEl.textContent = whyPrompt;
+    const phaseC = document.getElementById('phase-c-cog');
+    if (phaseC) { phaseC.textContent = pos; phaseC.style.display = 'block'; }
+  }
+
+  function onPosCogInput() {
+    const typed = document.getElementById('pos-cog-input').value.trim();
+    if (typed) { state.posCog = typed; applyPosCog(typed); }
+  }
+
+  function updateFutureIdentity() {
+    const pos = state.posCog;
+    const staticEl = document.getElementById('pos-cog-display');
+    const inputEl = document.getElementById('pos-cog-input');
+    const labelEl = document.getElementById('phase-a-cog-label');
+    const subEl = document.getElementById('phase-a-cog-sub');
+    const isProb = state.route === 'problem';
+    if (labelEl) labelEl.textContent = isProb ? 'Step into who you are without this problem' : 'My positive belief';
+    if (subEl) subEl.textContent = isProb ? 'You are no longer defined by it. Read this, feel it, then continue.' : 'The opposite of what you started with. Read it, feel it, then continue.';
+    if (pos) {
+      staticEl.textContent = pos; staticEl.style.display = 'block'; inputEl.style.display = 'none';
+      applyPosCog(pos);
+    } else if (isProb) {
+      const exitAns = val('pexit1') || '';
+      staticEl.style.display = 'none';
+      inputEl.placeholder = exitAns ? 'e.g. ' + exitAns + '...' : 'Write who you are without this problem...';
+      inputEl.style.display = 'block';
+      const typed = inputEl.value.trim();
+      if (typed) applyPosCog(typed); else if (exitAns) applyPosCog(exitAns);
+    } else {
+      staticEl.style.display = 'none'; inputEl.style.display = 'block';
+      const typed = inputEl.value.trim(); if (typed) applyPosCog(typed);
+    }
+  }
+
+  function selectScore(btn, num) {
+    document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected'); state.score = num;
+  }
+
+  function val(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+
+  function generateSummary() {
+    const isProb = state.route === 'problem';
+    let lines = [];
+    lines.push('THE DEEP WHY METHOD — SESSION SUMMARY');
+    lines.push('=====================================\n');
+    if (isProb) {
+      lines.push('STARTING POINT: Problem');
+      if (val('p-problem')) lines.push('Problem: ' + val('p-problem'));
+      if (state.score !== null) lines.push('Intensity: ' + state.score + '/10');
+      if (val('p-image')) lines.push('Worst moment image: ' + val('p-image'));
+    } else {
+      lines.push('STARTING POINT: Belief');
+      if (state.negCog) lines.push('Belief: ' + state.negCog);
+      if (state.posCog) lines.push('Positive belief: ' + state.posCog);
+    }
+    lines.push('\nTHE WHY CHAIN');
+    const prefix = isProb ? 'p' : '';
+    for (let i = 1; i <= 7; i++) { const v = val(prefix + 'why' + i); if (v) lines.push(i + '. ' + v); }
+    lines.push('\nEXIT QUESTION');
+    const ep = isProb ? 'p' : '';
+    if (val(ep+'exit1')) lines.push('Who am I without this: ' + val(ep+'exit1'));
+    if (val(ep+'exit2')) lines.push('Who else: ' + val(ep+'exit2'));
+    if (val(ep+'exit3')) lines.push('What it feels like: ' + val(ep+'exit3'));
+    if (val(ep+'exit4')) lines.push('Deeper feeling: ' + val(ep+'exit4'));
+    lines.push('\nFUTURE IDENTITY');
+    if (val('fi-feel')) lines.push('In the scene: ' + val('fi-feel'));
+    if (val('fi-body')) lines.push('In my body: ' + val('fi-body'));
+    if (val('fi-why')) lines.push('Why this is true: ' + val('fi-why'));
+    if (val('fi-cost1')) lines.push('What it has cost me: ' + val('fi-cost1'));
+    if (val('fi-cost2')) lines.push('Future cost if unchanged: ' + val('fi-cost2'));
+    if (val('fi-towards')) lines.push('Moving towards: ' + val('fi-towards'));
+    if (val('fi-action')) lines.push('First action: ' + val('fi-action'));
+    if (val('fi-easier')) lines.push('What makes it easier: ' + val('fi-easier'));
+    if (val('fi-standards')) lines.push('Standards I am setting: ' + val('fi-standards'));
+    if (val('fi-obstacle')) lines.push('Obstacle rehearsed: ' + val('fi-obstacle'));
+    document.getElementById('summary-output').textContent = lines.join('\n');
+  }
+
+  function copySummary() {
+    const text = document.getElementById('summary-output').textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn'); btn.textContent = 'Copied';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    } else {
+      const ta = document.createElement('textarea'); ta.value = text;
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    }
+  }
+
+  function resetAll() {
+    state = { route: 'cognition', negCog: '', posCog: '', score: null };
+    document.querySelectorAll('textarea').forEach(t => t.value = '');
+    document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
+    document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
+    const staticEl = document.getElementById('pos-cog-display');
+    const inputEl = document.getElementById('pos-cog-input');
+    if (staticEl) { staticEl.textContent = ''; staticEl.style.display = 'none'; }
+    if (inputEl) { inputEl.value = ''; inputEl.style.display = 'none'; }
+    goTo('s0');
+  }
+</script>
+</body>
+</html>
