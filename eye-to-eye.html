@@ -145,8 +145,12 @@
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:28%"></div></div><div class="progress-label">Identify the feelings</div></div>
   <div class="content">
     <div class="step-badge"><span></span>Step 2</div>
+    <div id="b2-display" style="background:var(--navy); border-radius:10px; padding:16px 18px; margin-bottom:20px; display:none;">
+      <div style="font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; font-family:'Jost',sans-serif;">Your peak moment</div>
+      <div id="b2-display-text" style="font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--white); font-style:italic;"></div>
+    </div>
     <div class="field-group">
-      <label class="field-label">1. As you picture this image, what does it feel like?</label>
+      <label class="field-label">1. As you picture this — what does it feel like?</label>
       <span class="field-sub">Focus on the positive or pleasurable feelings. Shame may interfere — stay with it gently.</span>
       <textarea id="b2-feels" class="short" placeholder="It feels like..."></textarea>
     </div>
@@ -476,6 +480,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     window.scrollTo(0, 0);
+    if (id === 'sb2') showPeakDisplay();
     if (id === 'sb4') showAnchor('anchor-sb4', 'anchor-sb4-text', val('b1-behaviour'));
     if (id === 'sp3') showAnchor('anchor-sp3', 'anchor-sp3-text', val('p1-situation'));
     if (id === 's-complete') generateSummary();
@@ -489,6 +494,18 @@
       bar.style.display = 'block';
     } else if (bar) {
       bar.style.display = 'none';
+    }
+  }
+
+  function showPeakDisplay() {
+    const peak = val('b1-peak') || val('b1-behaviour');
+    const display = document.getElementById('b2-display');
+    const textEl = document.getElementById('b2-display-text');
+    if (display && textEl && peak) {
+      textEl.textContent = peak;
+      display.style.display = 'block';
+    } else if (display) {
+      display.style.display = 'none';
     }
   }
 
