@@ -167,6 +167,23 @@
       <div class="cognition-item" onclick="selectCognition(this,'I have to be perfect','I can be myself; I can make mistakes')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I have to be perfect</span><span class="cognition-pos">I can be myself; I can make mistakes</span></div></div>
       <div class="cognition-item" onclick="selectCognition(this,'I can\'t handle it','I can handle it')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I can't handle it</span><span class="cognition-pos">I can handle it</span></div></div>
     </div>
+
+    <!-- CUSTOM COGNITION ENTRY -->
+    <div class="cognition-section">
+      <div class="cognition-section-title">Write your own</div>
+      <div style="margin-bottom:12px;">
+        <div class="field-group" style="margin-bottom:12px;">
+          <label class="field-label">My belief</label>
+          <span class="field-sub">Write a belief you hold about yourself that is not listed above</span>
+          <textarea id="custom-neg" class="short" placeholder="e.g. I am too much for people..." oninput="updateCustomCognition()"></textarea>
+        </div>
+        <div class="field-group" style="margin-bottom:0;">
+          <label class="field-label">The opposite belief <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:11px; color:#888;">(optional — you can write this later)</span></label>
+          <textarea id="custom-pos" class="short" placeholder="e.g. I am the right amount for the right people..." oninput="updateCustomCognition()"></textarea>
+        </div>
+      </div>
+    </div>
+
   </div>
   <div class="nav-fixed">
     <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
@@ -317,7 +334,10 @@
     <div class="field-group">
       <label class="field-label">My positive cognition</label>
       <span class="field-sub">The opposite of what you started with. It is shown below — read it, feel it, then continue.</span>
-      <div id="pos-cog-display" style="background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--navy); font-style:italic;">Loading...</div>
+      <!-- Static display when positive cognition is known -->
+      <div id="pos-cog-display" style="background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--navy); font-style:italic; display:none;"></div>
+      <!-- Editable input shown when no positive cognition was set -->
+      <textarea id="pos-cog-input" class="short" placeholder="Write your positive belief here — the opposite of what you started with..." oninput="onPosCogInput()" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--navy); display:none;"></textarea>
     </div>
     <div class="instruction"><p>Think of a future or goal where this positive cognition would be fully alive in you. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
     <div class="instruction"><p>Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p></div>
@@ -327,7 +347,10 @@
     <div class="field-group mt-4"><label class="field-label">Where do you feel it in your body?</label><textarea class="short" id="fi-body" placeholder="Chest, stomach, shoulders — wherever it lands..."></textarea></div>
     <div class="note mt-4"><p>If anything negative interrupts: ask "what do I need to feel right now?" Feel it. Reinforce it. Return to the scene.</p></div>
   </div>
-  <div class="nav-fixed"><button class="btn btn-primary" onclick="goTo('s5')">Continue to Phase B</button></div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo(state.route === 'cognition' ? 's3c' : 's3p')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s5')">Continue to Phase B</button>
+  </div>
 </div>
 
 <!-- SCREEN 5: FUTURE IDENTITY — PHASE B -->
@@ -361,7 +384,8 @@
     <div class="field-group"><label class="field-label">First action, and when?</label><span class="field-sub">Be specific. A real action, a real time.</span><textarea class="short" id="fi-action" placeholder="e.g. I will message X on Tuesday morning..."></textarea></div>
     <div class="divider"></div>
     <p style="font-weight:500; color:var(--navy); margin-bottom:12px;">Return to the scene.</p>
-    <div class="instruction"><p>Read your positive cognition and your first action. Close your eyes. Step back into the scene. See yourself living from this belief. This is who you are.</p></div>
+    <div id="phase-c-cog" style="font-family:'Cormorant Garamond',serif; font-size:20px; font-style:italic; color:var(--navy); background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; margin-bottom:16px;"></div>
+    <div class="instruction"><p>Read your positive cognition above and your first action. Close your eyes. Step back into the scene. See yourself living from this belief. This is who you are.</p></div>
     <div class="divider"></div>
     <p style="font-weight:500; color:var(--navy); margin-bottom:12px;">Now test it.</p>
     <div class="instruction"><p>Bring in a real obstacle. Something that could actually get in the way. See it clearly. Feel the weight of it — the resistance, the doubt, the moment you might want to stop. Now see yourself choosing to move through it anyway. Watch yourself come out the other side. Run it twice. Return to your future scene. End on success.</p></div>
@@ -396,6 +420,7 @@
       <a href="mailto:mindshiftingwithleon@gmail.com" style="display:inline-block; background:var(--gold); color:var(--navy); font-family:'Jost',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.08em; padding:12px 24px; border-radius:8px; text-decoration:none;">Book a conversation with Leon</a>
     </div>
     <button class="btn btn-secondary" style="width:100%; margin-top:16px; border:1.5px solid var(--grey);" onclick="resetAll()">Start a new session</button>
+    <button class="btn btn-secondary" style="width:100%; margin-top:10px; border:1.5px solid var(--grey);" onclick="goTo('s6')">Back to Phase C</button>
   </div>
 </div>
 
@@ -442,20 +467,71 @@
     el.classList.add('selected');
     state.negCog = neg;
     state.posCog = pos;
+    // Clear custom fields when a list item is selected
+    const cn = document.getElementById('custom-neg');
+    const cp = document.getElementById('custom-pos');
+    if (cn) cn.value = '';
+    if (cp) cp.value = '';
+  }
+
+  function updateCustomCognition() {
+    const neg = document.getElementById('custom-neg') ? document.getElementById('custom-neg').value.trim() : '';
+    const pos = document.getElementById('custom-pos') ? document.getElementById('custom-pos').value.trim() : '';
+    if (neg) {
+      // Deselect any list item
+      document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
+      state.negCog = neg;
+      state.posCog = pos; // may be empty — Phase A handles this
+    }
   }
 
   function updateCogDisplay() {
     if (state.negCog) {
       document.getElementById('disp-neg').textContent = state.negCog;
-      document.getElementById('disp-pos').textContent = 'Opposite: ' + state.posCog;
+      document.getElementById('disp-pos').textContent = state.posCog ? 'Opposite: ' + state.posCog : 'Opposite belief to be written in Phase A';
     }
   }
 
   function updateFutureIdentity() {
-    const pos = state.posCog || val('pexit1') || 'your positive cognition';
-    document.getElementById('pos-cog-display').textContent = pos;
-    document.getElementById('affirm-prompt').textContent = '"I am ' + pos.toLowerCase().replace(/^i /, '') + '."';
-    document.getElementById('why-am-i-prompt').textContent = '"Why am I ' + pos.toLowerCase().replace(/^i /, '') + '?"';
+    const pos = state.posCog;
+    const staticEl = document.getElementById('pos-cog-display');
+    const inputEl = document.getElementById('pos-cog-input');
+
+    if (pos) {
+      // Known positive cognition — show static display
+      staticEl.textContent = pos;
+      staticEl.style.display = 'block';
+      inputEl.style.display = 'none';
+      applyPosCog(pos);
+    } else {
+      // No positive cognition yet — show editable input
+      staticEl.style.display = 'none';
+      inputEl.style.display = 'block';
+      // If they already typed something in the input, use that
+      const typed = inputEl.value.trim();
+      if (typed) applyPosCog(typed);
+      else applyPosCog('your positive belief');
+    }
+  }
+
+  function onPosCogInput() {
+    const typed = document.getElementById('pos-cog-input').value.trim();
+    if (typed) {
+      state.posCog = typed;
+      applyPosCog(typed);
+      const phaseC = document.getElementById('phase-c-cog');
+      if (phaseC) phaseC.textContent = typed;
+    }
+  }
+
+  function applyPosCog(pos) {
+    const stripped = pos.replace(/^I am /i, '').replace(/^I /i, '');
+    const affirmEl = document.getElementById('affirm-prompt');
+    const whyEl = document.getElementById('why-am-i-prompt');
+    if (affirmEl) affirmEl.textContent = '"I am ' + stripped + '."';
+    if (whyEl) whyEl.textContent = '"Why am I ' + stripped + '?"';
+    const phaseC = document.getElementById('phase-c-cog');
+    if (phaseC) phaseC.textContent = pos;
   }
 
   function selectScore(btn, num) {
@@ -526,6 +602,11 @@
     document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
     document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
     document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
+    // Reset Phase A display
+    const staticEl = document.getElementById('pos-cog-display');
+    const inputEl = document.getElementById('pos-cog-input');
+    if (staticEl) { staticEl.textContent = ''; staticEl.style.display = 'none'; }
+    if (inputEl) { inputEl.value = ''; inputEl.style.display = 'none'; }
     goTo('s0');
   }
 </script>
