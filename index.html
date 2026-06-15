@@ -542,17 +542,42 @@
     }
   }
 
+  function buildWhyPrompt(pos) {
+    // Build a grammatically correct "Why" question from the positive cognition
+    // Strip semicolons — take only the first clause for the prompt
+    const firstClause = pos.split(';')[0].trim();
+    const lower = firstClause.toLowerCase();
+    if (/^i am /i.test(firstClause)) {
+      const rest = firstClause.replace(/^I am /i, '');
+      return 'Why am I ' + rest + '?';
+    } else if (/^i can /i.test(firstClause)) {
+      const rest = firstClause.replace(/^I can /i, '');
+      return 'Why can I ' + rest + '?';
+    } else if (/^i deserve /i.test(firstClause)) {
+      const rest = firstClause.replace(/^I deserve /i, '');
+      return 'Why do I deserve ' + rest + '?';
+    } else if (/^i now /i.test(firstClause)) {
+      const rest = firstClause.replace(/^I now /i, '');
+      return 'Why do I now ' + rest + '?';
+    } else if (/^i /i.test(firstClause)) {
+      const rest = firstClause.replace(/^I /i, '');
+      return 'Why do I ' + rest + '?';
+    } else {
+      return 'Why is this true for me?';
+    }
+  }
+
   function applyPosCog(pos) {
     const affirmEl = document.getElementById('affirm-prompt');
     const whyEl = document.getElementById('why-am-i-prompt');
     const whyLabelEl = document.getElementById('why-am-i-label');
+    const whyPrompt = buildWhyPrompt(pos);
     // Show the cognition exactly as written in the affirm prompt
     if (affirmEl) affirmEl.textContent = '"' + pos + '"';
-    // For "Why am I X?" — strip leading "I am " or "I " so it reads naturally
-    const stripped = pos.replace(/^I am /i, '').replace(/^I /i, '');
-    if (whyEl) whyEl.textContent = '"Why am I ' + stripped + '?"';
-    // Update the Phase B field label to repeat the cognition instead of "Why am I this?"
-    if (whyLabelEl) whyLabelEl.textContent = 'Why am I ' + stripped + '?';
+    // Use smart verb detection for the why prompt
+    if (whyEl) whyEl.textContent = '"' + whyPrompt + '"';
+    // Update Phase B field label to match
+    if (whyLabelEl) whyLabelEl.textContent = whyPrompt;
     const phaseC = document.getElementById('phase-c-cog');
     if (phaseC) phaseC.textContent = pos;
   }
