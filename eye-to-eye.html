@@ -67,6 +67,9 @@
   .complete-hero h1 { font-family: 'Cormorant Garamond', serif; color: var(--white); font-size: 32px; margin-bottom: 10px; }
   .complete-hero p { color: var(--light-blue); max-width: 300px; margin: 0 auto; }
   .mt-4 { margin-top: 16px; }
+  .anchor-bar { background: rgba(22,62,91,0.06); border-left: 3px solid var(--gold-mid); padding: 10px 16px; }
+  .anchor-bar-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; margin-bottom: 3px; font-family: 'Jost', sans-serif; }
+  .anchor-bar-text { font-size: 13px; color: var(--navy); font-style: italic; font-family: 'Cormorant Garamond', serif; line-height: 1.4; }
   .prompt { background: var(--navy); border-radius: 10px; padding: 18px 20px; margin: 16px 0 12px; }
   .prompt p { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--white); margin: 0; line-height: 1.4; }
 </style>
@@ -176,7 +179,7 @@
     <div class="step-badge"><span></span>Step 3</div>
     <div class="instruction"><p>Imagine taking a step outside of yourself, turning around, and looking deeply into your own eyes. Try to maintain the third person and focus.</p></div>
     <div class="field-group">
-      <label class="field-label">1. What are you seeing in their eyes?</label>
+      <label class="field-label">1. What are you seeing in your eyes?</label>
       <textarea id="b3-eyes" class="short" placeholder="I see..."></textarea>
     </div>
     <div class="field-group">
@@ -194,7 +197,7 @@
       <textarea id="b3-disturbing" class="short" placeholder="The most disturbing part is..."></textarea>
     </div>
     <div class="field-group">
-      <label class="field-label">3. Look directly into your younger self's eyes. What do you see?</label>
+      <label class="field-label">3. Look directly into your younger self's eyes. What do you see in your eyes?</label>
       <textarea id="b3-younger-eyes" class="short" placeholder="I see..."></textarea>
     </div>
     <div class="field-group">
@@ -211,7 +214,7 @@
       <textarea id="b3-younger-knows" class="short" placeholder="They now know..."></textarea>
     </div>
     <div class="field-group">
-      <label class="field-label">8. As you are looking into their eyes, what do they know about you?</label>
+      <label class="field-label">8. As you are looking into your eyes, what do they know about you?</label>
       <textarea id="b3-younger-about" class="short" placeholder="They know that I..."></textarea>
     </div>
   </div>
@@ -225,6 +228,10 @@
 <div id="sb4" class="screen">
   <div class="header"><div class="header-eyebrow">Addictive Behaviour</div><div class="header-title">Step 4</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">Return to the original behaviour</div></div>
+  <div class="anchor-bar" id="anchor-sb4" style="display:none;">
+    <div class="anchor-bar-label">You started with</div>
+    <div class="anchor-bar-text" id="anchor-sb4-text"></div>
+  </div>
   <div class="content">
     <div class="step-badge"><span></span>Step 4</div>
     <div class="instruction"><p>Go back to the original memory we started out with.</p></div>
@@ -336,7 +343,7 @@
       <textarea id="p2-disturbing" class="short" placeholder="The most disturbing part is..."></textarea>
     </div>
     <div class="field-group">
-      <label class="field-label">2. Look directly into your younger self's eyes. What do you see?</label>
+      <label class="field-label">2. Look directly into your younger self's eyes. What do you see in your eyes?</label>
       <textarea id="p2-younger-eyes" class="short" placeholder="I see..."></textarea>
     </div>
     <div class="field-group">
@@ -353,7 +360,7 @@
       <textarea id="p2-younger-knows" class="short" placeholder="They now know..."></textarea>
     </div>
     <div class="field-group">
-      <label class="field-label">7. As you are looking into their eyes, what do they know about you?</label>
+      <label class="field-label">7. As you are looking into your eyes, what do they know about you?</label>
       <textarea id="p2-younger-about" class="short" placeholder="They know that I..."></textarea>
     </div>
   </div>
@@ -367,6 +374,10 @@
 <div id="sp3" class="screen">
   <div class="header"><div class="header-eyebrow">Problem</div><div class="header-title">Original Memory</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">Return and re-score</div></div>
+  <div class="anchor-bar" id="anchor-sp3" style="display:none;">
+    <div class="anchor-bar-label">You started with</div>
+    <div class="anchor-bar-text" id="anchor-sp3-text"></div>
+  </div>
   <div class="content">
     <div class="step-badge"><span></span>Return</div>
     <div class="instruction"><p>Go back to the original memory we started out with.</p></div>
@@ -465,7 +476,20 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     window.scrollTo(0, 0);
+    if (id === 'sb4') showAnchor('anchor-sb4', 'anchor-sb4-text', val('b1-behaviour'));
+    if (id === 'sp3') showAnchor('anchor-sp3', 'anchor-sp3-text', val('p1-situation'));
     if (id === 's-complete') generateSummary();
+  }
+
+  function showAnchor(barId, textId, text) {
+    const bar = document.getElementById(barId);
+    const textEl = document.getElementById(textId);
+    if (bar && textEl && text) {
+      textEl.textContent = text;
+      bar.style.display = 'block';
+    } else if (bar) {
+      bar.style.display = 'none';
+    }
   }
 
   function goBack() {
