@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E;
+    --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF;
+    --light-blue: #A2B4C2; --white: #FFFFFF;
+  }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--white); }
+
+  .progress-wrap { background: var(--navy); padding: 0 24px 16px; }
+  .progress-track { height: 2px; background: rgba(255,255,255,0.15); border-radius: 2px; }
+  .progress-fill { height: 2px; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
+  .progress-label { font-size: 11px; color: var(--light-blue); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .content { padding: 32px 24px 100px; max-width: 640px; margin: 0 auto; }
+
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 500; color: var(--navy); line-height: 1.2; margin-bottom: 20px; }
+
+  p { font-size: 15px; color: #3a3a44; margin-bottom: 14px; line-height: 1.75; }
+  p:last-of-type { margin-bottom: 0; }
+
+  .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+  .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; }
+
+  .step-label { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; }
+
+  .note { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .note p { font-size: 13px; color: var(--navy); margin: 0; }
+
+  .divider { height: 1px; background: var(--grey); margin: 28px 0; }
+
+  .field-group { margin-bottom: 20px; }
+  .field-label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; }
+  .field-sub { display: block; font-size: 13px; color: #888; margin-bottom: 10px; font-style: italic; letter-spacing: 0; text-transform: none; font-weight: 400; }
+
+  textarea { width: 100%; border: 1.5px solid var(--grey); border-radius: 8px; padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 15px; color: var(--charcoal); background: var(--white); resize: none; transition: border-color 0.2s; -webkit-appearance: none; min-height: 90px; }
+  textarea:focus { outline: none; border-color: var(--navy); }
+  textarea.short { min-height: 60px; }
+
+  .phase-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 18px; }
+  .phase-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: block; }
+
+  .prompt { background: var(--navy); color: var(--white); padding: 18px 20px; border-radius: 10px; margin: 16px 0 12px; }
+  .prompt p { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--white); margin: 0; line-height: 1.4; }
+
+  .belief-display { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--navy); background: var(--white); border: 1.5px solid var(--grey); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; }
+
+  .copy-box { background: var(--white); border: 1.5px solid var(--grey); border-radius: 10px; padding: 20px; margin: 16px 0; position: relative; }
+  .copy-box-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 12px; font-weight: 500; }
+  .copy-btn { position: absolute; top: 16px; right: 16px; background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 6px 12px; font-size: 11px; font-family: 'Jost', sans-serif; cursor: pointer; letter-spacing: 0.08em; }
+  .copy-content { font-size: 14px; color: var(--charcoal); line-height: 1.8; white-space: pre-wrap; word-break: break-word; }
+
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-primary:active { background: #0f2e44; }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+
+  /* START SCREEN */
+  .start-hero { background: var(--navy); padding: 56px 24px 48px; text-align: center; }
+  .start-hero .eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; font-family: 'Jost', sans-serif; }
+  .start-hero h1 { color: var(--white); font-size: 38px; margin-bottom: 14px; }
+  .start-hero p { color: var(--light-blue); font-size: 15px; max-width: 320px; margin: 0 auto; }
+  .start-body { padding: 32px 24px 120px; max-width: 640px; margin: 0 auto; }
+
+  /* COMPLETE */
+  .complete-hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 60px 24px 48px; text-align: center; }
+  .complete-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+  .complete-icon svg { width: 28px; height: 28px; }
+  .complete-hero h1 { color: var(--white); font-size: 32px; margin-bottom: 10px; }
+  .complete-hero p { color: var(--light-blue); max-width: 300px; margin: 0 auto; }
+
+  .mt-4 { margin-top: 16px; }
+  .text-small { font-size: 13px; color: #888; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 0: START -->
+<div id="s0" class="screen active">
+  <div class="start-hero">
+    <div class="eyebrow">Leon James</div>
+    <h1>Future Identity</h1>
+    <p>Step into who you are when the belief is already yours. Work through the three phases below.</p>
+  </div>
+  <div class="start-body">
+    <div class="instruction">
+      <p>This works best after a clearing session. You have already removed what was in the way. Now you are building what replaces it.</p>
+    </div>
+
+    <div class="field-group mt-4">
+      <label class="field-label">My positive belief</label>
+      <span class="field-sub">Write the belief you are stepping into. If you are coming from a why chain session, this is your positive cognition. If you are starting fresh, write the belief you want to own.</span>
+      <textarea id="start-belief" class="short" placeholder="e.g. I am worthy. I can trust myself. I deserve good things..." oninput="onStartBeliefInput()"></textarea>
+    </div>
+
+    <div class="note">
+      <p>You can also write this at the start of Phase A if it becomes clearer once you are in the process.</p>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-primary" onclick="goTo('s1')">Begin Phase A</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: PHASE A — ENTER THE SCENE -->
+<div id="s1" class="screen">
+  <div class="header">
+    <div class="header-eyebrow">Future Identity</div>
+    <div class="header-title">Phase A — Enter the Scene</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" style="width:25%"></div></div>
+    <div class="progress-label">Step into who you are when this is already true</div>
+  </div>
+  <div class="content">
+    <div class="phase-badge"><span></span>Phase A</div>
+
+    <div class="field-group">
+      <label class="field-label">My positive belief</label>
+      <span class="field-sub">Read it. Feel it. If you need to refine it, edit it here before you continue.</span>
+      <textarea id="phase-a-belief" class="short" placeholder="Write your positive belief here if you skipped it..." oninput="onPhaseABeliefInput()"></textarea>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="instruction">
+      <p><span class="step-label">A</span> &nbsp;Think of a future or goal where this belief is fully alive in you. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p>
+    </div>
+
+    <div class="instruction">
+      <p><span class="step-label">B</span> &nbsp;Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p>
+    </div>
+
+    <div class="field-group mt-4">
+      <label class="field-label">What does it feel like?</label>
+      <textarea class="short" id="fi-feel" placeholder="Stay in it. Describe what you feel as him..."></textarea>
+    </div>
+
+    <div class="prompt">
+      <p id="affirm-prompt">"I am [your positive belief]."</p>
+    </div>
+    <p class="text-small" style="margin-top:8px;">Say it out loud. See it as true. Feel it as known, not hoped for.</p>
+
+    <div class="field-group mt-4">
+      <label class="field-label">Where do you feel it in your body?</label>
+      <textarea class="short" id="fi-body" placeholder="Chest, stomach, shoulders — wherever it lands..."></textarea>
+    </div>
+
+    <div class="note mt-4">
+      <p>If anything negative interrupts: ask "what do I need to feel right now?" Feel it. Reinforce it. Return to the scene.</p>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s2')">Continue to Phase B</button>
+  </div>
+</div>
+
+<!-- SCREEN 2: PHASE B — BUILD THE CONVICTION -->
+<div id="s2" class="screen">
+  <div class="header">
+    <div class="header-eyebrow">Future Identity</div>
+    <div class="header-title">Phase B — Build the Conviction</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" style="width:58%"></div></div>
+    <div class="progress-label">Amplify it. Let it grow.</div>
+  </div>
+  <div class="content">
+    <div class="phase-badge"><span></span>Phase B</div>
+
+    <div class="prompt">
+      <p id="why-prompt">"Why do I [positive belief]?"</p>
+    </div>
+
+    <div class="instruction">
+      <p><span class="step-label">A</span> &nbsp;See yourself as this. It might be a memory, a future version of you, or simply an image that comes. Whatever arises, stay with it. Amplify the feeling.</p>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label" id="why-label">Why is this true for me?</label>
+      <textarea id="fi-why" placeholder="What comes when you see yourself as this..."></textarea>
+    </div>
+
+    <div class="divider"></div>
+
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:16px;">B &nbsp;Step out of the scene.</p>
+
+    <div class="field-group">
+      <label class="field-label">What has holding the old belief already cost me?</label>
+      <span class="field-sub">Let this land fully. Feel the real cost.</span>
+      <textarea id="fi-cost1" placeholder="What has it cost you..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What will it keep costing me if I do not change this now?</label>
+      <span class="field-sub">Let this land fully before moving on.</span>
+      <textarea id="fi-cost2" placeholder="What will it keep costing you..."></textarea>
+    </div>
+
+    <div class="instruction">
+      <p><span class="step-label">C</span> &nbsp;Close your eyes. What becomes possible when this belief is fully yours? See it, hear it, feel it. This is not a writing question. Feel the answer. Then continue.</p>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s1')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s3')">Continue to Phase C</button>
+  </div>
+</div>
+
+<!-- SCREEN 3: PHASE C — GROUND AND REHEARSE -->
+<div id="s3" class="screen">
+  <div class="header">
+    <div class="header-eyebrow">Future Identity</div>
+    <div class="header-title">Phase C — Ground and Rehearse</div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" style="width:85%"></div></div>
+    <div class="progress-label">Every action you take from here deepens the conviction</div>
+  </div>
+  <div class="content">
+    <div class="phase-badge"><span></span>Phase C</div>
+
+    <div class="field-group">
+      <label class="field-label">What do I want to move towards?</label>
+      <textarea class="short" id="fi-towards" placeholder="Name it..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">First action, and when?</label>
+      <span class="field-sub">Be specific. A real action, a real time.</span>
+      <textarea class="short" id="fi-action" placeholder="e.g. I will message X on Tuesday morning..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What will make this first action easier?</label>
+      <span class="field-sub">Remove the friction before it appears.</span>
+      <textarea class="short" id="fi-easier" placeholder="What removes the resistance..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What standards do I need to set?</label>
+      <span class="field-sub">How you show up, what you allow, what you no longer accept.</span>
+      <textarea class="short" id="fi-standards" placeholder="The standards I am holding myself to..."></textarea>
+    </div>
+
+    <div class="divider"></div>
+
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">A &nbsp;Return to the scene.</p>
+
+    <div id="phase-c-belief" class="belief-display" style="display:none;"></div>
+
+    <div class="instruction">
+      <p>Read the belief above and your first action. Close your eyes. Step back into the scene. See yourself living from this. This is who you are.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">B &nbsp;Test it.</p>
+
+    <div class="instruction">
+      <p>Bring in a real obstacle. Something that could actually get in the way. See it clearly. Feel the weight of it — the resistance, the doubt, the moment you might want to stop. Now see yourself choosing to move through it anyway. Watch yourself come out the other side. Run it twice. Return to your future scene. End on success.</p>
+    </div>
+
+    <div class="field-group mt-4">
+      <label class="field-label">The obstacle I rehearsed moving through</label>
+      <textarea class="short" id="fi-obstacle" placeholder="Name the obstacle you tested..."></textarea>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s2')">Back</button>
+    <button class="btn btn-gold" onclick="goTo('s4')">Complete the session</button>
+  </div>
+</div>
+
+<!-- SCREEN 4: COMPLETE + SUMMARY -->
+<div id="s4" class="screen">
+  <div class="complete-hero">
+    <div class="complete-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#163E5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h1>Session complete.</h1>
+    <p>Take one slow breath. Notice how you feel in your body right now.</p>
+  </div>
+  <div class="content" style="padding-top:32px;">
+    <p style="margin-bottom:24px;">Your session is summarised below. Copy it to keep a record.</p>
+    <div class="copy-box">
+      <div class="copy-box-label">Your session summary</div>
+      <button class="copy-btn" onclick="copySummary()">Copy</button>
+      <div class="copy-content" id="summary-output">Generating...</div>
+    </div>
+    <div class="note mt-4">
+      <p>Return to this whenever you need to reinforce the belief. The more you rehearse it, the more it becomes the default.</p>
+    </div>
+    <div style="margin-top:28px; padding:20px; background:var(--navy); border-radius:12px; text-align:center;">
+      <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">Want to go deeper?</div>
+      <p style="color:rgba(255,255,255,0.8); font-size:14px; margin-bottom:16px;">In a 1:1 session the method works differently. Someone can track what you cannot track alone.</p>
+      <a href="mailto:mindshiftingwithleon@gmail.com" style="display:inline-block; background:var(--gold); color:var(--navy); font-family:'Jost',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.08em; padding:12px 24px; border-radius:8px; text-decoration:none;">Book a conversation with Leon</a>
+    </div>
+    <button class="btn btn-secondary" style="width:100%; margin-top:16px; border:1.5px solid var(--grey);" onclick="resetAll()">Start a new session</button>
+    <button class="btn btn-secondary" style="width:100%; margin-top:10px; border:1.5px solid var(--grey);" onclick="goTo('s3')">Back to Phase C</button>
+  </div>
+</div>
+
+<script>
+  let state = { belief: '' };
+
+  function val(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    if (id === 's1') syncBeliefToPhaseA();
+    if (id === 's2') updatePhaseB();
+    if (id === 's3') updatePhaseC();
+    if (id === 's4') generateSummary();
+  }
+
+  // Sync belief from start screen into Phase A field
+  function syncBeliefToPhaseA() {
+    const startBelief = val('start-belief');
+    const phaseAEl = document.getElementById('phase-a-belief');
+    if (startBelief && phaseAEl && !phaseAEl.value.trim()) {
+      phaseAEl.value = startBelief;
+    }
+    updateBeliefState();
+    applyBelief();
+  }
+
+  function onStartBeliefInput() {
+    state.belief = val('start-belief');
+  }
+
+  function onPhaseABeliefInput() {
+    state.belief = val('phase-a-belief');
+    applyBelief();
+  }
+
+  function updateBeliefState() {
+    const phaseA = val('phase-a-belief');
+    const start = val('start-belief');
+    state.belief = phaseA || start || '';
+  }
+
+  function buildWhyPrompt(belief) {
+    const first = belief.split(';')[0].trim();
+    if (/^I am /i.test(first)) return 'Why am I ' + first.replace(/^I am /i, '') + '?';
+    if (/^I can /i.test(first)) return 'Why can I ' + first.replace(/^I can /i, '') + '?';
+    if (/^I deserve /i.test(first)) return 'Why do I deserve ' + first.replace(/^I deserve /i, '') + '?';
+    if (/^I now /i.test(first)) return 'Why do I now ' + first.replace(/^I now /i, '') + '?';
+    if (/^I /i.test(first)) return 'Why do I ' + first.replace(/^I /i, '') + '?';
+    return 'Why is this true for me?';
+  }
+
+  function applyBelief() {
+    updateBeliefState();
+    const belief = state.belief;
+    if (!belief) return;
+
+    // Phase A affirm prompt
+    const affirmEl = document.getElementById('affirm-prompt');
+    if (affirmEl) affirmEl.textContent = '"' + belief + '"';
+
+    // Phase B why prompt and label
+    const whyPrompt = buildWhyPrompt(belief);
+    const whyEl = document.getElementById('why-prompt');
+    const whyLabelEl = document.getElementById('why-label');
+    if (whyEl) whyEl.textContent = '"' + whyPrompt + '"';
+    if (whyLabelEl) whyLabelEl.textContent = whyPrompt;
+
+    // Phase C belief display
+    const phaseCEl = document.getElementById('phase-c-belief');
+    if (phaseCEl) {
+      phaseCEl.textContent = belief;
+      phaseCEl.style.display = 'block';
+    }
+  }
+
+  function updatePhaseB() {
+    updateBeliefState();
+    applyBelief();
+  }
+
+  function updatePhaseC() {
+    updateBeliefState();
+    applyBelief();
+  }
+
+  function generateSummary() {
+    updateBeliefState();
+    const belief = state.belief;
+    let lines = [];
+    lines.push('FUTURE IDENTITY — SESSION SUMMARY');
+    lines.push('==================================\n');
+    if (belief) lines.push('Positive belief: ' + belief);
+    lines.push('\nPHASE A');
+    if (val('fi-feel')) lines.push('In the scene: ' + val('fi-feel'));
+    if (val('fi-body')) lines.push('In my body: ' + val('fi-body'));
+    lines.push('\nPHASE B');
+    if (val('fi-why')) lines.push('Why this is true: ' + val('fi-why'));
+    if (val('fi-cost1')) lines.push('What it has cost me: ' + val('fi-cost1'));
+    if (val('fi-cost2')) lines.push('What it will keep costing: ' + val('fi-cost2'));
+    lines.push('\nPHASE C');
+    if (val('fi-towards')) lines.push('Moving towards: ' + val('fi-towards'));
+    if (val('fi-action')) lines.push('First action: ' + val('fi-action'));
+    if (val('fi-easier')) lines.push('What makes it easier: ' + val('fi-easier'));
+    if (val('fi-standards')) lines.push('Standards I am setting: ' + val('fi-standards'));
+    if (val('fi-obstacle')) lines.push('Obstacle rehearsed: ' + val('fi-obstacle'));
+    document.getElementById('summary-output').textContent = lines.join('\n');
+  }
+
+  function copySummary() {
+    const text = document.getElementById('summary-output').textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+    }
+  }
+
+  function resetAll() {
+    state = { belief: '' };
+    document.querySelectorAll('textarea').forEach(t => t.value = '');
+    const phaseCEl = document.getElementById('phase-c-belief');
+    if (phaseCEl) { phaseCEl.textContent = ''; phaseCEl.style.display = 'none'; }
+    goTo('s0');
+  }
+</script>
+</body>
+</html>
