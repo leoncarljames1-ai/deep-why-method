@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work with Me</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E; --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF; --light-blue: #A2B4C2; --white: #FFFFFF; }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 64px 24px 56px; text-align: center; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; font-family: 'Jost', sans-serif; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 500; color: var(--white); margin-bottom: 14px; line-height: 1.2; }
+  .hero p { color: var(--light-blue); font-size: 15px; max-width: 340px; margin: 0 auto; line-height: 1.7; }
+
+  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--white); }
+
+  .progress-wrap { background: var(--navy); padding: 0 24px 16px; }
+  .progress-track { height: 2px; background: rgba(255,255,255,0.15); border-radius: 2px; }
+  .progress-fill { height: 2px; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
+  .progress-label { font-size: 11px; color: var(--light-blue); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .content { padding: 36px 24px 100px; max-width: 640px; margin: 0 auto; }
+
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 500; color: var(--navy); line-height: 1.3; margin-bottom: 16px; }
+
+  p { font-size: 15px; color: #3a3a44; margin-bottom: 18px; line-height: 1.85; }
+
+  .signal-list { margin: 0 0 24px 0; padding: 0; list-style: none; }
+  .signal-list li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--grey); font-size: 15px; color: #3a3a44; line-height: 1.7; }
+  .signal-list li:last-child { border-bottom: none; }
+  .signal-dot { flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); margin-top: 8px; }
+
+  .pricing-card { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; padding: 24px 22px; margin-bottom: 16px; }
+  .pricing-card.featured { border-color: var(--navy); background: #f0f4f7; }
+  .pricing-badge { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 14px; }
+  .pricing-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--navy); margin-bottom: 6px; }
+  .pricing-price { font-family: 'Jost', sans-serif; font-size: 32px; font-weight: 500; color: var(--navy); margin-bottom: 4px; }
+  .pricing-sub { font-size: 13px; color: #888; margin-bottom: 16px; }
+  .pricing-detail { font-size: 14px; color: #3a3a44; line-height: 1.8; }
+  .pricing-detail p { font-size: 14px; margin-bottom: 10px; }
+  .pricing-detail p:last-child { margin-bottom: 0; }
+
+  .guarantee { background: #EEF3F7; border-radius: 10px; padding: 20px; margin: 24px 0; }
+  .guarantee-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--navy); font-weight: 500; margin-bottom: 10px; font-family: 'Jost', sans-serif; }
+  .guarantee p { font-size: 14px; color: var(--charcoal); margin: 0; line-height: 1.8; }
+
+  .cta-block { background: linear-gradient(160deg, var(--charcoal), var(--navy)); border-radius: 12px; padding: 32px 24px; margin-top: 32px; text-align: center; }
+  .cta-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; font-family: 'Jost', sans-serif; }
+  .cta-heading { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--white); margin-bottom: 12px; line-height: 1.3; }
+  .cta-sub { font-size: 14px; color: var(--light-blue); margin-bottom: 24px; line-height: 1.7; }
+  .cta-btn { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.08em; padding: 16px 32px; border-radius: 10px; text-decoration: none; }
+
+  .divider { height: 1px; background: var(--grey); margin: 32px 0; }
+
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 0: WHEN SELF-GUIDED IS NOT ENOUGH -->
+<div id="s0" class="screen active">
+  <div class="hero">
+    <div class="hero-eyebrow">The OTOA Programme</div>
+    <h1>Work with Me</h1>
+    <p>This method works. Used consistently, it will shift things. But there are situations where working alone is slower than it needs to be.</p>
+  </div>
+  <div class="content">
+    <h2>When 1:1 work makes sense</h2>
+    <p>Self-guided work is powerful. But some things move faster and more completely with someone else tracking what you cannot track in yourself.</p>
+
+    <p>These are the signals:</p>
+
+    <ul class="signal-list">
+      <li><div class="signal-dot"></div>The same pattern keeps returning despite multiple sessions with the method.</li>
+      <li><div class="signal-dot"></div>The why chain consistently reaches a wall and stops without producing a clear root.</li>
+      <li><div class="signal-dot"></div>Something surfaces during the process that feels too heavy to sit with alone.</li>
+      <li><div class="signal-dot"></div>You want to move faster than self-guided work allows.</li>
+      <li><div class="signal-dot"></div>You know what the problem is but cannot seem to shift it on your own.</li>
+    </ul>
+
+    <p>In a 1:1 session the method works differently. Someone else can track your body language, your pauses, the moment your voice changes. They can ask the right question at the right time. They can stay with you in the material in a way a written process cannot.</p>
+
+    <p>I have been coaching men through this work for six years. I trained three years as a counsellor. I developed the Eye to Eye Method — a process that finds the belief behind a behaviour by working through three layers: what the behaviour is giving you on the surface, what you are actually craving underneath, and the original wound that was never processed.</p>
+
+    <p>Every session uses both the Deep Why Method and the Eye to Eye Method together.</p>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-primary" onclick="goTo('s1')">See the options</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: PRICING -->
+<div id="s1" class="screen">
+  <div class="header"><div class="header-eyebrow">Work with Me</div><div class="header-title">The Options</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">Two ways to work together</div></div>
+  <div class="content">
+
+    <div class="pricing-card">
+      <div class="pricing-name">Single Session</div>
+      <div class="pricing-price">£70</div>
+      <div class="pricing-sub">One 1:1 session — 90 minutes</div>
+      <div class="pricing-detail">
+        <p>A single deep session using the Deep Why Method and the Eye to Eye Method together. We identify what you are working on, clear the root, and run the Future Identity process to lock in the shift.</p>
+        <p>Good for a specific issue you want to work through, or to experience the method before committing to a programme.</p>
+      </div>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="pricing-badge">Recommended</div>
+      <div class="pricing-name">The OTOA Programme</div>
+      <div class="pricing-price">£180</div>
+      <div class="pricing-sub">3 sessions over 3 weeks — 90 minutes each</div>
+      <div class="pricing-detail">
+        <p>Three sessions that work together as a complete process. Session one goes in deep. Sessions two and three work on what surfaces underneath and lock in the identity shift.</p>
+        <p>Includes access to the Deep Why Method tool and the Beliefs Library between sessions, plus WhatsApp support for accountability and questions.</p>
+      </div>
+    </div>
+
+    <div class="guarantee">
+      <div class="guarantee-label">The guarantee</div>
+      <p>If we have not reached the target you set at the start of session one by the end of session three, two additional sessions are included at no extra cost.</p>
+    </div>
+
+    <p style="font-size:14px; color:#888; margin-top:8px;">Sessions are delivered online via Microsoft Teams.</p>
+
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-primary" onclick="goTo('s2')">Continue</button>
+  </div>
+</div>
+
+<!-- SCREEN 2: CTA -->
+<div id="s2" class="screen">
+  <div class="header"><div class="header-eyebrow">Work with Me</div><div class="header-title">Take the Next Step</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:100%"></div></div><div class="progress-label">When you are ready</div></div>
+  <div class="content">
+
+    <h2>What happens when you get in touch</h2>
+    <p>You send a message. I will come back to you within 24 hours. We have a short conversation — no pressure, no pitch — where you tell me what you are working on and I tell you honestly whether I think working together makes sense.</p>
+    <p>If it does, we book the first session. If it does not, I will tell you that too and point you toward whatever would actually help.</p>
+    <p>The only thing I ask is that you are honest about what is going on. That is the only requirement for this work to move.</p>
+
+    <div class="cta-block">
+      <div class="cta-label">Ready to go deeper</div>
+      <div class="cta-heading">Work with Leon</div>
+      <div class="cta-sub">Single session £70. OTOA Programme £180. Get in touch and we will take it from there.</div>
+      <!-- Replace YOUR_LINK_HERE with your booking or contact URL -->
+      <a href="YOUR_LINK_HERE" class="cta-btn">Work with Me</a>
+    </div>
+
+    <p style="font-size:13px; color:#888; text-align:center; margin-top:20px;">Or email directly: mindshiftingwithleon@gmail.com</p>
+
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s1')">Back</button>
+  </div>
+</div>
+
+<script>
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
