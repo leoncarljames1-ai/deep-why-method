@@ -17,13 +17,12 @@
   .screen.active { display: block; }
   .header { background: var(--navy); padding: 20px 24px; text-align: center; }
   .header-eyebrow { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--white); letter-spacing: 0.02em; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--white); }
   .progress-wrap { background: var(--navy); padding: 0 24px 16px; }
   .progress-track { height: 2px; background: rgba(255,255,255,0.15); border-radius: 2px; }
   .progress-fill { height: 2px; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
   .progress-label { font-size: 11px; color: var(--light-blue); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
   .content { padding: 32px 24px 100px; max-width: 640px; margin: 0 auto; }
-  h1 { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 500; color: var(--navy); line-height: 1.2; margin-bottom: 20px; }
   p { font-size: 15px; color: #3a3a44; margin-bottom: 14px; line-height: 1.75; }
   .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
   .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; line-height: 1.7; }
@@ -43,20 +42,13 @@
   .score-btn.selected { background: var(--navy); border-color: var(--navy); color: var(--white); }
   .step-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 18px; }
   .step-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: block; }
-  .prompt { background: var(--navy); color: var(--white); padding: 18px 20px; border-radius: 10px; margin: 16px 0 12px; }
-  .prompt p { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--white); margin: 0; line-height: 1.4; }
-  .layer-card { background: var(--white); border-radius: 10px; border: 1.5px solid var(--grey); padding: 16px 18px; margin-bottom: 12px; }
-  .layer-num { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; margin-bottom: 6px; font-family: 'Jost', sans-serif; }
-  .layer-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--navy); margin-bottom: 4px; }
-  .layer-desc { font-size: 13px; color: #888; font-style: italic; }
   .copy-box { background: var(--white); border: 1.5px solid var(--grey); border-radius: 10px; padding: 20px; margin: 16px 0; position: relative; }
   .copy-box-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 12px; font-weight: 500; }
-  .copy-btn { position: absolute; top: 16px; right: 16px; background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 6px 12px; font-size: 11px; font-family: 'Jost', sans-serif; cursor: pointer; letter-spacing: 0.08em; }
+  .copy-btn { position: absolute; top: 16px; right: 16px; background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 6px 12px; font-size: 11px; font-family: 'Jost', sans-serif; cursor: pointer; }
   .copy-content { font-size: 14px; color: var(--charcoal); line-height: 1.8; white-space: pre-wrap; word-break: break-word; }
   .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
   .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
   .btn-primary { background: var(--navy); color: var(--white); }
-  .btn-primary:active { background: #0f2e44; }
   .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
   .btn-gold { background: var(--gold); color: var(--navy); }
   .start-screen { min-height: 100vh; display: flex; flex-direction: column; }
@@ -75,7 +67,8 @@
   .complete-hero h1 { font-family: 'Cormorant Garamond', serif; color: var(--white); font-size: 32px; margin-bottom: 10px; }
   .complete-hero p { color: var(--light-blue); max-width: 300px; margin: 0 auto; }
   .mt-4 { margin-top: 16px; }
-  .mb-2 { margin-bottom: 8px; }
+  .prompt { background: var(--navy); border-radius: 10px; padding: 18px 20px; margin: 16px 0 12px; }
+  .prompt p { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--white); margin: 0; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -86,24 +79,20 @@
     <div class="start-hero">
       <div class="eyebrow">Leon James</div>
       <h1>The Eye to Eye Method</h1>
-      <p>A process for finding what is underneath. Not the behaviour. What the behaviour is trying to give you.</p>
+      <p>A process for finding what is underneath the behaviour.</p>
     </div>
     <div class="start-body">
       <div class="instruction">
-        <p>This is not an exercise in thinking. It is an exercise in observing. When you read a question, close your eyes. Allow whatever comes up to come up. Do not analyse it. Do not look for the right answer. Whatever image, thought, sensation or feeling appears — that is what you work with.</p>
+        <p>This is not an exercise in thinking. It is an exercise in observing. When you read a question, close your eyes. Allow whatever comes up to come up. Do not analyse it. Do not try to make it make sense. Do not look for the right answer. Whatever image, thought, sensation or feeling appears — that is what you work with. If nothing comes immediately, stay with it. Something will surface.</p>
       </div>
-
       <div class="warning">
-        <p>This work may activate strong emotional material. If at any point it feels overwhelming, stop. Use the Reset Breath from the Before You Begin lesson and seek support if needed.</p>
+        <p>This work may activate strong emotional material. If at any point it feels overwhelming, stop and use the Reset Breath from the Before You Begin lesson.</p>
       </div>
-
       <p style="margin-bottom:20px; color:#555; margin-top:20px;">Choose your route.</p>
-
       <div class="route-card" id="route-behaviour" onclick="selectRoute('behaviour')">
         <div class="route-card-title">Addictive Behaviour</div>
         <div class="route-card-sub">A compulsive pattern, sexual behaviour, fantasy or fetish you want to understand and resolve.</div>
       </div>
-
       <div class="route-card" id="route-problem" onclick="selectRoute('problem')">
         <div class="route-card-title">Problem or Event</div>
         <div class="route-card-sub">A specific situation, memory or emotional pattern that is still sitting with you.</div>
@@ -119,59 +108,26 @@
      BEHAVIOUR ROUTE
      ============================================================ -->
 
-<!-- SCREEN B1: IDENTIFY THE BEHAVIOUR -->
+<!-- SCREEN B — STEP 1 -->
 <div id="sb1" class="screen">
-  <div class="header"><div class="header-eyebrow">Addictive Behaviour — Step 1</div><div class="header-title">Identify the Behaviour</div></div>
-  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:12%"></div></div><div class="progress-label">Be specific. Clarity strengthens the process.</div></div>
+  <div class="header"><div class="header-eyebrow">Addictive Behaviour</div><div class="header-title">Step 1</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:14%"></div></div><div class="progress-label">Identify the behaviour</div></div>
   <div class="content">
     <div class="step-badge"><span></span>Step 1</div>
-
-    <div class="instruction">
-      <p>We are not working with explicit content. We are working with the emotional charge, the psychological meaning, and the unmet need beneath the behaviour. This requires honesty and emotional willingness.</p>
-    </div>
-
     <div class="field-group">
-      <label class="field-label">What is the behaviour or recurring pattern?</label>
-      <textarea id="b-behaviour" class="short" placeholder="Name it in a few words..."></textarea>
+      <label class="field-label">1. Imagine or choose a specific behaviour, fetish, fantasy or image you want to focus on.</label>
+      <textarea id="b1-behaviour" class="short" placeholder="Name it..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">How often does it occur?</label>
-      <textarea id="b-frequency" class="short" placeholder="Be honest..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">When does it usually arise?</label>
-      <span class="field-sub">Time of day, situation, emotional state that precedes it.</span>
-      <textarea id="b-when" class="short" placeholder="It usually happens when..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">What triggers it?</label>
-      <textarea id="b-triggers" class="short" placeholder="What sets it off..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">How do you feel immediately after?</label>
-      <textarea id="b-after" class="short" placeholder="Be honest about the feeling that follows..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">Intensity score</label>
-      <span class="field-sub">How strongly does this pattern have a hold on you right now? Tap a number.</span>
-      <div class="score-wrap" id="b-score-wrap">
-        <button class="score-btn" onclick="selectScore('b', this, 0)">0</button>
-        <button class="score-btn" onclick="selectScore('b', this, 1)">1</button>
-        <button class="score-btn" onclick="selectScore('b', this, 2)">2</button>
-        <button class="score-btn" onclick="selectScore('b', this, 3)">3</button>
-        <button class="score-btn" onclick="selectScore('b', this, 4)">4</button>
-        <button class="score-btn" onclick="selectScore('b', this, 5)">5</button>
-        <button class="score-btn" onclick="selectScore('b', this, 6)">6</button>
-        <button class="score-btn" onclick="selectScore('b', this, 7)">7</button>
-        <button class="score-btn" onclick="selectScore('b', this, 8)">8</button>
-        <button class="score-btn" onclick="selectScore('b', this, 9)">9</button>
-        <button class="score-btn" onclick="selectScore('b', this, 10)">10</button>
+      <label class="field-label">2. What would you score the intensity of this?</label>
+      <div class="score-wrap">
+        <button class="score-btn" onclick="selectScore('b1',this,0)">0</button><button class="score-btn" onclick="selectScore('b1',this,1)">1</button><button class="score-btn" onclick="selectScore('b1',this,2)">2</button><button class="score-btn" onclick="selectScore('b1',this,3)">3</button><button class="score-btn" onclick="selectScore('b1',this,4)">4</button><button class="score-btn" onclick="selectScore('b1',this,5)">5</button><button class="score-btn" onclick="selectScore('b1',this,6)">6</button><button class="score-btn" onclick="selectScore('b1',this,7)">7</button><button class="score-btn" onclick="selectScore('b1',this,8)">8</button><button class="score-btn" onclick="selectScore('b1',this,9)">9</button><button class="score-btn" onclick="selectScore('b1',this,10)">10</button>
       </div>
+    </div>
+    <div class="instruction"><p>3. Picture yourself fully engaging in the behaviour or experience.</p></div>
+    <div class="field-group">
+      <label class="field-label">4. Identify the single moment that feels the most sexually charged or satisfying, and hold that image in full, vivid detail.</label>
+      <textarea id="b1-peak" placeholder="The peak moment is..."></textarea>
     </div>
   </div>
   <div class="nav-fixed">
@@ -180,43 +136,31 @@
   </div>
 </div>
 
-<!-- SCREEN B2: PEAK MOMENT + FEELINGS -->
+<!-- SCREEN B — STEP 2 -->
 <div id="sb2" class="screen">
-  <div class="header"><div class="header-eyebrow">Addictive Behaviour — Step 2</div><div class="header-title">The Peak Moment</div></div>
-  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:28%"></div></div><div class="progress-label">Identify what it is giving you</div></div>
+  <div class="header"><div class="header-eyebrow">Addictive Behaviour</div><div class="header-title">Step 2</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:28%"></div></div><div class="progress-label">Identify the feelings</div></div>
   <div class="content">
     <div class="step-badge"><span></span>Step 2</div>
-
-    <div class="instruction">
-      <p>Picture yourself fully in the behaviour or experience. Find the single moment that feels the most intense or satisfying. Hold that image in full, vivid detail before you answer.</p>
-    </div>
-
     <div class="field-group">
-      <label class="field-label">What is the most charged or satisfying moment?</label>
-      <span class="field-sub">Describe it. The more specific, the more this works.</span>
-      <textarea id="b-peak" placeholder="The peak moment is..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">As you picture this moment — what does it feel like?</label>
+      <label class="field-label">1. As you picture this image, what does it feel like?</label>
       <span class="field-sub">Focus on the positive or pleasurable feelings. Shame may interfere — stay with it gently.</span>
-      <textarea id="b-feelings" class="short" placeholder="It feels like..."></textarea>
+      <textarea id="b2-feels" class="short" placeholder="It feels like..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What do you notice in your body? Where do you feel it?</label>
-      <textarea id="b-body" class="short" placeholder="In my body I notice..."></textarea>
+      <label class="field-label">2. What do you notice happening in your body, and where do you feel it?</label>
+      <textarea id="b2-body" class="short" placeholder="In my body I notice..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What do you believe about yourself at this moment?</label>
-      <span class="field-sub">Examples: I am powerful. I am wanted. I am in control. I am enough.</span>
-      <textarea id="b-belief" class="short" placeholder="At this moment I am..."></textarea>
+      <label class="field-label">3. What sensations do you notice? Do you notice any other positive feelings in your body?</label>
+      <textarea id="b2-sensations" class="short" placeholder="I notice..."></textarea>
     </div>
-
-    <div class="instruction">
-      <p>Now amplify all of these feelings as much as you can. Stay with them. Let them build.</p>
+    <div class="field-group">
+      <label class="field-label">4. What do you think about yourself at this moment?</label>
+      <span class="field-sub">Examples: I am powerful. I am desirable. I am in control. I am wanted. I am important. I am enough.</span>
+      <textarea id="b2-belief" class="short" placeholder="At this moment I am..."></textarea>
     </div>
+    <div class="instruction"><p>Amplify all these feelings as much as you can. Stay with them.</p></div>
   </div>
   <div class="nav-fixed">
     <button class="btn btn-secondary" onclick="goTo('sb1')">Back</button>
@@ -224,104 +168,51 @@
   </div>
 </div>
 
-<!-- SCREEN B3: THIRD PERSON + THREE LAYERS -->
+<!-- SCREEN B — STEP 3 -->
 <div id="sb3" class="screen">
-  <div class="header"><div class="header-eyebrow">Addictive Behaviour — Step 3</div><div class="header-title">Step Outside Yourself</div></div>
-  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:44%"></div></div><div class="progress-label">Observe from the outside</div></div>
+  <div class="header"><div class="header-eyebrow">Addictive Behaviour</div><div class="header-title">Step 3</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:44%"></div></div><div class="progress-label">Shift into third person</div></div>
   <div class="content">
     <div class="step-badge"><span></span>Step 3</div>
-
-    <div class="instruction">
-      <p>Imagine taking a step outside yourself. Turn around and look directly into your own eyes. Stay in third person. Observe — do not analyse.</p>
-    </div>
-
+    <div class="instruction"><p>Imagine taking a step outside of yourself, turning around, and looking deeply into your own eyes. Try to maintain the third person and focus.</p></div>
     <div class="field-group">
-      <label class="field-label">What do you see in your own eyes?</label>
-      <textarea id="b-eyes" class="short" placeholder="I see..."></textarea>
+      <label class="field-label">1. What are you seeing in their eyes?</label>
+      <textarea id="b3-eyes" class="short" placeholder="I see..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What do you want?</label>
-      <textarea id="b-want" class="short" placeholder="What this person wants is..."></textarea>
+      <label class="field-label">2. What do they want?</label>
+      <textarea id="b3-want" class="short" placeholder="They want..."></textarea>
     </div>
-
-    <div class="field-group">
-      <label class="field-label">What are you hoping to get from this behaviour?</label>
-      <textarea id="b-hoping" class="short" placeholder="Underneath the behaviour, what is being sought..."></textarea>
-    </div>
-
     <div class="divider"></div>
-
-    <p style="font-weight:500; color:var(--navy); margin-bottom:16px;">As you observe, look for these three layers:</p>
-
-    <div class="layer-card">
-      <div class="layer-num">Layer 1</div>
-      <div class="layer-title">The Surface</div>
-      <div class="layer-desc">The pleasure, intensity, power or relief. What the behaviour gives on the surface.</div>
-    </div>
-    <div class="layer-card">
-      <div class="layer-num">Layer 2</div>
-      <div class="layer-title">The Craving</div>
-      <div class="layer-desc">The longing beneath. To feel loved, safe, accepted, chosen, significant, valued.</div>
-    </div>
-    <div class="layer-card">
-      <div class="layer-num">Layer 3</div>
-      <div class="layer-title">The Unmet Need</div>
-      <div class="layer-desc">Often painful. Emptiness, loneliness, rejection, feeling unseen, not knowing who you are.</div>
-    </div>
-
-    <div class="field-group mt-4">
-      <label class="field-label">What feeling is behind the pleasure?</label>
-      <span class="field-sub">Look for the craving and the unmet need. Stay with it. Lean into it.</span>
-      <textarea id="b-behind" placeholder="Behind the pleasure is..."></textarea>
-    </div>
-
-    <div class="instruction">
-      <p>When you feel deeply connected to this innermost layer — continue.</p>
-    </div>
-
-    <div class="divider"></div>
-
-    <p style="font-weight:500; color:var(--navy); margin-bottom:12px;">Float back to an earlier memory.</p>
-
+    <p style="font-weight:500; color:var(--navy); margin-bottom:16px;">Floatback — third person</p>
     <div class="field-group">
-      <label class="field-label">When did you first feel this way?</label>
-      <span class="field-sub">Allow a memory to arise naturally. Do not force it. What comes up?</span>
-      <textarea id="b-memory" class="short" placeholder="The earliest memory that comes up is..."></textarea>
+      <label class="field-label">1. Is there an earlier time when you felt this way most intensely?</label>
+      <textarea id="b3-earlier" class="short" placeholder="The earliest memory that comes is..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What is the most disturbing part of that memory?</label>
-      <textarea id="b-disturbing" class="short" placeholder="The worst part was..."></textarea>
+      <label class="field-label">2. What is the image of this memory that represents the most disturbing part?</label>
+      <textarea id="b3-disturbing" class="short" placeholder="The most disturbing part is..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">Look directly into your younger self's eyes. What do you see?</label>
-      <textarea id="b-younger-eyes" class="short" placeholder="I see..."></textarea>
+      <label class="field-label">3. Look directly into your younger self's eyes. What do you see?</label>
+      <textarea id="b3-younger-eyes" class="short" placeholder="I see..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">Is there more of what you see?</label>
-      <textarea id="b-younger-more" class="short" placeholder="There is also..."></textarea>
+      <label class="field-label">4. Is there more of what you see?</label>
+      <textarea id="b3-younger-more" class="short" placeholder="There is also..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What does your younger self need at this moment?</label>
-      <textarea id="b-younger-need" class="short" placeholder="They need..."></textarea>
+      <label class="field-label">5. What does your younger self need at this moment?</label>
+      <textarea id="b3-younger-need" class="short" placeholder="They need..."></textarea>
     </div>
-
-    <div class="instruction">
-      <p>Go and give your younger self what they need right now. In your mind, step toward them. Say what needs to be said. Do what needs to be done. Amplify this as much as possible.</p>
-    </div>
-
+    <div class="instruction"><p>6. Go and give your younger self what they need at this moment. Amplify as much as possible.</p></div>
     <div class="field-group">
-      <label class="field-label">What does your younger self know about themselves now?</label>
-      <textarea id="b-younger-knows" class="short" placeholder="They now know..."></textarea>
+      <label class="field-label">7. What does your younger self know about themselves at this moment?</label>
+      <textarea id="b3-younger-knows" class="short" placeholder="They now know..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">As you look into their eyes — what do they know about you?</label>
-      <textarea id="b-younger-about-you" class="short" placeholder="They know that I..."></textarea>
+      <label class="field-label">8. As you are looking into their eyes, what do they know about you?</label>
+      <textarea id="b3-younger-about" class="short" placeholder="They know that I..."></textarea>
     </div>
   </div>
   <div class="nav-fixed">
@@ -330,49 +221,28 @@
   </div>
 </div>
 
-<!-- SCREEN B4: RETURN + RE-SCORE -->
+<!-- SCREEN B — STEP 4 RETURN -->
 <div id="sb4" class="screen">
-  <div class="header"><div class="header-eyebrow">Addictive Behaviour — Step 4</div><div class="header-title">Return to the Behaviour</div></div>
-  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:68%"></div></div><div class="progress-label">Check what has shifted</div></div>
+  <div class="header"><div class="header-eyebrow">Addictive Behaviour</div><div class="header-title">Step 4</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">Return to the original behaviour</div></div>
   <div class="content">
     <div class="step-badge"><span></span>Step 4</div>
-
-    <div class="instruction">
-      <p>Go back to the original behaviour and peak moment you started with. Hold that image. Notice what has changed.</p>
-    </div>
-
+    <div class="instruction"><p>Go back to the original memory we started out with.</p></div>
     <div class="field-group">
-      <label class="field-label">What do you notice about this that you did not notice before?</label>
-      <textarea id="b-new-notice" class="short" placeholder="Now I notice..."></textarea>
+      <label class="field-label">1. What do you notice about this that you did not notice before we started?</label>
+      <textarea id="b4-notice" class="short" placeholder="Now I notice..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">How do you feel about it now?</label>
-      <textarea id="b-new-feeling" class="short" placeholder="Now it feels..."></textarea>
+      <label class="field-label">2. How do you feel about it?</label>
+      <textarea id="b4-feeling" class="short" placeholder="Now it feels..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">New intensity score</label>
-      <span class="field-sub">Score it again now. If it is not at zero, repeat the process until it gets there.</span>
-      <div class="score-wrap" id="b-score-wrap-2">
-        <button class="score-btn" onclick="selectScore('b2', this, 0)">0</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 1)">1</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 2)">2</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 3)">3</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 4)">4</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 5)">5</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 6)">6</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 7)">7</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 8)">8</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 9)">9</button>
-        <button class="score-btn" onclick="selectScore('b2', this, 10)">10</button>
+      <label class="field-label">3. What would you score it now?</label>
+      <div class="score-wrap">
+        <button class="score-btn" onclick="selectScore('b4',this,0)">0</button><button class="score-btn" onclick="selectScore('b4',this,1)">1</button><button class="score-btn" onclick="selectScore('b4',this,2)">2</button><button class="score-btn" onclick="selectScore('b4',this,3)">3</button><button class="score-btn" onclick="selectScore('b4',this,4)">4</button><button class="score-btn" onclick="selectScore('b4',this,5)">5</button><button class="score-btn" onclick="selectScore('b4',this,6)">6</button><button class="score-btn" onclick="selectScore('b4',this,7)">7</button><button class="score-btn" onclick="selectScore('b4',this,8)">8</button><button class="score-btn" onclick="selectScore('b4',this,9)">9</button><button class="score-btn" onclick="selectScore('b4',this,10)">10</button>
       </div>
     </div>
-
-    <div class="note">
-      <p>If the score is not at zero, go back to Step 3 and repeat. The process is designed to be run more than once. Each pass goes deeper.</p>
-    </div>
-
+    <div class="note"><p>If it is not zero, repeat the process until it gets to zero.</p></div>
     <div style="display:flex; gap:12px; margin-top:20px;">
       <button class="btn btn-secondary" style="flex:1" onclick="goTo('sb3')">Go again</button>
       <button class="btn btn-primary" style="flex:1" onclick="goTo('sb5')">Continue</button>
@@ -381,36 +251,23 @@
   <div class="nav-fixed" style="display:none;"></div>
 </div>
 
-<!-- SCREEN B5: FUTURE SELF CONNECTION -->
+<!-- SCREEN B — STEP 5 FUTURE SELF -->
 <div id="sb5" class="screen">
-  <div class="header"><div class="header-eyebrow">Addictive Behaviour — Final Step</div><div class="header-title">Future Self Connection</div></div>
+  <div class="header"><div class="header-eyebrow">Addictive Behaviour</div><div class="header-title">Integration and Future Self</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:85%"></div></div><div class="progress-label">Step into who you are becoming</div></div>
   <div class="content">
     <div class="step-badge"><span></span>Integration</div>
-
-    <div class="instruction">
-      <p>Meet the version of you who no longer holds that old belief or pattern. See them clearly.</p>
-    </div>
-
     <div class="field-group">
-      <label class="field-label">What does their life look like?</label>
-      <span class="field-sub">The version of you who is free of this. How do they move through the world?</span>
-      <textarea id="b-future-life" placeholder="Their life looks like..."></textarea>
+      <label class="field-label">1. Meet the version of you who no longer holds that old belief and thoughts. What does their life look like?</label>
+      <textarea id="b5-life" placeholder="Their life looks like..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What message do they have for you?</label>
-      <textarea id="b-future-message" class="short" placeholder="They want you to know..."></textarea>
+      <label class="field-label">2. What message do they have for you?</label>
+      <textarea id="b5-message" class="short" placeholder="They want you to know..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What does it feel like to be them?</label>
-      <textarea id="b-future-feel" class="short" placeholder="It feels like..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">What do you now know about yourself that you did not know before?</label>
-      <textarea id="b-future-know" class="short" placeholder="I now know..."></textarea>
+      <label class="field-label">3. What does it feel like?</label>
+      <textarea id="b5-feel" class="short" placeholder="It feels like..."></textarea>
     </div>
   </div>
   <div class="nav-fixed">
@@ -423,60 +280,43 @@
      PROBLEM ROUTE
      ============================================================ -->
 
-<!-- SCREEN P1: IDENTIFY THE PROBLEM -->
+<!-- SCREEN P — STEP 1 -->
 <div id="sp1" class="screen">
-  <div class="header"><div class="header-eyebrow">Problem — Step 1</div><div class="header-title">Identify the Problem</div></div>
-  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:12%"></div></div><div class="progress-label">The more specific, the more the process works.</div></div>
+  <div class="header"><div class="header-eyebrow">Problem</div><div class="header-title">Step 1</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:14%"></div></div><div class="progress-label">Identify the problem</div></div>
   <div class="content">
     <div class="step-badge"><span></span>Step 1</div>
-
-    <div class="instruction">
-      <p>Picture yourself in the single moment, recent event, behaviour or problem that feels the most emotionally intense. Hold that image in full, vivid detail. The more specific, the more this works.</p>
-    </div>
-
     <div class="field-group">
-      <label class="field-label">What is the situation, event or problem?</label>
-      <textarea id="p-situation" class="short" placeholder="Name it..."></textarea>
+      <label class="field-label">1. Picture yourself in the single moment, recent event, behaviour or problem that feels the most emotionally intense, and hold that image in full, vivid detail.</label>
+      <textarea id="p1-situation" class="short" placeholder="The situation is..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">Intensity score</label>
-      <span class="field-sub">How intense does this feel right now?</span>
+      <label class="field-label">2. What would you score the intensity of this?</label>
       <div class="score-wrap">
-        <button class="score-btn" onclick="selectScore('p', this, 0)">0</button>
-        <button class="score-btn" onclick="selectScore('p', this, 1)">1</button>
-        <button class="score-btn" onclick="selectScore('p', this, 2)">2</button>
-        <button class="score-btn" onclick="selectScore('p', this, 3)">3</button>
-        <button class="score-btn" onclick="selectScore('p', this, 4)">4</button>
-        <button class="score-btn" onclick="selectScore('p', this, 5)">5</button>
-        <button class="score-btn" onclick="selectScore('p', this, 6)">6</button>
-        <button class="score-btn" onclick="selectScore('p', this, 7)">7</button>
-        <button class="score-btn" onclick="selectScore('p', this, 8)">8</button>
-        <button class="score-btn" onclick="selectScore('p', this, 9)">9</button>
-        <button class="score-btn" onclick="selectScore('p', this, 10)">10</button>
+        <button class="score-btn" onclick="selectScore('p1',this,0)">0</button><button class="score-btn" onclick="selectScore('p1',this,1)">1</button><button class="score-btn" onclick="selectScore('p1',this,2)">2</button><button class="score-btn" onclick="selectScore('p1',this,3)">3</button><button class="score-btn" onclick="selectScore('p1',this,4)">4</button><button class="score-btn" onclick="selectScore('p1',this,5)">5</button><button class="score-btn" onclick="selectScore('p1',this,6)">6</button><button class="score-btn" onclick="selectScore('p1',this,7)">7</button><button class="score-btn" onclick="selectScore('p1',this,8)">8</button><button class="score-btn" onclick="selectScore('p1',this,9)">9</button><button class="score-btn" onclick="selectScore('p1',this,10)">10</button>
       </div>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What image represents the worst part?</label>
-      <span class="field-sub">The way someone looked, what was said, the moment it happened. The most disturbing image.</span>
-      <textarea id="p-worst" class="short" placeholder="The worst part is the image of..."></textarea>
+      <label class="field-label">3. What image in the memory represents the worst part of the event?</label>
+      <span class="field-sub">For instance, the way the person looked, or what they said, or when the person walked away. If no image represents the incident, just think of the worst part.</span>
+      <textarea id="p1-worst" class="short" placeholder="The worst part is the image of..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">When you hold this image — what emotions come up?</label>
-      <textarea id="p-emotions" class="short" placeholder="I feel..."></textarea>
+      <label class="field-label">4. When you hold the image in mind, what emotions come up for you?</label>
+      <textarea id="p1-emotions" class="short" placeholder="I feel..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">Where do you feel it in your body?</label>
-      <textarea id="p-body" class="short" placeholder="I feel it in..."></textarea>
+      <label class="field-label">5. Where do you feel it in your body?</label>
+      <textarea id="p1-body" class="short" placeholder="I feel it in..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What negative thought goes along with it?</label>
-      <span class="field-sub">What do you believe about yourself when you hold this?</span>
-      <textarea id="p-neg-thought" class="short" placeholder="When I hold this I think..."></textarea>
+      <label class="field-label">6. What negative thought goes along with it?</label>
+      <textarea id="p1-neg-thought" class="short" placeholder="When I hold this I think..."></textarea>
+    </div>
+    <div class="instruction"><p>7. Now hold together the image and the negative thought, and feel the physical sensations in your body.</p></div>
+    <div class="field-group">
+      <label class="field-label">8. Focusing on the feelings, let your mind scan back to your childhood and notice the earliest memory that pops up where you felt the same way. Is there an earlier time when you felt this way most intensely?</label>
+      <textarea id="p1-earliest" class="short" placeholder="The earliest memory that comes is..."></textarea>
     </div>
   </div>
   <div class="nav-fixed">
@@ -485,82 +325,36 @@
   </div>
 </div>
 
-<!-- SCREEN P2: THIRD PERSON + FLOAT BACK -->
+<!-- SCREEN P — STEP 2 FLOAT BACK -->
 <div id="sp2" class="screen">
-  <div class="header"><div class="header-eyebrow">Problem — Step 2</div><div class="header-title">Step Outside Yourself</div></div>
-  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:35%"></div></div><div class="progress-label">Observe from the outside</div></div>
+  <div class="header"><div class="header-eyebrow">Problem</div><div class="header-title">Float Back to Childhood</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:35%"></div></div><div class="progress-label">Stay in third person</div></div>
   <div class="content">
-    <div class="step-badge"><span></span>Step 2</div>
-
-    <div class="instruction">
-      <p>Hold the image and the negative thought together. Feel the physical sensations in your body. Now imagine going outside yourself into third person. Look deeply and directly into your own eyes.</p>
-    </div>
-
+    <div class="step-badge"><span></span>Float Back</div>
     <div class="field-group">
-      <label class="field-label">What do you see in your own eyes?</label>
-      <textarea id="p-eyes" class="short" placeholder="I see..."></textarea>
+      <label class="field-label">1. What is the image of this memory that represents the most disturbing part?</label>
+      <textarea id="p2-disturbing" class="short" placeholder="The most disturbing part is..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">Is there more of what you see?</label>
-      <textarea id="p-eyes-more" class="short" placeholder="There is also..."></textarea>
+      <label class="field-label">2. Look directly into your younger self's eyes. What do you see?</label>
+      <textarea id="p2-younger-eyes" class="short" placeholder="I see..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What is this version of you wanting?</label>
-      <textarea id="p-wanting" class="short" placeholder="They want..."></textarea>
+      <label class="field-label">3. Is there more of what you see?</label>
+      <textarea id="p2-younger-more" class="short" placeholder="There is also..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">Now look deeper — what do they need?</label>
-      <textarea id="p-need" class="short" placeholder="What they need is..."></textarea>
+      <label class="field-label">4. What does your younger self need at this moment?</label>
+      <textarea id="p2-younger-need" class="short" placeholder="They need..."></textarea>
     </div>
-
-    <div class="divider"></div>
-
-    <p style="font-weight:500; color:var(--navy); margin-bottom:12px;">Float back to childhood.</p>
-
-    <div class="instruction">
-      <p>Let your mind scan back to the earliest memory where you felt this same way. Allow it to come naturally. Do not force it.</p>
-    </div>
-
+    <div class="instruction"><p>5. Go and give your younger self what they need in this moment.</p></div>
     <div class="field-group">
-      <label class="field-label">When did you first feel this way most intensely?</label>
-      <textarea id="p-earliest" class="short" placeholder="The earliest memory that comes is..."></textarea>
+      <label class="field-label">6. What does your younger self know about themselves at this moment?</label>
+      <textarea id="p2-younger-knows" class="short" placeholder="They now know..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What is the most disturbing part of that memory?</label>
-      <textarea id="p-mem-disturbing" class="short" placeholder="The worst part was..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">Look directly into your younger self's eyes. What do you see?</label>
-      <textarea id="p-younger-eyes" class="short" placeholder="I see..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">Is there more of what you see?</label>
-      <textarea id="p-younger-more" class="short" placeholder="There is also..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">What does your younger self need at this moment?</label>
-      <textarea id="p-younger-need" class="short" placeholder="They need..."></textarea>
-    </div>
-
-    <div class="instruction">
-      <p>Go and give your younger self what they need right now. Say what needs to be said. Do what needs to be done. Let the feeling express itself fully toward them.</p>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">What does your younger self know about themselves now?</label>
-      <textarea id="p-younger-knows" class="short" placeholder="They now know..."></textarea>
-    </div>
-
-    <div class="field-group">
-      <label class="field-label">As you look into their eyes — what do they know about you?</label>
-      <textarea id="p-younger-about-you" class="short" placeholder="They know that I..."></textarea>
+      <label class="field-label">7. As you are looking into their eyes, what do they know about you?</label>
+      <textarea id="p2-younger-about" class="short" placeholder="They know that I..."></textarea>
     </div>
   </div>
   <div class="nav-fixed">
@@ -569,49 +363,28 @@
   </div>
 </div>
 
-<!-- SCREEN P3: RETURN + RE-SCORE -->
+<!-- SCREEN P — STEP 3 RETURN -->
 <div id="sp3" class="screen">
-  <div class="header"><div class="header-eyebrow">Problem — Step 3</div><div class="header-title">Return to the Problem</div></div>
-  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">Check what has shifted</div></div>
+  <div class="header"><div class="header-eyebrow">Problem</div><div class="header-title">Original Memory</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">Return and re-score</div></div>
   <div class="content">
-    <div class="step-badge"><span></span>Step 3</div>
-
-    <div class="instruction">
-      <p>Go back to the original situation or event you started with. Hold that image again. Notice what has changed.</p>
-    </div>
-
+    <div class="step-badge"><span></span>Return</div>
+    <div class="instruction"><p>Go back to the original memory we started out with.</p></div>
     <div class="field-group">
-      <label class="field-label">What do you notice now that you did not notice before?</label>
-      <textarea id="p-new-notice" class="short" placeholder="Now I notice..."></textarea>
+      <label class="field-label">1. What do you notice about this that you did not notice before we started?</label>
+      <textarea id="p3-notice" class="short" placeholder="Now I notice..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">How do you feel about it now?</label>
-      <textarea id="p-new-feeling" class="short" placeholder="Now it feels..."></textarea>
+      <label class="field-label">2. How do you feel about it?</label>
+      <textarea id="p3-feeling" class="short" placeholder="Now it feels..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">New intensity score</label>
-      <span class="field-sub">If it is not at zero, repeat the process until it gets there.</span>
+      <label class="field-label">3. What would you score it now?</label>
       <div class="score-wrap">
-        <button class="score-btn" onclick="selectScore('p2', this, 0)">0</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 1)">1</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 2)">2</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 3)">3</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 4)">4</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 5)">5</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 6)">6</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 7)">7</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 8)">8</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 9)">9</button>
-        <button class="score-btn" onclick="selectScore('p2', this, 10)">10</button>
+        <button class="score-btn" onclick="selectScore('p3',this,0)">0</button><button class="score-btn" onclick="selectScore('p3',this,1)">1</button><button class="score-btn" onclick="selectScore('p3',this,2)">2</button><button class="score-btn" onclick="selectScore('p3',this,3)">3</button><button class="score-btn" onclick="selectScore('p3',this,4)">4</button><button class="score-btn" onclick="selectScore('p3',this,5)">5</button><button class="score-btn" onclick="selectScore('p3',this,6)">6</button><button class="score-btn" onclick="selectScore('p3',this,7)">7</button><button class="score-btn" onclick="selectScore('p3',this,8)">8</button><button class="score-btn" onclick="selectScore('p3',this,9)">9</button><button class="score-btn" onclick="selectScore('p3',this,10)">10</button>
       </div>
     </div>
-
-    <div class="note">
-      <p>If the score is not at zero, go back and repeat. Each pass goes deeper. Trust the process.</p>
-    </div>
-
+    <div class="note"><p>4. If it is not zero, repeat the process until it gets to zero.</p></div>
     <div style="display:flex; gap:12px; margin-top:20px;">
       <button class="btn btn-secondary" style="flex:1" onclick="goTo('sp2')">Go again</button>
       <button class="btn btn-primary" style="flex:1" onclick="goTo('sp4')">Continue</button>
@@ -620,30 +393,27 @@
   <div class="nav-fixed" style="display:none;"></div>
 </div>
 
-<!-- SCREEN P4: FUTURE SELF CONNECTION -->
+<!-- SCREEN P — STEP 4 FUTURE SELF -->
 <div id="sp4" class="screen">
-  <div class="header"><div class="header-eyebrow">Problem — Final Step</div><div class="header-title">Future Self Connection</div></div>
+  <div class="header"><div class="header-eyebrow">Problem</div><div class="header-title">Integration and Future Self</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:85%"></div></div><div class="progress-label">Step into who you are becoming</div></div>
   <div class="content">
     <div class="step-badge"><span></span>Integration</div>
-
-    <div class="instruction">
-      <p>Meet the version of you who no longer holds that old belief or thought pattern. Place them in a scenario similar to the original event.</p>
-    </div>
-
     <div class="field-group">
-      <label class="field-label">What are they like now in that same situation?</label>
-      <textarea id="p-future-life" placeholder="Now they are..."></textarea>
+      <label class="field-label">1. Meet the version of you who no longer holds that old belief or thoughts.</label>
+      <textarea id="p4-future" class="short" placeholder="This version of me..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What does it feel like to be them?</label>
-      <textarea id="p-future-feel" class="short" placeholder="It feels like..."></textarea>
+      <label class="field-label">2. Place them in a scenario similar to the original event. What are they like now?</label>
+      <textarea id="p4-scenario" class="short" placeholder="In that same situation, they are now..."></textarea>
     </div>
-
     <div class="field-group">
-      <label class="field-label">What message do they have for you?</label>
-      <textarea id="p-future-message" class="short" placeholder="They want you to know..."></textarea>
+      <label class="field-label">3. What does it feel like?</label>
+      <textarea id="p4-feel" class="short" placeholder="It feels like..."></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">4. What message do they have for you?</label>
+      <textarea id="p4-message" class="short" placeholder="They want you to know..."></textarea>
     </div>
   </div>
   <div class="nav-fixed">
@@ -652,14 +422,10 @@
   </div>
 </div>
 
-<!-- ============================================================
-     COMPLETE + SUMMARY
-     ============================================================ -->
+<!-- COMPLETE -->
 <div id="s-complete" class="screen">
   <div class="complete-hero">
-    <div class="complete-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#163E5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-    </div>
+    <div class="complete-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#163E5B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
     <h1>Session complete.</h1>
     <p>Take one slow breath. Notice how you feel in your body right now.</p>
   </div>
@@ -670,9 +436,7 @@
       <button class="copy-btn" onclick="copySummary()">Copy</button>
       <div class="copy-content" id="summary-output">Generating...</div>
     </div>
-    <div class="note mt-4">
-      <p>If the same pattern surfaces again, come back and run the method again. Each session goes to a different place.</p>
-    </div>
+    <div class="note mt-4"><p>If the same pattern surfaces again, come back and run the method again. Each session goes to a different place.</p></div>
     <div style="margin-top:28px; padding:20px; background:var(--navy); border-radius:12px; text-align:center;">
       <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">Want to go deeper?</div>
       <p style="color:rgba(255,255,255,0.8); font-size:14px; margin-bottom:16px;">In a 1:1 session the Eye to Eye Method works differently. Someone can track what you cannot track alone.</p>
@@ -728,75 +492,58 @@
 
     if (state.route === 'behaviour') {
       lines.push('ROUTE: Addictive Behaviour\n');
-      if (val('b-behaviour')) lines.push('Behaviour: ' + val('b-behaviour'));
-      if (val('b-frequency')) lines.push('Frequency: ' + val('b-frequency'));
-      if (val('b-when')) lines.push('When it arises: ' + val('b-when'));
-      if (val('b-triggers')) lines.push('Triggers: ' + val('b-triggers'));
-      if (val('b-after')) lines.push('Feeling after: ' + val('b-after'));
-      if (state.scores['b'] !== undefined) lines.push('Opening intensity: ' + state.scores['b'] + '/10');
-
-      lines.push('\nPEAK MOMENT');
-      if (val('b-peak')) lines.push(val('b-peak'));
-      if (val('b-feelings')) lines.push('Feelings: ' + val('b-feelings'));
-      if (val('b-body')) lines.push('In the body: ' + val('b-body'));
-      if (val('b-belief')) lines.push('Belief at peak: ' + val('b-belief'));
-
-      lines.push('\nTHIRD PERSON OBSERVATION');
-      if (val('b-eyes')) lines.push('What I see in my eyes: ' + val('b-eyes'));
-      if (val('b-want')) lines.push('What I want: ' + val('b-want'));
-      if (val('b-hoping')) lines.push('What I am hoping for: ' + val('b-hoping'));
-      if (val('b-behind')) lines.push('What is behind the pleasure: ' + val('b-behind'));
-
-      lines.push('\nEARLIER MEMORY');
-      if (val('b-memory')) lines.push('Memory: ' + val('b-memory'));
-      if (val('b-disturbing')) lines.push('Worst part: ' + val('b-disturbing'));
-      if (val('b-younger-eyes')) lines.push('Younger self\'s eyes: ' + val('b-younger-eyes'));
-      if (val('b-younger-need')) lines.push('What they needed: ' + val('b-younger-need'));
-      if (val('b-younger-knows')) lines.push('What they now know: ' + val('b-younger-knows'));
-      if (val('b-younger-about-you')) lines.push('What they know about me: ' + val('b-younger-about-you'));
-
-      lines.push('\nRETURN');
-      if (val('b-new-notice')) lines.push('New notice: ' + val('b-new-notice'));
-      if (val('b-new-feeling')) lines.push('New feeling: ' + val('b-new-feeling'));
-      if (state.scores['b2'] !== undefined) lines.push('New intensity: ' + state.scores['b2'] + '/10');
-
-      lines.push('\nFUTURE SELF');
-      if (val('b-future-life')) lines.push('Their life: ' + val('b-future-life'));
-      if (val('b-future-message')) lines.push('Their message: ' + val('b-future-message'));
-      if (val('b-future-feel')) lines.push('What it feels like: ' + val('b-future-feel'));
-      if (val('b-future-know')) lines.push('What I now know: ' + val('b-future-know'));
-
+      lines.push('STEP 1');
+      if (val('b1-behaviour')) lines.push('Behaviour: ' + val('b1-behaviour'));
+      if (state.scores['b1'] !== undefined) lines.push('Opening intensity: ' + state.scores['b1'] + '/10');
+      if (val('b1-peak')) lines.push('Peak moment: ' + val('b1-peak'));
+      lines.push('\nSTEP 2');
+      if (val('b2-feels')) lines.push('What it feels like: ' + val('b2-feels'));
+      if (val('b2-body')) lines.push('In the body: ' + val('b2-body'));
+      if (val('b2-sensations')) lines.push('Sensations: ' + val('b2-sensations'));
+      if (val('b2-belief')) lines.push('Belief at peak: ' + val('b2-belief'));
+      lines.push('\nSTEP 3 — THIRD PERSON');
+      if (val('b3-eyes')) lines.push('What I see in my eyes: ' + val('b3-eyes'));
+      if (val('b3-want')) lines.push('What I want: ' + val('b3-want'));
+      lines.push('\nFLOATBACK');
+      if (val('b3-earlier')) lines.push('Earlier memory: ' + val('b3-earlier'));
+      if (val('b3-disturbing')) lines.push('Most disturbing part: ' + val('b3-disturbing'));
+      if (val('b3-younger-eyes')) lines.push("Younger self's eyes: " + val('b3-younger-eyes'));
+      if (val('b3-younger-need')) lines.push('What they needed: ' + val('b3-younger-need'));
+      if (val('b3-younger-knows')) lines.push('What they now know: ' + val('b3-younger-knows'));
+      if (val('b3-younger-about')) lines.push('What they know about me: ' + val('b3-younger-about'));
+      lines.push('\nSTEP 4 — RETURN');
+      if (val('b4-notice')) lines.push('New notice: ' + val('b4-notice'));
+      if (val('b4-feeling')) lines.push('New feeling: ' + val('b4-feeling'));
+      if (state.scores['b4'] !== undefined) lines.push('New intensity: ' + state.scores['b4'] + '/10');
+      lines.push('\nINTEGRATION');
+      if (val('b5-life')) lines.push('Future self life: ' + val('b5-life'));
+      if (val('b5-message')) lines.push('Their message: ' + val('b5-message'));
+      if (val('b5-feel')) lines.push('What it feels like: ' + val('b5-feel'));
     } else {
       lines.push('ROUTE: Problem\n');
-      if (val('p-situation')) lines.push('Situation: ' + val('p-situation'));
-      if (state.scores['p'] !== undefined) lines.push('Opening intensity: ' + state.scores['p'] + '/10');
-      if (val('p-worst')) lines.push('Worst part image: ' + val('p-worst'));
-      if (val('p-emotions')) lines.push('Emotions: ' + val('p-emotions'));
-      if (val('p-body')) lines.push('In the body: ' + val('p-body'));
-      if (val('p-neg-thought')) lines.push('Negative thought: ' + val('p-neg-thought'));
-
-      lines.push('\nTHIRD PERSON');
-      if (val('p-eyes')) lines.push('What I see in my eyes: ' + val('p-eyes'));
-      if (val('p-wanting')) lines.push('What I want: ' + val('p-wanting'));
-      if (val('p-need')) lines.push('What I need: ' + val('p-need'));
-
-      lines.push('\nEARLIER MEMORY');
-      if (val('p-earliest')) lines.push('Memory: ' + val('p-earliest'));
-      if (val('p-mem-disturbing')) lines.push('Worst part: ' + val('p-mem-disturbing'));
-      if (val('p-younger-eyes')) lines.push('Younger self\'s eyes: ' + val('p-younger-eyes'));
-      if (val('p-younger-need')) lines.push('What they needed: ' + val('p-younger-need'));
-      if (val('p-younger-knows')) lines.push('What they now know: ' + val('p-younger-knows'));
-      if (val('p-younger-about-you')) lines.push('What they know about me: ' + val('p-younger-about-you'));
-
+      lines.push('STEP 1');
+      if (val('p1-situation')) lines.push('Situation: ' + val('p1-situation'));
+      if (state.scores['p1'] !== undefined) lines.push('Opening intensity: ' + state.scores['p1'] + '/10');
+      if (val('p1-worst')) lines.push('Worst part image: ' + val('p1-worst'));
+      if (val('p1-emotions')) lines.push('Emotions: ' + val('p1-emotions'));
+      if (val('p1-body')) lines.push('In the body: ' + val('p1-body'));
+      if (val('p1-neg-thought')) lines.push('Negative thought: ' + val('p1-neg-thought'));
+      if (val('p1-earliest')) lines.push('Earliest memory: ' + val('p1-earliest'));
+      lines.push('\nFLOAT BACK');
+      if (val('p2-disturbing')) lines.push('Most disturbing part: ' + val('p2-disturbing'));
+      if (val('p2-younger-eyes')) lines.push("Younger self's eyes: " + val('p2-younger-eyes'));
+      if (val('p2-younger-need')) lines.push('What they needed: ' + val('p2-younger-need'));
+      if (val('p2-younger-knows')) lines.push('What they now know: ' + val('p2-younger-knows'));
+      if (val('p2-younger-about')) lines.push('What they know about me: ' + val('p2-younger-about'));
       lines.push('\nRETURN');
-      if (val('p-new-notice')) lines.push('New notice: ' + val('p-new-notice'));
-      if (val('p-new-feeling')) lines.push('New feeling: ' + val('p-new-feeling'));
-      if (state.scores['p2'] !== undefined) lines.push('New intensity: ' + state.scores['p2'] + '/10');
-
-      lines.push('\nFUTURE SELF');
-      if (val('p-future-life')) lines.push('Future self in that situation: ' + val('p-future-life'));
-      if (val('p-future-feel')) lines.push('What it feels like: ' + val('p-future-feel'));
-      if (val('p-future-message')) lines.push('Their message: ' + val('p-future-message'));
+      if (val('p3-notice')) lines.push('New notice: ' + val('p3-notice'));
+      if (val('p3-feeling')) lines.push('New feeling: ' + val('p3-feeling'));
+      if (state.scores['p3'] !== undefined) lines.push('New intensity: ' + state.scores['p3'] + '/10');
+      lines.push('\nINTEGRATION');
+      if (val('p4-future')) lines.push('Future self: ' + val('p4-future'));
+      if (val('p4-scenario')) lines.push('In the same situation: ' + val('p4-scenario'));
+      if (val('p4-feel')) lines.push('What it feels like: ' + val('p4-feel'));
+      if (val('p4-message')) lines.push('Their message: ' + val('p4-message'));
     }
 
     document.getElementById('summary-output').textContent = lines.join('\n');
