@@ -281,6 +281,11 @@
 <div id="s3c" class="screen">
   <div class="header"><div class="header-eyebrow">Step 3</div><div class="header-title">The Exit Question</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div><div class="progress-label">Feel your way into the answer. Do not think your way into it.</div></div>
+  <!-- Belief anchor bar -->
+  <div class="anchor-bar" id="anchor-3c" style="display:none;">
+    <div class="anchor-bar-label">Your belief</div>
+    <div class="anchor-bar-text" id="anchor-3c-text"></div>
+  </div>
   <div class="content">
     <div class="prompt"><p>"Who am I without this belief?"</p></div>
     <div class="instruction"><p>Close your eyes. Hold the question. Feel what comes before you write it. If the last answer in your why chain was itself a belief, hold that one instead. Whichever has the most weight is the right one.</p></div>
@@ -343,7 +348,7 @@
     <div class="instruction"><p>Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p></div>
     <div class="field-group mt-4"><label class="field-label">What does it feel like?</label><textarea class="short" id="fi-feel" placeholder="Stay in it. Describe what you feel as him..."></textarea></div>
     <div class="prompt"><p id="affirm-prompt">"I am [your positive cognition]."</p></div>
-    <p class="text-small" style="margin-top:8px;">Say it. See it as true. Feel it as known, not hoped for. Where do you feel it in your body?</p>
+    <p class="text-small" style="margin-top:8px;">Say it out loud. See it as true. Feel it as known, not hoped for. Where do you feel it in your body?</p>
     <div class="field-group mt-4"><label class="field-label">Where do you feel it in your body?</label><textarea class="short" id="fi-body" placeholder="Chest, stomach, shoulders — wherever it lands..."></textarea></div>
     <div class="note mt-4"><p>If anything negative interrupts: ask "what do I need to feel right now?" Feel it. Reinforce it. Return to the scene.</p></div>
   </div>
@@ -361,7 +366,7 @@
     <div class="phase-badge"><span></span>Phase B</div>
     <div class="prompt"><p id="why-am-i-prompt">"Why am I [your positive cognition]?"</p></div>
     <div class="instruction"><p>See yourself as this. It might be a memory, a future version of you, or simply an image that comes. Whatever arises, stay with it. Amplify the feeling.</p></div>
-    <div class="field-group"><label class="field-label">Why am I this?</label><textarea id="fi-why" placeholder="What comes when you see yourself as this..."></textarea></div>
+    <div class="field-group"><label class="field-label" id="why-am-i-label">Why am I this?</label><textarea id="fi-why" placeholder="What comes when you see yourself as this..."></textarea></div>
     <div class="divider"></div>
     <p style="font-weight:500; color:var(--navy); margin-bottom:16px;">Now step out of the scene.</p>
     <div class="field-group"><label class="field-label">What has holding the old belief already cost me?</label><span class="field-sub">Let this land fully. Feel the real cost.</span><textarea id="fi-cost1" placeholder="What has it cost you..."></textarea></div>
@@ -443,9 +448,22 @@
     window.scrollTo(0, 0);
     if (id === 's2c') updateCogDisplay();
     if (id === 's2p') showAnchorBar('anchor-2p', 'anchor-2p-text');
+    if (id === 's3c') showBeliefAnchor();
     if (id === 's3p') showAnchorBar('anchor-3p', 'anchor-3p-text');
     if (id === 's4') updateFutureIdentity();
     if (id === 's7') generateSummary();
+  }
+
+  // Shows the selected/custom belief on the cognition exit question screen
+  function showBeliefAnchor() {
+    const bar = document.getElementById('anchor-3c');
+    const textEl = document.getElementById('anchor-3c-text');
+    if (bar && textEl && state.negCog) {
+      textEl.textContent = state.negCog;
+      bar.style.display = 'block';
+    } else if (bar) {
+      bar.style.display = 'none';
+    }
   }
 
   // Reads the worst part image from step 1 and populates the anchor bar
@@ -488,7 +506,7 @@
   function updateCogDisplay() {
     if (state.negCog) {
       document.getElementById('disp-neg').textContent = state.negCog;
-      document.getElementById('disp-pos').textContent = state.posCog ? 'Opposite: ' + state.posCog : 'Opposite belief to be written in Phase A';
+      document.getElementById('disp-pos').textContent = state.posCog ? 'Opposite: ' + state.posCog : '';
     }
   }
 
@@ -525,11 +543,16 @@
   }
 
   function applyPosCog(pos) {
-    const stripped = pos.replace(/^I am /i, '').replace(/^I /i, '');
     const affirmEl = document.getElementById('affirm-prompt');
     const whyEl = document.getElementById('why-am-i-prompt');
-    if (affirmEl) affirmEl.textContent = '"I am ' + stripped + '."';
+    const whyLabelEl = document.getElementById('why-am-i-label');
+    // Show the cognition exactly as written in the affirm prompt
+    if (affirmEl) affirmEl.textContent = '"' + pos + '"';
+    // For "Why am I X?" — strip leading "I am " or "I " so it reads naturally
+    const stripped = pos.replace(/^I am /i, '').replace(/^I /i, '');
     if (whyEl) whyEl.textContent = '"Why am I ' + stripped + '?"';
+    // Update the Phase B field label to repeat the cognition instead of "Why am I this?"
+    if (whyLabelEl) whyLabelEl.textContent = 'Why am I ' + stripped + '?';
     const phaseC = document.getElementById('phase-c-cog');
     if (phaseC) phaseC.textContent = pos;
   }
