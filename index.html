@@ -237,17 +237,11 @@
     <div id="selected-cog-display" class="selected-display mb-2">
       <div class="selected-display-label">Your cognition</div>
       <div class="selected-display-neg" id="disp-neg">...</div>
-      <div class="selected-display-pos" id="disp-pos">...</div>
     </div>
     <div class="instruction"><p>Close your eyes. Hold the cognition. Ask "why is this true?" Feel the answer, then type it. Ask why again. Stop when you hit something raw that needs no further question. If the answer becomes about someone else, stop there too.</p></div>
 
-    <div class="quiet-prompt">
-      <div class="quiet-prompt-label">Optional — before you begin</div>
-      <div class="quiet-prompt-text">"Why can't I let this go?"</div>
-    </div>
-
     <div class="why-chain">
-      <div class="why-row"><div class="why-num">1</div><textarea class="short" id="why1" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">1</div><div style="flex:1;"><textarea class="short" id="why1" placeholder="Why..."></textarea><div style="font-size:12px; font-style:italic; color:var(--light-blue); margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div></div></div>
       <div class="why-row"><div class="why-num">2</div><textarea class="short" id="why2" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">3</div><textarea class="short" id="why3" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">4</div><textarea class="short" id="why4" placeholder="Why..."></textarea></div>
@@ -275,13 +269,8 @@
   <div class="content">
     <div class="instruction"><p>Hold the image of the worst part of the problem. Ask "why does this affect me?" Feel the answer, then type it. Ask why again. Stop when it goes raw or points at someone else.</p></div>
 
-    <div class="quiet-prompt">
-      <div class="quiet-prompt-label">Optional — before you begin</div>
-      <div class="quiet-prompt-text">"Why can't I let this go?"</div>
-    </div>
-
     <div class="why-chain">
-      <div class="why-row"><div class="why-num">1</div><textarea class="short" id="pwhy1" placeholder="Why..."></textarea></div>
+      <div class="why-row"><div class="why-num">1</div><div style="flex:1;"><textarea class="short" id="pwhy1" placeholder="Why..."></textarea><div style="font-size:12px; font-style:italic; color:var(--light-blue); margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div></div></div>
       <div class="why-row"><div class="why-num">2</div><textarea class="short" id="pwhy2" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">3</div><textarea class="short" id="pwhy3" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">4</div><textarea class="short" id="pwhy4" placeholder="Why..."></textarea></div>
@@ -532,7 +521,6 @@
   function updateCogDisplay() {
     if (state.negCog) {
       document.getElementById('disp-neg').textContent = state.negCog;
-      document.getElementById('disp-pos').textContent = state.posCog ? 'Opposite: ' + state.posCog : '';
     }
   }
 
