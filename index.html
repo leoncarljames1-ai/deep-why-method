@@ -232,6 +232,13 @@
       <div class="selected-display-pos" id="disp-pos">...</div>
     </div>
     <div class="instruction"><p>Close your eyes. Hold the cognition. Ask "why is this true?" Feel the answer, then type it. Ask why again. Stop when you hit something raw that needs no further question. If the answer becomes about someone else, stop there too.</p></div>
+
+    <div class="field-group">
+      <label class="field-label">Why can't I let this go? <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:11px; color:#888;">Optional</span></label>
+      <span class="field-sub">Before you start the why chain — sit with this question for a moment. Only answer if something comes.</span>
+      <textarea id="cant-let-go-c" class="short" placeholder="What comes up when you ask this..."></textarea>
+    </div>
+
     <div class="why-chain">
       <div class="why-row"><div class="why-num">1</div><textarea class="short" id="why1" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">2</div><textarea class="short" id="why2" placeholder="Why..."></textarea></div>
@@ -260,6 +267,13 @@
   </div>
   <div class="content">
     <div class="instruction"><p>Hold the image of the worst part of the problem. Ask "why does this affect me?" Feel the answer, then type it. Ask why again. Stop when it goes raw or points at someone else.</p></div>
+
+    <div class="field-group">
+      <label class="field-label">Why can't I let this go? <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:11px; color:#888;">Optional</span></label>
+      <span class="field-sub">Before you start the why chain — sit with this question for a moment. Only answer if something comes.</span>
+      <textarea id="cant-let-go-p" class="short" placeholder="What comes up when you ask this..."></textarea>
+    </div>
+
     <div class="why-chain">
       <div class="why-row"><div class="why-num">1</div><textarea class="short" id="pwhy1" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">2</div><textarea class="short" id="pwhy2" placeholder="Why..."></textarea></div>
@@ -337,15 +351,15 @@
   <div class="content">
     <div class="phase-badge"><span></span>Phase A</div>
     <div class="field-group">
-      <label class="field-label">My positive cognition</label>
-      <span class="field-sub">The opposite of what you started with. It is shown below — read it, feel it, then continue.</span>
+      <label class="field-label" id="phase-a-cog-label">My positive cognition</label>
+      <span class="field-sub" id="phase-a-cog-sub">The opposite of what you started with. It is shown below — read it, feel it, then continue.</span>
       <!-- Static display when positive cognition is known -->
       <div id="pos-cog-display" style="background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--navy); font-style:italic; display:none;"></div>
       <!-- Editable input shown when no positive cognition was set -->
       <textarea id="pos-cog-input" class="short" placeholder="Write your positive belief here — the opposite of what you started with..." oninput="onPosCogInput()" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--navy); display:none;"></textarea>
     </div>
-    <div class="instruction"><p>Think of a future or goal where this positive cognition would be fully alive in you. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
-    <div class="instruction"><p>Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p></div>
+    <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid);">A</strong> &nbsp;Think of a future or goal where this is fully alive in you. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
+    <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid);">B</strong> &nbsp;Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p></div>
     <div class="field-group mt-4"><label class="field-label">What does it feel like?</label><textarea class="short" id="fi-feel" placeholder="Stay in it. Describe what you feel as him..."></textarea></div>
     <div class="prompt"><p id="affirm-prompt">"I am [your positive cognition]."</p></div>
     <p class="text-small" style="margin-top:8px;">Say it out loud. See it as true. Feel it as known, not hoped for. Where do you feel it in your body?</p>
@@ -365,13 +379,13 @@
   <div class="content">
     <div class="phase-badge"><span></span>Phase B</div>
     <div class="prompt"><p id="why-am-i-prompt">"Why am I [your positive cognition]?"</p></div>
-    <div class="instruction"><p>See yourself as this. It might be a memory, a future version of you, or simply an image that comes. Whatever arises, stay with it. Amplify the feeling.</p></div>
+    <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid);">A</strong> &nbsp;See yourself as this. It might be a memory, a future version of you, or simply an image that comes. Whatever arises, stay with it. Amplify the feeling.</p></div>
     <div class="field-group"><label class="field-label" id="why-am-i-label">Why am I this?</label><textarea id="fi-why" placeholder="What comes when you see yourself as this..."></textarea></div>
     <div class="divider"></div>
-    <p style="font-weight:500; color:var(--navy); margin-bottom:16px;">Now step out of the scene.</p>
-    <div class="field-group"><label class="field-label">What has holding the old belief already cost me?</label><span class="field-sub">Let this land fully. Feel the real cost.</span><textarea id="fi-cost1" placeholder="What has it cost you..."></textarea></div>
-    <div class="field-group"><label class="field-label">What will it continue to cost me if I do not change this now?</label><span class="field-sub">Let this land fully before moving on.</span><textarea id="fi-cost2" placeholder="What will it keep costing you..."></textarea></div>
-    <div class="instruction"><p>Close your eyes. What becomes possible when this belief is fully yours? See it, hear it, feel it. This is not a writing question. Close your eyes and feel the answer. Then continue.</p></div>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:16px;">B &nbsp;Step out of the scene.</p>
+    <div class="field-group"><label class="field-label">What has this already cost me?</label><span class="field-sub">Let this land fully. Feel the real cost.</span><textarea id="fi-cost1" placeholder="What has it cost you..."></textarea></div>
+    <div class="field-group"><label class="field-label">What will it keep costing me if I do not change this now?</label><span class="field-sub">Let this land fully before moving on.</span><textarea id="fi-cost2" placeholder="What will it keep costing you..."></textarea></div>
+    <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid);">C</strong> &nbsp;Close your eyes. What becomes possible when this is fully yours? See it, hear it, feel it. This is not a writing question. Feel the answer. Then continue.</p></div>
   </div>
   <div class="nav-fixed">
     <button class="btn btn-secondary" onclick="goTo('s4')">Back</button>
@@ -388,11 +402,11 @@
     <div class="field-group"><label class="field-label">What do I want to move towards?</label><textarea class="short" id="fi-towards" placeholder="Name it..."></textarea></div>
     <div class="field-group"><label class="field-label">First action, and when?</label><span class="field-sub">Be specific. A real action, a real time.</span><textarea class="short" id="fi-action" placeholder="e.g. I will message X on Tuesday morning..."></textarea></div>
     <div class="divider"></div>
-    <p style="font-weight:500; color:var(--navy); margin-bottom:12px;">Return to the scene.</p>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">A &nbsp;Return to the scene.</p>
     <div id="phase-c-cog" style="font-family:'Cormorant Garamond',serif; font-size:20px; font-style:italic; color:var(--navy); background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; margin-bottom:16px;"></div>
-    <div class="instruction"><p>Read your positive cognition above and your first action. Close your eyes. Step back into the scene. See yourself living from this belief. This is who you are.</p></div>
+    <div class="instruction"><p>Read the belief above and your first action. Close your eyes. Step back into the scene. See yourself living from this. This is who you are.</p></div>
     <div class="divider"></div>
-    <p style="font-weight:500; color:var(--navy); margin-bottom:12px;">Now test it.</p>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">B &nbsp;Test it.</p>
     <div class="instruction"><p>Bring in a real obstacle. Something that could actually get in the way. See it clearly. Feel the weight of it — the resistance, the doubt, the moment you might want to stop. Now see yourself choosing to move through it anyway. Watch yourself come out the other side. Run it twice. Return to your future scene. End on success.</p></div>
     <div class="field-group mt-4"><label class="field-label">The obstacle I rehearsed moving through</label><textarea class="short" id="fi-obstacle" placeholder="Name the obstacle you tested..."></textarea></div>
   </div>
@@ -514,18 +528,38 @@
     const pos = state.posCog;
     const staticEl = document.getElementById('pos-cog-display');
     const inputEl = document.getElementById('pos-cog-input');
+    const labelEl = document.getElementById('phase-a-cog-label');
+    const subEl = document.getElementById('phase-a-cog-sub');
+    const isProb = state.route === 'problem';
+
+    // Adjust label wording based on route
+    if (labelEl) labelEl.textContent = isProb ? 'Step into who you are without this problem' : 'My positive cognition';
+    if (subEl) subEl.textContent = isProb
+      ? 'You are no longer defined by it. Read this, feel it, then continue.'
+      : 'The opposite of what you started with. Read it, feel it, then continue.';
 
     if (pos) {
-      // Known positive cognition — show static display
       staticEl.textContent = pos;
       staticEl.style.display = 'block';
       inputEl.style.display = 'none';
       applyPosCog(pos);
-    } else {
-      // No positive cognition yet — show editable input
+    } else if (isProb) {
+      // Problem route with no positive — pull from exit question answer as anchor
+      const exitAns = val('pexit1') || '';
       staticEl.style.display = 'none';
+      inputEl.placeholder = exitAns
+        ? 'e.g. ' + exitAns + '...'
+        : 'Write who you are without this problem...';
       inputEl.style.display = 'block';
-      // If they already typed something in the input, use that
+      const typed = inputEl.value.trim();
+      if (typed) applyPosCog(typed);
+      else if (exitAns) applyPosCog(exitAns);
+      else applyPosCog('who I am without this problem');
+    } else {
+      // Cognition route with no positive written
+      staticEl.style.display = 'none';
+      inputEl.placeholder = 'Write your positive belief here — the opposite of what you started with...';
+      inputEl.style.display = 'block';
       const typed = inputEl.value.trim();
       if (typed) applyPosCog(typed);
       else applyPosCog('your positive belief');
@@ -610,6 +644,8 @@
     }
     lines.push('\nTHE WHY CHAIN');
     const prefix = isProb ? 'p' : '';
+    const cantLetGo = isProb ? val('cant-let-go-p') : val('cant-let-go-c');
+    if (cantLetGo) lines.push('Why I can\'t let this go: ' + cantLetGo);
     for (let i = 1; i <= 7; i++) { const v = val(prefix + 'why' + i); if (v) lines.push(i + '. ' + v); }
     lines.push('\nEXIT QUESTION');
     const ep = isProb ? 'p' : '';
