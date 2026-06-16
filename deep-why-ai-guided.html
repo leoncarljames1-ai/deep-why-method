@@ -270,7 +270,7 @@ async function sendMessage() {
       })
     });
     const data = await response.json();
-    const reply = data.content[0].text;
+    const reply = (data && data.content && data.content[0]) ? data.content[0].text : (data.error || JSON.stringify(data));
     removeTyping();
     addAIMessage(reply);
     state.history.push({ role: 'assistant', content: reply });
