@@ -118,7 +118,7 @@
 const API_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL = 'claude-sonnet-4-6';
 
-let state = { route: '', history: [], whyCount: 0, phase: 'start' };
+let state = { route: '', history: [], whyCount: 0, phase: 'start', openingMsg: '' };
 
 const COGNITION_SYSTEM = `You are Leon James, a Mind Shifting Coach guiding a client through the Deep Why Method — cognition route. You follow this exact script in order. You never skip steps. You never give advice or interpretations beyond what the script asks.
 
@@ -189,7 +189,7 @@ function goTo(id) {
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
   if (id === 's0') {
-    state = { route: '', history: [], whyCount: 0, phase: 'start' };
+    state = { route: '', history: [], whyCount: 0, phase: 'start', openingMsg: '' };
     document.getElementById('chat-messages').innerHTML = '';
     document.getElementById('chat-input-wrap').style.display = 'flex';
   }
@@ -204,7 +204,8 @@ function startSession() {
     ? 'Close your eyes for a moment before we begin. Take one breath.\n\nWhat is the belief you are working with today?'
     : 'Close your eyes for a moment before we begin. Take one breath.\n\nWhat is the problem, behaviour or situation you are working with today? Name it in a few words.';
   addAIMessage(firstMsg);
-  state.history.push({ role: 'assistant', content: firstMsg });
+  // Don't push opening message to history — Anthropic requires user message first
+  state.openingMsg = firstMsg;
 }
 
 function addAIMessage(text) {
@@ -251,7 +252,12 @@ async function sendMessage() {
   input.value = '';
 
   addUserMessage(text);
-  state.history.push({ role: 'user', content: text });
+  // On first user message, include context of what was asked
+  if (state.history.length === 0 && state.openingMsg) {
+    state.history.push({ role: 'user', content: 'You asked: ' + state.openingMsg + '\n\nMy answer: ' + text });
+  } else {
+    state.history.push({ role: 'user', content: text });
+  }
 
   const sendBtn = document.getElementById('chat-send');
   sendBtn.disabled = true;
