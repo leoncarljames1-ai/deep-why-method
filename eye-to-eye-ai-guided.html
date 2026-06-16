@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eye to Eye Method — AI Guided</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E;
+    --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF;
+    --light-blue: #A2B4C2; --white: #FFFFFF;
+  }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 56px 24px 48px; text-align: center; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; font-family: 'Jost', sans-serif; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; color: var(--white); font-size: 36px; margin-bottom: 12px; line-height: 1.2; }
+  .hero p { color: var(--light-blue); font-size: 15px; max-width: 320px; margin: 0 auto; }
+  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: var(--white); }
+  .content { padding: 32px 24px 100px; max-width: 640px; margin: 0 auto; }
+  p { font-size: 15px; color: #3a3a44; margin-bottom: 14px; line-height: 1.75; }
+  .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+  .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; }
+  .note { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .note p { font-size: 13px; color: var(--navy); margin: 0; line-height: 1.7; }
+  .warning { background: #fff8ee; border: 1.5px solid var(--gold-mid); border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .warning p { font-size: 13px; color: #5a4010; margin: 0; line-height: 1.7; }
+  .route-card { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; padding: 22px 20px; margin-bottom: 14px; cursor: pointer; transition: all 0.2s; }
+  .route-card:hover, .route-card.selected { border-color: var(--navy); background: #f0f4f7; }
+  .route-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 4px; }
+  .route-card-sub { font-size: 13px; color: #888; }
+  .start-body { padding: 32px 24px 120px; max-width: 640px; margin: 0 auto; }
+  .chat-wrap { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .chat-messages { padding: 20px; min-height: 300px; max-height: 500px; overflow-y: auto; }
+  .chat-msg { margin-bottom: 20px; }
+  .chat-msg.ai .chat-msg-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .chat-msg.ai .chat-bubble { background: #f0f4f7; border-radius: 0 12px 12px 12px; padding: 14px 18px; font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--charcoal); line-height: 1.8; max-width: 92%; }
+  .chat-msg.user { text-align: right; }
+  .chat-msg.user .chat-bubble { background: var(--navy); color: var(--white); border-radius: 12px 0 12px 12px; padding: 12px 16px; font-size: 15px; line-height: 1.75; display: inline-block; max-width: 88%; text-align: left; }
+  .chat-input-wrap { border-top: 1px solid var(--grey); padding: 12px 16px; display: flex; gap: 10px; align-items: flex-end; }
+  .chat-input { flex: 1; border: 1.5px solid var(--grey); border-radius: 8px; padding: 12px 14px; font-family: 'Jost', sans-serif; font-size: 15px; color: var(--charcoal); background: var(--cream); resize: none; min-height: 48px; max-height: 120px; line-height: 1.5; }
+  .chat-input:focus { outline: none; border-color: var(--navy); }
+  .chat-send { flex-shrink: 0; width: 48px; height: 48px; border-radius: 10px; background: var(--navy); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .chat-send:disabled { background: #aaa; cursor: not-allowed; }
+  .chat-send svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .typing { display: flex; gap: 4px; align-items: center; padding: 14px 18px; }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--light-blue); animation: bounce 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 0: START -->
+<div id="s0" class="screen active">
+  <div class="hero">
+    <div class="hero-eyebrow">Leon James</div>
+    <h1>Eye to Eye Method</h1>
+    <p>AI guided. The AI will ask each question and reflect back what you say before moving to the next.</p>
+  </div>
+  <div class="start-body">
+    <div class="instruction">
+      <p>This is not an exercise in thinking. It is an exercise in observing. When you read a question, close your eyes. Allow whatever comes up to come up. Do not analyse it. Whatever appears — that is what you work with.</p>
+    </div>
+    <div class="warning">
+      <p>This work may activate strong emotional material. If at any point it feels overwhelming, stop and use the Reset Breath from the Before You Begin lesson.</p>
+    </div>
+    <p style="margin-bottom:20px; color:#555; margin-top:20px;">Choose your route.</p>
+    <div class="route-card" id="route-behaviour" onclick="selectRoute('behaviour')">
+      <div class="route-card-title">Addictive Behaviour</div>
+      <div class="route-card-sub">A compulsive pattern, sexual behaviour, fantasy or fetish you want to understand and resolve.</div>
+    </div>
+    <div class="route-card" id="route-problem" onclick="selectRoute('problem')">
+      <div class="route-card-title">Problem or Event</div>
+      <div class="route-card-sub">A specific situation, memory or emotional pattern that is still sitting with you.</div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-primary" onclick="startSession()">Begin</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: SESSION -->
+<div id="s1" class="screen">
+  <div class="header">
+    <div class="header-eyebrow" id="session-eyebrow">Eye to Eye Method</div>
+    <div class="header-title" id="session-title">AI Guided Session</div>
+  </div>
+  <div class="content">
+    <div class="chat-wrap">
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-wrap" id="chat-input-wrap">
+        <textarea class="chat-input" id="chat-input" placeholder="Close your eyes. Observe what comes. Then type..." onkeydown="handleKey(event)" rows="2"></textarea>
+        <button class="chat-send" id="chat-send" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="note">
+      <p>Close your eyes before each answer. Observe — do not analyse. Whatever comes up is what you work with.</p>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Start over</button>
+  </div>
+</div>
+
+<script>
+const API_URL = 'https://api.anthropic.com/v1/messages';
+const MODEL = 'claude-sonnet-4-6';
+let state = { route: '', history: [] };
+
+const BEHAVIOUR_SYSTEM = `You are Leon James, a Mind Shifting Coach guiding a client through the Eye to Eye Method — addictive behaviour route. You follow this exact script in order, question by question. You never skip steps. You never give advice, interpretation or coaching beyond what the script says.
+
+YOUR RULES:
+- After EVERY client answer, reflect back their EXACT words before asking the next question. Use their precise language woven naturally into your next question. For example: if they say "I feel stupid and my arms are on fire" your next question should include "when you feel stupid and your arms are on fire" before asking what they believe about themselves.
+- Keep responses short. Reflect, then ask. Nothing more.
+- Never analyse. Never interpret. Never advise. Just reflect and ask.
+- Never use em dashes. Warm, direct, present tone.
+- If the client says nothing comes up, say "Stay with it. Whatever is there, even faintly. What do you notice?"
+- When the score reaches zero or the client says it feels clear, move to Integration.
+
+EXACT SCRIPT TO FOLLOW IN ORDER:
+1. "Imagine or choose a specific behaviour, fantasy or pattern you want to focus on today. What is it?"
+2. "What would you score the intensity of this right now, from 0 to 10?"
+3. "Picture yourself fully in this behaviour or experience. Find the single moment that feels the most intense or satisfying. Hold that image in full, vivid detail. What is that moment?"
+4. [Reflect their peak moment back] "As you picture [their peak moment] — what does it feel like?"
+5. [Reflect feeling] "You feel [their feeling]. What do you notice happening in your body, and where do you feel it?"
+6. [Reflect body sensation] "You feel [their sensation] in [their location]. What do you think about yourself at this moment?"
+7. "Amplify all of these feelings as much as you can. Stay with them. Now — imagine taking a step outside yourself, turning around, and looking deeply into your own eyes. What are you seeing in your eyes?"
+8. [Reflect] "You see [what they see]. What do you want?"
+9. "Is there an earlier time when you felt this way most intensely? What comes up?"
+10. [Reflect] "You felt this [their earlier time]. What is the image of this memory that represents the most disturbing part?"
+11. [Reflect] "Look directly into your younger self's eyes. What do you see in your eyes?"
+12. "Is there more of what you see?"
+13. "What does your younger self need at this moment?"
+14. "Go and give your younger self what they need right now. Say what needs to be said. Do what needs to be done. Amplify this as much as possible. What does your younger self know about themselves now?"
+15. "As you are looking into your eyes — what do they know about you?"
+16. "Now go back to the original behaviour or image we started with. What do you notice about it that you did not notice before?"
+17. "How do you feel about it now? What would you score it?"
+18. [If not zero]: "Stay with it. Let us go again." [Return to step 7]
+19. [If zero or clear]: "Meet the version of you who no longer holds that old pattern. What does their life look like?"
+20. "What message do they have for you?"
+21. "What does it feel like to be them?"
+22. "Take one slow breath. Notice how you feel right now. This is where the work lands."`;
+
+const PROBLEM_SYSTEM = `You are Leon James, a Mind Shifting Coach guiding a client through the Eye to Eye Method — problem route. You follow this exact script in order, question by question. You never skip steps. You never give advice or interpretation beyond what the script says.
+
+YOUR RULES:
+- After EVERY client answer, reflect back their EXACT words before asking the next question. Weave their precise language into the next question naturally. For example: if they say "I feel like a failure and I feel it in my stomach" your next question should include "when you feel like a failure and feel it in your stomach" before the next prompt.
+- Keep responses short. Reflect, then ask. Nothing more.
+- Never analyse. Never interpret. Never advise.
+- Never use em dashes. Warm, direct, present tone.
+
+EXACT SCRIPT TO FOLLOW IN ORDER:
+1. "Picture yourself in the single moment, recent event or problem that feels the most emotionally intense. Hold that image in full, vivid detail. What is it?"
+2. "What would you score the intensity of this right now, from 0 to 10?"
+3. [Reflect] "What image in this memory represents the worst part? The way someone looked, what was said, the moment it happened."
+4. [Reflect the image] "When you hold [their image] in mind — what emotions come up for you?"
+5. [Reflect emotion] "You feel [their emotion]. Where do you feel it in your body?"
+6. [Reflect body location] "You feel it in [their location]. What negative thought goes along with it?"
+7. [Reflect thought] "Hold together the image and [their thought], and feel the physical sensations in your body. Now let your mind scan back to your childhood. Is there an earlier time when you felt this way most intensely?"
+8. [Reflect] "What is the image of that memory that represents the most disturbing part?"
+9. [Reflect] "Look directly into your younger self's eyes. What do you see in your eyes?"
+10. "Is there more of what you see?"
+11. "What does your younger self need at this moment?"
+12. "Go and give your younger self what they need right now. What does your younger self know about themselves now?"
+13. "As you are looking into your eyes — what do they know about you?"
+14. "Go back to the original situation we started with. What do you notice about it that you did not notice before?"
+15. "How do you feel about it now? What would you score it?"
+16. [If not zero]: "Stay with it. Let us go again." [Return to step 7]
+17. [If zero or clear]: "Meet the version of you who no longer holds that old pattern. Place them in a scenario similar to the original event. What are they like now?"
+18. "What does it feel like to be them?"
+19. "What message do they have for you?"
+20. "Take one slow breath. Notice how you feel right now. This is where the work lands."`;
+
+function selectRoute(route) {
+  state.route = route;
+  document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('route-' + route).classList.add('selected');
+}
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  if (id === 's0') {
+    state = { route: '', history: [] };
+    document.getElementById('chat-messages').innerHTML = '';
+    document.getElementById('chat-input-wrap').style.display = 'flex';
+  }
+}
+
+function startSession() {
+  if (!state.route) return;
+  document.getElementById('session-eyebrow').textContent = state.route === 'behaviour' ? 'Addictive Behaviour' : 'Problem';
+  goTo('s1');
+  const firstMsg = state.route === 'behaviour'
+    ? 'Close your eyes for a moment before we begin. Take one breath.\n\nImagine or choose a specific behaviour, fantasy or pattern you want to focus on today. What is it?'
+    : 'Close your eyes for a moment before we begin. Take one breath.\n\nPicture yourself in the single moment, recent event or problem that feels the most emotionally intense. Hold that image in full, vivid detail. What is it?';
+  addAIMessage(firstMsg);
+  state.history.push({ role: 'assistant', content: firstMsg });
+}
+
+function addAIMessage(text) {
+  const wrap = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ai';
+  div.innerHTML = `<div class="chat-msg-label">Leon's AI</div><div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function addUserMessage(text) {
+  const wrap = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg user';
+  div.innerHTML = `<div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function showTyping() {
+  const wrap = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ai';
+  div.id = 'typing-indicator';
+  div.innerHTML = `<div class="chat-msg-label">Leon's AI</div><div class="chat-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  addUserMessage(text);
+  state.history.push({ role: 'user', content: text });
+  const sendBtn = document.getElementById('chat-send');
+  sendBtn.disabled = true;
+  showTyping();
+  try {
+    const system = state.route === 'behaviour' ? BEHAVIOUR_SYSTEM : PROBLEM_SYSTEM;
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 300,
+        system: system,
+        messages: state.history
+      })
+    });
+    const data = await response.json();
+    const reply = data.content[0].text;
+    removeTyping();
+    addAIMessage(reply);
+    state.history.push({ role: 'assistant', content: reply });
+    if (reply.toLowerCase().includes('this is where the work lands')) {
+      document.getElementById('chat-input-wrap').style.display = 'none';
+    }
+  } catch(e) {
+    removeTyping();
+    addAIMessage('Something went wrong. Please check your connection and try again.');
+  }
+  sendBtn.disabled = false;
+}
+</script>
+</body>
+</html>
