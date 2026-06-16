@@ -403,7 +403,7 @@ Keep the response focused and direct. Three clear sections. No fluff.`;
       document.getElementById('r-response-text').textContent = result;
       document.getElementById('r-btn').textContent = 'Identify and redirect';
     } catch(e) {
-      document.getElementById('r-response-text').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('r-response-text').textContent = 'Error: ' + (e.message || JSON.stringify(e));
       document.getElementById('r-btn').textContent = 'Identify and redirect';
     }
     document.getElementById('r-btn').disabled = false;
@@ -435,7 +435,7 @@ Format your response standard by standard. Be concise on each one. End with one 
       document.getElementById('st-response-text').textContent = result;
       document.getElementById('st-btn').textContent = 'Check my standards';
     } catch(e) {
-      document.getElementById('st-response-text').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('st-response-text').textContent = 'Error: ' + (e.message || JSON.stringify(e));
       document.getElementById('st-btn').textContent = 'Check my standards';
     }
     document.getElementById('st-btn').disabled = false;
@@ -468,7 +468,7 @@ Be direct. Three clear sections. This person needs clarity, not exploration.`;
       document.getElementById('ps-response-text').textContent = result;
       document.getElementById('ps-btn').textContent = 'Spot the pattern';
     } catch(e) {
-      document.getElementById('ps-response-text').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('ps-response-text').textContent = 'Error: ' + (e.message || JSON.stringify(e));
       document.getElementById('ps-btn').textContent = 'Spot the pattern';
     }
     document.getElementById('ps-btn').disabled = false;
@@ -499,7 +499,7 @@ Write this as a coaching observation, not a report. Warm, direct, honest. Talk t
       document.getElementById('pr-response-text').textContent = result;
       document.getElementById('pr-btn').textContent = 'Reflect on my progress';
     } catch(e) {
-      document.getElementById('pr-response-text').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('pr-response-text').textContent = 'Error: ' + (e.message || JSON.stringify(e));
       document.getElementById('pr-btn').textContent = 'Reflect on my progress';
     }
     document.getElementById('pr-btn').disabled = false;
