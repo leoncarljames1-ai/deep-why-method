@@ -350,7 +350,7 @@ Write in a direct, warm, honest tone. No generic coaching language. No em dashes
       })
     });
     const data = await response.json();
-    return data.content[0].text;
+    return (data && data.content && data.content[0]) ? data.content[0].text : (data.error || JSON.stringify(data));
   }
 
   function goTo(id) {
