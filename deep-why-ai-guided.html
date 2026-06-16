@@ -115,8 +115,7 @@
 <script>
 const API_URL = 'https://soft-rain-727d.leoncarljames1.workers.dev/';
 const MODEL = 'claude-sonnet-4-6';
-const API_KEY = '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';
-
+const API_KEY = 'sk-ant-api03-3KY...';
 let state = { route: '', history: [], whyCount: 0, phase: 'start', openingMsg: '' };
 
 const COGNITION_SYSTEM = `You are Leon James, a Mind Shifting Coach guiding a client through the Deep Why Method — cognition route. You follow this exact script in order. You never skip steps. You never give advice or interpretations beyond what the script asks.
@@ -267,10 +266,7 @@ async function sendMessage() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        
-        'anthropic-version': '2023-06-01',
-        
-      },
+        'Content-Type': 'application/json'
       body: JSON.stringify({
         model: MODEL,
         max_tokens: 400,
