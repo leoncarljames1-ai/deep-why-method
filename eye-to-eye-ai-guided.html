@@ -209,7 +209,8 @@ function startSession() {
     ? 'Close your eyes for a moment before we begin. Take one breath.\n\nImagine or choose a specific behaviour, fantasy or pattern you want to focus on today. What is it?'
     : 'Close your eyes for a moment before we begin. Take one breath.\n\nPicture yourself in the single moment, recent event or problem that feels the most emotionally intense. Hold that image in full, vivid detail. What is it?';
   addAIMessage(firstMsg);
-  state.history.push({ role: 'assistant', content: firstMsg });
+  // Don't push opening message to history — Anthropic requires user message first
+  state.openingMsg = firstMsg;
 }
 
 function addAIMessage(text) {
@@ -255,7 +256,12 @@ async function sendMessage() {
   if (!text) return;
   input.value = '';
   addUserMessage(text);
-  state.history.push({ role: 'user', content: text });
+  // On first user message, include context of what was asked
+  if (state.history.length === 0 && state.openingMsg) {
+    state.history.push({ role: 'user', content: 'You asked: ' + state.openingMsg + '\n\nMy answer: ' + text });
+  } else {
+    state.history.push({ role: 'user', content: text });
+  }
   const sendBtn = document.getElementById('chat-send');
   sendBtn.disabled = true;
   showTyping();
@@ -272,7 +278,7 @@ async function sendMessage() {
       })
     });
     const data = await response.json();
-    const reply = data.content[0].text;
+    const reply = (data && data.content && data.content[0]) ? data.content[0].text : (data.error || JSON.stringify(data));
     removeTyping();
     addAIMessage(reply);
     state.history.push({ role: 'assistant', content: reply });
