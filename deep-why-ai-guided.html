@@ -1,1 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Why Method — AI Guided</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E;
+    --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF;
+    --light-blue: #A2B4C2; --white: #FFFFFF;
+  }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  .hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 56px 24px 48px; text-align: center; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; font-family: 'Jost', sans-serif; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; color: var(--white); font-size: 36px; margin-bottom: 12px; line-height: 1.2; }
+  .hero p { color: var(--light-blue); font-size: 15px; max-width: 320px; margin: 0 auto; }
+  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: var(--white); }
+  .content { padding: 32px 24px 100px; max-width: 640px; margin: 0 auto; }
+  p { font-size: 15px; color: #3a3a44; margin-bottom: 14px; line-height: 1.75; }
+  .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+  .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; }
+  .note { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .note p { font-size: 13px; color: var(--navy); margin: 0; line-height: 1.7; }
+  .divider { height: 1px; background: var(--grey); margin: 24px 0; }
+  .route-card { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; padding: 22px 20px; margin-bottom: 14px; cursor: pointer; transition: all 0.2s; }
+  .route-card:hover, .route-card.selected { border-color: var(--navy); background: #f0f4f7; }
+  .route-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 4px; }
+  .route-card-sub { font-size: 13px; color: #888; }
+  .start-body { padding: 32px 24px 120px; max-width: 640px; margin: 0 auto; }
+  .chat-wrap { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .chat-messages { padding: 20px; min-height: 300px; max-height: 500px; overflow-y: auto; }
+  .chat-msg { margin-bottom: 20px; }
+  .chat-msg.ai .chat-msg-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .chat-msg.ai .chat-bubble { background: #f0f4f7; border-radius: 0 12px 12px 12px; padding: 14px 18px; color: var(--charcoal); line-height: 1.8; max-width: 92%; font-family: 'Cormorant Garamond', serif; font-size: 17px; }
+  .chat-msg.user { text-align: right; }
+  .chat-msg.user .chat-bubble { background: var(--navy); color: var(--white); border-radius: 12px 0 12px 12px; padding: 12px 16px; font-size: 15px; line-height: 1.75; display: inline-block; max-width: 88%; text-align: left; }
+  .chat-input-wrap { border-top: 1px solid var(--grey); padding: 12px 16px; display: flex; gap: 10px; align-items: flex-end; }
+  .chat-input { flex: 1; border: 1.5px solid var(--grey); border-radius: 8px; padding: 12px 14px; font-family: 'Jost', sans-serif; font-size: 15px; color: var(--charcoal); background: var(--cream); resize: none; min-height: 48px; max-height: 120px; line-height: 1.5; }
+  .chat-input:focus { outline: none; border-color: var(--navy); }
+  .chat-send { flex-shrink: 0; width: 48px; height: 48px; border-radius: 10px; background: var(--navy); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .chat-send:disabled { background: #aaa; cursor: not-allowed; }
+  .chat-send svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .typing { display: flex; gap: 4px; align-items: center; padding: 14px 18px; }
+  .typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--light-blue); animation: bounce 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+</style>
+</head>
+<body>
 
+<!-- SCREEN 0: START -->
+<div id="s0" class="screen active">
+  <div class="hero">
+    <div class="hero-eyebrow">Leon James</div>
+    <h1>Deep Why Method</h1>
+    <p>AI guided. Answer each question out loud in your mind first, then type what came up.</p>
+  </div>
+  <div class="start-body">
+    <div class="instruction">
+      <p>Close your eyes before each question. Feel the answer before you type it. The AI will reflect back what you said and guide you to the next question. Stay honest and present.</p>
+    </div>
+    <p style="margin-bottom:20px; color:#555; margin-top:20px;">Choose your route.</p>
+    <div class="route-card" id="route-cognition" onclick="selectRoute('cognition')">
+      <div class="route-card-title">Start with a belief</div>
+      <div class="route-card-sub">A limiting belief you hold about yourself. You will name it and the AI will guide you down through it.</div>
+    </div>
+    <div class="route-card" id="route-problem" onclick="selectRoute('problem')">
+      <div class="route-card-title">Start with a problem</div>
+      <div class="route-card-sub">A specific behaviour, event or situation that is still sitting with you.</div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-primary" onclick="startSession()">Begin</button>
+  </div>
+</div>
+
+<!-- SCREEN 1: SESSION -->
+<div id="s1" class="screen">
+  <div class="header">
+    <div class="header-eyebrow" id="session-eyebrow">Deep Why Method</div>
+    <div class="header-title" id="session-title">AI Guided Session</div>
+  </div>
+  <div class="content">
+    <div class="chat-wrap">
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-wrap" id="chat-input-wrap">
+        <textarea class="chat-input" id="chat-input" placeholder="Close your eyes. Feel the answer. Then type..." onkeydown="handleKey(event)" rows="2"></textarea>
+        <button class="chat-send" id="chat-send" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="note">
+      <p>Take your time with each answer. Close your eyes. Feel it before you type. There is no rush.</p>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Start over</button>
+  </div>
+</div>
+
+<script>
+const API_URL = 'https://soft-rain-727d.leoncarljames1.workers.dev/';
+const MODEL = 'claude-sonnet-4-6';
+
+let state = { route: '', history: [], whyCount: 0, phase: 'start', openingMsg: '' };
+
+const COGNITION_SYSTEM = `You are Leon James, a Mind Shifting Coach guiding a client through the Deep Why Method — cognition route. You follow this exact script in order. You never skip steps. You never give advice or interpretations beyond what the script asks.
+
+YOUR RULES:
+- After each client answer, reflect back their EXACT words in your response before asking the next question. Use their words, not your interpretation.
+- Keep your responses short. Reflect back, then ask. Nothing more.
+- Follow the script below exactly in order.
+- For the why chain: ask why up to 4 times maximum. After each why answer, decide:
+  * If the answer goes INWARD (about themselves, a feeling, a belief) — reflect and ask why again
+  * If the answer goes OUTWARD (about someone else, what someone did, external events) — say "That points outside of you. Let us move to the next step." and go to the exit question
+  * If the answer is a raw belief statement like "I am worthless" or "I will never be enough" — say "That sounds like the root. Let us move to the next step." and go to the exit question
+  * After 4 whys — move to the exit question regardless
+- After the exit question answers, if the client says the belief still has weight, offer ONE of these: "What would it feel like to let this go?" or "What do you need to feel right now?" or "Why can't you let this go?" — read their answer and either loop back into the why chain or move to Future Identity.
+- Never use em dashes. Never say "you're not broken" or generic coaching phrases.
+- Write in a warm, direct, present tone. Like you are in the room with them.
+
+SCRIPT ORDER:
+1. Ask: "What is the belief you are working with today?"
+2. Ask: "Close your eyes. Hold this belief. Why is this true? Feel the answer before you type it."
+3. [Why chain — up to 4 whys, reflect each answer back before next why]
+4. Exit question: "Who are you without this belief? Close your eyes. Feel what comes before you write it."
+5. Follow up: "Who else?"
+6. Follow up: "What does it feel like?"
+7. Follow up: "What does that feel like?"
+8. Ask: "Now bring all of that together. Feel it spreading through you in every direction — in front and behind, left and right, above and below. Does this belief still have weight?"
+9. [If yes — offer alternative prompt. If no — move to Future Identity]
+10. Future Identity: "Meet the version of you who already lives from this new place. Close your eyes and step into that scene. What does it feel like to be them?"
+11. "What do they want you to know?"
+12. Close: "Take one slow breath. Notice how you feel right now. This is where the work lands."`;
+
+const PROBLEM_SYSTEM = `You are Leon James, a Mind Shifting Coach guiding a client through the Deep Why Method — problem route. You follow this exact script in order. You never skip steps. You never give advice or interpretations beyond what the script asks.
+
+YOUR RULES:
+- After each client answer, reflect back their EXACT words in your response before asking the next question. Use their words, not your interpretation.
+- Keep your responses short. Reflect back, then ask. Nothing more.
+- Follow the script below exactly in order.
+- For the why chain: ask why up to 4 times maximum. After each why answer, decide:
+  * If the answer goes INWARD — reflect and ask why again
+  * If the answer goes OUTWARD (about someone else) — say "That points outside of you. Let us move to the next step." and go to the exit question
+  * If the answer is a raw belief — move to the exit question
+  * After 4 whys — move to the exit question regardless
+- After the exit question, if still has weight, offer an alternative prompt, read the answer and decide to loop or move on.
+- Never use em dashes. Warm, direct, present tone.
+
+SCRIPT ORDER:
+1. Ask: "What is the problem, behaviour or situation you are working with today? Name it in a few words."
+2. Ask: "What image represents the worst part of this? Picture the moment it felt most intense — the way someone looked, what was said, the moment it happened. Hold it fully, then describe it."
+3. Ask: "Why does this affect you? Close your eyes. Hold that image. Feel the answer before you type it."
+4. [Why chain — up to 4 whys, reflect each answer before next why]
+5. Exit question: "Who are you without this problem? Close your eyes. Feel what comes before you write it."
+6. Follow up: "Who else?"
+7. Follow up: "What does it feel like?"
+8. Follow up: "What does that feel like?"
+9. Ask: "Now bring all of that together. Feel it spreading through you in every direction. Does this problem still have weight?"
+10. [If yes — alternative prompt. If no — Future Identity]
+11. Future Identity: "Meet the version of you who is free of this. Step into that scene. What does it feel like?"
+12. "What do they want you to know?"
+13. Close: "Take one slow breath. Notice how you feel right now. This is where the work lands."`;
+
+function selectRoute(route) {
+  state.route = route;
+  document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('route-' + route).classList.add('selected');
+}
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+  if (id === 's0') {
+    state = { route: '', history: [], whyCount: 0, phase: 'start', openingMsg: '' };
+    document.getElementById('chat-messages').innerHTML = '';
+    document.getElementById('chat-input-wrap').style.display = 'flex';
+  }
+}
+
+function startSession() {
+  if (!state.route) return;
+  document.getElementById('session-eyebrow').textContent = state.route === 'cognition' ? 'Cognition Route' : 'Problem Route';
+  goTo('s1');
+  const firstMsg = state.route === 'cognition'
+    ? 'Close your eyes for a moment before we begin. Take one breath.\n\nWhat is the belief you are working with today?'
+    : 'Close your eyes for a moment before we begin. Take one breath.\n\nWhat is the problem, behaviour or situation you are working with today? Name it in a few words.';
+  addAIMessage(firstMsg);
+  state.openingMsg = firstMsg;
+}
+
+function addAIMessage(text) {
+  const wrap = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ai';
+  const safeText = (typeof text === 'string') ? text : JSON.stringify(text);
+  div.innerHTML = `<div class="chat-msg-label">Leon's AI</div><div class="chat-bubble">${safeText.replace(/\n/g, '<br>')}</div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function addUserMessage(text) {
+  const wrap = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg user';
+  div.innerHTML = `<div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function showTyping() {
+  const wrap = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ai';
+  div.id = 'typing-indicator';
+  div.innerHTML = `<div class="chat-msg-label">Leon's AI</div><div class="chat-bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
+  wrap.appendChild(div);
+  wrap.scrollTop = wrap.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  addUserMessage(text);
+
+  if (state.history.length === 0 && state.openingMsg) {
+    state.history.push({ role: 'user', content: 'You asked: ' + state.openingMsg + '\n\nMy answer: ' + text });
+  } else {
+    state.history.push({ role: 'user', content: text });
+  }
+
+  const sendBtn = document.getElementById('chat-send');
+  sendBtn.disabled = true;
+  showTyping();
+
+  try {
+    const system = state.route === 'cognition' ? COGNITION_SYSTEM : PROBLEM_SYSTEM;
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 400,
+        system: system,
+        messages: state.history
+      })
+    });
+
+    const data = await response.json();
+    console.log('API response:', JSON.stringify(data));
+
+    // Safely extract reply as a guaranteed string before any string methods
+    let reply = '';
+    if (data && data.content && Array.isArray(data.content) && data.content[0] && typeof data.content[0].text === 'string') {
+      reply = data.content[0].text;
+    } else if (data && data.error && data.error.message) {
+      reply = 'Error: ' + data.error.message;
+    } else {
+      reply = JSON.stringify(data);
+    }
+
+    removeTyping();
+    addAIMessage(reply);
+    state.history.push({ role: 'assistant', content: reply });
+
+    // reply is guaranteed a string here — no toLowerCase crash possible
+    if (reply.toLowerCase().includes('this is where the work lands')) {
+      document.getElementById('chat-input-wrap').style.display = 'none';
+    }
+
+  } catch(err) {
+    removeTyping();
+    console.log('Fetch error:', err);
+    addAIMessage('Something went wrong. Please try again. (' + (err.message || 'unknown error') + ')');
+  }
+
+  sendBtn.disabled = false;
+}
+</script>
+</body>
+</html>
