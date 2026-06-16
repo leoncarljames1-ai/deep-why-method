@@ -329,7 +329,7 @@
 </div>
 
 <script>
-  const API_URL = 'https://soft-rain-727d.leoncarljames1.workers.dev/';
+  const API_URL = 'https://api.anthropic.com/v1/messages';
   const MODEL = 'claude-sonnet-4-6';
 
   const SYSTEM_BASE = `You are an AI assistant built into the OTOA Programme created by Leon James, a Mind Shifting Coach and NLP practitioner. Leon's work is built on the insight that compulsive behaviour is never the problem — it is what the mind built to cope with deeper drivers: loneliness, anxiety, not feeling enough, lack of purpose, boredom, stress, low self-worth. Clear the drivers and the behaviour loses its reason to exist.
@@ -341,7 +341,7 @@ Write in a direct, warm, honest tone. No generic coaching language. No em dashes
   async function callClaude(systemPrompt, userMessage) {
     const response = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': 'sk-ant-api03-s6kLcyliisOroqhh6h5DhLDf4nQRQdUdjn8ghj5CC35lNt-SyVegq04joDj7-Y4dn83GrpBCdosttVdYeRZUA-tCG31QAA', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
       body: JSON.stringify({
         model: MODEL,
         max_tokens: 1000,
