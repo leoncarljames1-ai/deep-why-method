@@ -1,1 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Support Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E;
+    --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF;
+    --light-blue: #A2B4C2; --white: #FFFFFF;
+  }
+  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .screen { display: none; }
+  .screen.active { display: block; }
 
+  /* HEADER */
+  .hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 48px 24px 40px; text-align: center; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; font-family: 'Jost', sans-serif; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 500; color: var(--white); margin-bottom: 12px; line-height: 1.2; }
+  .hero p { color: var(--light-blue); font-size: 15px; max-width: 320px; margin: 0 auto; }
+  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: var(--white); }
+
+  /* CONTENT */
+  .content { padding: 32px 24px 100px; max-width: 640px; margin: 0 auto; }
+  p { font-size: 15px; color: #3a3a44; margin-bottom: 14px; line-height: 1.75; }
+  .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+  .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; }
+  .note { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
+  .note p { font-size: 13px; color: var(--navy); margin: 0; line-height: 1.7; }
+  .divider { height: 1px; background: var(--grey); margin: 24px 0; }
+
+  /* TOOL SELECTION CARDS */
+  .tool-card { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; padding: 20px 20px; margin-bottom: 14px; cursor: pointer; transition: all 0.2s; display: flex; align-items: flex-start; gap: 16px; }
+  .tool-card:hover { border-color: var(--navy); background: #f0f4f7; }
+  .tool-icon { flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px; background: var(--navy); display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .tool-icon svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .tool-text { flex: 1; }
+  .tool-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 4px; }
+  .tool-sub { font-size: 13px; color: #888; line-height: 1.5; }
+
+  /* FIELDS */
+  .field-group { margin-bottom: 20px; }
+  .field-label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; }
+  .field-sub { display: block; font-size: 13px; color: #888; margin-bottom: 10px; font-style: italic; }
+  textarea { width: 100%; border: 1.5px solid var(--grey); border-radius: 8px; padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 15px; color: var(--charcoal); background: var(--white); resize: none; transition: border-color 0.2s; -webkit-appearance: none; min-height: 120px; }
+  textarea:focus { outline: none; border-color: var(--navy); }
+  textarea.short { min-height: 70px; }
+
+  /* AI RESPONSE */
+  .ai-response { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; padding: 20px; margin-top: 20px; display: none; }
+  .ai-response-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 12px; font-weight: 500; font-family: 'Jost', sans-serif; }
+  .ai-response-text { font-size: 15px; color: var(--charcoal); line-height: 1.85; white-space: pre-wrap; }
+  .ai-loading { font-size: 14px; color: var(--light-blue); font-style: italic; }
+
+  /* CHAT (Future Identity Builder) */
+  .chat-wrap { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; padding: 0; margin-top: 20px; overflow: hidden; }
+  .chat-messages { padding: 20px; min-height: 200px; max-height: 420px; overflow-y: auto; }
+  .chat-msg { margin-bottom: 16px; }
+  .chat-msg.ai .chat-bubble { background: #EEF3F7; border-radius: 0 12px 12px 12px; padding: 12px 16px; font-size: 14px; color: var(--charcoal); line-height: 1.75; max-width: 88%; }
+  .chat-msg.user { text-align: right; }
+  .chat-msg.user .chat-bubble { background: var(--navy); color: var(--white); border-radius: 12px 0 12px 12px; padding: 12px 16px; font-size: 14px; line-height: 1.75; display: inline-block; max-width: 88%; text-align: left; }
+  .chat-msg-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; margin-bottom: 5px; }
+  .chat-input-wrap { border-top: 1px solid var(--grey); padding: 12px 16px; display: flex; gap: 10px; }
+  .chat-input { flex: 1; border: 1.5px solid var(--grey); border-radius: 8px; padding: 10px 14px; font-family: 'Jost', sans-serif; font-size: 14px; color: var(--charcoal); background: var(--cream); resize: none; min-height: 44px; max-height: 100px; }
+  .chat-input:focus { outline: none; border-color: var(--navy); }
+  .chat-send { flex-shrink: 0; width: 44px; height: 44px; border-radius: 10px; background: var(--navy); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .chat-send svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* PORTRAIT OUTPUT */
+  .portrait-box { background: var(--navy); border-radius: 12px; padding: 24px; margin-top: 20px; display: none; }
+  .portrait-box-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; font-family: 'Jost', sans-serif; }
+  .portrait-box-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--white); line-height: 1.8; font-style: italic; white-space: pre-wrap; }
+  .copy-btn { background: var(--gold); color: var(--navy); border: none; border-radius: 8px; padding: 10px 20px; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; margin-top: 16px; width: 100%; }
+
+  /* NAV */
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .mt-4 { margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<!-- SCREEN 0: SELECTION -->
+<div id="s0" class="screen active">
+  <div class="hero">
+    <div class="hero-eyebrow">OTOA Programme</div>
+    <h1>AI Support Tools</h1>
+    <p>Choose a tool based on where you are right now.</p>
+  </div>
+  <div class="content">
+    <div class="tool-card" onclick="goTo('s-resistance')">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M12 2L12 6M12 18L12 22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12L6 12M18 12L22 12M4.93 19.07L7.76 16.24M16.24 7.76L19.07 4.93"/></svg></div>
+      <div class="tool-text">
+        <div class="tool-title">Resistance Reader</div>
+        <div class="tool-sub">Something is stopping you. This identifies what it is, what is underneath it, and exactly where to take it in the method.</div>
+      </div>
+    </div>
+    <div class="tool-card" onclick="goTo('s-standards')">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+      <div class="tool-text">
+        <div class="tool-title">Standards Checker</div>
+        <div class="tool-sub">Paste your standards. Get honest feedback on which are real decisions and which are still wishes.</div>
+      </div>
+    </div>
+    <div class="tool-card" onclick="goTo('s-pattern')">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+      <div class="tool-text">
+        <div class="tool-title">Pattern Spotter</div>
+        <div class="tool-sub">Describe three situations where you felt the same way. This identifies the pattern, the belief underneath, and where to start in the method.</div>
+      </div>
+    </div>
+    <div class="tool-card" onclick="goTo('s-progress')">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+      <div class="tool-text">
+        <div class="tool-title">Progress Reflection</div>
+        <div class="tool-sub">Paste two or three session summaries. This reads them together and tells you what has shifted, what is still moving, and what the next layer is.</div>
+      </div>
+    </div>
+    <div class="tool-card" onclick="goTo('s-identity')">
+      <div class="tool-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div class="tool-text">
+        <div class="tool-title">Future Identity Builder</div>
+        <div class="tool-sub">Answer a few questions in a conversation. This builds a first draft of your identity portrait in your own words.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     RESISTANCE READER
+     ============================================================ -->
+<div id="s-resistance" class="screen">
+  <div class="header"><div class="header-eyebrow">AI Support Tool</div><div class="header-title">Resistance Reader</div></div>
+  <div class="content">
+    <p>Resistance shows up in many forms. Procrastination, avoidance, burnout, wanting to give up, not starting, feeling overwhelmed. Whatever it looks like on the surface, something specific is driving it.</p>
+    <p>This tool works in three layers. Name the resistance, find what is underneath it, then get a clear starting point for the method.</p>
+
+    <div class="divider"></div>
+
+    <div class="field-group">
+      <label class="field-label">Layer 1 — What is the resistance showing up as?</label>
+      <span class="field-sub">Be specific. What exactly is happening? Procrastination on what? Avoiding what? Wanting to give up on what?</span>
+      <textarea id="r-surface" class="short" placeholder="e.g. I keep putting off starting the method. Every time I sit down to do it I find something else to do..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Layer 2 — What is the internal dialogue?</label>
+      <span class="field-sub">What are you saying to yourself? The voice that says I can't, I won't, what's the point, it won't work, who am I to want this.</span>
+      <textarea id="r-dialogue" class="short" placeholder="The voice says things like..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Layer 3 — What identity feels like it is running?</label>
+      <span class="field-sub">Is there a version of you that feels more real right now than the one you are building? The one who gives up, who is not enough, who does not follow through.</span>
+      <textarea id="r-identity" class="short" placeholder="The identity running is..."></textarea>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%; margin-top:8px;" onclick="runResistance()" id="r-btn">Identify and redirect</button>
+
+    <div class="ai-response" id="r-response">
+      <div class="ai-response-label">What this is and where to take it</div>
+      <div class="ai-response-text" id="r-response-text"><span class="ai-loading">Reading your resistance...</span></div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     STANDARDS CHECKER
+     ============================================================ -->
+<div id="s-standards" class="screen">
+  <div class="header"><div class="header-eyebrow">AI Support Tool</div><div class="header-title">Standards Checker</div></div>
+  <div class="content">
+    <p>Paste your standards from the Identity Upgrade below. This will read each one and give you honest feedback on whether it is a real decision you are living from or still a wish you are working toward.</p>
+
+    <div class="instruction">
+      <p>Copy your standards from the Identity Upgrade tool and paste them here. Include all of them, not just the ones you feel good about.</p>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Your standards</label>
+      <textarea id="st-input" placeholder="Paste your standards here..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Anything you want to add about how you have been living them?</label>
+      <span class="field-sub">Optional. Any context about where you are at with these.</span>
+      <textarea id="st-context" class="short" placeholder="Optional context..."></textarea>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%; margin-top:8px;" onclick="runStandards()" id="st-btn">Check my standards</button>
+
+    <div class="ai-response" id="st-response">
+      <div class="ai-response-label">Feedback on your standards</div>
+      <div class="ai-response-text" id="st-response-text"><span class="ai-loading">Reading your standards...</span></div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     PATTERN SPOTTER
+     ============================================================ -->
+<div id="s-pattern" class="screen">
+  <div class="header"><div class="header-eyebrow">AI Support Tool</div><div class="header-title">Pattern Spotter</div></div>
+  <div class="content">
+    <p>Describe three different situations from your life where you felt the same way. They do not need to be related. The pattern connecting them is what this tool is looking for.</p>
+
+    <div class="field-group">
+      <label class="field-label">Situation 1</label>
+      <span class="field-sub">What happened. How you felt. What you told yourself.</span>
+      <textarea id="ps-1" class="short" placeholder="Situation 1..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Situation 2</label>
+      <textarea id="ps-2" class="short" placeholder="Situation 2..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Situation 3</label>
+      <textarea id="ps-3" class="short" placeholder="Situation 3..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What feeling connects all three?</label>
+      <span class="field-sub">If you can name it. If not, leave it and the tool will identify it.</span>
+      <textarea id="ps-feeling" class="short" placeholder="Optional — the feeling is..."></textarea>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%; margin-top:8px;" onclick="runPattern()" id="ps-btn">Spot the pattern</button>
+
+    <div class="ai-response" id="ps-response">
+      <div class="ai-response-label">The pattern and where to take it</div>
+      <div class="ai-response-text" id="ps-response-text"><span class="ai-loading">Reading the pattern...</span></div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     PROGRESS REFLECTION
+     ============================================================ -->
+<div id="s-progress" class="screen">
+  <div class="header"><div class="header-eyebrow">AI Support Tool</div><div class="header-title">Progress Reflection</div></div>
+  <div class="content">
+    <p>Paste two or three session summaries from your previous sessions. This reads them together and tells you what has shifted, what is still moving, and what the next layer appears to be.</p>
+
+    <div class="instruction">
+      <p>Copy your session summaries from the Deep Why Method or Eye to Eye tool using the Copy button at the end of each session. Paste them all below separated by a blank line.</p>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">Your session summaries</label>
+      <span class="field-sub">Paste two or three summaries here. Oldest first.</span>
+      <textarea id="pr-input" placeholder="Paste your session summaries here..."></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">What are you noticing between sessions?</label>
+      <span class="field-sub">Optional. Any shifts in how you feel, behave or think since starting the work.</span>
+      <textarea id="pr-context" class="short" placeholder="Between sessions I have noticed..."></textarea>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%; margin-top:8px;" onclick="runProgress()" id="pr-btn">Reflect on my progress</button>
+
+    <div class="ai-response" id="pr-response">
+      <div class="ai-response-label">What your sessions show</div>
+      <div class="ai-response-text" id="pr-response-text"><span class="ai-loading">Reading your sessions...</span></div>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     FUTURE IDENTITY BUILDER
+     ============================================================ -->
+<div id="s-identity" class="screen">
+  <div class="header"><div class="header-eyebrow">AI Support Tool</div><div class="header-title">Future Identity Builder</div></div>
+  <div class="content">
+    <p>Answer a few questions in the conversation below. Based on your answers, this will build a first draft of your identity portrait in present tense — who you are becoming, in your own words.</p>
+    <p>You can copy the portrait at the end and refine it in the Identity Upgrade tool.</p>
+
+    <div class="note">
+      <p>There are no right answers. Write honestly. The more specific you are, the more the portrait will actually sound like you.</p>
+    </div>
+
+    <div class="chat-wrap">
+      <div class="chat-messages" id="fi-messages">
+        <div class="chat-msg ai">
+          <div class="chat-msg-label">Leon's AI</div>
+          <div class="chat-bubble">Let's build your identity portrait together. I will ask you a few questions and use your answers to create a first draft you can work with.\n\nFirst question: What is the one thing that has shifted most since you started this work? It does not need to be dramatic. Even a small but real shift.</div>
+        </div>
+      </div>
+      <div class="chat-input-wrap">
+        <textarea class="chat-input" id="fi-input" placeholder="Type your answer..." rows="1" onkeydown="handleChatKey(event)"></textarea>
+        <button class="chat-send" onclick="sendChat()">
+          <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="portrait-box" id="fi-portrait">
+      <div class="portrait-box-label">Your identity portrait — first draft</div>
+      <div class="portrait-box-text" id="fi-portrait-text"></div>
+      <button class="copy-btn" onclick="copyPortrait()">Copy portrait</button>
+    </div>
+  </div>
+  <div class="nav-fixed">
+    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+  </div>
+</div>
+
+<script>
+  const API_KEY = 'YOUR_API_KEY_HERE';
+  const API_URL = 'https://api.anthropic.com/v1/messages';
+  const MODEL = 'claude-sonnet-4-6';
+
+  const SYSTEM_BASE = `You are an AI assistant built into the OTOA Programme created by Leon James, a Mind Shifting Coach and NLP practitioner. Leon's work is built on the insight that compulsive behaviour is never the problem — it is what the mind built to cope with deeper drivers: loneliness, anxiety, not feeling enough, lack of purpose, boredom, stress, low self-worth. Clear the drivers and the behaviour loses its reason to exist.
+
+The programme uses three main tools: the Deep Why Method (follows a belief or problem down through why questions to its root), the Eye to Eye Method (finds the belief behind a behaviour through three layers: surface, craving, unmet need), and Future Identity (steps into who you are once the clearing is done).
+
+Write in a direct, warm, honest tone. No generic coaching language. No em dashes. No phrases like "you're not broken" or "it's not because you are". Be specific. Be honest. Talk to one person directly using you and your.`;
+
+  async function callClaude(systemPrompt, userMessage) {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userMessage }]
+      })
+    });
+    const data = await response.json();
+    return data.content[0].text;
+  }
+
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function val(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+  }
+
+  function setLoading(btnId, responseId, isLoading) {
+    const btn = document.getElementById(btnId);
+    const box = document.getElementById(responseId);
+    if (isLoading) {
+      btn.disabled = true;
+      btn.textContent = 'Working...';
+      box.style.display = 'block';
+    } else {
+      btn.disabled = false;
+    }
+  }
+
+  // ── RESISTANCE READER ──
+  async function runResistance() {
+    const surface = val('r-surface');
+    const dialogue = val('r-dialogue');
+    const identity = val('r-identity');
+    if (!surface) return;
+
+    setLoading('r-btn', 'r-response', true);
+    document.getElementById('r-btn').textContent = 'Working...';
+
+    const system = SYSTEM_BASE + `\n\nYou are the Resistance Reader. Your job is to do three things in one response:
+
+1. NAME THE RESISTANCE — Identify specifically what type of resistance this is. Is it a limiting belief running in the background? A fear of failure or success? A protection mechanism? An identity conflict between who they are and who they are becoming? A secondary belief blocking the work? Be precise and name it clearly.
+
+2. WHAT IS UNDERNEATH — Tell them what is actually driving it. The belief or identity statement running underneath the surface behaviour. Frame it as: "What is running underneath this is..." and name the belief or identity statement directly.
+
+3. WHERE TO TAKE IT — Give them one clear instruction. Which tool to use, which route to take, and what to use as their starting point. Be specific. If it is a belief send them to the Deep Why Method cognition route and name the closest cognition. If it is a problem or pattern send them to the Deep Why problem route. If it is about behaviour or addiction send them to Eye to Eye. If it is about identity send them to the Identity Upgrade.
+
+Keep the response focused and direct. Three clear sections. No fluff.`;
+
+    const message = `Surface resistance: ${surface}\n\nInternal dialogue: ${dialogue}\n\nIdentity running: ${identity}`;
+
+    try {
+      const result = await callClaude(system, message);
+      document.getElementById('r-response-text').textContent = result;
+      document.getElementById('r-btn').textContent = 'Identify and redirect';
+    } catch(e) {
+      document.getElementById('r-response-text').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('r-btn').textContent = 'Identify and redirect';
+    }
+    document.getElementById('r-btn').disabled = false;
+  }
+
+  // ── STANDARDS CHECKER ──
+  async function runStandards() {
+    const standards = val('st-input');
+    if (!standards) return;
+
+    setLoading('st-btn', 'st-response', true);
+    document.getElementById('st-btn').textContent = 'Working...';
+
+    const system = SYSTEM_BASE + `\n\nYou are the Standards Checker. Read the standards provided and give honest, direct feedback on each one.
+
+For each standard tell them:
+- Whether it reads as a real decision already made or a wish/goal they are working toward
+- If it is vague, call it out and suggest how to make it specific enough to actually live by
+- If it is strong, say so briefly
+
+Be honest. The point of this tool is not to make them feel good about their standards but to make their standards real. If a standard is still a wish, say so clearly and suggest how to sharpen it into a decision.
+
+Format your response standard by standard. Be concise on each one. End with one overall observation about what their standards reveal about where they are in the work.`;
+
+    const message = `My standards:\n\n${standards}${val('st-context') ? '\n\nContext: ' + val('st-context') : ''}`;
+
+    try {
+      const result = await callClaude(system, message);
+      document.getElementById('st-response-text').textContent = result;
+      document.getElementById('st-btn').textContent = 'Check my standards';
+    } catch(e) {
+      document.getElementById('st-response-text').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('st-btn').textContent = 'Check my standards';
+    }
+    document.getElementById('st-btn').disabled = false;
+  }
+
+  // ── PATTERN SPOTTER ──
+  async function runPattern() {
+    const s1 = val('ps-1');
+    const s2 = val('ps-2');
+    const s3 = val('ps-3');
+    if (!s1 || !s2 || !s3) return;
+
+    setLoading('ps-btn', 'ps-response', true);
+    document.getElementById('ps-btn').textContent = 'Working...';
+
+    const system = SYSTEM_BASE + `\n\nYou are the Pattern Spotter. Read the three situations and do three things:
+
+1. IDENTIFY THE PATTERN — What connects all three situations? Name it specifically. Not a vague theme but the precise emotional pattern.
+
+2. NAME THE BELIEF — What limiting belief is running underneath all three? Frame it as a cognition — a first-person statement like "I am not enough" or "I cannot trust people" or "I will always be rejected." Be specific.
+
+3. WHERE TO START — Tell them exactly where to take this in the method. If the belief is on the cognition list, name it. If it is not, tell them to use the custom belief entry. Tell them which tool and which route.
+
+Be direct. Three clear sections. This person needs clarity, not exploration.`;
+
+    const message = `Situation 1: ${s1}\n\nSituation 2: ${s2}\n\nSituation 3: ${s3}${val('ps-feeling') ? '\n\nThe feeling I notice: ' + val('ps-feeling') : ''}`;
+
+    try {
+      const result = await callClaude(system, message);
+      document.getElementById('ps-response-text').textContent = result;
+      document.getElementById('ps-btn').textContent = 'Spot the pattern';
+    } catch(e) {
+      document.getElementById('ps-response-text').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('ps-btn').textContent = 'Spot the pattern';
+    }
+    document.getElementById('ps-btn').disabled = false;
+  }
+
+  // ── PROGRESS REFLECTION ──
+  async function runProgress() {
+    const summaries = val('pr-input');
+    if (!summaries) return;
+
+    setLoading('pr-btn', 'pr-response', true);
+    document.getElementById('pr-btn').textContent = 'Working...';
+
+    const system = SYSTEM_BASE + `\n\nYou are the Progress Reflection tool. Read the session summaries provided and give a coaching-style reflection that covers three things:
+
+1. WHAT HAS SHIFTED — What does the work show has genuinely moved? Look at the roots found, the beliefs cleared, the why chains, the exit question answers, the future self descriptions. Name what appears to have shifted.
+
+2. WHAT IS STILL MOVING — What has not yet fully cleared? What patterns or beliefs appear across multiple sessions? What is the work still working on?
+
+3. THE NEXT LAYER — Based on what you can see, what appears to be the next thing to work on? Name it specifically. If possible, suggest which tool and which route.
+
+Write this as a coaching observation, not a report. Warm, direct, honest. Talk to one person. Make them feel seen in the work they have done.`;
+
+    const message = `Session summaries:\n\n${summaries}${val('pr-context') ? '\n\nWhat I have noticed between sessions: ' + val('pr-context') : ''}`;
+
+    try {
+      const result = await callClaude(system, message);
+      document.getElementById('pr-response-text').textContent = result;
+      document.getElementById('pr-btn').textContent = 'Reflect on my progress';
+    } catch(e) {
+      document.getElementById('pr-response-text').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('pr-btn').textContent = 'Reflect on my progress';
+    }
+    document.getElementById('pr-btn').disabled = false;
+  }
+
+  // ── FUTURE IDENTITY BUILDER (CHAT) ──
+  let chatHistory = [];
+  let questionCount = 0;
+  const questions = [
+    "What is the one thing that has shifted most since you started this work? It does not need to be dramatic. Even a small but real shift.",
+    "How do you carry yourself differently now compared to before? What is different about your presence or the way you move through the world?",
+    "What have you stopped doing, tolerating or accepting that you used to?",
+    "What do you want to move toward? Not a goal. A feeling, a way of being, a version of your life.",
+    "In one sentence — who are you becoming? Write it in the present tense as if it is already true."
+  ];
+
+  const IDENTITY_SYSTEM = SYSTEM_BASE + `\n\nYou are the Future Identity Builder. You are having a short conversation to gather the material needed to write someone's identity portrait. You have been given a sequence of questions to ask. Ask one question at a time. After they answer, respond briefly with one or two sentences acknowledging what they said, then ask the next question. Do not give coaching advice during the conversation. Just gather. After the fifth answer, tell them you have what you need and that their portrait is being generated. Keep your responses short and warm during the conversation.`;
+
+  function addMessage(role, text) {
+    const wrap = document.getElementById('fi-messages');
+    const div = document.createElement('div');
+    div.className = `chat-msg ${role}`;
+    div.innerHTML = `${role === 'ai' ? '<div class="chat-msg-label">Leon\'s AI</div>' : ''}<div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>`;
+    wrap.appendChild(div);
+    wrap.scrollTop = wrap.scrollHeight;
+  }
+
+  function handleChatKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+  }
+
+  async function sendChat() {
+    const input = document.getElementById('fi-input');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+
+    addMessage('user', text);
+    chatHistory.push({ role: 'user', content: text });
+    questionCount++;
+
+    if (questionCount >= questions.length) {
+      // Generate portrait
+      addMessage('ai', "I have everything I need. Building your portrait now...");
+      try {
+        const portraitSystem = SYSTEM_BASE + `\n\nBased on the conversation answers below, write a first-draft identity portrait for this person. Write it in first person present tense as if they are already living from this identity. Use their exact words and phrases where possible. Make it feel personal and specific to them, not generic. Two to three paragraphs. Warm, direct, grounded. This is who they are becoming — written as already true.`;
+        const portraitMsg = chatHistory.map(m => `${m.role === 'user' ? 'Their answer' : 'Question'}: ${m.content}`).join('\n\n');
+        const portrait = await callClaude(portraitSystem, portraitMsg);
+        document.getElementById('fi-portrait-text').textContent = portrait;
+        document.getElementById('fi-portrait').style.display = 'block';
+        document.querySelector('.chat-input-wrap').style.display = 'none';
+      } catch(e) {
+        addMessage('ai', 'Something went wrong generating your portrait. Please try again.');
+      }
+      return;
+    }
+
+    // Continue conversation
+    try {
+      const nextQ = questions[questionCount];
+      chatHistory.push({ role: 'assistant', content: nextQ });
+      const response = await callClaude(IDENTITY_SYSTEM, JSON.stringify(chatHistory));
+      addMessage('ai', response);
+      chatHistory.push({ role: 'assistant', content: response });
+    } catch(e) {
+      addMessage('ai', 'Something went wrong. Please try again.');
+    }
+  }
+
+  function copyPortrait() {
+    const text = document.getElementById('fi-portrait-text').textContent;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied';
+        setTimeout(() => btn.textContent = 'Copy portrait', 2000);
+      });
+    }
+  }
+</script>
+</body>
+</html>
