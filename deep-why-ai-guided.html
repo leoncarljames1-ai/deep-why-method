@@ -34,12 +34,11 @@
   .route-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 4px; }
   .route-card-sub { font-size: 13px; color: #888; }
   .start-body { padding: 32px 24px 120px; max-width: 640px; margin: 0 auto; }
-  /* CHAT */
   .chat-wrap { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
   .chat-messages { padding: 20px; min-height: 300px; max-height: 500px; overflow-y: auto; }
   .chat-msg { margin-bottom: 20px; }
   .chat-msg.ai .chat-msg-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
-  .chat-msg.ai .chat-bubble { background: #f0f4f7; border-radius: 0 12px 12px 12px; padding: 14px 18px; font-size: 15px; color: var(--charcoal); line-height: 1.8; max-width: 92%; font-family: 'Cormorant Garamond', serif; font-size: 17px; }
+  .chat-msg.ai .chat-bubble { background: #f0f4f7; border-radius: 0 12px 12px 12px; padding: 14px 18px; color: var(--charcoal); line-height: 1.8; max-width: 92%; font-family: 'Cormorant Garamond', serif; font-size: 17px; }
   .chat-msg.user { text-align: right; }
   .chat-msg.user .chat-bubble { background: var(--navy); color: var(--white); border-radius: 12px 0 12px 12px; padding: 12px 16px; font-size: 15px; line-height: 1.75; display: inline-block; max-width: 88%; text-align: left; }
   .chat-input-wrap { border-top: 1px solid var(--grey); padding: 12px 16px; display: flex; gap: 10px; align-items: flex-end; }
@@ -53,7 +52,6 @@
   .typing span:nth-child(2) { animation-delay: 0.2s; }
   .typing span:nth-child(3) { animation-delay: 0.4s; }
   @keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
-  /* NAV */
   .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
   .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
   .btn-primary { background: var(--navy); color: var(--white); }
@@ -117,6 +115,7 @@
 <script>
 const API_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL = 'claude-sonnet-4-6';
+const API_KEY = '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';
 
 let state = { route: '', history: [], whyCount: 0, phase: 'start', openingMsg: '' };
 
@@ -199,12 +198,10 @@ function startSession() {
   if (!state.route) return;
   document.getElementById('session-eyebrow').textContent = state.route === 'cognition' ? 'Cognition Route' : 'Problem Route';
   goTo('s1');
-  // First AI message
   const firstMsg = state.route === 'cognition'
     ? 'Close your eyes for a moment before we begin. Take one breath.\n\nWhat is the belief you are working with today?'
     : 'Close your eyes for a moment before we begin. Take one breath.\n\nWhat is the problem, behaviour or situation you are working with today? Name it in a few words.';
   addAIMessage(firstMsg);
-  // Don't push opening message to history — Anthropic requires user message first
   state.openingMsg = firstMsg;
 }
 
@@ -253,7 +250,7 @@ async function sendMessage() {
   input.value = '';
 
   addUserMessage(text);
-  // On first user message, include context of what was asked
+
   if (state.history.length === 0 && state.openingMsg) {
     state.history.push({ role: 'user', content: 'You asked: ' + state.openingMsg + '\n\nMy answer: ' + text });
   } else {
@@ -268,7 +265,12 @@ async function sendMessage() {
     const system = state.route === 'cognition' ? COGNITION_SYSTEM : PROBLEM_SYSTEM;
     const response = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': 'sk-ant-api03-s6kLcyliisOroqhh6h5DhLDf4nQRQdUdjn8ghj5CC35lNt-SyVegq04joDj7-Y4dn83GrpBCdosttVdYeRZUA-tCG31QAA', 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
       body: JSON.stringify({
         model: MODEL,
         max_tokens: 400,
@@ -276,22 +278,35 @@ async function sendMessage() {
         messages: state.history
       })
     });
+
     const data = await response.json();
     console.log('API response:', JSON.stringify(data));
-    const reply = (data && data.content && data.content[0]) ? data.content[0].text : (data.error || JSON.stringify(data));
+
+    // Safely extract reply as a guaranteed string before any string methods
+    let reply = '';
+    if (data && data.content && Array.isArray(data.content) && data.content[0] && typeof data.content[0].text === 'string') {
+      reply = data.content[0].text;
+    } else if (data && data.error && data.error.message) {
+      reply = 'Error: ' + data.error.message;
+    } else {
+      reply = JSON.stringify(data);
+    }
+
     removeTyping();
     addAIMessage(reply);
     state.history.push({ role: 'assistant', content: reply });
 
-    // Check if session is complete
+    // reply is guaranteed a string here — no toLowerCase crash possible
     if (reply.toLowerCase().includes('this is where the work lands')) {
       document.getElementById('chat-input-wrap').style.display = 'none';
     }
-  } catch(e) {
+
+  } catch(err) {
     removeTyping();
-    console.log('Fetch error:', e);
-    addAIMessage('Error detail: ' + (e.message || JSON.stringify(e)));
+    console.log('Fetch error:', err);
+    addAIMessage('Something went wrong. Please try again. (' + (err.message || 'unknown error') + ')');
   }
+
   sendBtn.disabled = false;
 }
 </script>
