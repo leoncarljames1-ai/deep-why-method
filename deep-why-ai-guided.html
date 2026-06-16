@@ -281,7 +281,7 @@ async function sendMessage() {
     }
   } catch(e) {
     removeTyping();
-    addAIMessage('Something went wrong. Please check your connection and try again.');
+    addAIMessage('Error: ' + (e.message || JSON.stringify(e)));
   }
   sendBtn.disabled = false;
 }
