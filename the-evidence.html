@@ -248,18 +248,13 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;min-height:1
         <label class="ev-field-label">Your email</label>
         <input id="ev-email-input" type="email" class="ev-input" placeholder="Enter your email address">
       </div>
-      <button class="ev-btn-navy" onclick="sendOTP()">Send Code</button>
+      <button class="ev-btn-navy" onclick="sendLink()">Send Sign-in Link</button>
       <p id="ev-email-err" class="ev-auth-err">Something went wrong. Check your email and try again.</p>
     </div>
-    <div id="ev-auth-otp" class="ev-auth-section">
-      <p class="ev-otp-hint">A 6-digit code has been sent to your email. Enter it below.</p>
-      <div class="ev-field-group">
-        <label class="ev-field-label">Your code</label>
-        <input id="ev-otp-input" type="text" class="ev-input" placeholder="000000" maxlength="6" style="letter-spacing:6px;font-size:20px;text-align:center;">
-      </div>
-      <button class="ev-btn-navy" onclick="verifyOTP()">Verify</button>
-      <button class="ev-resend-link" onclick="resendOTP()">Resend code</button>
-      <p id="ev-otp-err" class="ev-auth-err">That code did not work. Check it and try again.</p>
+    <div id="ev-auth-sent" class="ev-auth-section">
+      <p class="ev-otp-hint" style="text-align:center;margin-bottom:24px;">A sign-in link has been sent to your email. Open it and you will be brought straight back here and logged in.</p>
+      <p style="font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;opacity:.4;text-align:center;line-height:1.6;">Check your spam folder if it does not arrive within a minute.</p>
+      <button class="ev-resend-link" onclick="sendLink()" style="margin-top:20px;">Resend link</button>
     </div>
   </div>
 </div>
@@ -695,34 +690,21 @@ async function saveData() {
 // ==============================
 // AUTH
 // ==============================
-let otpEmail = '';
+const REDIRECT_URL = 'https://leoncarljames1-ai.github.io/deep-why-method/the-evidence.html';
 
-async function sendOTP() {
+async function sendLink() {
   const email = g('ev-email-input').value.trim();
-  if (!email) { return; }
+  if (!email) return;
+  g('ev-email-err').style.display = 'none';
   try {
-    const { error } = await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true } });
+    const { error } = await sb.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: true, emailRedirectTo: REDIRECT_URL }
+    });
     if (error) { g('ev-email-err').style.display = 'block'; return; }
-    otpEmail = email;
     g('ev-auth-email').classList.remove('active');
-    g('ev-auth-otp').classList.add('active');
+    g('ev-auth-sent').classList.add('active');
   } catch(e) { g('ev-email-err').style.display = 'block'; }
-}
-
-async function verifyOTP() {
-  const token = g('ev-otp-input').value.trim();
-  if (!token) return;
-  try {
-    const { data, error } = await sb.auth.verifyOtp({ email: otpEmail, token, type: 'email' });
-    if (error) { g('ev-otp-err').style.display = 'block'; return; }
-    currentUser = data.user;
-    await loadData();
-    afterAuth();
-  } catch(e) { g('ev-otp-err').style.display = 'block'; }
-}
-
-async function resendOTP() {
-  await sb.auth.signInWithOtp({ email: otpEmail, options: { shouldCreateUser: true } });
 }
 
 async function doSignOut() {
@@ -731,9 +713,8 @@ async function doSignOut() {
   state = JSON.parse(JSON.stringify(defaultState));
   showView('ev-auth');
   g('ev-auth-email').classList.add('active');
-  g('ev-auth-otp').classList.remove('active');
+  g('ev-auth-sent').classList.remove('active');
   g('ev-email-input').value = '';
-  g('ev-otp-input').value = '';
 }
 
 function afterAuth() {
@@ -1299,6 +1280,16 @@ function uid(){ return Date.now().toString(36)+Math.random().toString(36).substr
 // INIT
 // ==============================
 window.addEventListener('load', async function(){
+  // Listen for auth state changes - handles magic link return
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session && !currentUser) {
+      currentUser = session.user;
+      await loadData();
+      afterAuth();
+      g('ev-loading').style.display = 'none';
+    }
+  });
+
   const { data: { session } } = await sb.auth.getSession();
   if(session){
     currentUser = session.user;
@@ -1309,7 +1300,6 @@ window.addEventListener('load', async function(){
   }
   g('ev-loading').style.display = 'none';
 
-  // Slider init
   setTimeout(function(){
     const ms = g('ev-daily-mood-slider');
     if(ms) styleSlider(ms, ms.value);
