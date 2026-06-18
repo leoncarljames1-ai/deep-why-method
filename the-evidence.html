@@ -1287,25 +1287,30 @@ function uid(){ return Date.now().toString(36)+Math.random().toString(36).substr
 // INIT
 // ==============================
 window.addEventListener('load', async function(){
-  // Listen for auth state changes - handles magic link return
   sb.auth.onAuthStateChange(async (event, session) => {
-    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session && !currentUser) {
-      currentUser = session.user;
-      await loadData();
-      afterAuth();
+    if (event === 'INITIAL_SESSION') {
+      if (session) {
+        currentUser = session.user;
+        await loadData();
+        afterAuth();
+      } else {
+        showView('ev-auth');
+      }
+      g('ev-loading').style.display = 'none';
+    } else if (event === 'SIGNED_IN' && session) {
+      if (!currentUser) {
+        currentUser = session.user;
+        await loadData();
+        afterAuth();
+        g('ev-loading').style.display = 'none';
+      }
+    } else if (event === 'SIGNED_OUT') {
+      currentUser = null;
+      state = JSON.parse(JSON.stringify(defaultState));
+      showView('ev-auth');
       g('ev-loading').style.display = 'none';
     }
   });
-
-  const { data: { session } } = await sb.auth.getSession();
-  if(session){
-    currentUser = session.user;
-    await loadData();
-    afterAuth();
-  } else {
-    showView('ev-auth');
-  }
-  g('ev-loading').style.display = 'none';
 
   setTimeout(function(){
     const ms = g('ev-daily-mood-slider');
