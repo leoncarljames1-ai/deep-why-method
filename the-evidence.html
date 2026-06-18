@@ -176,8 +176,7 @@
 #ev-milestone-modal .ev-milestone-msg{font-family:'Cormorant Garamond',serif;font-size:28px;font-style:italic;color:#F2BE54;line-height:1.35;margin-bottom:18px;}
 #ev-milestone-modal .ev-milestone-sub{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.6;margin-bottom:32px;}
 
-#ev-loading-screen{position:fixed;inset:0;background:#FAF8F4;z-index:99998;display:flex;align-items:center;justify-content:center;}
-#ev-loading-screen p{font-family:'Cormorant Garamond',serif;font-size:28px;font-style:italic;color:#163E5B;opacity:.4;}
+
 
 @media(max-width:600px){
   #ev-wrap .ev-setup-header h1{font-size:38px;}
@@ -188,8 +187,6 @@
   #ev-wrap .ev-action-card.ev-standard-card{grid-column:auto;}
 }
 </style>
-
-<div id="ev-loading-screen"><p>Loading...</p></div>
 
 <div id="ev-wrap">
 
@@ -646,7 +643,6 @@ window.evDownloadPDF=function(){
 evLoad();
 if(evState.setup){evShowView('ev-dashboard');evRenderDashboard();const p=(evState.standards||[]).find(s=>s.checkBack&&!s.followUpResult);if(p&&(Date.now()-new Date(p.date).getTime())/3600000>=24){evOpenFollowup(p.id);}}
 else{evShowView('ev-setup');}
-evG('ev-loading-screen').style.display='none';
 setTimeout(function(){const ms=evG('ev-daily-mood-slider');if(ms)evStyleSlider(ms,ms.value);EV_DIMS.forEach(d=>{const s=evG('ev-ew-s-'+d);if(s)evStyleSlider(s,s.value);});const ts=evG('ev-ew-s-this');if(ts)evStyleSlider(ts,ts.value);},200);
 })();
 </script>
