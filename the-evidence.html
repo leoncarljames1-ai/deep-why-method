@@ -701,10 +701,17 @@ async function sendLink() {
       email,
       options: { shouldCreateUser: true, emailRedirectTo: REDIRECT_URL }
     });
-    if (error) { g('ev-email-err').style.display = 'block'; return; }
+    if (error) {
+      g('ev-email-err').textContent = error.message || 'Something went wrong.';
+      g('ev-email-err').style.display = 'block';
+      return;
+    }
     g('ev-auth-email').classList.remove('active');
     g('ev-auth-sent').classList.add('active');
-  } catch(e) { g('ev-email-err').style.display = 'block'; }
+  } catch(e) {
+    g('ev-email-err').textContent = e.message || 'Something went wrong.';
+    g('ev-email-err').style.display = 'block';
+  }
 }
 
 async function doSignOut() {
