@@ -12,11 +12,11 @@
 body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-view{display:none;}
 .ev-view.active{display:block;}
-
 .ev-btn-primary{width:100%;padding:16px;background:#163E5B;color:#F2BE54;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;border:none;border-radius:3px;cursor:pointer;}
 .ev-btn-ghost{padding:8px 14px;background:transparent;border:1px solid rgba(255,255,255,0.22);border-radius:2px;color:rgba(255,255,255,0.7);font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
 .ev-btn-gold{padding:9px 18px;background:#F2BE54;border:none;border-radius:2px;color:#163E5B;font-family:'Jost',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
 .ev-btn-outline{padding:14px;background:transparent;border:1px solid rgba(22,62,91,0.2);border-radius:3px;color:#163E5B;font-family:'Jost',sans-serif;font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;}
+.ev-btn-danger{padding:7px 12px;background:transparent;border:1px solid rgba(192,57,43,0.25);border-radius:2px;color:#c0392b;font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
 .ev-input,.ev-textarea{width:100%;background:#fff;border:1px solid rgba(22,62,91,0.18);border-radius:3px;padding:13px 16px;font-family:'Jost',sans-serif;font-size:14px;color:#163E5B;outline:none;}
 .ev-input:focus,.ev-textarea:focus{border-color:#C8963E;}
 .ev-textarea{resize:vertical;min-height:90px;line-height:1.65;}
@@ -28,14 +28,10 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-slider{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:2px;background:rgba(22,62,91,0.12);outline:none;cursor:pointer;}
 .ev-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#C8963E;border:3px solid #163E5B;cursor:pointer;}
 .ev-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#C8963E;border:3px solid #163E5B;cursor:pointer;}
-
-/* TOPBAR */
 .ev-topbar{background:#163E5B;display:flex;align-items:center;justify-content:space-between;padding:13px 22px;gap:10px;}
 .ev-topbar-brand{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:rgba(255,255,255,.7);}
 .ev-topbar-brand strong{color:#F2BE54;font-weight:600;}
 .ev-topbar-actions{display:flex;gap:8px;align-items:center;}
-
-/* SETUP */
 #ev-setup{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:60px 22px 100px;}
 .ev-setup-hd{text-align:center;margin-bottom:52px;max-width:500px;}
 .ev-setup-hd h1{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:500;color:#163E5B;margin-bottom:14px;line-height:1.1;}
@@ -49,8 +45,6 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-restore-toggle button{background:none;border:none;font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;opacity:.4;cursor:pointer;text-decoration:underline;}
 #ev-restore-box{display:none;margin-top:16px;}
 .ev-restore-err{font-family:'Jost',sans-serif;font-size:12px;color:#c0392b;margin-top:8px;display:none;}
-
-/* DASHBOARD */
 .ev-why-banner{background:#163E5B;padding:32px 22px;text-align:center;}
 .ev-why-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.45);margin-bottom:12px;}
 .ev-why-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;font-weight:400;color:#F2BE54;line-height:1.45;max-width:660px;margin:0 auto;}
@@ -59,16 +53,12 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-stat:last-child{border-right:none;}
 .ev-stat-n{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#163E5B;line-height:1;margin-bottom:4px;}
 .ev-stat-l{font-family:'Jost',sans-serif;font-size:9px;color:#163E5B;opacity:.38;letter-spacing:1px;text-transform:uppercase;}
-
-/* CURRENT WEEK STRIP */
 .ev-this-week{background:#fff;border-bottom:1px solid rgba(22,62,91,.08);padding:16px 22px;}
 .ev-this-week-title{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#163E5B;opacity:.35;margin-bottom:10px;}
 .ev-this-week-items{display:flex;gap:8px;flex-wrap:wrap;}
 .ev-tw-item{padding:5px 10px;border-radius:20px;font-family:'Jost',sans-serif;font-size:11px;font-weight:400;}
 .ev-tw-done{background:rgba(39,174,96,.1);color:#27ae60;}
 .ev-tw-pending{background:rgba(22,62,91,.06);color:#163E5B;opacity:.5;}
-
-/* FOUNDATION */
 .ev-found{background:#fff;border-bottom:1px solid rgba(22,62,91,.08);}
 .ev-found-toggle{width:100%;padding:16px 22px;background:none;border:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#163E5B;opacity:.5;}
 .ev-found-body{display:none;padding:0 22px 22px;}
@@ -76,33 +66,28 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-found-item{margin-bottom:14px;}
 .ev-found-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8963E;margin-bottom:4px;}
 .ev-found-val{font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;line-height:1.55;}
-
-/* NUDGE */
+.ev-found-actions{display:flex;flex-direction:column;gap:6px;padding-top:12px;margin-top:4px;border-top:1px solid rgba(22,62,91,0.07);}
+.ev-found-action-btn{background:none;border:none;font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;opacity:.45;cursor:pointer;text-decoration:underline;padding:4px 0;text-align:left;}
 .ev-nudge{background:#163E5B;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .ev-nudge p{font-family:'Jost',sans-serif;font-size:12px;color:rgba(255,255,255,.7);line-height:1.4;}
 .ev-nudge p strong{color:#F2BE54;}
 .ev-nudge button{flex-shrink:0;padding:8px 14px;background:#F2BE54;border:none;border-radius:2px;font-family:'Jost',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#163E5B;cursor:pointer;}
-
-/* CHART */
 .ev-chart-sec{background:#163E5B;padding:28px 22px;}
 .ev-chart-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.45);margin-bottom:6px;}
 .ev-chart-ttl{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#fff;margin-bottom:20px;}
 .ev-chart-wrap{position:relative;height:220px;}
 .ev-chart-empty{height:220px;display:flex;align-items:center;justify-content:center;}
 .ev-chart-empty p{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,.25);font-style:italic;text-align:center;}
-
-/* ACTION CARDS */
 .ev-actions{padding:24px 22px;background:#FAF8F4;}
 .ev-actions-ttl{font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#163E5B;opacity:.35;margin-bottom:14px;}
 .ev-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .ev-action-card{padding:18px 16px;background:#fff;border:1px solid rgba(22,62,91,.1);border-radius:4px;cursor:pointer;text-align:left;}
-.ev-action-card.ev-std-card{grid-column:1/-1;background:#163E5B;border:none;}
+.ev-action-card.ev-std-card{background:#163E5B;border:none;}
+.ev-action-card.ev-std-view-card{background:#0f2d42;border:none;}
 .ev-action-card-name{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;color:#163E5B;margin-bottom:3px;}
-.ev-std-card .ev-action-card-name{color:#F2BE54;font-size:19px;}
+.ev-std-card .ev-action-card-name,.ev-std-view-card .ev-action-card-name{color:#F2BE54;}
 .ev-action-card-desc{font-family:'Jost',sans-serif;font-size:11px;font-weight:300;color:#163E5B;opacity:.45;}
-.ev-std-card .ev-action-card-desc{color:rgba(255,255,255,.35);}
-
-/* HISTORY */
+.ev-std-card .ev-action-card-desc,.ev-std-view-card .ev-action-card-desc{color:rgba(255,255,255,.35);}
 .ev-history{padding:28px 22px;}
 .ev-history-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#C8963E;margin-bottom:6px;}
 .ev-history-ttl{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#163E5B;margin-bottom:20px;}
@@ -124,8 +109,17 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-det-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#163E5B;opacity:.35;margin-bottom:4px;}
 .ev-det-txt{font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;line-height:1.5;}
 .ev-done{opacity:.35;text-decoration:line-through;}
-
-/* CHECK-IN VIEWS (no fixed positioning) */
+.ev-sow-entry{background:#FAF8F4;border-radius:3px;padding:12px 14px;margin-bottom:14px;}
+.ev-sow-entry-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8963E;margin-bottom:8px;}
+.ev-sow-entry-item{font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;line-height:1.55;margin-bottom:4px;opacity:.75;}
+.ev-daily-entries{margin-top:14px;padding-top:14px;border-top:1px solid rgba(22,62,91,.06);}
+.ev-daily-entries-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#163E5B;opacity:.35;margin-bottom:10px;}
+.ev-daily-entry{background:#FAF8F4;border-radius:3px;padding:12px 14px;margin-bottom:8px;}
+.ev-daily-entry-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.ev-daily-entry-date{font-family:'Jost',sans-serif;font-size:10px;color:#163E5B;opacity:.4;}
+.ev-daily-entry-mood{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#C8963E;}
+.ev-daily-entry-journal{font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;line-height:1.55;opacity:.7;}
+.ev-daily-entry-del{background:none;border:none;font-family:'Jost',sans-serif;font-size:10px;color:#c0392b;opacity:.5;cursor:pointer;padding:0;text-decoration:underline;}
 .ev-checkin-view{background:#FAF8F4;min-height:100vh;}
 .ev-checkin-topbar{background:#163E5B;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;}
 .ev-checkin-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:#F2BE54;}
@@ -146,16 +140,6 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-prev-comm input[type=checkbox]{width:18px;height:18px;accent-color:#C8963E;cursor:pointer;flex-shrink:0;}
 .ev-prev-comm label{font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;line-height:1.4;}
 .ev-checkin-actions{display:flex;gap:12px;padding-top:24px;border-top:1px solid rgba(22,62,91,.08);margin-top:32px;}
-
-/* THE STANDARD */
-.ev-std-anchor{background:#163E5B;border-radius:4px;padding:20px;margin-bottom:24px;}
-.ev-std-anchor-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(242,190,84,.5);margin-bottom:10px;}
-.ev-std-id{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:#F2BE54;line-height:1.4;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08);}
-.ev-std-id em{color:#fff;font-style:normal;font-weight:600;}
-.ev-std-nn span{display:block;font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,.55);padding:3px 0;}
-.ev-std-this{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);}
-.ev-std-this-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(242,190,84,.4);margin-bottom:6px;}
-.ev-std-this-items span{display:block;font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:#F2BE54;opacity:.7;line-height:1.8;}
 .ev-q-block{margin-bottom:22px;}
 .ev-q-text{font-family:'Jost',sans-serif;font-size:15px;color:#163E5B;line-height:1.5;margin-bottom:12px;}
 .ev-q-row{display:flex;gap:8px;}
@@ -172,13 +156,27 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-checkback{display:flex;align-items:center;gap:12px;margin-top:18px;padding:14px 16px;background:#fff;border:1px solid rgba(22,62,91,.1);border-radius:3px;}
 .ev-checkback input[type=checkbox]{width:18px;height:18px;accent-color:#C8963E;}
 .ev-checkback label{font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;}
-
-/* STANDARD RESULT */
-#ev-std-result{background:#163E5B;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center;}
+#ev-std-result{background:#163E5B;}
+.ev-std-result-inner{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 28px 80px;text-align:center;}
 .ev-std-result-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:rgba(250,248,244,.7);line-height:1.6;max-width:480px;margin-bottom:40px;}
 .ev-std-result-quote strong{color:#F2BE54;font-style:italic;font-weight:500;}
-
-/* FOLLOW-UP VIEW */
+.ev-std-result-btns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;}
+.ev-std-record{background:#fff;border:1px solid rgba(22,62,91,.1);border-radius:4px;margin-bottom:12px;overflow:hidden;}
+.ev-std-record-hd{padding:16px;border-bottom:1px solid rgba(22,62,91,.06);}
+.ev-std-record-date{font-family:'Jost',sans-serif;font-size:10px;color:#163E5B;opacity:.35;margin-bottom:6px;}
+.ev-std-record-situation{font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;line-height:1.5;}
+.ev-std-record-body{padding:14px 16px;}
+.ev-std-record-q{font-family:'Jost',sans-serif;font-size:11px;color:#163E5B;opacity:.45;margin-bottom:3px;}
+.ev-std-record-a{font-family:'Jost',sans-serif;font-size:12px;font-weight:500;color:#163E5B;margin-bottom:10px;text-transform:capitalize;}
+.ev-std-record-sentence{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:#163E5B;opacity:.7;border-top:1px solid rgba(22,62,91,.06);padding-top:12px;margin-top:4px;line-height:1.5;}
+.ev-std-record-sentence strong{color:#C8963E;font-style:italic;}
+.ev-std-record-footer{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1px solid rgba(22,62,91,.06);background:#FAF8F4;}
+.ev-std-held-badge{font-family:'Jost',sans-serif;font-size:10px;font-weight:500;padding:4px 8px;border-radius:20px;}
+.ev-std-held-badge.held{background:rgba(39,174,96,.1);color:#27ae60;}
+.ev-std-held-badge.did-not{background:rgba(22,62,91,.06);color:#163E5B;opacity:.5;}
+.ev-std-held-badge.ongoing{background:rgba(200,150,62,.1);color:#C8963E;}
+.ev-std-held-badge.pending{background:rgba(22,62,91,.04);color:#163E5B;opacity:.35;}
+.ev-std-empty{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:#163E5B;opacity:.35;font-style:italic;padding:40px 22px;text-align:center;}
 .ev-fu-inner{max-width:500px;margin:0 auto;padding:60px 28px;}
 .ev-fu-lbl{font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8963E;margin-bottom:10px;}
 .ev-fu-sentence{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:#163E5B;line-height:1.4;margin-bottom:6px;}
@@ -189,36 +187,45 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-fu-btn.held{border-left:3px solid #27ae60;}
 .ev-fu-btn.didnot{border-left:3px solid rgba(22,62,91,.2);}
 .ev-fu-btn.ongoing{border-left:3px solid #C8963E;}
-
-/* TOAST */
 #ev-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#163E5B;color:#F2BE54;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:12px 24px;border-radius:3px;display:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(22,62,91,.3);}
-
-/* MILESTONE */
+#ev-confirm{display:none;position:fixed;inset:0;background:rgba(15,45,66,.7);z-index:500;align-items:center;justify-content:center;padding:24px;}
+#ev-confirm.show{display:flex;}
+.ev-confirm-box{background:#fff;border-radius:6px;padding:28px 24px;max-width:320px;width:100%;}
+.ev-confirm-msg{font-family:'Jost',sans-serif;font-size:14px;color:#163E5B;line-height:1.5;margin-bottom:20px;}
+.ev-confirm-btns{display:flex;gap:10px;}
+.ev-confirm-yes{flex:1;padding:12px;background:#c0392b;color:#fff;border:none;border-radius:3px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;}
+.ev-confirm-no{flex:1;padding:12px;background:transparent;border:1px solid rgba(22,62,91,.2);border-radius:3px;font-family:'Jost',sans-serif;font-size:11px;color:#163E5B;cursor:pointer;}
 #ev-milestone{display:none;position:fixed;inset:0;background:rgba(15,45,66,.93);z-index:200;align-items:center;justify-content:center;padding:24px;}
 #ev-milestone.show{display:flex;}
 .ev-ms-box{background:#163E5B;border:1px solid rgba(242,190,84,.22);border-radius:6px;padding:44px 36px;max-width:420px;width:100%;text-align:center;}
 .ev-ms-tag{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.4);margin-bottom:18px;}
 .ev-ms-msg{font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;color:#F2BE54;line-height:1.35;margin-bottom:16px;}
 .ev-ms-sub{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.6;margin-bottom:28px;}
-
 @media(max-width:560px){
   .ev-setup-hd h1{font-size:36px;}
   .ev-why-text{font-size:18px;}
   .ev-scores{grid-template-columns:repeat(3,1fr);}
   .ev-checkin-actions{flex-direction:column;}
   .ev-action-grid{grid-template-columns:1fr;}
-  .ev-action-card.ev-std-card{grid-column:auto;}
 }
 </style>
 </head>
 <body>
-
 <div id="ev-toast"></div>
+<div id="ev-confirm">
+  <div class="ev-confirm-box">
+    <div class="ev-confirm-msg" id="confirm-msg"></div>
+    <div class="ev-confirm-btns">
+      <button class="ev-confirm-yes" id="confirm-yes">Delete</button>
+      <button class="ev-confirm-no" onclick="confirmClose()">Cancel</button>
+    </div>
+  </div>
+</div>
 
 <!-- SETUP -->
 <div id="ev-setup" class="ev-view">
   <div class="ev-setup-hd">
-    <span class="ev-eyebrow"> THE OTOA Programme</span>
+    <span class="ev-eyebrow">The OTOA Programme</span>
     <h1>The Evidence</h1>
     <p>Set your foundation once. Everything you track from here is proof of who you are becoming.</p>
   </div>
@@ -253,10 +260,7 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 <div id="ev-dashboard" class="ev-view">
   <div class="ev-topbar">
     <div class="ev-topbar-brand">The <strong>Evidence</strong></div>
-    <div class="ev-topbar-actions">
-      <button class="ev-btn-ghost" onclick="setupEdit()">Setup</button>
-      <button class="ev-btn-gold" onclick="pdfDownload()">PDF</button>
-    </div>
+    <div class="ev-topbar-actions"><button class="ev-btn-gold" onclick="pdfDownload()">PDF</button></div>
   </div>
   <div class="ev-why-banner"><p class="ev-why-ey">Your Big Why</p><p class="ev-why-text" id="d-why"></p></div>
   <div class="ev-stats">
@@ -276,9 +280,10 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
       <div class="ev-found-item"><div class="ev-found-lbl">Non-Negotiables</div><div class="ev-found-val" id="f-nn"></div></div>
       <div class="ev-found-item"><div class="ev-found-lbl">Intentions</div><div class="ev-found-val" id="f-intentions"></div></div>
       <div class="ev-found-item"><div class="ev-found-lbl">Your This</div><div class="ev-found-val" id="f-this" style="color:#C8963E;"></div></div>
-      <div style="padding-top:12px;margin-top:4px;border-top:1px solid rgba(22,62,91,0.07);display:flex;align-items:center;justify-content:space-between;">
-        <span style="font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#163E5B;opacity:.3;">Backup</span>
-        <button id="copy-btn" onclick="codeCopy()" style="background:none;border:none;font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;opacity:.4;cursor:pointer;text-decoration:underline;padding:0;">Copy restore code</button>
+      <div class="ev-found-actions">
+        <button class="ev-found-action-btn" onclick="goTo('ev-edit-found');editFoundPrep()">Edit Foundations</button>
+        <button class="ev-found-action-btn" onclick="codeCopy()">Copy restore code</button>
+        <button class="ev-found-action-btn" onclick="goTo('ev-restore-dash')">Restore a previous record</button>
       </div>
     </div>
   </div>
@@ -286,7 +291,7 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
   <div class="ev-chart-sec">
     <p class="ev-chart-ey">Your Progress</p>
     <h2 class="ev-chart-ttl">The Evidence</h2>
-    <div id="chart-empty" class="ev-chart-empty"><p>Your chart will appear after your first End of Week check-in.</p></div>
+    <div id="chart-empty" class="ev-chart-empty"><p>Your chart will update as you log check-ins.</p></div>
     <div id="chart-wrap" class="ev-chart-wrap" style="display:none;"><canvas id="ev-chart"></canvas></div>
   </div>
   <div class="ev-actions">
@@ -295,18 +300,19 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
       <div class="ev-action-card" onclick="goTo('ev-start')"><div class="ev-action-card-name">Start of Week</div><div class="ev-action-card-desc">Set intentions and commitments</div></div>
       <div class="ev-action-card" onclick="goTo('ev-daily')"><div class="ev-action-card-name">Daily Check-in</div><div class="ev-action-card-desc">Mood and open journal</div></div>
       <div class="ev-action-card" onclick="goTo('ev-end')"><div class="ev-action-card-name">End of Week</div><div class="ev-action-card-desc">Rate the week and reflect</div></div>
-      <div class="ev-action-card ev-std-card" onclick="goTo('ev-std')"><div class="ev-action-card-name">The Standard</div><div class="ev-action-card-desc">Hold the decision against who you are</div></div>
+      <div class="ev-action-card ev-std-card" onclick="goTo('ev-std');stdPrep()"><div class="ev-action-card-name">Log a Standard</div><div class="ev-action-card-desc">Hold the decision against who you are</div></div>
+      <div class="ev-action-card ev-std-view-card" onclick="goTo('ev-std-list');stdListRender()"><div class="ev-action-card-name">View Standards</div><div class="ev-action-card-desc">Every moment you have logged</div></div>
     </div>
   </div>
   <div class="ev-history">
     <p class="ev-history-ey">Your Journey</p>
     <h2 class="ev-history-ttl">Weekly Record</h2>
-    <p class="ev-history-empty" id="hist-empty">No completed weeks yet. Finish your first End of Week check-in to see your record here.</p>
+    <p class="ev-history-empty" id="hist-empty">No check-ins yet. Start logging to see your record here.</p>
     <div id="hist-list"></div>
   </div>
 </div>
 
-<!-- START OF WEEK VIEW -->
+<!-- START OF WEEK -->
 <div id="ev-start" class="ev-view ev-checkin-view">
   <div class="ev-checkin-topbar"><span class="ev-checkin-title">Start of Week</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
   <div class="ev-checkin-inner">
@@ -323,7 +329,7 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
   </div>
 </div>
 
-<!-- DAILY CHECK-IN VIEW -->
+<!-- DAILY CHECK-IN -->
 <div id="ev-daily" class="ev-view ev-checkin-view">
   <div class="ev-checkin-topbar"><span class="ev-checkin-title">Daily Check-in</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
   <div class="ev-checkin-inner">
@@ -337,7 +343,7 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
   </div>
 </div>
 
-<!-- END OF WEEK VIEW -->
+<!-- END OF WEEK -->
 <div id="ev-end" class="ev-view ev-checkin-view">
   <div class="ev-checkin-topbar"><span class="ev-checkin-title">End of Week</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
   <div class="ev-checkin-inner">
@@ -363,17 +369,11 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
   </div>
 </div>
 
-<!-- THE STANDARD VIEW -->
+<!-- THE STANDARD -->
 <div id="ev-std" class="ev-view ev-checkin-view">
   <div class="ev-checkin-topbar"><span class="ev-checkin-title">The Standard</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
   <div class="ev-checkin-inner">
     <div class="ev-checkin-head"><h2>The Standard</h2><p>Hold the decision against who you said you are.</p></div>
-    <div class="ev-std-anchor">
-      <div class="ev-std-anchor-lbl">Who you said you are</div>
-      <div class="ev-std-id" id="std-identity"></div>
-      <div class="ev-std-nn" id="std-nn"></div>
-      <div class="ev-std-this" id="std-this"></div>
-    </div>
     <div class="ev-block"><div class="ev-block-ttl">What is the decision or situation?</div><textarea id="std-situation" class="ev-textarea" placeholder="Write what you are facing right now."></textarea></div>
     <div class="ev-block"><div class="ev-block-ttl">The questions</div>
       <div class="ev-q-block"><p class="ev-q-text">Does this align with who I am becoming?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q1','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q1','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q1','not-sure',this)">Not sure</button></div></div>
@@ -392,16 +392,25 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
   </div>
 </div>
 
-<!-- STANDARD RESULT VIEW -->
+<!-- STANDARD RESULT -->
 <div id="ev-std-result" class="ev-view">
   <div class="ev-checkin-topbar" style="background:#0f2d42;"><span class="ev-checkin-title" style="font-size:14px;opacity:.6;">Logged</span></div>
-  <div style="background:#163E5B;min-height:calc(100vh - 48px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center;">
+  <div class="ev-std-result-inner">
     <p class="ev-std-result-quote" id="std-result-sentence"></p>
-    <button class="ev-btn-gold" style="padding:14px 36px;" onclick="goTo('ev-dashboard');dashRender();">Continue</button>
+    <div class="ev-std-result-btns">
+      <button class="ev-btn-gold" style="padding:14px 36px;" onclick="goTo('ev-std-list');stdListRender()">View All Standards</button>
+      <button class="ev-btn-ghost" style="padding:14px 36px;" onclick="goTo('ev-dashboard');dashRender()">Back to Dashboard</button>
+    </div>
   </div>
 </div>
 
-<!-- FOLLOW-UP VIEW -->
+<!-- VIEW STANDARDS LIST -->
+<div id="ev-std-list" class="ev-view ev-checkin-view">
+  <div class="ev-checkin-topbar"><span class="ev-checkin-title">Standards</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+  <div class="ev-checkin-inner" style="padding-top:28px;"><div id="std-list-body"></div></div>
+</div>
+
+<!-- FOLLOW-UP -->
 <div id="ev-fu" class="ev-view ev-checkin-view">
   <div class="ev-checkin-topbar"><span class="ev-checkin-title">Check Back</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">Skip</button></div>
   <div class="ev-fu-inner">
@@ -414,6 +423,40 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
       <button class="ev-fu-btn didnot" onclick="fuSave('did-not')">I did not hold it.</button>
       <button class="ev-fu-btn ongoing" onclick="fuSave('ongoing')">It is still ongoing.</button>
     </div>
+  </div>
+</div>
+
+<!-- EDIT FOUNDATIONS -->
+<div id="ev-edit-found" class="ev-view ev-checkin-view">
+  <div class="ev-checkin-topbar"><span class="ev-checkin-title">Edit Foundations</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+  <div class="ev-checkin-inner" style="padding-top:32px;">
+    <div class="ev-group"><label class="ev-label">Your Big Why</label><textarea id="ef-why" class="ev-textarea"></textarea></div>
+    <div class="ev-group"><label class="ev-label">Your Big Vision</label><textarea id="ef-vision" class="ev-textarea"></textarea></div>
+    <div class="ev-group"><label class="ev-label">The Identity You Are Becoming</label><div class="ev-id-row"><span class="ev-id-pre">I am</span><input id="ef-identity" type="text" class="ev-input"></div></div>
+    <div class="ev-group"><label class="ev-label">Your Non-Negotiables</label>
+      <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-nn1" type="text" class="ev-input"></div>
+      <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-nn2" type="text" class="ev-input"></div>
+      <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-nn3" type="text" class="ev-input"></div>
+    </div>
+    <div class="ev-group"><label class="ev-label">Your Intentions</label><textarea id="ef-intentions" class="ev-textarea"></textarea></div>
+    <div class="ev-group"><label class="ev-label">Your This</label>
+      <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-this1" type="text" class="ev-input"></div>
+      <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-this2" type="text" class="ev-input"></div>
+      <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-this3" type="text" class="ev-input"></div>
+    </div>
+    <button class="ev-btn-primary" onclick="editFoundSave()">Update Foundations</button>
+    <div style="margin-top:12px;"><button class="ev-btn-outline" style="width:100%;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+  </div>
+</div>
+
+<!-- RESTORE FROM DASHBOARD -->
+<div id="ev-restore-dash" class="ev-view ev-checkin-view">
+  <div class="ev-checkin-topbar"><span class="ev-checkin-title">Restore Record</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+  <div class="ev-checkin-inner" style="padding-top:40px;">
+    <p class="ev-hint" style="margin-bottom:20px;">Paste the restore code from the bottom of your downloaded PDF to recover a previous record.</p>
+    <textarea id="dash-restore" class="ev-textarea" style="min-height:80px;font-size:11px;font-family:monospace;" placeholder="Paste restore code here..."></textarea>
+    <button class="ev-btn-primary" style="margin-top:12px;" onclick="restoreFromDash()">Restore My Record</button>
+    <p class="ev-restore-err" id="dash-restore-err">That code did not work. Copy it exactly from the bottom of your PDF.</p>
   </div>
 </div>
 
@@ -431,8 +474,7 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 const KEY='ev3';
 const DIMS=['alignment','clarity','mood','productivity','momentum'];
 const MS={1:{tag:'Week 1 Complete',msg:'You showed up. That already puts you ahead of who you were.',sub:'Most people wait. You started.'},4:{tag:'Four Weeks In',msg:'A month of showing up for yourself. That is not nothing.',sub:'Look at where you started. Look at where you are now.'},8:{tag:'Eight Weeks',msg:'Two months of doing the work. The person who started this is not the person reading this.',sub:'Download your record. You have earned it.'},12:{tag:'Twelve Weeks',msg:'Three months. Most people talk about changing. You are the evidence.',sub:'Keep going.'}};
-
-let chart=null,qa={},fuId=null;
+let chart=null,qa={},fuId=null,confirmCb=null;
 let S={setup:null,weeks:[],standards:[],milestones:{}};
 
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
@@ -443,19 +485,22 @@ function g(id){return document.getElementById(id);}
 function v(id){return(g(id).value||'').trim();}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function fmt(iso){try{return new Date(iso).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}catch(e){return '';}}
+function fmtFull(iso){try{return new Date(iso).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});}catch(e){return '';}}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).substr(2);}
 function sl(el,val){const p=((val-1)/9)*100;el.style.background='linear-gradient(to right,#C8963E '+p+'%,rgba(22,62,91,0.12) '+p+'%)';}
-
 function toast(msg){const t=g('ev-toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
 
+function confirmDo(msg,cb){g('confirm-msg').textContent=msg;confirmCb=cb;g('ev-confirm').classList.add('show');}
+function confirmClose(){g('ev-confirm').classList.remove('show');confirmCb=null;}
+g('confirm-yes').onclick=function(){g('ev-confirm').classList.remove('show');if(confirmCb)confirmCb();confirmCb=null;};
+
 function goTo(id){
-  document.querySelectorAll('.ev-view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.ev-view').forEach(vv=>vv.classList.remove('active'));
   g(id).classList.add('active');
   window.scrollTo(0,0);
   if(id==='ev-start')startPrep();
   if(id==='ev-daily')dailyPrep();
   if(id==='ev-end')endPrep();
-  if(id==='ev-std')stdPrep();
 }
 
 function setupSave(){
@@ -464,16 +509,25 @@ function setupSave(){
   S.setup={bigWhy:why,bigVision:v('s-vision'),identity:id,nonNegotiables:[v('s-nn1'),v('s-nn2'),v('s-nn3')].filter(Boolean),intentions:v('s-intentions'),yourThis:[v('s-this1'),v('s-this2'),v('s-this3')].filter(Boolean),startedAt:new Date().toISOString()};
   save();goTo('ev-dashboard');dashRender();
 }
-function setupEdit(){
+function editFoundPrep(){
   const s=S.setup;
-  g('s-why').value=s.bigWhy||'';g('s-vision').value=s.bigVision||'';g('s-identity').value=s.identity||'';
-  const nn=s.nonNegotiables||[];g('s-nn1').value=nn[0]||'';g('s-nn2').value=nn[1]||'';g('s-nn3').value=nn[2]||'';
-  g('s-intentions').value=s.intentions||'';
-  const th=s.yourThis||[];g('s-this1').value=th[0]||'';g('s-this2').value=th[1]||'';g('s-this3').value=th[2]||'';
-  goTo('ev-setup');
+  g('ef-why').value=s.bigWhy||'';g('ef-vision').value=s.bigVision||'';g('ef-identity').value=s.identity||'';
+  const nn=s.nonNegotiables||[];g('ef-nn1').value=nn[0]||'';g('ef-nn2').value=nn[1]||'';g('ef-nn3').value=nn[2]||'';
+  g('ef-intentions').value=s.intentions||'';
+  const th=s.yourThis||[];g('ef-this1').value=th[0]||'';g('ef-this2').value=th[1]||'';g('ef-this3').value=th[2]||'';
 }
-function restoreToggle(){const b=g('ev-restore-box');b.style.display=b.style.display==='none'?'block':'none';}
+function editFoundSave(){
+  const why=v('ef-why'),id=v('ef-identity');
+  if(!why||!id){alert('Big Why and Identity are required.');return;}
+  S.setup.bigWhy=why;S.setup.bigVision=v('ef-vision');S.setup.identity=id;
+  S.setup.nonNegotiables=[v('ef-nn1'),v('ef-nn2'),v('ef-nn3')].filter(Boolean);
+  S.setup.intentions=v('ef-intentions');
+  S.setup.yourThis=[v('ef-this1'),v('ef-this2'),v('ef-this3')].filter(Boolean);
+  save();toast('Foundations updated');goTo('ev-dashboard');dashRender();
+}
+function restoreToggle(){const b=g('ev-restore-box');b.style.display=b.style.display==='none'||b.style.display===''?'block':'none';}
 function restoreRun(){const p=fromCode(v('s-restore'));if(!p||!p.setup){g('restore-err').style.display='block';return;}S=p;save();goTo('ev-dashboard');dashRender();}
+function restoreFromDash(){const p=fromCode(v('dash-restore'));if(!p||!p.setup){g('dash-restore-err').style.display='block';return;}S=p;save();toast('Record restored');goTo('ev-dashboard');dashRender();}
 
 function dashRender(){
   const s=S.setup;if(!s)return;
@@ -499,60 +553,139 @@ function thisWeekRender(){
   const strip=g('this-week-strip'),items=g('this-week-items');
   if(!open&&!S.weeks.length){strip.style.display='none';return;}
   strip.style.display='block';
-  const checks=[];
-  const hasStart=open&&open.startEntry;
   const dailyCount=open?(open.checkIns||[]).length:0;
-  checks.push({label:'Start of Week',done:!!hasStart});
-  checks.push({label:'Daily check-ins ('+dailyCount+')',done:dailyCount>=3});
-  checks.push({label:'End of Week',done:open?!!open.endEntry:false});
-  items.innerHTML=checks.map(c=>'<span class="ev-tw-item '+(c.done?'ev-tw-done':'ev-tw-pending')+'">'+(c.done?'&#10003; ':'')+c.label+'</span>').join('');
+  const hasStart=open&&open.startEntry;
+  items.innerHTML=[
+    '<span class="ev-tw-item '+(hasStart?'ev-tw-done':'ev-tw-pending')+'">'+(hasStart?'&#10003; ':'')+'Start of Week</span>',
+    '<span class="ev-tw-item '+(dailyCount>=3?'ev-tw-done':'ev-tw-pending')+'">'+(dailyCount>=3?'&#10003; ':'')+'Daily check-ins ('+dailyCount+')</span>',
+    '<span class="ev-tw-item '+(open&&open.endEntry?'ev-tw-done':'ev-tw-pending')+'">'+(open&&open.endEntry?'&#10003; ':'')+'End of Week</span>'
+  ].join('');
 }
 
 function avgPct(e){if(!e||!e.dimensions)return 0;const d=e.dimensions;return Math.round((d.alignment+d.clarity+d.mood+d.productivity+d.momentum)/5*10);}
-function foundToggle(){const b=g('found-body');b.classList.toggle('open');g('found-chev').textContent=b.classList.contains('open')?'▲':'▼';}
+function foundToggle(){const b=g('found-body');b.classList.toggle('open');g('found-chev').textContent=b.classList.contains('open')?'&#9650;':'&#9660;';}
 function nudgeRender(){
   const a=g('nudge-area'),p=(S.standards||[]).find(s=>s.checkBack&&!s.followUpResult);
   if(p){const d=Math.floor((Date.now()-new Date(p.date).getTime())/86400000);if(d>=1)a.innerHTML='<div class="ev-nudge"><p><strong>'+d+' day'+(d!==1?'s':'')+' ago</strong> you logged a Standard moment. How did it go?</p><button onclick="fuOpen(\''+p.id+'\')">Check In</button></div>';}
   else a.innerHTML='';
 }
-function codeCopy(){try{navigator.clipboard.writeText(toCode(S)).then(()=>toast('Restore code copied'));}catch(e){}}
+function codeCopy(){try{navigator.clipboard.writeText(toCode(S)).then(()=>toast('Restore code copied'));}catch(e){toast('Copy failed. Use the PDF to find your restore code.');}}
 
 function chartRender(){
-  const c=S.weeks.filter(w=>w.endEntry);
-  if(!c.length){g('chart-empty').style.display='flex';g('chart-wrap').style.display='none';return;}
+  const completedWeeks=S.weeks.filter(w=>w.endEntry);
+  const allDailies=S.weeks.reduce((a,w)=>a.concat(w.checkIns||[]),[]);
+  const hasAnyData=completedWeeks.length>0||allDailies.length>0;
+  if(!hasAnyData){g('chart-empty').style.display='flex';g('chart-wrap').style.display='none';return;}
   g('chart-empty').style.display='none';g('chart-wrap').style.display='block';
   const ctx=g('ev-chart').getContext('2d');
   if(chart){chart.destroy();chart=null;}
-  const wp=c.map((w,i)=>({x:i,y:avgPct(w.endEntry)}));
+  const wp=completedWeeks.map((w,i)=>({x:i,y:avgPct(w.endEntry)}));
   const dp=[];S.weeks.forEach((w,wi)=>{(w.checkIns||[]).forEach((ci,cii)=>{dp.push({x:wi+(cii+1)/((w.checkIns.length||1)+1),y:ci.mood*10});});});
   const allY=[...wp.map(p=>p.y),...dp.map(p=>p.y)];
-  const minY=Math.max(0,Math.min(...allY)-8),maxY=Math.min(100,Math.max(...allY)+8);
+  const minY=Math.max(0,Math.min(...allY)-10),maxY=Math.min(100,Math.max(...allY)+10);
   const gr=ctx.createLinearGradient(0,0,0,220);gr.addColorStop(0,'rgba(242,190,84,0.28)');gr.addColorStop(0.7,'rgba(242,190,84,0.04)');gr.addColorStop(1,'rgba(242,190,84,0)');
   const td=wp.length>=2?[{x:wp[0].x,y:wp[0].y},{x:wp[wp.length-1].x,y:wp[wp.length-1].y}]:[];
+  const maxX=Math.max(completedWeeks.length,S.weeks.length,1);
   chart=new Chart(ctx,{type:'scatter',data:{datasets:[
-    {type:'line',data:wp,borderColor:'#F2BE54',backgroundColor:gr,borderWidth:2.5,tension:0.45,fill:true,pointBackgroundColor:'#F2BE54',pointBorderColor:'#163E5B',pointBorderWidth:2.5,pointRadius:6,pointHoverRadius:9,order:2},
+    wp.length?{type:'line',data:wp,borderColor:'#F2BE54',backgroundColor:gr,borderWidth:2.5,tension:0.45,fill:true,pointBackgroundColor:'#F2BE54',pointBorderColor:'#163E5B',pointBorderWidth:2.5,pointRadius:6,pointHoverRadius:9,order:2}:null,
     td.length?{type:'line',data:td,borderColor:'rgba(242,190,84,0.25)',backgroundColor:'transparent',borderWidth:1.5,borderDash:[6,4],pointRadius:0,tension:0,fill:false,order:3}:null,
-    dp.length?{type:'scatter',data:dp,backgroundColor:'rgba(250,248,244,0.4)',borderColor:'rgba(250,248,244,0.1)',borderWidth:1,pointRadius:3.5,order:1}:null
-  ].filter(Boolean)},options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},scales:{x:{type:'linear',min:-0.3,max:Math.max(c.length,1),grid:{color:'rgba(255,255,255,0.05)'},border:{display:false},ticks:{color:'rgba(250,248,244,0.35)',font:{family:'Jost',size:10},callback:(v)=>Number.isInteger(v)&&v>=0&&v<c.length?'Wk'+(v+1):''}},y:{min:minY,max:maxY,grid:{color:'rgba(255,255,255,0.05)'},border:{display:false},ticks:{color:'rgba(250,248,244,0.35)',font:{family:'Jost',size:10},callback:(v)=>v+'%'}}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#0f2d42',titleColor:'#F2BE54',bodyColor:'#FAF8F4',borderColor:'rgba(242,190,84,0.18)',borderWidth:1,padding:10,callbacks:{title:(items)=>{const x=items[0].parsed.x;return Number.isInteger(x)&&x>=0&&x<c.length?'Week '+(x+1):'Daily';},label:(item)=>'  Score: '+item.parsed.y+'%'}}}}});
+    dp.length?{type:'scatter',data:dp,backgroundColor:'rgba(250,248,244,0.55)',borderColor:'rgba(250,248,244,0.15)',borderWidth:1,pointRadius:4,order:1}:null
+  ].filter(Boolean)},options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},scales:{x:{type:'linear',min:-0.3,max:maxX,grid:{color:'rgba(255,255,255,0.05)'},border:{display:false},ticks:{color:'rgba(250,248,244,0.35)',font:{family:'Jost',size:10},callback:(val)=>Number.isInteger(val)&&val>=0&&val<maxX?'Wk'+(val+1):''}},y:{min:minY,max:maxY,grid:{color:'rgba(255,255,255,0.05)'},border:{display:false},ticks:{color:'rgba(250,248,244,0.35)',font:{family:'Jost',size:10},callback:(val)=>val+'%'}}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#0f2d42',titleColor:'#F2BE54',bodyColor:'#FAF8F4',borderColor:'rgba(242,190,84,0.18)',borderWidth:1,padding:10,callbacks:{title:(items)=>{const x=items[0].parsed.x;return Number.isInteger(x)&&x>=0&&x<completedWeeks.length?'Week '+(x+1):'Daily';},label:(item)=>'  Score: '+item.parsed.y+'%'}}}}});
 }
 
 function histRender(){
   const list=g('hist-list'),empty=g('hist-empty');
-  const c=S.weeks.filter(w=>w.endEntry);
-  if(!c.length){list.innerHTML='';empty.style.display='block';return;}
+  const completed=S.weeks.filter(w=>w.endEntry);
+  const open=S.weeks.find(w=>!w.endEntry);
+  const hasOpenData=open&&(open.startEntry||(open.checkIns||[]).length>0);
+  if(!completed.length&&!hasOpenData){list.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';list.innerHTML='';
-  [...c].reverse().forEach((week,ri)=>{
-    const ri2=c.length-1-ri,avg=avgPct(week.endEntry);
-    const prev=ri2>0?c[ri2-1]:null,pc=prev&&prev.startEntry?(prev.startEntry.commitments||[]):[];
+
+  if(hasOpenData){
+    let body='';
+    if(open.startEntry){
+      body+='<div class="ev-sow-entry"><div class="ev-sow-entry-lbl">Start of Week</div>';
+      if(open.startEntry.intentions)body+='<div class="ev-sow-entry-item"><strong>Intentions:</strong> '+esc(open.startEntry.intentions)+'</div>';
+      const comms=(open.startEntry.commitments||[]).filter(Boolean);
+      if(comms.length)body+='<div class="ev-sow-entry-item"><strong>Commitments:</strong> '+comms.map(c=>esc(c)).join(', ')+'</div>';
+      if(open.startEntry.plannedSelfWorth)body+='<div class="ev-sow-entry-item"><strong>Planned act of self-worth:</strong> '+esc(open.startEntry.plannedSelfWorth)+'</div>';
+      if(open.startEntry.plannedService)body+='<div class="ev-sow-entry-item"><strong>Planned act of service:</strong> '+esc(open.startEntry.plannedService)+'</div>';
+      body+='</div>';
+    }
+    const dailies=open.checkIns||[];
+    if(dailies.length){
+      const openIdx=S.weeks.indexOf(open);
+      body+='<div class="ev-daily-entries"><div class="ev-daily-entries-lbl">Daily check-ins ('+dailies.length+')</div>';
+      dailies.forEach((ci,ci_i)=>{body+='<div class="ev-daily-entry"><div class="ev-daily-entry-hd"><span class="ev-daily-entry-date">'+fmtFull(ci.date)+'</span><span class="ev-daily-entry-mood">'+(ci.mood*10)+'%</span></div>'+(ci.journal?'<div class="ev-daily-entry-journal">'+esc(ci.journal)+'</div>':'')+'<div style="text-align:right;margin-top:8px;"><button class="ev-daily-entry-del" onclick="delDaily('+openIdx+','+ci_i+')">Delete</button></div></div>';});
+      body+='</div>';
+    }
+    list.innerHTML='<div class="ev-wk-card"><div class="ev-wk-hd" onclick="wkT(\'open\')"><div><div class="ev-wk-name">Week '+open.weekNumber+' <span style="font-size:9px;opacity:.4;font-weight:400;letter-spacing:1px;">(current)</span></div><div class="ev-wk-date">In progress</div></div><div style="display:flex;align-items:center;"><div class="ev-wk-chev" id="wk-c-open">&#9660;</div></div></div><div class="ev-wk-body open" id="wk-b-open">'+body+'</div></div>';
+  }
+
+  [...completed].reverse().forEach((week,ri)=>{
+    const ri2=completed.length-1-ri;
+    const weekIdx=S.weeks.indexOf(week);
+    const avg=avgPct(week.endEntry);
+    let body='';
+    if(week.startEntry){
+      body+='<div class="ev-sow-entry"><div class="ev-sow-entry-lbl">Start of Week</div>';
+      if(week.startEntry.intentions)body+='<div class="ev-sow-entry-item"><strong>Intentions:</strong> '+esc(week.startEntry.intentions)+'</div>';
+      const comms=(week.startEntry.commitments||[]).filter(Boolean);
+      if(comms.length)body+='<div class="ev-sow-entry-item"><strong>Commitments:</strong> '+comms.map(c=>esc(c)).join(', ')+'</div>';
+      body+='</div>';
+    }
+    body+='<div class="ev-scores">'+DIMS.map(d=>'<div class="ev-sc-item"><div class="ev-sc-num">'+(week.endEntry.dimensions[d]*10)+'%</div><div class="ev-sc-lbl">'+d.charAt(0).toUpperCase()+d.slice(1)+'</div></div>').join('')+'</div>';
+    const prev=ri2>0?completed[ri2-1]:null,pc=prev&&prev.startEntry?(prev.startEntry.commitments||[]):[];
     const cd=week.endEntry.commitmentsDone||[];
-    let body='<div class="ev-scores">'+DIMS.map(d=>'<div class="ev-sc-item"><div class="ev-sc-num">'+(week.endEntry.dimensions[d]*10)+'%</div><div class="ev-sc-lbl">'+d.charAt(0).toUpperCase()+d.slice(1)+'</div></div>').join('')+'</div>';
-    if(pc.filter(Boolean).length)body+='<div class="ev-det-row"><div class="ev-det-lbl">Previous Commitments</div>'+pc.filter(Boolean).map((c2,i)=>'<div class="ev-det-txt '+(cd[i]?'ev-done':'')+'">'+( cd[i]?'&#10003;':'&#9675;')+' '+esc(c2)+'</div>').join('')+'</div>';
+    if(pc.filter(Boolean).length)body+='<div class="ev-det-row"><div class="ev-det-lbl">Commitments</div>'+pc.filter(Boolean).map((c2,i)=>'<div class="ev-det-txt '+(cd[i]?'ev-done':'')+'">'+( cd[i]?'&#10003;':'&#9675;')+' '+esc(c2)+'</div>').join('')+'</div>';
     [{l:'Act of Self-Worth',v:week.endEntry.actOfSelfWorth},{l:'Act of Service',v:week.endEntry.actOfService},{l:'Gratitude',v:week.endEntry.gratitude},{l:'What Shifted',v:week.endEntry.whatShifted,i:true}].filter(f=>f.v).forEach(f=>{body+='<div class="ev-det-row"><div class="ev-det-lbl">'+f.l+'</div><div class="ev-det-txt"'+(f.i?' style="font-style:italic;"':'')+'>'+esc(f.v)+'</div></div>';});
     if(week.endEntry.theThis)body+='<div class="ev-det-row"><div class="ev-det-lbl" style="font-size:8px;opacity:.35;">The This</div><div class="ev-det-txt" style="font-size:12px;opacity:.5;">'+week.endEntry.theThis+'/10</div></div>';
+    const dailies=week.checkIns||[];
+    if(dailies.length){
+      body+='<div class="ev-daily-entries"><div class="ev-daily-entries-lbl">Daily check-ins ('+dailies.length+')</div>';
+      dailies.forEach((ci,ci_i)=>{body+='<div class="ev-daily-entry"><div class="ev-daily-entry-hd"><span class="ev-daily-entry-date">'+fmtFull(ci.date)+'</span><span class="ev-daily-entry-mood">'+(ci.mood*10)+'%</span></div>'+(ci.journal?'<div class="ev-daily-entry-journal">'+esc(ci.journal)+'</div>':'')+'<div style="text-align:right;margin-top:8px;"><button class="ev-daily-entry-del" onclick="delDaily('+weekIdx+','+ci_i+')">Delete</button></div></div>';});
+      body+='</div>';
+    }
     list.innerHTML+='<div class="ev-wk-card"><div class="ev-wk-hd" onclick="wkT('+ri2+')"><div><div class="ev-wk-name">Week '+week.weekNumber+'</div><div class="ev-wk-date">'+fmt(week.endEntry.date)+'</div></div><div style="display:flex;align-items:center;"><div class="ev-wk-avg">'+avg+'%</div><div class="ev-wk-chev" id="wk-c-'+ri2+'">&#9660;</div></div></div><div class="ev-wk-body" id="wk-b-'+ri2+'">'+body+'</div></div>';
   });
 }
-function wkT(i){g('wk-b-'+i).classList.toggle('open');g('wk-c-'+i).classList.toggle('open');}
+
+function wkT(i){const b=g('wk-b-'+i);if(!b)return;b.classList.toggle('open');const c=g('wk-c-'+i);if(c)c.classList.toggle('open');}
+
+function delDaily(weekIdx,ciIdx){
+  confirmDo('Delete this daily check-in? This cannot be undone.',function(){
+    if(S.weeks[weekIdx]&&S.weeks[weekIdx].checkIns){S.weeks[weekIdx].checkIns.splice(ciIdx,1);save();toast('Check-in deleted');dashRender();}
+  });
+}
+
+function stdListRender(){
+  const body=g('std-list-body');
+  const stds=(S.standards||[]).slice().reverse();
+  if(!stds.length){body.innerHTML='<div class="ev-std-empty">No standards logged yet.</div>';return;}
+  const qLabels={q1:'Aligns with who I am becoming?',q2:'Reflects my worth?',q3:'Would the person I am becoming do this?',q5:'Above, at or below my standard?'};
+  const badgeMap={held:'Held','did-not':'Did not hold',ongoing:'Still ongoing'};
+  body.innerHTML=stds.map((s,ri)=>{
+    const origIdx=(S.standards||[]).length-1-ri;
+    const badgeClass=s.followUpResult||'pending';
+    const badgeText=s.followUpResult?badgeMap[s.followUpResult]:'Pending';
+    let answers='';
+    if(s.answers){
+      Object.entries(qLabels).forEach(([k,lbl])=>{
+        const val=s.answers[k];
+        if(val)answers+='<div class="ev-std-record-q">'+lbl+'</div><div class="ev-std-record-a">'+esc(val)+'</div>';
+      });
+      if(s.answers.q4face)answers+='<div class="ev-std-record-q">What is this actually asking you to face?</div><div class="ev-std-record-a" style="font-style:italic;text-transform:none;opacity:.7;">'+esc(s.answers.q4face)+'</div>';
+    }
+    const sentence=s.sentence?'<div class="ev-std-record-sentence">'+esc(s.sentence).replace(esc(s.thisText||''),'<strong>'+esc(s.thisText||'')+'</strong>')+'</div>':'';
+    return '<div class="ev-std-record"><div class="ev-std-record-hd"><div class="ev-std-record-date">'+fmtFull(s.date)+'</div><div class="ev-std-record-situation">'+esc(s.situation||'')+'</div></div>'+(answers||sentence?'<div class="ev-std-record-body"><div class="ev-std-record-answers">'+answers+'</div>'+sentence+'</div>':'')+'<div class="ev-std-record-footer"><span class="ev-std-held-badge '+badgeClass+'">'+badgeText+'</span><button class="ev-btn-danger" onclick="delStandard('+origIdx+')">Delete</button></div></div>';
+  }).join('');
+}
+
+function delStandard(idx){
+  confirmDo('Delete this standard? This cannot be undone.',function(){
+    (S.standards||[]).splice(idx,1);save();toast('Standard deleted');stdListRender();statsRender();
+  });
+}
 
 function startPrep(){g('sw-num').textContent=nextWk();['sw-intentions','sw-c1','sw-c2','sw-c3','sw-self','sw-service'].forEach(id=>g(id).value='');}
 function nextWk(){const o=S.weeks.find(w=>!w.endEntry);return o?o.weekNumber:S.weeks.length+1;}
@@ -596,11 +729,6 @@ function endSave(){
 }
 
 function stdPrep(){
-  const s=S.setup;
-  g('std-identity').innerHTML='<em>I am</em> '+esc(s.identity||'');
-  g('std-nn').innerHTML=(s.nonNegotiables||[]).filter(Boolean).map(n=>'<span>'+esc(n)+'</span>').join('');
-  const th=(s.yourThis||[]).filter(Boolean),td=g('std-this');
-  if(th.length){td.style.display='block';td.innerHTML='<div class="ev-std-this-lbl">Your This</div><div class="ev-std-this-items">'+th.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div>';}else td.style.display='none';
   g('std-situation').value='';g('std-q4').value='';g('std-this-input').value='';
   g('sentence-result').style.display='none';g('sentence-result').innerHTML='';
   g('std-checkback').checked=false;qa={};
