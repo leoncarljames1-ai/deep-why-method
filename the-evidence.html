@@ -10,26 +10,15 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
-
-/* APP SHELL — clips everything, each view scrolls itself */
 #ev-app{position:relative;width:100%;height:100vh;overflow:hidden;}
-
-/* VIEWS — each fills the shell, scrolls independently */
-.ev-view{
-  position:absolute;top:0;left:0;width:100%;height:100%;
-  overflow-y:auto;-webkit-overflow-scrolling:touch;
-  display:none;background:#FAF8F4;
-}
+.ev-view{position:absolute;top:0;left:0;width:100%;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none;background:#FAF8F4;}
 .ev-view.active{display:block;}
 
-/* BUTTONS */
 .ev-btn-primary{width:100%;padding:16px;background:#163E5B;color:#F2BE54;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;border:none;border-radius:3px;cursor:pointer;}
 .ev-btn-ghost{padding:8px 14px;background:transparent;border:1px solid rgba(255,255,255,0.22);border-radius:2px;color:rgba(255,255,255,0.7);font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
 .ev-btn-gold{padding:9px 18px;background:#F2BE54;border:none;border-radius:2px;color:#163E5B;font-family:'Jost',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
 .ev-btn-outline{padding:14px;background:transparent;border:1px solid rgba(22,62,91,0.2);border-radius:3px;color:#163E5B;font-family:'Jost',sans-serif;font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;}
 .ev-btn-danger{padding:7px 12px;background:transparent;border:1px solid rgba(192,57,43,0.25);border-radius:2px;color:#c0392b;font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
-
-/* INPUTS */
 .ev-input,.ev-textarea{width:100%;background:#fff;border:1px solid rgba(22,62,91,0.18);border-radius:3px;padding:13px 16px;font-family:'Jost',sans-serif;font-size:14px;color:#163E5B;outline:none;}
 .ev-input:focus,.ev-textarea:focus{border-color:#C8963E;}
 .ev-textarea{resize:vertical;min-height:90px;line-height:1.65;}
@@ -46,7 +35,6 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 .ev-topbar{background:#163E5B;display:flex;align-items:center;justify-content:space-between;padding:13px 22px;gap:10px;flex-shrink:0;}
 .ev-topbar-brand{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:rgba(255,255,255,.7);}
 .ev-topbar-brand strong{color:#F2BE54;font-weight:600;}
-.ev-topbar-actions{display:flex;gap:8px;align-items:center;}
 
 /* SETUP */
 .ev-setup-inner{display:flex;flex-direction:column;align-items:center;padding:60px 22px 100px;}
@@ -64,20 +52,22 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 .ev-restore-err{font-family:'Jost',sans-serif;font-size:12px;color:#c0392b;margin-top:8px;display:none;}
 
 /* DASHBOARD */
-.ev-why-banner{background:#163E5B;padding:32px 22px;text-align:center;}
-.ev-why-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.45);margin-bottom:12px;}
-.ev-why-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;font-weight:400;color:#F2BE54;line-height:1.45;max-width:660px;margin:0 auto;}
+.ev-why-banner{background:#163E5B;padding:28px 22px;text-align:center;}
+.ev-why-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.45);margin-bottom:10px;}
+.ev-why-text{font-family:'Cormorant Garamond',serif;font-size:19px;font-style:italic;font-weight:400;color:#F2BE54;line-height:1.45;max-width:660px;margin:0 auto;}
 .ev-stats{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border-bottom:1px solid rgba(22,62,91,.08);}
-.ev-stat{padding:18px 14px;border-right:1px solid rgba(22,62,91,.07);}
+.ev-stat{padding:16px 12px;border-right:1px solid rgba(22,62,91,.07);}
 .ev-stat:last-child{border-right:none;}
-.ev-stat-n{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:#163E5B;line-height:1;margin-bottom:4px;}
+.ev-stat-n{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:#163E5B;line-height:1;margin-bottom:4px;}
 .ev-stat-l{font-family:'Jost',sans-serif;font-size:9px;color:#163E5B;opacity:.38;letter-spacing:1px;text-transform:uppercase;}
-.ev-this-week{background:#fff;border-bottom:1px solid rgba(22,62,91,.08);padding:16px 22px;}
+.ev-this-week{background:#fff;border-bottom:1px solid rgba(22,62,91,.08);padding:14px 22px;}
 .ev-this-week-title{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#163E5B;opacity:.35;margin-bottom:10px;}
 .ev-this-week-items{display:flex;gap:8px;flex-wrap:wrap;}
-.ev-tw-item{padding:5px 10px;border-radius:20px;font-family:'Jost',sans-serif;font-size:11px;font-weight:400;}
+.ev-tw-item{padding:5px 10px;border-radius:20px;font-family:'Jost',sans-serif;font-size:11px;}
 .ev-tw-done{background:rgba(39,174,96,.1);color:#27ae60;}
 .ev-tw-pending{background:rgba(22,62,91,.06);color:#163E5B;opacity:.5;}
+
+/* FOUNDATION */
 .ev-found{background:#fff;border-bottom:1px solid rgba(22,62,91,.08);}
 .ev-found-toggle{width:100%;padding:16px 22px;background:none;border:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#163E5B;opacity:.5;}
 .ev-found-body{display:none;padding:0 22px 22px;}
@@ -85,18 +75,56 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 .ev-found-item{margin-bottom:14px;}
 .ev-found-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8963E;margin-bottom:4px;}
 .ev-found-val{font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;line-height:1.55;}
+.ev-found-sentence{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:#163E5B;line-height:1.5;padding:12px 14px;background:#FAF8F4;border-radius:3px;margin-top:4px;}
+.ev-found-sentence strong{color:#C8963E;font-style:italic;}
 .ev-found-actions{display:flex;flex-direction:column;gap:6px;padding-top:12px;margin-top:4px;border-top:1px solid rgba(22,62,91,0.07);}
 .ev-found-action-btn{background:none;border:none;font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;opacity:.45;cursor:pointer;text-decoration:underline;padding:4px 0;text-align:left;}
+
+/* NUDGE */
 .ev-nudge{background:#163E5B;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .ev-nudge p{font-family:'Jost',sans-serif;font-size:12px;color:rgba(255,255,255,.7);line-height:1.4;}
 .ev-nudge p strong{color:#F2BE54;}
 .ev-nudge button{flex-shrink:0;padding:8px 14px;background:#F2BE54;border:none;border-radius:2px;font-family:'Jost',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#163E5B;cursor:pointer;}
-.ev-chart-sec{background:#163E5B;padding:28px 22px;}
+
+/* BALANCE SCALE */
+.ev-scale-sec{background:#163E5B;padding:28px 22px 32px;}
+.ev-scale-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.45);margin-bottom:6px;}
+.ev-scale-ttl{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#fff;margin-bottom:24px;}
+.ev-scale-wrap{position:relative;display:flex;flex-direction:column;align-items:center;}
+.ev-scale-pivot-top{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15);}
+.ev-scale-pivot{width:2px;height:48px;background:rgba(255,255,255,.1);}
+.ev-scale-beam-row{width:100%;display:flex;justify-content:center;align-items:center;}
+.ev-scale-beam{width:88%;height:2px;background:rgba(255,255,255,.12);position:relative;transform-origin:center center;transition:transform 1s cubic-bezier(.34,1.56,.64,1);}
+.ev-scale-chain{position:absolute;top:0;width:1px;height:28px;background:rgba(255,255,255,.1);}
+.ev-scale-chain.left{left:0;}
+.ev-scale-chain.right{right:0;}
+.ev-scale-plates{display:flex;justify-content:space-between;width:88%;margin-top:0;}
+.ev-scale-plate{width:46%;display:flex;flex-direction:column;align-items:center;gap:5px;}
+.ev-scale-dish{height:3px;border-radius:2px;width:100%;}
+.ev-scale-plate-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-top:4px;}
+.ev-scale-plate-score{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;line-height:1;}
+.ev-scale-plate-sub{font-family:'Jost',sans-serif;font-size:10px;font-weight:300;opacity:.4;text-align:center;line-height:1.4;}
+.ev-scale-this .ev-scale-dish{background:rgba(192,57,43,.35);}
+.ev-scale-this .ev-scale-plate-lbl{color:rgba(231,76,60,.55);}
+.ev-scale-this .ev-scale-plate-score{color:#e74c3c;}
+.ev-scale-vision .ev-scale-dish{background:rgba(39,174,96,.35);}
+.ev-scale-vision .ev-scale-plate-lbl{color:rgba(39,174,96,.55);}
+.ev-scale-vision .ev-scale-plate-score{color:#27ae60;}
+.ev-scale-msg{text-align:center;margin-top:20px;font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(250,248,244,.3);line-height:1.5;min-height:44px;}
+.ev-scale-empty{text-align:center;padding:20px 0;font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,.2);font-style:italic;}
+
+/* CHART */
+.ev-chart-sec{background:#163E5B;padding:28px 22px;border-top:1px solid rgba(255,255,255,.05);}
 .ev-chart-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.45);margin-bottom:6px;}
-.ev-chart-ttl{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#fff;margin-bottom:20px;}
+.ev-chart-ttl{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#fff;margin-bottom:20px;}
 .ev-chart-wrap{position:relative;height:220px;}
-.ev-chart-empty{height:220px;display:flex;align-items:center;justify-content:center;}
-.ev-chart-empty p{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,.25);font-style:italic;text-align:center;}
+.ev-chart-empty{height:160px;display:flex;align-items:center;justify-content:center;}
+.ev-chart-empty p{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,.2);font-style:italic;text-align:center;}
+.ev-chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;}
+.ev-chart-legend-item{display:flex;align-items:center;gap:6px;font-family:'Jost',sans-serif;font-size:10px;color:rgba(255,255,255,.35);}
+.ev-chart-legend-dot{width:8px;height:8px;border-radius:50%;}
+
+/* ACTIONS */
 .ev-actions{padding:24px 22px;background:#FAF8F4;}
 .ev-actions-ttl{font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#163E5B;opacity:.35;margin-bottom:14px;}
 .ev-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -107,9 +135,11 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 .ev-std-card .ev-action-card-name,.ev-std-view-card .ev-action-card-name{color:#F2BE54;}
 .ev-action-card-desc{font-family:'Jost',sans-serif;font-size:11px;font-weight:300;color:#163E5B;opacity:.45;}
 .ev-std-card .ev-action-card-desc,.ev-std-view-card .ev-action-card-desc{color:rgba(255,255,255,.35);}
+
+/* HISTORY */
 .ev-history{padding:28px 22px 80px;}
 .ev-history-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#C8963E;margin-bottom:6px;}
-.ev-history-ttl{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#163E5B;margin-bottom:20px;}
+.ev-history-ttl{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#163E5B;margin-bottom:20px;}
 .ev-history-empty{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:#163E5B;opacity:.35;font-style:italic;}
 .ev-wk-card{background:#fff;border:1px solid rgba(22,62,91,.1);border-radius:4px;margin-bottom:10px;overflow:hidden;}
 .ev-wk-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;}
@@ -122,7 +152,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 .ev-wk-body.open{display:block;}
 .ev-scores{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(22,62,91,.06);}
 .ev-sc-item{text-align:center;}
-.ev-sc-num{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#163E5B;line-height:1;margin-bottom:2px;}
+.ev-sc-num{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#163E5B;line-height:1;margin-bottom:2px;}
 .ev-sc-lbl{font-family:'Jost',sans-serif;font-size:8px;color:#163E5B;opacity:.35;text-transform:uppercase;letter-spacing:1px;}
 .ev-det-row{margin-bottom:10px;}
 .ev-det-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#163E5B;opacity:.35;margin-bottom:4px;}
@@ -136,32 +166,66 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 .ev-daily-entry{background:#FAF8F4;border-radius:3px;padding:12px 14px;margin-bottom:8px;}
 .ev-daily-entry-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
 .ev-daily-entry-date{font-family:'Jost',sans-serif;font-size:10px;color:#163E5B;opacity:.4;}
-.ev-daily-entry-mood{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#C8963E;}
-.ev-daily-entry-journal{font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;line-height:1.55;opacity:.7;}
+.ev-daily-entry-scores{display:flex;gap:10px;}
+.ev-daily-entry-score{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;}
+.ev-daily-entry-mood-score{color:#C8963E;}
+.ev-daily-entry-energy-score{color:#27ae60;}
+.ev-daily-entry-journal{font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;line-height:1.55;opacity:.7;margin-top:4px;}
+.ev-daily-entry-intention{font-family:'Jost',sans-serif;font-size:11px;margin-top:6px;padding:4px 8px;border-radius:20px;display:inline-block;}
+.ev-int-yes{background:rgba(39,174,96,.1);color:#27ae60;}
+.ev-int-partly{background:rgba(200,150,62,.1);color:#C8963E;}
+.ev-int-no{background:rgba(22,62,91,.06);color:#163E5B;opacity:.5;}
 .ev-daily-entry-del{background:none;border:none;font-family:'Jost',sans-serif;font-size:10px;color:#c0392b;opacity:.5;cursor:pointer;padding:0;text-decoration:underline;}
 
-/* CHECK-IN VIEWS — fixed topbar, scrollable body */
+/* CHECK-IN VIEWS */
 .ev-checkin-wrap{display:flex;flex-direction:column;height:100%;}
 .ev-checkin-topbar{background:#163E5B;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .ev-checkin-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:#F2BE54;}
 .ev-checkin-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .ev-checkin-inner{max-width:580px;margin:0 auto;padding:0 22px 80px;}
-.ev-checkin-head{text-align:center;padding:40px 0 32px;border-bottom:1px solid rgba(22,62,91,.1);margin-bottom:32px;}
-.ev-checkin-head h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;color:#163E5B;margin-bottom:6px;}
+.ev-checkin-head{text-align:center;padding:36px 0 28px;border-bottom:1px solid rgba(22,62,91,.1);margin-bottom:28px;}
+.ev-checkin-head h2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:500;color:#163E5B;margin-bottom:6px;}
 .ev-checkin-head p{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:#163E5B;opacity:.45;margin-top:6px;}
-.ev-block{margin-bottom:34px;}
+.ev-block{margin-bottom:30px;}
 .ev-block-ttl{font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:#163E5B;padding-bottom:12px;border-bottom:1px solid rgba(22,62,91,.1);margin-bottom:18px;}
-.ev-dim-row{margin-bottom:18px;}
+.ev-dim-row{margin-bottom:20px;}
 .ev-dim-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
 .ev-dim-name{font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:#163E5B;margin-bottom:2px;}
 .ev-dim-sub{font-family:'Jost',sans-serif;font-size:11px;font-weight:300;color:#163E5B;opacity:.4;}
-.ev-dim-score{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:#C8963E;line-height:1;min-width:52px;text-align:right;}
+.ev-dim-score{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:#C8963E;line-height:1;min-width:52px;text-align:right;}
+.ev-dim-score.energy{color:#27ae60;}
 .ev-comm-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .ev-comm-n{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#C8963E;min-width:18px;}
 .ev-prev-comm{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:1px solid rgba(22,62,91,.1);border-radius:3px;margin-bottom:8px;}
 .ev-prev-comm input[type=checkbox]{width:18px;height:18px;accent-color:#C8963E;cursor:pointer;flex-shrink:0;}
 .ev-prev-comm label{font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;line-height:1.4;}
-.ev-checkin-actions{display:flex;gap:12px;padding-top:24px;border-top:1px solid rgba(22,62,91,.08);margin-top:32px;}
+.ev-checkin-actions{display:flex;gap:12px;padding-top:24px;border-top:1px solid rgba(22,62,91,.08);margin-top:28px;}
+
+/* INTENTION BLOCK */
+.ev-intention-box{background:#163E5B;border-radius:4px;padding:14px 16px;margin-bottom:18px;}
+.ev-intention-box-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(242,190,84,.5);margin-bottom:6px;}
+.ev-intention-box-text{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(250,248,244,.7);line-height:1.5;}
+.ev-3btn-row{display:flex;gap:8px;margin-top:12px;}
+.ev-3btn{flex:1;padding:12px 8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:3px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;color:rgba(255,255,255,.5);cursor:pointer;text-align:center;}
+.ev-3btn.sel-yes{background:rgba(39,174,96,.2);border-color:rgba(39,174,96,.4);color:#27ae60;}
+.ev-3btn.sel-partly{background:rgba(200,150,62,.2);border-color:rgba(200,150,62,.4);color:#C8963E;}
+.ev-3btn.sel-no{background:rgba(22,62,91,.3);border-color:rgba(22,62,91,.5);color:rgba(255,255,255,.4);}
+
+/* THIS REMINDER */
+.ev-this-reminder{background:#FAF8F4;border-left:3px solid #C8963E;border-radius:0 3px 3px 0;padding:12px 14px;margin-bottom:18px;}
+.ev-this-reminder-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8963E;margin-bottom:6px;}
+.ev-this-reminder-text{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:#163E5B;line-height:1.5;}
+.ev-this-reminder-text strong{color:#C8963E;font-style:italic;}
+
+/* OUTCOMES in Standard */
+.ev-outcomes-block{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px;}
+.ev-outcome-card{padding:14px;border-radius:4px;}
+.ev-outcome-card.this-outcome{background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.15);}
+.ev-outcome-card.vision-outcome{background:rgba(39,174,96,.07);border:1px solid rgba(39,174,96,.15);}
+.ev-outcome-card-lbl{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;}
+.ev-outcome-card.this-outcome .ev-outcome-card-lbl{color:rgba(192,57,43,.6);}
+.ev-outcome-card.vision-outcome .ev-outcome-card-lbl{color:rgba(39,174,96,.6);}
+.ev-outcome-card-text{font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;line-height:1.5;opacity:.7;}
 
 /* THE STANDARD */
 .ev-q-block{margin-bottom:22px;}
@@ -169,7 +233,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 .ev-q-row{display:flex;gap:8px;}
 .ev-q-btn{flex:1;padding:12px 8px;background:#fff;border:1px solid rgba(22,62,91,.15);border-radius:3px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;color:#163E5B;cursor:pointer;text-align:center;}
 .ev-q-btn.sel{background:#163E5B;border-color:#163E5B;color:#F2BE54;}
-.ev-sentence-wrap{margin-top:32px;padding-top:24px;border-top:1px solid rgba(22,62,91,.1);}
+.ev-sentence-wrap{margin-top:28px;padding-top:22px;border-top:1px solid rgba(22,62,91,.1);}
 .ev-sentence-lbl{font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#163E5B;opacity:.35;margin-bottom:14px;}
 .ev-sentence-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:'Cormorant Garamond',serif;font-size:17px;color:rgba(22,62,91,.45);font-style:italic;line-height:1.8;}
 .ev-sentence-input{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:#C8963E;border:none;border-bottom:1px solid rgba(200,150,62,.4);background:transparent;outline:none;min-width:120px;padding:2px 4px;}
@@ -200,7 +264,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 .ev-std-record-footer{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-top:1px solid rgba(22,62,91,.06);background:#FAF8F4;}
 .ev-std-held-badge{font-family:'Jost',sans-serif;font-size:10px;font-weight:500;padding:4px 8px;border-radius:20px;}
 .ev-std-held-badge.held{background:rgba(39,174,96,.1);color:#27ae60;}
-.ev-std-held-badge.did-not{background:rgba(22,62,91,.06);color:#163E5B;opacity:.5;}
+.ev-std-held-badge.did-not{background:rgba(192,57,43,.08);color:#c0392b;}
 .ev-std-held-badge.ongoing{background:rgba(200,150,62,.1);color:#C8963E;}
 .ev-std-held-badge.pending{background:rgba(22,62,91,.04);color:#163E5B;opacity:.35;}
 .ev-std-empty{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:#163E5B;opacity:.35;font-style:italic;padding:40px 22px;text-align:center;}
@@ -214,7 +278,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 .ev-fu-btns{display:flex;flex-direction:column;gap:10px;}
 .ev-fu-btn{padding:16px;background:#fff;border:1px solid rgba(22,62,91,.12);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;cursor:pointer;text-align:left;}
 .ev-fu-btn.held{border-left:3px solid #27ae60;}
-.ev-fu-btn.didnot{border-left:3px solid rgba(22,62,91,.2);}
+.ev-fu-btn.didnot{border-left:3px solid #c0392b;}
 .ev-fu-btn.ongoing{border-left:3px solid #C8963E;}
 
 /* TOAST */
@@ -234,20 +298,20 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 #ev-milestone.show{display:flex;}
 .ev-ms-box{background:#163E5B;border:1px solid rgba(242,190,84,.22);border-radius:6px;padding:44px 36px;max-width:420px;width:100%;text-align:center;}
 .ev-ms-tag{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.4);margin-bottom:18px;}
-.ev-ms-msg{font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;color:#F2BE54;line-height:1.35;margin-bottom:16px;}
+.ev-ms-msg{font-family:'Cormorant Garamond',serif;font-size:24px;font-style:italic;color:#F2BE54;line-height:1.35;margin-bottom:16px;}
 .ev-ms-sub{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.6;margin-bottom:28px;}
 
 @media(max-width:560px){
   .ev-setup-hd h1{font-size:34px;}
-  .ev-why-text{font-size:18px;}
+  .ev-why-text{font-size:17px;}
   .ev-scores{grid-template-columns:repeat(3,1fr);}
   .ev-checkin-actions{flex-direction:column;}
   .ev-action-grid{grid-template-columns:1fr;}
+  .ev-outcomes-block{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
-
 <div id="ev-toast"></div>
 <div id="ev-confirm">
   <div class="ev-confirm-box">
@@ -292,6 +356,8 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
         <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="s-this2" type="text" class="ev-input" placeholder="Optional"></div>
         <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="s-this3" type="text" class="ev-input" placeholder="Optional"></div>
       </div>
+      <div class="ev-group"><label class="ev-label">The cost of feeding The This</label><p class="ev-hint">Be vivid. Where does this road lead if nothing changes?</p><textarea id="s-cost" class="ev-textarea" placeholder="If I keep giving into this, my life looks like..."></textarea></div>
+      <div class="ev-group"><label class="ev-label">The outcome of feeding your vision</label><p class="ev-hint">Where does consistent action lead? Make it real.</p><textarea id="s-outcome" class="ev-textarea" placeholder="If I keep showing up every day, my life looks like..."></textarea></div>
       <div class="ev-divider"></div>
       <button class="ev-btn-primary" onclick="setupSave()">Begin My Record</button>
       <div class="ev-restore-toggle"><button onclick="restoreToggle()">Returning? Restore a previous record</button></div>
@@ -309,7 +375,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 <div id="ev-dashboard" class="ev-view">
   <div class="ev-topbar">
     <div class="ev-topbar-brand">The <strong>Evidence</strong></div>
-    <div class="ev-topbar-actions"><button class="ev-btn-gold" onclick="pdfDownload()">PDF</button></div>
+    <div style="display:flex;gap:8px;"><button class="ev-btn-gold" onclick="pdfDownload()">PDF</button></div>
   </div>
   <div class="ev-why-banner"><p class="ev-why-ey">Your Big Why</p><p class="ev-why-text" id="d-why"></p></div>
   <div class="ev-stats">
@@ -329,6 +395,9 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
       <div class="ev-found-item"><div class="ev-found-lbl">Non-Negotiables</div><div class="ev-found-val" id="f-nn"></div></div>
       <div class="ev-found-item"><div class="ev-found-lbl">Intentions</div><div class="ev-found-val" id="f-intentions"></div></div>
       <div class="ev-found-item"><div class="ev-found-lbl">Your This</div><div class="ev-found-val" id="f-this" style="color:#C8963E;"></div></div>
+      <div class="ev-found-item" id="f-sentence-wrap" style="display:none;">
+        <div class="ev-found-sentence" id="f-sentence"></div>
+      </div>
       <div class="ev-found-actions">
         <button class="ev-found-action-btn" onclick="goTo('ev-edit-found');editFoundPrep()">Edit Foundations</button>
         <button class="ev-found-action-btn" onclick="codeCopy()">Copy restore code</button>
@@ -337,17 +406,57 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
     </div>
   </div>
   <div id="nudge-area"></div>
+
+  <!-- BALANCE SCALE -->
+  <div class="ev-scale-sec">
+    <p class="ev-scale-ey">The Balance</p>
+    <h2 class="ev-scale-ttl">Where is the weight?</h2>
+    <div id="scale-empty" class="ev-scale-empty">Log your first check-in to see the balance.</div>
+    <div id="scale-main" style="display:none;">
+      <div class="ev-scale-wrap">
+        <div class="ev-scale-pivot-top"></div>
+        <div class="ev-scale-pivot"></div>
+        <div class="ev-scale-beam-row">
+          <div class="ev-scale-beam" id="scale-beam">
+            <div class="ev-scale-chain left"></div>
+            <div class="ev-scale-chain right"></div>
+          </div>
+        </div>
+        <div class="ev-scale-plates">
+          <div class="ev-scale-plate ev-scale-this">
+            <div class="ev-scale-dish"></div>
+            <div class="ev-scale-plate-lbl">The This</div>
+            <div class="ev-scale-plate-score" id="scale-this-score">0</div>
+            <div class="ev-scale-plate-sub">feeding the pattern</div>
+          </div>
+          <div class="ev-scale-plate ev-scale-vision">
+            <div class="ev-scale-dish"></div>
+            <div class="ev-scale-plate-lbl">The Vision</div>
+            <div class="ev-scale-plate-score" id="scale-vision-score">0</div>
+            <div class="ev-scale-plate-sub">building the future</div>
+          </div>
+        </div>
+      </div>
+      <p class="ev-scale-msg" id="scale-msg"></p>
+    </div>
+  </div>
+
+  <!-- CHART -->
   <div class="ev-chart-sec">
     <p class="ev-chart-ey">Your Progress</p>
     <h2 class="ev-chart-ttl">The Evidence</h2>
     <div id="chart-empty" class="ev-chart-empty"><p>Your chart will update as you log check-ins.</p></div>
-    <div id="chart-wrap" class="ev-chart-wrap" style="display:none;"><canvas id="ev-chart"></canvas></div>
+    <div id="chart-wrap" style="display:none;">
+      <div class="ev-chart-legend" id="chart-legend"></div>
+      <div class="ev-chart-wrap"><canvas id="ev-chart"></canvas></div>
+    </div>
   </div>
+
   <div class="ev-actions">
     <p class="ev-actions-ttl">Check In</p>
     <div class="ev-action-grid">
       <div class="ev-action-card" onclick="goTo('ev-start')"><div class="ev-action-card-name">Start of Week</div><div class="ev-action-card-desc">Set intentions and commitments</div></div>
-      <div class="ev-action-card" onclick="goTo('ev-daily')"><div class="ev-action-card-name">Daily Check-in</div><div class="ev-action-card-desc">Mood and open journal</div></div>
+      <div class="ev-action-card" onclick="goTo('ev-daily')"><div class="ev-action-card-name">Daily Check-in</div><div class="ev-action-card-desc">Mood, energy, and intention</div></div>
       <div class="ev-action-card" onclick="goTo('ev-end')"><div class="ev-action-card-name">End of Week</div><div class="ev-action-card-desc">Rate the week and reflect</div></div>
       <div class="ev-action-card ev-std-card" onclick="goTo('ev-std');stdPrep()"><div class="ev-action-card-name">Log a Standard</div><div class="ev-action-card-desc">Hold the decision against who you are</div></div>
       <div class="ev-action-card ev-std-view-card" onclick="goTo('ev-std-list');stdListRender()"><div class="ev-action-card-name">View Standards</div><div class="ev-action-card-desc">Every moment you have logged</div></div>
@@ -365,20 +474,18 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 <div id="ev-start" class="ev-view">
   <div class="ev-checkin-wrap">
     <div class="ev-checkin-topbar"><span class="ev-checkin-title">Start of Week</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-    <div class="ev-checkin-scroll">
-      <div class="ev-checkin-inner">
-        <div class="ev-checkin-head"><span class="ev-eyebrow">Week <span id="sw-num"></span></span><h2>This week begins now.</h2><p>Set your intentions. Name your commitments.</p></div>
-        <div class="ev-block"><div class="ev-block-ttl">Intentions for this week</div><textarea id="sw-intentions" class="ev-textarea" placeholder="What do you want to achieve or shift this week?"></textarea></div>
-        <div class="ev-block"><div class="ev-block-ttl">This week I commit to</div>
-          <div class="ev-comm-row"><span class="ev-comm-n">1</span><input id="sw-c1" type="text" class="ev-input"></div>
-          <div class="ev-comm-row"><span class="ev-comm-n">2</span><input id="sw-c2" type="text" class="ev-input"></div>
-          <div class="ev-comm-row"><span class="ev-comm-n">3</span><input id="sw-c3" type="text" class="ev-input"></div>
-        </div>
-        <div class="ev-block"><div class="ev-block-ttl">Planned act of self-worth</div><p class="ev-hint">Something you will do for yourself this week.</p><input id="sw-self" type="text" class="ev-input"></div>
-        <div class="ev-block"><div class="ev-block-ttl">Planned act of service</div><p class="ev-hint">Something you will give to someone else.</p><input id="sw-service" type="text" class="ev-input"></div>
-        <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="startSave()">Save</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    <div class="ev-checkin-scroll"><div class="ev-checkin-inner">
+      <div class="ev-checkin-head"><span class="ev-eyebrow">Week <span id="sw-num"></span></span><h2>This week begins now.</h2><p>Set your intentions. Name your commitments.</p></div>
+      <div class="ev-block"><div class="ev-block-ttl">Intentions for this week</div><textarea id="sw-intentions" class="ev-textarea" placeholder="What do you want to achieve or shift this week?"></textarea></div>
+      <div class="ev-block"><div class="ev-block-ttl">This week I commit to</div>
+        <div class="ev-comm-row"><span class="ev-comm-n">1</span><input id="sw-c1" type="text" class="ev-input"></div>
+        <div class="ev-comm-row"><span class="ev-comm-n">2</span><input id="sw-c2" type="text" class="ev-input"></div>
+        <div class="ev-comm-row"><span class="ev-comm-n">3</span><input id="sw-c3" type="text" class="ev-input"></div>
       </div>
-    </div>
+      <div class="ev-block"><div class="ev-block-ttl">Planned act of self-worth</div><p class="ev-hint">Something you will do for yourself this week.</p><input id="sw-self" type="text" class="ev-input"></div>
+      <div class="ev-block"><div class="ev-block-ttl">Planned act of service</div><p class="ev-hint">Something you will give to someone else.</p><input id="sw-service" type="text" class="ev-input"></div>
+      <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="startSave()">Save</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    </div></div>
   </div>
 </div>
 
@@ -386,17 +493,46 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 <div id="ev-daily" class="ev-view">
   <div class="ev-checkin-wrap">
     <div class="ev-checkin-topbar"><span class="ev-checkin-title">Daily Check-in</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-    <div class="ev-checkin-scroll">
-      <div class="ev-checkin-inner">
-        <div class="ev-checkin-head"><span class="ev-eyebrow" id="daily-date"></span><h2>How are you right now?</h2></div>
-        <div class="ev-block"><div class="ev-block-ttl">Mood</div>
-          <div class="ev-dim-hd"><div class="ev-dim-name">How are you feeling today?</div><div class="ev-dim-score" id="daily-mood-val">50%</div></div>
-          <input type="range" min="1" max="10" value="5" class="ev-slider" id="daily-slider" oninput="dailyMood(this.value)">
-        </div>
-        <div class="ev-block"><div class="ev-block-ttl">Write anything</div><textarea id="daily-journal" class="ev-textarea" style="min-height:140px;"></textarea></div>
-        <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="dailySave()">Save</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    <div class="ev-checkin-scroll"><div class="ev-checkin-inner">
+      <div class="ev-checkin-head"><span class="ev-eyebrow" id="daily-date"></span><h2>How are you right now?</h2></div>
+
+      <div class="ev-block"><div class="ev-block-ttl">Mood</div>
+        <div class="ev-dim-hd"><div class="ev-dim-name">How are you feeling?</div><div class="ev-dim-score" id="daily-mood-val">50</div></div>
+        <input type="range" min="1" max="100" value="50" class="ev-slider" id="daily-mood-slider" oninput="dailySlider('mood',this.value)">
       </div>
-    </div>
+
+      <div class="ev-block"><div class="ev-block-ttl">Energy</div>
+        <div class="ev-dim-hd"><div class="ev-dim-name">How much fuel do you have?</div><div class="ev-dim-score energy" id="daily-energy-val">50</div></div>
+        <input type="range" min="1" max="100" value="50" class="ev-slider" id="daily-energy-slider" oninput="dailySlider('energy',this.value)">
+      </div>
+
+      <div class="ev-block">
+        <div class="ev-block-ttl">Intention</div>
+        <div class="ev-intention-box">
+          <div class="ev-intention-box-lbl">This week's intention</div>
+          <div class="ev-intention-box-text" id="daily-intention-text">No intention set yet. Log a Start of Week first.</div>
+          <div class="ev-3btn-row">
+            <button class="ev-3btn" id="int-yes" onclick="setIntention('yes')">Yes</button>
+            <button class="ev-3btn" id="int-partly" onclick="setIntention('partly')">Partly</button>
+            <button class="ev-3btn" id="int-no" onclick="setIntention('no')">Not today</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ev-block">
+        <div class="ev-block-ttl">Your This</div>
+        <div id="daily-this-reminder" class="ev-this-reminder" style="display:none;">
+          <div class="ev-this-reminder-lbl">Remember</div>
+          <div class="ev-this-reminder-text" id="daily-this-sentence"></div>
+        </div>
+        <div class="ev-dim-hd" style="margin-top:4px;"><div><div class="ev-dim-name" style="font-size:13px;">How loud is The This today?</div><div class="ev-dim-sub">1 = quiet. 100 = overwhelming.</div></div><div class="ev-dim-score" id="daily-this-val" style="font-size:24px;color:#e74c3c;">50</div></div>
+        <input type="range" min="1" max="100" value="50" class="ev-slider" id="daily-this-slider" oninput="dailySlider('this',this.value)" style="--thumb-color:#e74c3c;">
+      </div>
+
+      <div class="ev-block"><div class="ev-block-ttl">One win, or something you are carrying</div><textarea id="daily-journal" class="ev-textarea" style="min-height:120px;" placeholder="One thing from today, however small..."></textarea></div>
+
+      <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="dailySave()">Save</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    </div></div>
   </div>
 </div>
 
@@ -404,29 +540,27 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 <div id="ev-end" class="ev-view">
   <div class="ev-checkin-wrap">
     <div class="ev-checkin-topbar"><span class="ev-checkin-title">End of Week</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-    <div class="ev-checkin-scroll">
-      <div class="ev-checkin-inner">
-        <div class="ev-checkin-head"><span class="ev-eyebrow">Week <span id="ew-num"></span> Reflection</span><h2>The week is done. What does it say?</h2></div>
-        <div id="ew-prev-block" class="ev-block" style="display:none;"><div class="ev-block-ttl">Last week's commitments</div><div id="ew-prev-list"></div></div>
-        <div class="ev-block"><div class="ev-block-ttl">How you showed up this week</div>
-          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Alignment</div><div class="ev-dim-sub">How aligned am I with who I am becoming?</div></div><div class="ev-dim-score" id="ew-v-alignment">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-alignment" oninput="ewSl('alignment',this.value)"></div>
-          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Clarity</div><div class="ev-dim-sub">How clear do I feel about my direction?</div></div><div class="ev-dim-score" id="ew-v-clarity">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-clarity" oninput="ewSl('clarity',this.value)"></div>
-          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Mood and State</div><div class="ev-dim-sub">How has my overall state been?</div></div><div class="ev-dim-score" id="ew-v-mood">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-mood" oninput="ewSl('mood',this.value)"></div>
-          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Productivity</div><div class="ev-dim-sub">How productive have I been?</div></div><div class="ev-dim-score" id="ew-v-productivity">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-productivity" oninput="ewSl('productivity',this.value)"></div>
-          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Momentum</div><div class="ev-dim-sub">Am I moving forward?</div></div><div class="ev-dim-score" id="ew-v-momentum">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-momentum" oninput="ewSl('momentum',this.value)"></div>
-        </div>
-        <div class="ev-block"><div class="ev-block-ttl">Act of self-worth this week</div><p class="ev-hint">What did you do for yourself?</p><input id="ew-self" type="text" class="ev-input"></div>
-        <div class="ev-block"><div class="ev-block-ttl">Act of service this week</div><p class="ev-hint">What did you give to someone else?</p><input id="ew-service" type="text" class="ev-input"></div>
-        <div class="ev-block"><div class="ev-block-ttl">One thing about yourself you are grateful for</div><p class="ev-hint">Not what you have. Something about you this week.</p><input id="ew-gratitude" type="text" class="ev-input" placeholder="I am grateful that I..."></div>
-        <div class="ev-block"><div class="ev-block-ttl">What shifted this week</div><p class="ev-hint">One sentence. The thing that moved.</p><input id="ew-shifted" type="text" class="ev-input" placeholder="This week..."></div>
-        <div class="ev-block">
-          <div class="ev-block-ttl" style="opacity:.5;font-size:9px;">The This</div>
-          <div class="ev-dim-hd" style="margin-bottom:10px;"><div><div class="ev-dim-name" style="font-size:13px;opacity:.6;">How loud is The This speaking?</div><div class="ev-dim-sub">1 = quiet and in control. 10 = loud and overcoming you.</div></div><div class="ev-dim-score" id="ew-v-this" style="font-size:22px;opacity:.7;">5</div></div>
-          <input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-this" oninput="thisSl(this.value)" style="opacity:.6;">
-        </div>
-        <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="endSave()">Save Week</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    <div class="ev-checkin-scroll"><div class="ev-checkin-inner">
+      <div class="ev-checkin-head"><span class="ev-eyebrow">Week <span id="ew-num"></span> Reflection</span><h2>The week is done. What does it say?</h2></div>
+      <div id="ew-prev-block" class="ev-block" style="display:none;"><div class="ev-block-ttl">Last week's commitments</div><div id="ew-prev-list"></div></div>
+      <div class="ev-block"><div class="ev-block-ttl">How you showed up this week</div>
+        <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Alignment</div><div class="ev-dim-sub">How aligned am I with who I am becoming?</div></div><div class="ev-dim-score" id="ew-v-alignment">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-alignment" oninput="ewSl('alignment',this.value)"></div>
+        <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Clarity</div><div class="ev-dim-sub">How clear do I feel about my direction?</div></div><div class="ev-dim-score" id="ew-v-clarity">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-clarity" oninput="ewSl('clarity',this.value)"></div>
+        <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Mood and State</div><div class="ev-dim-sub">How has my overall state been?</div></div><div class="ev-dim-score" id="ew-v-mood">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-mood" oninput="ewSl('mood',this.value)"></div>
+        <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Productivity</div><div class="ev-dim-sub">How productive have I been?</div></div><div class="ev-dim-score" id="ew-v-productivity">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-productivity" oninput="ewSl('productivity',this.value)"></div>
+        <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Momentum</div><div class="ev-dim-sub">Am I moving forward?</div></div><div class="ev-dim-score" id="ew-v-momentum">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-momentum" oninput="ewSl('momentum',this.value)"></div>
       </div>
-    </div>
+      <div class="ev-block"><div class="ev-block-ttl">Act of self-worth this week</div><p class="ev-hint">What did you do for yourself?</p><input id="ew-self" type="text" class="ev-input"></div>
+      <div class="ev-block"><div class="ev-block-ttl">Act of service this week</div><p class="ev-hint">What did you give to someone else?</p><input id="ew-service" type="text" class="ev-input"></div>
+      <div class="ev-block"><div class="ev-block-ttl">One thing about yourself you are grateful for</div><p class="ev-hint">Not what you have. Something about you this week.</p><input id="ew-gratitude" type="text" class="ev-input" placeholder="I am grateful that I..."></div>
+      <div class="ev-block"><div class="ev-block-ttl">What shifted this week</div><p class="ev-hint">One sentence. The thing that moved.</p><input id="ew-shifted" type="text" class="ev-input" placeholder="This week..."></div>
+      <div class="ev-block">
+        <div class="ev-block-ttl" style="opacity:.5;font-size:9px;">The This</div>
+        <div class="ev-dim-hd" style="margin-bottom:10px;"><div><div class="ev-dim-name" style="font-size:13px;opacity:.6;">How loud is The This speaking?</div><div class="ev-dim-sub">1 = quiet and in control. 10 = loud and overcoming you.</div></div><div class="ev-dim-score" id="ew-v-this" style="font-size:22px;opacity:.7;">5</div></div>
+        <input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-this" oninput="thisSl(this.value)" style="opacity:.6;">
+      </div>
+      <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="endSave()">Save Week</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    </div></div>
   </div>
 </div>
 
@@ -434,26 +568,31 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 <div id="ev-std" class="ev-view">
   <div class="ev-checkin-wrap">
     <div class="ev-checkin-topbar"><span class="ev-checkin-title">The Standard</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-    <div class="ev-checkin-scroll">
-      <div class="ev-checkin-inner">
-        <div class="ev-checkin-head"><h2>The Standard</h2><p>Hold the decision against who you said you are.</p></div>
-        <div class="ev-block"><div class="ev-block-ttl">What is the decision or situation?</div><textarea id="std-situation" class="ev-textarea" placeholder="Write what you are facing right now."></textarea></div>
-        <div class="ev-block"><div class="ev-block-ttl">The questions</div>
-          <div class="ev-q-block"><p class="ev-q-text">Does this align with who I am becoming?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q1','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q1','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q1','not-sure',this)">Not sure</button></div></div>
-          <div class="ev-q-block"><p class="ev-q-text">Does this reflect my worth?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q2','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q2','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q2','not-sure',this)">Not sure</button></div></div>
-          <div class="ev-q-block"><p class="ev-q-text">Would the person I am becoming do this?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q3','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q3','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q3','not-sure',this)">Not sure</button></div></div>
-          <div class="ev-q-block"><p class="ev-q-text">What is this moment actually asking you to face?</p><textarea id="std-q4" class="ev-textarea" style="min-height:80px;" placeholder="Write your answer here."></textarea></div>
-          <div class="ev-q-block"><p class="ev-q-text">Is this above, at, or below your standard?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q5','above',this)">Above</button><button class="ev-q-btn" onclick="qAns('q5','at',this)">At</button><button class="ev-q-btn" onclick="qAns('q5','below',this)">Below</button></div></div>
-        </div>
-        <div class="ev-sentence-wrap">
-          <div class="ev-sentence-lbl">Name it.</div>
-          <div class="ev-sentence-line"><span>If I can overcome</span><input type="text" id="std-this-input" class="ev-sentence-input" placeholder="type your this here" oninput="sentUpd(this.value)"><span>I can overcome anything.</span></div>
-          <div class="ev-sentence-result" id="sentence-result"></div>
-        </div>
-        <div class="ev-checkback" style="margin-top:18px;"><input type="checkbox" id="std-checkback"><label for="std-checkback">Check back on this</label></div>
-        <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="stdSave()">Log This Moment</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    <div class="ev-checkin-scroll"><div class="ev-checkin-inner">
+      <div class="ev-checkin-head"><h2>The Standard</h2><p>Hold the decision against who you said you are.</p></div>
+
+      <!-- Outcomes reminder -->
+      <div id="std-outcomes" class="ev-outcomes-block" style="display:none;">
+        <div class="ev-outcome-card this-outcome"><div class="ev-outcome-card-lbl">Cost of The This</div><div class="ev-outcome-card-text" id="std-cost-text"></div></div>
+        <div class="ev-outcome-card vision-outcome"><div class="ev-outcome-card-lbl">Outcome of the Vision</div><div class="ev-outcome-card-text" id="std-outcome-text"></div></div>
       </div>
-    </div>
+
+      <div class="ev-block"><div class="ev-block-ttl">What is the decision or situation?</div><textarea id="std-situation" class="ev-textarea" placeholder="Write what you are facing right now."></textarea></div>
+      <div class="ev-block"><div class="ev-block-ttl">The questions</div>
+        <div class="ev-q-block"><p class="ev-q-text">Does this align with who I am becoming?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q1','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q1','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q1','not-sure',this)">Not sure</button></div></div>
+        <div class="ev-q-block"><p class="ev-q-text">Does this reflect my worth?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q2','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q2','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q2','not-sure',this)">Not sure</button></div></div>
+        <div class="ev-q-block"><p class="ev-q-text">Would the person I am becoming do this?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q3','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q3','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q3','not-sure',this)">Not sure</button></div></div>
+        <div class="ev-q-block"><p class="ev-q-text">What is this moment actually asking you to face?</p><textarea id="std-q4" class="ev-textarea" style="min-height:80px;" placeholder="Write your answer here."></textarea></div>
+        <div class="ev-q-block"><p class="ev-q-text">Is this above, at, or below your standard?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q5','above',this)">Above</button><button class="ev-q-btn" onclick="qAns('q5','at',this)">At</button><button class="ev-q-btn" onclick="qAns('q5','below',this)">Below</button></div></div>
+      </div>
+      <div class="ev-sentence-wrap">
+        <div class="ev-sentence-lbl">Name it.</div>
+        <div class="ev-sentence-line"><span>If I can overcome</span><input type="text" id="std-this-input" class="ev-sentence-input" placeholder="type your this here" oninput="sentUpd(this.value)"><span>I can overcome anything.</span></div>
+        <div class="ev-sentence-result" id="sentence-result"></div>
+      </div>
+      <div class="ev-checkback" style="margin-top:18px;"><input type="checkbox" id="std-checkback"><label for="std-checkback">Check back on this</label></div>
+      <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="stdSave()">Log This Moment</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    </div></div>
   </div>
 </div>
 
@@ -472,9 +611,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 <div id="ev-std-list" class="ev-view">
   <div class="ev-checkin-wrap">
     <div class="ev-checkin-topbar"><span class="ev-checkin-title">Standards</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-    <div class="ev-checkin-scroll">
-      <div class="ev-checkin-inner" style="padding-top:28px;"><div id="std-list-body"></div></div>
-    </div>
+    <div class="ev-checkin-scroll"><div class="ev-checkin-inner" style="padding-top:28px;"><div id="std-list-body"></div></div></div>
   </div>
 </div>
 
@@ -482,19 +619,17 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 <div id="ev-fu" class="ev-view">
   <div class="ev-checkin-wrap">
     <div class="ev-checkin-topbar"><span class="ev-checkin-title">Check Back</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">Skip</button></div>
-    <div class="ev-checkin-scroll">
-      <div class="ev-fu-inner">
-        <div class="ev-fu-lbl">You faced this</div>
-        <div class="ev-fu-sentence" id="fu-sentence"></div>
-        <div class="ev-fu-days" id="fu-days"></div>
-        <div class="ev-fu-q">How did it go?</div>
-        <div class="ev-fu-btns">
-          <button class="ev-fu-btn held" onclick="fuSave('held')">I held it.</button>
-          <button class="ev-fu-btn didnot" onclick="fuSave('did-not')">I did not hold it.</button>
-          <button class="ev-fu-btn ongoing" onclick="fuSave('ongoing')">It is still ongoing.</button>
-        </div>
+    <div class="ev-checkin-scroll"><div class="ev-fu-inner">
+      <div class="ev-fu-lbl">You faced this</div>
+      <div class="ev-fu-sentence" id="fu-sentence"></div>
+      <div class="ev-fu-days" id="fu-days"></div>
+      <div class="ev-fu-q">How did it go?</div>
+      <div class="ev-fu-btns">
+        <button class="ev-fu-btn held" onclick="fuSave('held')">I held it.</button>
+        <button class="ev-fu-btn didnot" onclick="fuSave('did-not')">I did not hold it.</button>
+        <button class="ev-fu-btn ongoing" onclick="fuSave('ongoing')">It is still ongoing.</button>
       </div>
-    </div>
+    </div></div>
   </div>
 </div>
 
@@ -502,26 +637,26 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 <div id="ev-edit-found" class="ev-view">
   <div class="ev-checkin-wrap">
     <div class="ev-checkin-topbar"><span class="ev-checkin-title">Edit Foundations</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-    <div class="ev-checkin-scroll">
-      <div class="ev-checkin-inner" style="padding-top:32px;">
-        <div class="ev-group"><label class="ev-label">Your Big Why</label><textarea id="ef-why" class="ev-textarea"></textarea></div>
-        <div class="ev-group"><label class="ev-label">Your Big Vision</label><textarea id="ef-vision" class="ev-textarea"></textarea></div>
-        <div class="ev-group"><label class="ev-label">The Identity You Are Becoming</label><div class="ev-id-row"><span class="ev-id-pre">I am</span><input id="ef-identity" type="text" class="ev-input"></div></div>
-        <div class="ev-group"><label class="ev-label">Your Non-Negotiables</label>
-          <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-nn1" type="text" class="ev-input"></div>
-          <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-nn2" type="text" class="ev-input"></div>
-          <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-nn3" type="text" class="ev-input"></div>
-        </div>
-        <div class="ev-group"><label class="ev-label">Your Intentions</label><textarea id="ef-intentions" class="ev-textarea"></textarea></div>
-        <div class="ev-group"><label class="ev-label">Your This</label>
-          <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-this1" type="text" class="ev-input"></div>
-          <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-this2" type="text" class="ev-input"></div>
-          <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-this3" type="text" class="ev-input"></div>
-        </div>
-        <button class="ev-btn-primary" onclick="editFoundSave()">Update Foundations</button>
-        <div style="margin-top:12px;"><button class="ev-btn-outline" style="width:100%;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    <div class="ev-checkin-scroll"><div class="ev-checkin-inner" style="padding-top:32px;">
+      <div class="ev-group"><label class="ev-label">Your Big Why</label><textarea id="ef-why" class="ev-textarea"></textarea></div>
+      <div class="ev-group"><label class="ev-label">Your Big Vision</label><textarea id="ef-vision" class="ev-textarea"></textarea></div>
+      <div class="ev-group"><label class="ev-label">The Identity You Are Becoming</label><div class="ev-id-row"><span class="ev-id-pre">I am</span><input id="ef-identity" type="text" class="ev-input"></div></div>
+      <div class="ev-group"><label class="ev-label">Your Non-Negotiables</label>
+        <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-nn1" type="text" class="ev-input"></div>
+        <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-nn2" type="text" class="ev-input"></div>
+        <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-nn3" type="text" class="ev-input"></div>
       </div>
-    </div>
+      <div class="ev-group"><label class="ev-label">Your Intentions</label><textarea id="ef-intentions" class="ev-textarea"></textarea></div>
+      <div class="ev-group"><label class="ev-label">Your This</label>
+        <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-this1" type="text" class="ev-input"></div>
+        <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-this2" type="text" class="ev-input"></div>
+        <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-this3" type="text" class="ev-input"></div>
+      </div>
+      <div class="ev-group"><label class="ev-label">The cost of feeding The This</label><textarea id="ef-cost" class="ev-textarea"></textarea></div>
+      <div class="ev-group"><label class="ev-label">The outcome of feeding your vision</label><textarea id="ef-outcome" class="ev-textarea"></textarea></div>
+      <button class="ev-btn-primary" onclick="editFoundSave()">Update Foundations</button>
+      <div style="margin-top:12px;"><button class="ev-btn-outline" style="width:100%;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+    </div></div>
   </div>
 </div>
 
@@ -529,24 +664,22 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#
 <div id="ev-restore-dash" class="ev-view">
   <div class="ev-checkin-wrap">
     <div class="ev-checkin-topbar"><span class="ev-checkin-title">Restore Record</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-    <div class="ev-checkin-scroll">
-      <div class="ev-checkin-inner" style="padding-top:40px;">
-        <p class="ev-hint" style="margin-bottom:20px;">Paste the restore code from the bottom of your downloaded PDF to recover a previous record.</p>
-        <textarea id="dash-restore" class="ev-textarea" style="min-height:80px;font-size:11px;font-family:monospace;" placeholder="Paste restore code here..."></textarea>
-        <button class="ev-btn-primary" style="margin-top:12px;" onclick="restoreFromDash()">Restore My Record</button>
-        <p class="ev-restore-err" id="dash-restore-err">That code did not work. Copy it exactly from the bottom of your PDF.</p>
-      </div>
-    </div>
+    <div class="ev-checkin-scroll"><div class="ev-checkin-inner" style="padding-top:40px;">
+      <p class="ev-hint" style="margin-bottom:20px;">Paste the restore code from the bottom of your downloaded PDF to recover a previous record.</p>
+      <textarea id="dash-restore" class="ev-textarea" style="min-height:80px;font-size:11px;font-family:monospace;" placeholder="Paste restore code here..."></textarea>
+      <button class="ev-btn-primary" style="margin-top:12px;" onclick="restoreFromDash()">Restore My Record</button>
+      <p class="ev-restore-err" id="dash-restore-err">That code did not work. Copy it exactly from the bottom of your PDF.</p>
+    </div></div>
   </div>
 </div>
 
 </div><!-- end #ev-app -->
 
 <script>
-const KEY='ev3';
+const KEY='ev4';
 const DIMS=['alignment','clarity','mood','productivity','momentum'];
 const MS={1:{tag:'Week 1 Complete',msg:'You showed up. That already puts you ahead of who you were.',sub:'Most people wait. You started.'},4:{tag:'Four Weeks In',msg:'A month of showing up for yourself. That is not nothing.',sub:'Look at where you started. Look at where you are now.'},8:{tag:'Eight Weeks',msg:'Two months of doing the work. The person who started this is not the person reading this.',sub:'Download your record. You have earned it.'},12:{tag:'Twelve Weeks',msg:'Three months. Most people talk about changing. You are the evidence.',sub:'Keep going.'}};
-let chart=null,qa={},fuId=null,confirmCb=null;
+let chart=null,qa={},fuId=null,confirmCb=null,intentionSel=null;
 let S={setup:null,weeks:[],standards:[],milestones:{}};
 
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
@@ -559,37 +692,41 @@ function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function fmt(iso){try{return new Date(iso).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}catch(e){return '';}}
 function fmtFull(iso){try{return new Date(iso).toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});}catch(e){return '';}}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).substr(2);}
-function sl(el,val){const p=((val-1)/9)*100;el.style.background='linear-gradient(to right,#C8963E '+p+'%,rgba(22,62,91,0.12) '+p+'%)';}
+function sl(el,val,max){const p=((val-1)/(max-1))*100;el.style.background='linear-gradient(to right,#C8963E '+p+'%,rgba(22,62,91,0.12) '+p+'%)';}
+function slRed(el,val){const p=((val-1)/99)*100;el.style.background='linear-gradient(to right,rgba(231,76,60,.6) '+p+'%,rgba(22,62,91,0.12) '+p+'%)';}
+function slGreen(el,val){const p=((val-1)/99)*100;el.style.background='linear-gradient(to right,rgba(39,174,96,.5) '+p+'%,rgba(22,62,91,0.12) '+p+'%)';}
 function toast(msg){const t=g('ev-toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
 function confirmDo(msg,cb){g('confirm-msg').textContent=msg;confirmCb=cb;g('ev-confirm').classList.add('show');}
 function confirmClose(){g('ev-confirm').classList.remove('show');confirmCb=null;}
 g('confirm-yes').onclick=function(){g('ev-confirm').classList.remove('show');if(confirmCb)confirmCb();confirmCb=null;};
 
 function goTo(id){
-  document.querySelectorAll('#ev-app .ev-view').forEach(vv=>{
-    vv.classList.remove('active');
-    // reset scroll position of each view when hidden
-    vv.scrollTop=0;
-  });
-  const target=g(id);
-  if(target){target.classList.add('active');target.scrollTop=0;}
+  document.querySelectorAll('#ev-app .ev-view').forEach(vv=>{vv.classList.remove('active');vv.scrollTop=0;});
+  const t=g(id);if(t){t.classList.add('active');t.scrollTop=0;}
   if(id==='ev-start')startPrep();
   if(id==='ev-daily')dailyPrep();
   if(id==='ev-end')endPrep();
+  if(id==='ev-std')stdPrep();
 }
 
+/* SETUP */
 function setupSave(){
   const why=v('s-why'),id=v('s-identity');
   if(!why||!id){alert('Please fill in your Big Why and Identity.');return;}
-  S.setup={bigWhy:why,bigVision:v('s-vision'),identity:id,nonNegotiables:[v('s-nn1'),v('s-nn2'),v('s-nn3')].filter(Boolean),intentions:v('s-intentions'),yourThis:[v('s-this1'),v('s-this2'),v('s-this3')].filter(Boolean),startedAt:new Date().toISOString()};
+  S.setup={bigWhy:why,bigVision:v('s-vision'),identity:id,nonNegotiables:[v('s-nn1'),v('s-nn2'),v('s-nn3')].filter(Boolean),intentions:v('s-intentions'),yourThis:[v('s-this1'),v('s-this2'),v('s-this3')].filter(Boolean),costOfThis:v('s-cost'),outcomeOfVision:v('s-outcome'),startedAt:new Date().toISOString()};
   save();goTo('ev-dashboard');dashRender();
 }
+function restoreToggle(){const b=g('ev-restore-box');b.style.display=b.style.display==='none'||b.style.display===''?'block':'none';}
+function restoreRun(){const p=fromCode(v('s-restore'));if(!p||!p.setup){g('restore-err').style.display='block';return;}S=p;save();goTo('ev-dashboard');dashRender();}
+function restoreFromDash(){const p=fromCode(v('dash-restore'));if(!p||!p.setup){g('dash-restore-err').style.display='block';return;}S=p;save();toast('Record restored');goTo('ev-dashboard');dashRender();}
+
 function editFoundPrep(){
   const s=S.setup;
   g('ef-why').value=s.bigWhy||'';g('ef-vision').value=s.bigVision||'';g('ef-identity').value=s.identity||'';
   const nn=s.nonNegotiables||[];g('ef-nn1').value=nn[0]||'';g('ef-nn2').value=nn[1]||'';g('ef-nn3').value=nn[2]||'';
   g('ef-intentions').value=s.intentions||'';
   const th=s.yourThis||[];g('ef-this1').value=th[0]||'';g('ef-this2').value=th[1]||'';g('ef-this3').value=th[2]||'';
+  g('ef-cost').value=s.costOfThis||'';g('ef-outcome').value=s.outcomeOfVision||'';
 }
 function editFoundSave(){
   const why=v('ef-why'),id=v('ef-identity');
@@ -598,12 +735,11 @@ function editFoundSave(){
   S.setup.nonNegotiables=[v('ef-nn1'),v('ef-nn2'),v('ef-nn3')].filter(Boolean);
   S.setup.intentions=v('ef-intentions');
   S.setup.yourThis=[v('ef-this1'),v('ef-this2'),v('ef-this3')].filter(Boolean);
+  S.setup.costOfThis=v('ef-cost');S.setup.outcomeOfVision=v('ef-outcome');
   save();toast('Foundations updated');goTo('ev-dashboard');dashRender();
 }
-function restoreToggle(){const b=g('ev-restore-box');b.style.display=b.style.display==='none'||b.style.display===''?'block':'none';}
-function restoreRun(){const p=fromCode(v('s-restore'));if(!p||!p.setup){g('restore-err').style.display='block';return;}S=p;save();goTo('ev-dashboard');dashRender();}
-function restoreFromDash(){const p=fromCode(v('dash-restore'));if(!p||!p.setup){g('dash-restore-err').style.display='block';return;}S=p;save();toast('Record restored');goTo('ev-dashboard');dashRender();}
 
+/* DASHBOARD */
 function dashRender(){
   const s=S.setup;if(!s)return;
   g('d-why').textContent=s.bigWhy;
@@ -612,8 +748,16 @@ function dashRender(){
   g('f-nn').innerHTML=(s.nonNegotiables||[]).map((n,i)=>'<div>'+(i+1)+'. '+esc(n)+'</div>').join('');
   g('f-intentions').textContent=s.intentions||'-';
   g('f-this').innerHTML=(s.yourThis||[]).map((t,i)=>'<div>'+(i+1)+'. '+esc(t)+'</div>').join('')||'-';
-  statsRender();thisWeekRender();chartRender();histRender();nudgeRender();
+  // This sentence in foundations
+  const thisArr=s.yourThis||[];
+  if(thisArr.length&&thisArr[0]){
+    const sw=g('f-sentence-wrap'),sf=g('f-sentence');
+    sf.innerHTML='If I can overcome <strong>'+esc(thisArr[0])+'</strong> I can overcome anything.';
+    sw.style.display='block';
+  }
+  statsRender();thisWeekRender();scaleRender();chartRender();histRender();nudgeRender();
 }
+
 function statsRender(){
   const c=S.weeks.filter(w=>w.endEntry);
   g('d-weeks').textContent=c.length;
@@ -621,6 +765,7 @@ function statsRender(){
   const stds=S.standards||[],cb=stds.filter(s=>s.checkBack&&s.followUpResult),held=cb.filter(s=>s.followUpResult==='held').length;
   g('d-stds').textContent=cb.length>0?held+'/'+cb.length:'-';
 }
+
 function thisWeekRender(){
   const open=S.weeks.find(w=>!w.endEntry);
   const strip=g('this-week-strip'),items=g('this-week-items');
@@ -630,10 +775,11 @@ function thisWeekRender(){
   const hasStart=open&&open.startEntry;
   items.innerHTML=[
     '<span class="ev-tw-item '+(hasStart?'ev-tw-done':'ev-tw-pending')+'">'+(hasStart?'&#10003; ':'')+'Start of Week</span>',
-    '<span class="ev-tw-item '+(dailyCount>=3?'ev-tw-done':'ev-tw-pending')+'">'+(dailyCount>=3?'&#10003; ':'')+'Daily check-ins ('+dailyCount+')</span>',
+    '<span class="ev-tw-item '+(dailyCount>=3?'ev-tw-done':'ev-tw-pending')+'">'+(dailyCount>=3?'&#10003; ':'')+'Daily ('+dailyCount+')</span>',
     '<span class="ev-tw-item '+(open&&open.endEntry?'ev-tw-done':'ev-tw-pending')+'">'+(open&&open.endEntry?'&#10003; ':'')+'End of Week</span>'
   ].join('');
 }
+
 function avgPct(e){if(!e||!e.dimensions)return 0;const d=e.dimensions;return Math.round((d.alignment+d.clarity+d.mood+d.productivity+d.momentum)/5*10);}
 function foundToggle(){const b=g('found-body');b.classList.toggle('open');g('found-chev').textContent=b.classList.contains('open')?'▲':'▼';}
 function nudgeRender(){
@@ -643,28 +789,86 @@ function nudgeRender(){
 }
 function codeCopy(){try{navigator.clipboard.writeText(toCode(S)).then(()=>toast('Restore code copied'));}catch(e){toast('Copy failed. Use the PDF instead.');}}
 
+/* SCALE */
+function scaleWeights(){
+  let thisW=0,visionW=0;
+  // Daily check-ins
+  S.weeks.forEach(w=>{
+    (w.checkIns||[]).forEach(ci=>{
+      thisW+=ci.thisScore||0;
+      visionW+=(ci.mood||0)+(ci.energy||0);
+      if(ci.intention==='yes')visionW+=100;
+      else if(ci.intention==='partly')visionW+=50;
+    });
+  });
+  // Standards — double weight
+  (S.standards||[]).forEach(s=>{
+    if(s.followUpResult==='held')visionW+=200;
+    else if(s.followUpResult==='did-not')thisW+=200;
+  });
+  return{thisW:Math.round(thisW),visionW:Math.round(visionW)};
+}
+function scaleRender(){
+  const{thisW,visionW}=scaleWeights();
+  const total=thisW+visionW;
+  if(total===0){g('scale-empty').style.display='block';g('scale-main').style.display='none';return;}
+  g('scale-empty').style.display='none';g('scale-main').style.display='block';
+  g('scale-this-score').textContent=thisW;
+  g('scale-vision-score').textContent=visionW;
+  const diff=thisW-visionW;
+  const maxTilt=18;
+  const angle=Math.max(-maxTilt,Math.min(maxTilt,(diff/total)*maxTilt*2));
+  g('scale-beam').style.transform='rotate('+angle+'deg)';
+  const msg=g('scale-msg');
+  if(diff>total*0.2)msg.textContent='The This is getting the weight. You already know where this leads.';
+  else if(diff<-total*0.2)msg.textContent='The vision is winning. Keep feeding it.';
+  else msg.textContent='Close. Every daily choice is the deciding vote.';
+}
+
+/* CHART */
 function chartRender(){
   const completedWeeks=S.weeks.filter(w=>w.endEntry);
   const allDailies=S.weeks.reduce((a,w)=>a.concat(w.checkIns||[]),[]);
   const hasAnyData=completedWeeks.length>0||allDailies.length>0;
   if(!hasAnyData){g('chart-empty').style.display='flex';g('chart-wrap').style.display='none';return;}
   g('chart-empty').style.display='none';g('chart-wrap').style.display='block';
+  // Legend
+  g('chart-legend').innerHTML=[
+    '<div class="ev-chart-legend-item"><div class="ev-chart-legend-dot" style="background:#F2BE54;"></div>Weekly score</div>',
+    '<div class="ev-chart-legend-item"><div class="ev-chart-legend-dot" style="background:#C8963E;"></div>Daily mood</div>',
+    '<div class="ev-chart-legend-item"><div class="ev-chart-legend-dot" style="background:#27ae60;"></div>Daily energy</div>',
+    '<div class="ev-chart-legend-item"><div class="ev-chart-legend-dot" style="background:rgba(39,174,96,.5);border:2px solid #27ae60;"></div>Intention yes</div>',
+    '<div class="ev-chart-legend-item"><div class="ev-chart-legend-dot" style="background:rgba(200,150,62,.5);border:2px solid #C8963E;"></div>Intention partly</div>'
+  ].join('');
   const ctx=g('ev-chart').getContext('2d');
   if(chart){chart.destroy();chart=null;}
   const wp=completedWeeks.map((w,i)=>({x:i,y:avgPct(w.endEntry)}));
-  const dp=[];S.weeks.forEach((w,wi)=>{(w.checkIns||[]).forEach((ci,cii)=>{dp.push({x:wi+(cii+1)/((w.checkIns.length||1)+1),y:ci.mood*10});});});
-  const allY=[...wp.map(p=>p.y),...dp.map(p=>p.y)];
-  const minY=Math.max(0,Math.min(...allY)-10),maxY=Math.min(100,Math.max(...allY)+10);
-  const gr=ctx.createLinearGradient(0,0,0,220);gr.addColorStop(0,'rgba(242,190,84,0.28)');gr.addColorStop(0.7,'rgba(242,190,84,0.04)');gr.addColorStop(1,'rgba(242,190,84,0)');
-  const td=wp.length>=2?[{x:wp[0].x,y:wp[0].y},{x:wp[wp.length-1].x,y:wp[wp.length-1].y}]:[];
+  const moodPts=[],energyPts=[],intYes=[],intPartly=[],intNo=[];
+  S.weeks.forEach((w,wi)=>{
+    (w.checkIns||[]).forEach((ci,cii)=>{
+      const x=wi+(cii+1)/((w.checkIns.length||1)+1);
+      if(ci.mood)moodPts.push({x,y:ci.mood});
+      if(ci.energy)energyPts.push({x,y:ci.energy});
+      if(ci.intention==='yes')intYes.push({x,y:ci.mood||50});
+      else if(ci.intention==='partly')intPartly.push({x,y:ci.mood||50});
+      else if(ci.intention==='no')intNo.push({x,y:ci.mood||50});
+    });
+  });
+  const allY=[...wp.map(p=>p.y),...moodPts.map(p=>p.y),...energyPts.map(p=>p.y)].filter(Boolean);
+  const minY=allY.length?Math.max(0,Math.min(...allY)-10):0;
+  const maxY=allY.length?Math.min(100,Math.max(...allY)+10):100;
   const maxX=Math.max(completedWeeks.length,S.weeks.length,1);
+  const gr=ctx.createLinearGradient(0,0,0,220);gr.addColorStop(0,'rgba(242,190,84,0.22)');gr.addColorStop(1,'rgba(242,190,84,0)');
   chart=new Chart(ctx,{type:'scatter',data:{datasets:[
-    wp.length?{type:'line',data:wp,borderColor:'#F2BE54',backgroundColor:gr,borderWidth:2.5,tension:0.45,fill:true,pointBackgroundColor:'#F2BE54',pointBorderColor:'#163E5B',pointBorderWidth:2.5,pointRadius:6,pointHoverRadius:9,order:2}:null,
-    td.length?{type:'line',data:td,borderColor:'rgba(242,190,84,0.25)',backgroundColor:'transparent',borderWidth:1.5,borderDash:[6,4],pointRadius:0,tension:0,fill:false,order:3}:null,
-    dp.length?{type:'scatter',data:dp,backgroundColor:'rgba(250,248,244,0.55)',borderColor:'rgba(250,248,244,0.15)',borderWidth:1,pointRadius:4,order:1}:null
-  ].filter(Boolean)},options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},scales:{x:{type:'linear',min:-0.3,max:maxX,grid:{color:'rgba(255,255,255,0.05)'},border:{display:false},ticks:{color:'rgba(250,248,244,0.35)',font:{family:'Jost',size:10},callback:(val)=>Number.isInteger(val)&&val>=0&&val<maxX?'Wk'+(val+1):''}},y:{min:minY,max:maxY,grid:{color:'rgba(255,255,255,0.05)'},border:{display:false},ticks:{color:'rgba(250,248,244,0.35)',font:{family:'Jost',size:10},callback:(val)=>val+'%'}}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#0f2d42',titleColor:'#F2BE54',bodyColor:'#FAF8F4',borderColor:'rgba(242,190,84,0.18)',borderWidth:1,padding:10,callbacks:{title:(items)=>{const x=items[0].parsed.x;return Number.isInteger(x)&&x>=0&&x<completedWeeks.length?'Week '+(x+1):'Daily';},label:(item)=>'  Score: '+item.parsed.y+'%'}}}}});
+    wp.length?{type:'line',data:wp,borderColor:'#F2BE54',backgroundColor:gr,borderWidth:2.5,tension:0.4,fill:true,pointBackgroundColor:'#F2BE54',pointBorderColor:'#163E5B',pointBorderWidth:2,pointRadius:5,order:1}:null,
+    moodPts.length?{type:'scatter',data:moodPts,backgroundColor:'rgba(200,150,62,0.6)',pointRadius:3.5,order:3}:null,
+    energyPts.length?{type:'scatter',data:energyPts,backgroundColor:'rgba(39,174,96,0.6)',pointRadius:3.5,order:4}:null,
+    intYes.length?{type:'scatter',data:intYes,backgroundColor:'rgba(39,174,96,0.5)',borderColor:'#27ae60',borderWidth:2,pointRadius:6,pointStyle:'circle',order:2}:null,
+    intPartly.length?{type:'scatter',data:intPartly,backgroundColor:'rgba(200,150,62,0.5)',borderColor:'#C8963E',borderWidth:2,pointRadius:6,pointStyle:'circle',order:2}:null
+  ].filter(Boolean)},options:{responsive:true,maintainAspectRatio:false,animation:{duration:500},scales:{x:{type:'linear',min:-0.3,max:maxX,grid:{color:'rgba(255,255,255,0.04)'},border:{display:false},ticks:{color:'rgba(250,248,244,0.3)',font:{family:'Jost',size:10},callback:(val)=>Number.isInteger(val)&&val>=0&&val<maxX?'Wk'+(val+1):''}},y:{min:minY,max:maxY,grid:{color:'rgba(255,255,255,0.04)'},border:{display:false},ticks:{color:'rgba(250,248,244,0.3)',font:{family:'Jost',size:10},callback:(val)=>val}}},plugins:{legend:{display:false},tooltip:{backgroundColor:'#0f2d42',titleColor:'#F2BE54',bodyColor:'#FAF8F4',borderColor:'rgba(242,190,84,0.15)',borderWidth:1,padding:10,callbacks:{title:(items)=>{const x=items[0].parsed.x;return Number.isInteger(x)&&x>=0&&x<completedWeeks.length?'Week '+(x+1):'Daily';},label:(item)=>'  '+item.parsed.y}}}}});
 }
 
+/* HISTORY */
 function histRender(){
   const list=g('hist-list'),empty=g('hist-empty');
   const completed=S.weeks.filter(w=>w.endEntry);
@@ -679,18 +883,16 @@ function histRender(){
       if(open.startEntry.intentions)body+='<div class="ev-sow-entry-item"><strong>Intentions:</strong> '+esc(open.startEntry.intentions)+'</div>';
       const comms=(open.startEntry.commitments||[]).filter(Boolean);
       if(comms.length)body+='<div class="ev-sow-entry-item"><strong>Commitments:</strong> '+comms.map(c=>esc(c)).join(', ')+'</div>';
-      if(open.startEntry.plannedSelfWorth)body+='<div class="ev-sow-entry-item"><strong>Planned self-worth:</strong> '+esc(open.startEntry.plannedSelfWorth)+'</div>';
-      if(open.startEntry.plannedService)body+='<div class="ev-sow-entry-item"><strong>Planned service:</strong> '+esc(open.startEntry.plannedService)+'</div>';
       body+='</div>';
     }
     const dailies=open.checkIns||[];
     if(dailies.length){
       const openIdx=S.weeks.indexOf(open);
       body+='<div class="ev-daily-entries"><div class="ev-daily-entries-lbl">Daily check-ins ('+dailies.length+')</div>';
-      dailies.forEach((ci,ci_i)=>{body+='<div class="ev-daily-entry"><div class="ev-daily-entry-hd"><span class="ev-daily-entry-date">'+fmtFull(ci.date)+'</span><span class="ev-daily-entry-mood">'+(ci.mood*10)+'%</span></div>'+(ci.journal?'<div class="ev-daily-entry-journal">'+esc(ci.journal)+'</div>':'')+'<div style="text-align:right;margin-top:8px;"><button class="ev-daily-entry-del" onclick="delDaily('+openIdx+','+ci_i+')">Delete</button></div></div>';});
+      dailies.forEach((ci,ci_i)=>{body+=dailyEntryHtml(ci,S.weeks.indexOf(open),ci_i);});
       body+='</div>';
     }
-    list.innerHTML='<div class="ev-wk-card"><div class="ev-wk-hd" onclick="wkT(\'open\')"><div><div class="ev-wk-name">Week '+open.weekNumber+' <span style="font-size:9px;opacity:.4;font-weight:400;letter-spacing:1px;">(current)</span></div><div class="ev-wk-date">In progress</div></div><div style="display:flex;align-items:center;"><div class="ev-wk-chev" id="wk-c-open">&#9660;</div></div></div><div class="ev-wk-body open" id="wk-b-open">'+body+'</div></div>';
+    list.innerHTML='<div class="ev-wk-card"><div class="ev-wk-hd" onclick="wkT(\'open\')"><div><div class="ev-wk-name">Week '+open.weekNumber+' <span style="font-size:9px;opacity:.4;font-weight:400;">(current)</span></div><div class="ev-wk-date">In progress</div></div><div style="display:flex;align-items:center;"><div class="ev-wk-chev" id="wk-c-open">&#9660;</div></div></div><div class="ev-wk-body open" id="wk-b-open">'+body+'</div></div>';
   }
   [...completed].reverse().forEach((week,ri)=>{
     const ri2=completed.length-1-ri,weekIdx=S.weeks.indexOf(week),avg=avgPct(week.endEntry);
@@ -707,22 +909,37 @@ function histRender(){
     const cd=week.endEntry.commitmentsDone||[];
     if(pc.filter(Boolean).length)body+='<div class="ev-det-row"><div class="ev-det-lbl">Commitments</div>'+pc.filter(Boolean).map((c2,i)=>'<div class="ev-det-txt '+(cd[i]?'ev-done':'')+'">'+( cd[i]?'&#10003;':'&#9675;')+' '+esc(c2)+'</div>').join('')+'</div>';
     [{l:'Act of Self-Worth',v:week.endEntry.actOfSelfWorth},{l:'Act of Service',v:week.endEntry.actOfService},{l:'Gratitude',v:week.endEntry.gratitude},{l:'What Shifted',v:week.endEntry.whatShifted,i:true}].filter(f=>f.v).forEach(f=>{body+='<div class="ev-det-row"><div class="ev-det-lbl">'+f.l+'</div><div class="ev-det-txt"'+(f.i?' style="font-style:italic;"':'')+'>'+esc(f.v)+'</div></div>';});
-    if(week.endEntry.theThis)body+='<div class="ev-det-row"><div class="ev-det-lbl" style="font-size:8px;opacity:.35;">The This</div><div class="ev-det-txt" style="font-size:12px;opacity:.5;">'+week.endEntry.theThis+'/10</div></div>';
     const dailies=week.checkIns||[];
     if(dailies.length){
       body+='<div class="ev-daily-entries"><div class="ev-daily-entries-lbl">Daily check-ins ('+dailies.length+')</div>';
-      dailies.forEach((ci,ci_i)=>{body+='<div class="ev-daily-entry"><div class="ev-daily-entry-hd"><span class="ev-daily-entry-date">'+fmtFull(ci.date)+'</span><span class="ev-daily-entry-mood">'+(ci.mood*10)+'%</span></div>'+(ci.journal?'<div class="ev-daily-entry-journal">'+esc(ci.journal)+'</div>':'')+'<div style="text-align:right;margin-top:8px;"><button class="ev-daily-entry-del" onclick="delDaily('+weekIdx+','+ci_i+')">Delete</button></div></div>';});
+      dailies.forEach((ci,ci_i)=>{body+=dailyEntryHtml(ci,weekIdx,ci_i);});
       body+='</div>';
     }
     list.innerHTML+='<div class="ev-wk-card"><div class="ev-wk-hd" onclick="wkT('+ri2+')"><div><div class="ev-wk-name">Week '+week.weekNumber+'</div><div class="ev-wk-date">'+fmt(week.endEntry.date)+'</div></div><div style="display:flex;align-items:center;"><div class="ev-wk-avg">'+avg+'%</div><div class="ev-wk-chev" id="wk-c-'+ri2+'">&#9660;</div></div></div><div class="ev-wk-body" id="wk-b-'+ri2+'">'+body+'</div></div>';
   });
 }
+
+function dailyEntryHtml(ci,weekIdx,ci_i){
+  const intMap={yes:'&#10003; Yes',partly:'Partly','no':'Not today'};
+  const intClass={yes:'ev-int-yes',partly:'ev-int-partly','no':'ev-int-no'};
+  let html='<div class="ev-daily-entry"><div class="ev-daily-entry-hd"><span class="ev-daily-entry-date">'+fmtFull(ci.date)+'</span><div class="ev-daily-entry-scores">';
+  if(ci.mood)html+='<span class="ev-daily-entry-score ev-daily-entry-mood-score">'+ci.mood+'</span>';
+  if(ci.energy)html+='<span class="ev-daily-entry-score ev-daily-entry-energy-score">'+ci.energy+'</span>';
+  html+='</div></div>';
+  if(ci.intention)html+='<span class="ev-daily-entry-intention '+(intClass[ci.intention]||'ev-int-no')+'">'+( intMap[ci.intention]||ci.intention)+'</span>';
+  if(ci.journal)html+='<div class="ev-daily-entry-journal">'+esc(ci.journal)+'</div>';
+  html+='<div style="text-align:right;margin-top:8px;"><button class="ev-daily-entry-del" onclick="delDaily('+weekIdx+','+ci_i+')">Delete</button></div></div>';
+  return html;
+}
+
 function wkT(i){const b=g('wk-b-'+i);if(!b)return;b.classList.toggle('open');const c=g('wk-c-'+i);if(c)c.classList.toggle('open');}
 function delDaily(weekIdx,ciIdx){
   confirmDo('Delete this daily check-in? This cannot be undone.',function(){
     if(S.weeks[weekIdx]&&S.weeks[weekIdx].checkIns){S.weeks[weekIdx].checkIns.splice(ciIdx,1);save();toast('Check-in deleted');dashRender();}
   });
 }
+
+/* VIEW STANDARDS */
 function stdListRender(){
   const body=g('std-list-body');
   const stds=(S.standards||[]).slice().reverse();
@@ -744,9 +961,11 @@ function stdListRender(){
 }
 function delStandard(idx){
   confirmDo('Delete this standard? This cannot be undone.',function(){
-    (S.standards||[]).splice(idx,1);save();toast('Standard deleted');stdListRender();statsRender();
+    (S.standards||[]).splice(idx,1);save();toast('Standard deleted');stdListRender();statsRender();scaleRender();
   });
 }
+
+/* START OF WEEK */
 function startPrep(){g('sw-num').textContent=nextWk();['sw-intentions','sw-c1','sw-c2','sw-c3','sw-self','sw-service'].forEach(id=>g(id).value='');}
 function nextWk(){const o=S.weeks.find(w=>!w.endEntry);return o?o.weekNumber:S.weeks.length+1;}
 function startSave(){
@@ -755,52 +974,96 @@ function startSave(){
   if(o)o.startEntry=e;else S.weeks.push({weekNumber:wn,startEntry:e,checkIns:[],endEntry:null});
   save();toast('Week '+wn+' started');goTo('ev-dashboard');dashRender();
 }
+
+/* DAILY CHECK-IN */
 function dailyPrep(){
   g('daily-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
-  g('daily-slider').value=5;g('daily-mood-val').textContent='50%';sl(g('daily-slider'),5);g('daily-journal').value='';
+  g('daily-mood-slider').value=50;g('daily-mood-val').textContent='50';
+  g('daily-energy-slider').value=50;g('daily-energy-val').textContent='50';
+  g('daily-this-slider').value=50;g('daily-this-val').textContent='50';
+  sl(g('daily-mood-slider'),50,100);slGreen(g('daily-energy-slider'),50);slRed(g('daily-this-slider'),50);
+  g('daily-journal').value='';intentionSel=null;
+  ['int-yes','int-partly','int-no'].forEach(id=>g(id).className='ev-3btn');
+  // Pull this week's intention
+  const open=S.weeks.find(w=>!w.endEntry);
+  const intention=open&&open.startEntry&&open.startEntry.intentions?open.startEntry.intentions:'No intention set yet. Log a Start of Week first.';
+  g('daily-intention-text').textContent=intention;
+  // This sentence reminder
+  const thisArr=(S.setup&&S.setup.yourThis)||[];
+  const rem=g('daily-this-reminder');
+  if(thisArr.length&&thisArr[0]){
+    g('daily-this-sentence').innerHTML='If I can overcome <strong>'+esc(thisArr[0])+'</strong> I can overcome anything.';
+    rem.style.display='block';
+  }else{rem.style.display='none';}
 }
-function dailyMood(val){g('daily-mood-val').textContent=(val*10)+'%';sl(g('daily-slider'),val);}
+function dailySlider(type,val){
+  const v=parseInt(val);
+  if(type==='mood'){g('daily-mood-val').textContent=v;sl(g('daily-mood-slider'),v,100);}
+  if(type==='energy'){g('daily-energy-val').textContent=v;slGreen(g('daily-energy-slider'),v);}
+  if(type==='this'){g('daily-this-val').textContent=v;slRed(g('daily-this-slider'),v);}
+}
+function setIntention(val){
+  intentionSel=val;
+  ['int-yes','int-partly','int-no'].forEach(id=>g(id).className='ev-3btn');
+  if(val==='yes')g('int-yes').className='ev-3btn sel-yes';
+  else if(val==='partly')g('int-partly').className='ev-3btn sel-partly';
+  else g('int-no').className='ev-3btn sel-no';
+}
 function dailySave(){
-  const e={date:new Date().toISOString(),mood:parseInt(g('daily-slider').value),journal:v('daily-journal')};
+  const e={date:new Date().toISOString(),mood:parseInt(g('daily-mood-slider').value),energy:parseInt(g('daily-energy-slider').value),thisScore:parseInt(g('daily-this-slider').value),intention:intentionSel,journal:(g('daily-journal').value||'').trim()};
   let o=S.weeks.find(w=>!w.endEntry);
   if(!o){o={weekNumber:S.weeks.length+1,startEntry:null,checkIns:[],endEntry:null};S.weeks.push(o);}
   if(!o.checkIns)o.checkIns=[];o.checkIns.push(e);
   save();toast('Check-in saved');goTo('ev-dashboard');dashRender();
 }
+
+/* END OF WEEK */
 function endPrep(){
   const o=S.weeks.find(w=>!w.endEntry);g('ew-num').textContent=o?o.weekNumber:S.weeks.length;
-  DIMS.forEach(d=>{g('ew-s-'+d).value=5;g('ew-v-'+d).textContent='50%';sl(g('ew-s-'+d),5);});
-  g('ew-s-this').value=5;g('ew-v-this').textContent='5';sl(g('ew-s-this'),5);
+  DIMS.forEach(d=>{g('ew-s-'+d).value=5;g('ew-v-'+d).textContent='50%';sl(g('ew-s-'+d),5,10);});
+  g('ew-s-this').value=5;g('ew-v-this').textContent='5';sl(g('ew-s-this'),5,10);
   ['ew-self','ew-service','ew-gratitude','ew-shifted'].forEach(id=>g(id).value='');
   const pb=g('ew-prev-block'),pl=g('ew-prev-list');pl.innerHTML='';
   const c=S.weeks.filter(w=>w.endEntry);
   if(c.length>0){const last=c[c.length-1],comms=(last.startEntry?last.startEntry.commitments:[]).filter(Boolean);if(comms.length){pb.style.display='block';comms.forEach((c2,i)=>{pl.innerHTML+='<div class="ev-prev-comm"><input type="checkbox" id="pc-'+i+'"><label for="pc-'+i+'">'+esc(c2)+'</label></div>';});}else pb.style.display='none';}else pb.style.display='none';
 }
-function ewSl(d,val){g('ew-v-'+d).textContent=(val*10)+'%';sl(g('ew-s-'+d),val);}
-function thisSl(val){g('ew-v-this').textContent=val;sl(g('ew-s-this'),val);}
+function ewSl(d,val){g('ew-v-'+d).textContent=(val*10)+'%';sl(g('ew-s-'+d),val,10);}
+function thisSl(val){g('ew-v-this').textContent=val;sl(g('ew-s-this'),val,10);}
 function endSave(){
   const dims={};DIMS.forEach(d=>{dims[d]=parseInt(g('ew-s-'+d).value);});
   const cd=[];document.querySelectorAll('[id^="pc-"]').forEach(cb=>cd.push(cb.checked));
-  const e={date:new Date().toISOString(),dimensions:dims,commitmentsDone:cd,actOfSelfWorth:v('ew-self'),actOfService:v('ew-service'),gratitude:v('ew-gratitude'),whatShifted:v('ew-shifted'),theThis:parseInt(g('ew-s-this').value)};
+  const e={date:new Date().toISOString(),dimensions:dims,commitmentsDone:cd,actOfSelfWorth:(g('ew-self').value||'').trim(),actOfService:(g('ew-service').value||'').trim(),gratitude:(g('ew-gratitude').value||'').trim(),whatShifted:(g('ew-shifted').value||'').trim(),theThis:parseInt(g('ew-s-this').value)};
   let o=S.weeks.find(w=>!w.endEntry);if(!o){o={weekNumber:S.weeks.length+1,startEntry:null,checkIns:[],endEntry:null};S.weeks.push(o);}
   o.endEntry=e;save();toast('Week saved');goTo('ev-dashboard');dashRender();msCheck();
 }
+
+/* THE STANDARD */
 function stdPrep(){
   g('std-situation').value='';g('std-q4').value='';g('std-this-input').value='';
   g('sentence-result').style.display='none';g('sentence-result').innerHTML='';
   g('std-checkback').checked=false;qa={};
   document.querySelectorAll('.ev-q-btn').forEach(b=>b.classList.remove('sel'));
+  // Show outcomes
+  const s=S.setup;
+  const ob=g('std-outcomes');
+  if(s&&(s.costOfThis||s.outcomeOfVision)){
+    g('std-cost-text').textContent=s.costOfThis||'Not set yet.';
+    g('std-outcome-text').textContent=s.outcomeOfVision||'Not set yet.';
+    ob.style.display='grid';
+  }else ob.style.display='none';
 }
 function qAns(q,val,btn){const row=btn.closest('.ev-q-row');row.querySelectorAll('.ev-q-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');qa[q]=val;}
 function sentUpd(val){const r=g('sentence-result');if(val.trim()){r.style.display='block';r.innerHTML='<p>If I can overcome <strong>'+esc(val.trim())+'</strong> I can overcome anything.</p>';}else r.style.display='none';}
 function stdSave(){
   const tt=g('std-this-input').value.trim();
   const sentence=tt?'If I can overcome '+tt+' I can overcome anything.':'';
-  const e={id:uid(),date:new Date().toISOString(),situation:v('std-situation'),answers:{q1:qa.q1||null,q2:qa.q2||null,q3:qa.q3||null,q4face:v('std-q4'),q5:qa.q5||null},thisText:tt,sentence:sentence,checkBack:g('std-checkback').checked,followUpResult:null,followUpDate:null};
+  const e={id:uid(),date:new Date().toISOString(),situation:(g('std-situation').value||'').trim(),answers:{q1:qa.q1||null,q2:qa.q2||null,q3:qa.q3||null,q4face:(g('std-q4').value||'').trim(),q5:qa.q5||null},thisText:tt,sentence:sentence,checkBack:g('std-checkback').checked,followUpResult:null,followUpDate:null};
   if(!S.standards)S.standards=[];S.standards.push(e);save();
   if(sentence){g('std-result-sentence').innerHTML='If I can overcome <strong>'+esc(tt)+'</strong> I can overcome anything.';goTo('ev-std-result');}
   else{toast('Standard logged');goTo('ev-dashboard');dashRender();}
 }
+
+/* FOLLOW-UP */
 function fuOpen(id){
   const s=(S.standards||[]).find(s=>s.id===id);if(!s)return;
   fuId=id;const d=Math.floor((Date.now()-new Date(s.date).getTime())/86400000);
@@ -811,6 +1074,8 @@ function fuSave(r){
   const s=(S.standards||[]).find(s=>s.id===fuId);if(s){s.followUpResult=r;s.followUpDate=new Date().toISOString();}
   save();toast('Logged');goTo('ev-dashboard');dashRender();
 }
+
+/* MILESTONES */
 function msCheck(){
   const c=S.weeks.filter(w=>w.endEntry),n=c.length;if(!S.milestones)S.milestones={};
   if(MS[n]&&!S.milestones['w'+n]){S.milestones['w'+n]=true;msShow(MS[n]);save();return;}
@@ -819,6 +1084,7 @@ function msCheck(){
 function msShow(m){g('ms-tag').textContent=m.tag;g('ms-msg').textContent=m.msg;g('ms-sub').textContent=m.sub;g('ev-milestone').classList.add('show');}
 function msClose(){g('ev-milestone').classList.remove('show');}
 
+/* PDF */
 function pdfDownload(){
   const{jsPDF}=window.jspdf,doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
   const W=210,mg=22,cw=W-mg*2,nv=[22,62,91],gd=[200,150,62],gr=[100,100,100],lg=[185,180,175];let y=0;
@@ -836,12 +1102,15 @@ function pdfDownload(){
   sec('Big Vision',s.bigVision);sec('Identity','I am '+(s.identity||''));
   sec('Non-Negotiables',(s.nonNegotiables||[]).filter(Boolean).map((n,i)=>(i+1)+'. '+n).join('\n'));
   sec('Intentions',s.intentions);sec('Your This',(s.yourThis||[]).filter(Boolean).map((t,i)=>(i+1)+'. '+t).join('\n'));
+  if(s.costOfThis||s.outcomeOfVision){chk(20);doc.setDrawColor(...lg);doc.line(mg,y,W-mg,y);y+=8;sec('Cost of The This',s.costOfThis);sec('Outcome of the Vision',s.outcomeOfVision);}
+  const{thisW,visionW}=scaleWeights();
+  if(thisW+visionW>0){chk(20);doc.setDrawColor(...lg);doc.line(mg,y,W-mg,y);y+=8;doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...nv);doc.text('THE BALANCE',mg,y);y+=5;doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(...gr);doc.text('The This: '+thisW+'   Vision: '+visionW,mg,y);y+=8;}
   const c=S.weeks.filter(w=>w.endEntry);
   if(c.length>0&&chart){chk(70);doc.setDrawColor(...lg);doc.line(mg,y,W-mg,y);y+=8;doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...gd);doc.text('YOUR PROGRESS',mg,y);y+=7;try{doc.addImage(g('ev-chart').toDataURL('image/png'),'PNG',mg,y,cw,50);y+=58;}catch(e){}}
   if(c.length>0){chk(16);doc.setDrawColor(...lg);doc.line(mg,y,W-mg,y);y+=8;doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...gd);doc.text('WEEKLY RECORD',mg,y);y+=10;
     c.forEach(week=>{chk(40);const avg=avgPct(week.endEntry);
       doc.setFillColor(...nv);doc.rect(mg,y,cw,8,'F');doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(255,255,255);doc.text('WEEK '+week.weekNumber+'   '+fmt(week.endEntry.date)+'   Score: '+avg+'%',mg+4,y+5.5);y+=12;
-      const dw=cw/5,d=week.endEntry.dimensions;DIMS.forEach((dim,di)=>{const x=mg+di*dw;doc.setFont('helvetica','bold');doc.setFontSize(14);doc.setTextColor(...nv);doc.text((d[dim]*10)+'%',x,y+6);doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...lg);doc.text(dim.charAt(0).toUpperCase()+dim.slice(1),x,y+11);});y+=18;
+      const dw=cw/5,d=week.endEntry.dimensions;DIMS.forEach((dim,di)=>{const x=mg+di*dw;doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(...nv);doc.text((d[dim]*10)+'%',x,y+5);doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...lg);doc.text(dim.charAt(0).toUpperCase()+dim.slice(1),x,y+10);});y+=16;
       [{l:'Act of Self-Worth',v:week.endEntry.actOfSelfWorth},{l:'Act of Service',v:week.endEntry.actOfService},{l:'Gratitude',v:week.endEntry.gratitude},{l:'What Shifted',v:week.endEntry.whatShifted}].filter(x=>x.v).forEach(det=>{chk(14);doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(...nv);doc.text(det.l.toUpperCase(),mg,y);y+=4;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...gr);const ls=doc.splitTextToSize(det.v,cw);doc.text(ls,mg,y);y+=ls.length*4.5+4;});
       y+=4;doc.setDrawColor(210,205,200);doc.setLineWidth(0.2);doc.line(mg,y,W-mg,y);y+=8;
     });
@@ -863,7 +1132,7 @@ if(S.setup){
 }else{
   goTo('ev-setup');
 }
-setTimeout(()=>{try{sl(g('daily-slider'),5);DIMS.forEach(d=>sl(g('ew-s-'+d),5));sl(g('ew-s-this'),5);}catch(e){}},150);
+setTimeout(()=>{try{sl(g('daily-mood-slider'),50,100);slGreen(g('daily-energy-slider'),50);slRed(g('daily-this-slider'),50);DIMS.forEach(d=>sl(g('ew-s-'+d),5,10));sl(g('ew-s-this'),5,10);}catch(e){}},150);
 </script>
 </body>
 </html>
