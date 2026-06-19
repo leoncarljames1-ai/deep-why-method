@@ -2,21 +2,34 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>The Evidence</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
-.ev-view{display:none;}
+html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
+
+/* APP SHELL — clips everything, each view scrolls itself */
+#ev-app{position:relative;width:100%;height:100vh;overflow:hidden;}
+
+/* VIEWS — each fills the shell, scrolls independently */
+.ev-view{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;
+  display:none;background:#FAF8F4;
+}
 .ev-view.active{display:block;}
+
+/* BUTTONS */
 .ev-btn-primary{width:100%;padding:16px;background:#163E5B;color:#F2BE54;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;border:none;border-radius:3px;cursor:pointer;}
 .ev-btn-ghost{padding:8px 14px;background:transparent;border:1px solid rgba(255,255,255,0.22);border-radius:2px;color:rgba(255,255,255,0.7);font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
 .ev-btn-gold{padding:9px 18px;background:#F2BE54;border:none;border-radius:2px;color:#163E5B;font-family:'Jost',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
 .ev-btn-outline{padding:14px;background:transparent;border:1px solid rgba(22,62,91,0.2);border-radius:3px;color:#163E5B;font-family:'Jost',sans-serif;font-size:11px;font-weight:400;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;}
 .ev-btn-danger{padding:7px 12px;background:transparent;border:1px solid rgba(192,57,43,0.25);border-radius:2px;color:#c0392b;font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;cursor:pointer;}
+
+/* INPUTS */
 .ev-input,.ev-textarea{width:100%;background:#fff;border:1px solid rgba(22,62,91,0.18);border-radius:3px;padding:13px 16px;font-family:'Jost',sans-serif;font-size:14px;color:#163E5B;outline:none;}
 .ev-input:focus,.ev-textarea:focus{border-color:#C8963E;}
 .ev-textarea{resize:vertical;min-height:90px;line-height:1.65;}
@@ -28,13 +41,17 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-slider{-webkit-appearance:none;appearance:none;width:100%;height:3px;border-radius:2px;background:rgba(22,62,91,0.12);outline:none;cursor:pointer;}
 .ev-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#C8963E;border:3px solid #163E5B;cursor:pointer;}
 .ev-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#C8963E;border:3px solid #163E5B;cursor:pointer;}
-.ev-topbar{background:#163E5B;display:flex;align-items:center;justify-content:space-between;padding:13px 22px;gap:10px;}
+
+/* TOPBAR */
+.ev-topbar{background:#163E5B;display:flex;align-items:center;justify-content:space-between;padding:13px 22px;gap:10px;flex-shrink:0;}
 .ev-topbar-brand{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:rgba(255,255,255,.7);}
 .ev-topbar-brand strong{color:#F2BE54;font-weight:600;}
 .ev-topbar-actions{display:flex;gap:8px;align-items:center;}
-#ev-setup{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:60px 22px 100px;}
+
+/* SETUP */
+.ev-setup-inner{display:flex;flex-direction:column;align-items:center;padding:60px 22px 100px;}
 .ev-setup-hd{text-align:center;margin-bottom:52px;max-width:500px;}
-.ev-setup-hd h1{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:500;color:#163E5B;margin-bottom:14px;line-height:1.1;}
+.ev-setup-hd h1{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:500;color:#163E5B;margin-bottom:14px;line-height:1.1;}
 .ev-setup-hd p{font-family:'Jost',sans-serif;font-size:14px;font-weight:300;color:#163E5B;opacity:.6;line-height:1.7;}
 .ev-setup-form{width:100%;max-width:580px;}
 .ev-id-row{display:flex;align-items:center;gap:12px;}
@@ -45,6 +62,8 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-restore-toggle button{background:none;border:none;font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;opacity:.4;cursor:pointer;text-decoration:underline;}
 #ev-restore-box{display:none;margin-top:16px;}
 .ev-restore-err{font-family:'Jost',sans-serif;font-size:12px;color:#c0392b;margin-top:8px;display:none;}
+
+/* DASHBOARD */
 .ev-why-banner{background:#163E5B;padding:32px 22px;text-align:center;}
 .ev-why-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.45);margin-bottom:12px;}
 .ev-why-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;font-weight:400;color:#F2BE54;line-height:1.45;max-width:660px;margin:0 auto;}
@@ -88,7 +107,7 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-std-card .ev-action-card-name,.ev-std-view-card .ev-action-card-name{color:#F2BE54;}
 .ev-action-card-desc{font-family:'Jost',sans-serif;font-size:11px;font-weight:300;color:#163E5B;opacity:.45;}
 .ev-std-card .ev-action-card-desc,.ev-std-view-card .ev-action-card-desc{color:rgba(255,255,255,.35);}
-.ev-history{padding:28px 22px;}
+.ev-history{padding:28px 22px 80px;}
 .ev-history-ey{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#C8963E;margin-bottom:6px;}
 .ev-history-ttl{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:#163E5B;margin-bottom:20px;}
 .ev-history-empty{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:#163E5B;opacity:.35;font-style:italic;}
@@ -97,7 +116,7 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-wk-name{font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#163E5B;}
 .ev-wk-date{font-family:'Jost',sans-serif;font-size:10px;font-weight:300;color:#163E5B;opacity:.35;margin-top:2px;}
 .ev-wk-avg{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:#C8963E;line-height:1;}
-.ev-wk-chev{font-size:10px;color:#163E5B;opacity:.25;margin-left:8px;display:inline-block;}
+.ev-wk-chev{font-size:10px;color:#163E5B;opacity:.25;margin-left:8px;transition:transform .2s;}
 .ev-wk-chev.open{transform:rotate(180deg);}
 .ev-wk-body{display:none;padding:16px;border-top:1px solid rgba(22,62,91,.07);}
 .ev-wk-body.open{display:block;}
@@ -120,9 +139,12 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-daily-entry-mood{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#C8963E;}
 .ev-daily-entry-journal{font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;line-height:1.55;opacity:.7;}
 .ev-daily-entry-del{background:none;border:none;font-family:'Jost',sans-serif;font-size:10px;color:#c0392b;opacity:.5;cursor:pointer;padding:0;text-decoration:underline;}
-.ev-checkin-view{background:#FAF8F4;min-height:100vh;}
-.ev-checkin-topbar{background:#163E5B;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;}
+
+/* CHECK-IN VIEWS — fixed topbar, scrollable body */
+.ev-checkin-wrap{display:flex;flex-direction:column;height:100%;}
+.ev-checkin-topbar{background:#163E5B;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .ev-checkin-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:#F2BE54;}
+.ev-checkin-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .ev-checkin-inner{max-width:580px;margin:0 auto;padding:0 22px 80px;}
 .ev-checkin-head{text-align:center;padding:40px 0 32px;border-bottom:1px solid rgba(22,62,91,.1);margin-bottom:32px;}
 .ev-checkin-head h2{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:500;color:#163E5B;margin-bottom:6px;}
@@ -140,6 +162,8 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-prev-comm input[type=checkbox]{width:18px;height:18px;accent-color:#C8963E;cursor:pointer;flex-shrink:0;}
 .ev-prev-comm label{font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;line-height:1.4;}
 .ev-checkin-actions{display:flex;gap:12px;padding-top:24px;border-top:1px solid rgba(22,62,91,.08);margin-top:32px;}
+
+/* THE STANDARD */
 .ev-q-block{margin-bottom:22px;}
 .ev-q-text{font-family:'Jost',sans-serif;font-size:15px;color:#163E5B;line-height:1.5;margin-bottom:12px;}
 .ev-q-row{display:flex;gap:8px;}
@@ -156,11 +180,14 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-checkback{display:flex;align-items:center;gap:12px;margin-top:18px;padding:14px 16px;background:#fff;border:1px solid rgba(22,62,91,.1);border-radius:3px;}
 .ev-checkback input[type=checkbox]{width:18px;height:18px;accent-color:#C8963E;}
 .ev-checkback label{font-family:'Jost',sans-serif;font-size:13px;color:#163E5B;}
-#ev-std-result{background:#163E5B;}
-.ev-std-result-inner{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 28px 80px;text-align:center;}
+
+/* STANDARD RESULT */
+.ev-std-result-inner{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 28px 80px;text-align:center;background:#163E5B;}
 .ev-std-result-quote{font-family:'Cormorant Garamond',serif;font-size:22px;font-style:italic;color:rgba(250,248,244,.7);line-height:1.6;max-width:480px;margin-bottom:40px;}
 .ev-std-result-quote strong{color:#F2BE54;font-style:italic;font-weight:500;}
 .ev-std-result-btns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;}
+
+/* VIEW STANDARDS */
 .ev-std-record{background:#fff;border:1px solid rgba(22,62,91,.1);border-radius:4px;margin-bottom:12px;overflow:hidden;}
 .ev-std-record-hd{padding:16px;border-bottom:1px solid rgba(22,62,91,.06);}
 .ev-std-record-date{font-family:'Jost',sans-serif;font-size:10px;color:#163E5B;opacity:.35;margin-bottom:6px;}
@@ -177,7 +204,9 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-std-held-badge.ongoing{background:rgba(200,150,62,.1);color:#C8963E;}
 .ev-std-held-badge.pending{background:rgba(22,62,91,.04);color:#163E5B;opacity:.35;}
 .ev-std-empty{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:#163E5B;opacity:.35;font-style:italic;padding:40px 22px;text-align:center;}
-.ev-fu-inner{max-width:500px;margin:0 auto;padding:60px 28px;}
+
+/* FOLLOW-UP */
+.ev-fu-inner{max-width:500px;margin:0 auto;padding:60px 28px 80px;}
 .ev-fu-lbl{font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#C8963E;margin-bottom:10px;}
 .ev-fu-sentence{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:#163E5B;line-height:1.4;margin-bottom:6px;}
 .ev-fu-days{font-family:'Jost',sans-serif;font-size:12px;color:#163E5B;opacity:.4;margin-bottom:28px;}
@@ -187,22 +216,29 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 .ev-fu-btn.held{border-left:3px solid #27ae60;}
 .ev-fu-btn.didnot{border-left:3px solid rgba(22,62,91,.2);}
 .ev-fu-btn.ongoing{border-left:3px solid #C8963E;}
-#ev-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#163E5B;color:#F2BE54;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:12px 24px;border-radius:3px;display:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(22,62,91,.3);}
-#ev-confirm{display:none;position:fixed;inset:0;background:rgba(15,45,66,.7);z-index:500;align-items:center;justify-content:center;padding:24px;}
+
+/* TOAST */
+#ev-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#163E5B;color:#F2BE54;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:12px 24px;border-radius:3px;display:none;z-index:9999;white-space:nowrap;box-shadow:0 4px 20px rgba(22,62,91,.3);}
+
+/* CONFIRM */
+#ev-confirm{display:none;position:fixed;inset:0;background:rgba(15,45,66,.75);z-index:9998;align-items:center;justify-content:center;padding:24px;}
 #ev-confirm.show{display:flex;}
 .ev-confirm-box{background:#fff;border-radius:6px;padding:28px 24px;max-width:320px;width:100%;}
 .ev-confirm-msg{font-family:'Jost',sans-serif;font-size:14px;color:#163E5B;line-height:1.5;margin-bottom:20px;}
 .ev-confirm-btns{display:flex;gap:10px;}
 .ev-confirm-yes{flex:1;padding:12px;background:#c0392b;color:#fff;border:none;border-radius:3px;font-family:'Jost',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;}
 .ev-confirm-no{flex:1;padding:12px;background:transparent;border:1px solid rgba(22,62,91,.2);border-radius:3px;font-family:'Jost',sans-serif;font-size:11px;color:#163E5B;cursor:pointer;}
-#ev-milestone{display:none;position:fixed;inset:0;background:rgba(15,45,66,.93);z-index:200;align-items:center;justify-content:center;padding:24px;}
+
+/* MILESTONE */
+#ev-milestone{display:none;position:fixed;inset:0;background:rgba(15,45,66,.93);z-index:9997;align-items:center;justify-content:center;padding:24px;}
 #ev-milestone.show{display:flex;}
 .ev-ms-box{background:#163E5B;border:1px solid rgba(242,190,84,.22);border-radius:6px;padding:44px 36px;max-width:420px;width:100%;text-align:center;}
 .ev-ms-tag{font-family:'Jost',sans-serif;font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(242,190,84,.4);margin-bottom:18px;}
 .ev-ms-msg{font-family:'Cormorant Garamond',serif;font-size:26px;font-style:italic;color:#F2BE54;line-height:1.35;margin-bottom:16px;}
 .ev-ms-sub{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,.45);line-height:1.6;margin-bottom:28px;}
+
 @media(max-width:560px){
-  .ev-setup-hd h1{font-size:36px;}
+  .ev-setup-hd h1{font-size:34px;}
   .ev-why-text{font-size:18px;}
   .ev-scores{grid-template-columns:repeat(3,1fr);}
   .ev-checkin-actions{flex-direction:column;}
@@ -211,6 +247,7 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 </style>
 </head>
 <body>
+
 <div id="ev-toast"></div>
 <div id="ev-confirm">
   <div class="ev-confirm-box">
@@ -221,37 +258,49 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
     </div>
   </div>
 </div>
+<div id="ev-milestone">
+  <div class="ev-ms-box">
+    <div class="ev-ms-tag" id="ms-tag"></div>
+    <div class="ev-ms-msg" id="ms-msg"></div>
+    <div class="ev-ms-sub" id="ms-sub"></div>
+    <button class="ev-btn-gold" style="width:100%;padding:13px;" onclick="msClose()">Continue</button>
+  </div>
+</div>
+
+<div id="ev-app">
 
 <!-- SETUP -->
 <div id="ev-setup" class="ev-view">
-  <div class="ev-setup-hd">
-    <span class="ev-eyebrow">The OTOA Programme</span>
-    <h1>The Evidence</h1>
-    <p>Set your foundation once. Everything you track from here is proof of who you are becoming.</p>
-  </div>
-  <div class="ev-setup-form">
-    <div class="ev-group"><label class="ev-label">Your Big Why</label><p class="ev-hint">Not a goal. The reason you fight for it.</p><textarea id="s-why" class="ev-textarea" placeholder="Why does this matter more than anything else?"></textarea></div>
-    <div class="ev-group"><label class="ev-label">Your Big Vision</label><p class="ev-hint">Who are you when this work is done?</p><textarea id="s-vision" class="ev-textarea" placeholder="Describe the life you are moving toward..."></textarea></div>
-    <div class="ev-group"><label class="ev-label">The Identity You Are Becoming</label><p class="ev-hint">Finish this sentence.</p><div class="ev-id-row"><span class="ev-id-pre">I am</span><input id="s-identity" type="text" class="ev-input" placeholder="someone who..."></div></div>
-    <div class="ev-group"><label class="ev-label">Your Non-Negotiables</label><p class="ev-hint">Three commitments that do not bend.</p>
-      <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="s-nn1" type="text" class="ev-input"></div>
-      <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="s-nn2" type="text" class="ev-input"></div>
-      <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="s-nn3" type="text" class="ev-input"></div>
+  <div class="ev-setup-inner">
+    <div class="ev-setup-hd">
+      <span class="ev-eyebrow">The OTOA Programme</span>
+      <h1>The Evidence</h1>
+      <p>Set your foundation once. Everything you track from here is proof of who you are becoming.</p>
     </div>
-    <div class="ev-group"><label class="ev-label">Your Intentions</label><p class="ev-hint">What are you here to shift?</p><textarea id="s-intentions" class="ev-textarea" placeholder="What needs to change?"></textarea></div>
-    <div class="ev-group"><label class="ev-label">Your This</label><p class="ev-hint">The things you are here to overcome. Add one or more.</p>
-      <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="s-this1" type="text" class="ev-input" placeholder="e.g. the pull that keeps me small"></div>
-      <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="s-this2" type="text" class="ev-input" placeholder="Optional"></div>
-      <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="s-this3" type="text" class="ev-input" placeholder="Optional"></div>
-    </div>
-    <div class="ev-divider"></div>
-    <button class="ev-btn-primary" onclick="setupSave()">Begin My Record</button>
-    <div class="ev-restore-toggle"><button onclick="restoreToggle()">Returning? Restore a previous record</button></div>
-    <div id="ev-restore-box">
-      <p class="ev-hint" style="margin-bottom:10px;">Paste the restore code from the bottom of your last downloaded PDF.</p>
-      <textarea id="s-restore" class="ev-textarea" style="min-height:80px;font-size:11px;font-family:monospace;" placeholder="Paste restore code here..."></textarea>
-      <button class="ev-btn-primary" style="margin-top:10px;" onclick="restoreRun()">Restore My Record</button>
-      <p class="ev-restore-err" id="restore-err">That code did not work. Copy it exactly from the bottom of your PDF.</p>
+    <div class="ev-setup-form">
+      <div class="ev-group"><label class="ev-label">Your Big Why</label><p class="ev-hint">Not a goal. The reason you fight for it.</p><textarea id="s-why" class="ev-textarea" placeholder="Why does this matter more than anything else?"></textarea></div>
+      <div class="ev-group"><label class="ev-label">Your Big Vision</label><p class="ev-hint">Who are you when this work is done?</p><textarea id="s-vision" class="ev-textarea" placeholder="Describe the life you are moving toward..."></textarea></div>
+      <div class="ev-group"><label class="ev-label">The Identity You Are Becoming</label><p class="ev-hint">Finish this sentence.</p><div class="ev-id-row"><span class="ev-id-pre">I am</span><input id="s-identity" type="text" class="ev-input" placeholder="someone who..."></div></div>
+      <div class="ev-group"><label class="ev-label">Your Non-Negotiables</label><p class="ev-hint">Three commitments that do not bend.</p>
+        <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="s-nn1" type="text" class="ev-input"></div>
+        <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="s-nn2" type="text" class="ev-input"></div>
+        <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="s-nn3" type="text" class="ev-input"></div>
+      </div>
+      <div class="ev-group"><label class="ev-label">Your Intentions</label><p class="ev-hint">What are you here to shift?</p><textarea id="s-intentions" class="ev-textarea" placeholder="What needs to change?"></textarea></div>
+      <div class="ev-group"><label class="ev-label">Your This</label><p class="ev-hint">The things you are here to overcome.</p>
+        <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="s-this1" type="text" class="ev-input" placeholder="e.g. the pull that keeps me small"></div>
+        <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="s-this2" type="text" class="ev-input" placeholder="Optional"></div>
+        <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="s-this3" type="text" class="ev-input" placeholder="Optional"></div>
+      </div>
+      <div class="ev-divider"></div>
+      <button class="ev-btn-primary" onclick="setupSave()">Begin My Record</button>
+      <div class="ev-restore-toggle"><button onclick="restoreToggle()">Returning? Restore a previous record</button></div>
+      <div id="ev-restore-box">
+        <p class="ev-hint" style="margin-bottom:10px;">Paste the restore code from the bottom of your last downloaded PDF.</p>
+        <textarea id="s-restore" class="ev-textarea" style="min-height:80px;font-size:11px;font-family:monospace;" placeholder="Paste restore code here..."></textarea>
+        <button class="ev-btn-primary" style="margin-top:10px;" onclick="restoreRun()">Restore My Record</button>
+        <p class="ev-restore-err" id="restore-err">That code did not work. Copy it exactly from the bottom of your PDF.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -313,88 +362,103 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
 </div>
 
 <!-- START OF WEEK -->
-<div id="ev-start" class="ev-view ev-checkin-view">
-  <div class="ev-checkin-topbar"><span class="ev-checkin-title">Start of Week</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-  <div class="ev-checkin-inner">
-    <div class="ev-checkin-head"><span class="ev-eyebrow">Week <span id="sw-num"></span></span><h2>This week begins now.</h2><p>Set your intentions. Name your commitments.</p></div>
-    <div class="ev-block"><div class="ev-block-ttl">Intentions for this week</div><textarea id="sw-intentions" class="ev-textarea" placeholder="What do you want to achieve or shift this week?"></textarea></div>
-    <div class="ev-block"><div class="ev-block-ttl">This week I commit to</div>
-      <div class="ev-comm-row"><span class="ev-comm-n">1</span><input id="sw-c1" type="text" class="ev-input"></div>
-      <div class="ev-comm-row"><span class="ev-comm-n">2</span><input id="sw-c2" type="text" class="ev-input"></div>
-      <div class="ev-comm-row"><span class="ev-comm-n">3</span><input id="sw-c3" type="text" class="ev-input"></div>
+<div id="ev-start" class="ev-view">
+  <div class="ev-checkin-wrap">
+    <div class="ev-checkin-topbar"><span class="ev-checkin-title">Start of Week</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+    <div class="ev-checkin-scroll">
+      <div class="ev-checkin-inner">
+        <div class="ev-checkin-head"><span class="ev-eyebrow">Week <span id="sw-num"></span></span><h2>This week begins now.</h2><p>Set your intentions. Name your commitments.</p></div>
+        <div class="ev-block"><div class="ev-block-ttl">Intentions for this week</div><textarea id="sw-intentions" class="ev-textarea" placeholder="What do you want to achieve or shift this week?"></textarea></div>
+        <div class="ev-block"><div class="ev-block-ttl">This week I commit to</div>
+          <div class="ev-comm-row"><span class="ev-comm-n">1</span><input id="sw-c1" type="text" class="ev-input"></div>
+          <div class="ev-comm-row"><span class="ev-comm-n">2</span><input id="sw-c2" type="text" class="ev-input"></div>
+          <div class="ev-comm-row"><span class="ev-comm-n">3</span><input id="sw-c3" type="text" class="ev-input"></div>
+        </div>
+        <div class="ev-block"><div class="ev-block-ttl">Planned act of self-worth</div><p class="ev-hint">Something you will do for yourself this week.</p><input id="sw-self" type="text" class="ev-input"></div>
+        <div class="ev-block"><div class="ev-block-ttl">Planned act of service</div><p class="ev-hint">Something you will give to someone else.</p><input id="sw-service" type="text" class="ev-input"></div>
+        <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="startSave()">Save</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+      </div>
     </div>
-    <div class="ev-block"><div class="ev-block-ttl">Planned act of self-worth</div><p class="ev-hint">Something you will do for yourself this week.</p><input id="sw-self" type="text" class="ev-input"></div>
-    <div class="ev-block"><div class="ev-block-ttl">Planned act of service</div><p class="ev-hint">Something you will give to someone else.</p><input id="sw-service" type="text" class="ev-input"></div>
-    <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="startSave()">Save</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
   </div>
 </div>
 
 <!-- DAILY CHECK-IN -->
-<div id="ev-daily" class="ev-view ev-checkin-view">
-  <div class="ev-checkin-topbar"><span class="ev-checkin-title">Daily Check-in</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-  <div class="ev-checkin-inner">
-    <div class="ev-checkin-head"><span class="ev-eyebrow" id="daily-date"></span><h2>How are you right now?</h2></div>
-    <div class="ev-block"><div class="ev-block-ttl">Mood</div>
-      <div class="ev-dim-hd"><div class="ev-dim-name">How are you feeling today?</div><div class="ev-dim-score" id="daily-mood-val">50%</div></div>
-      <input type="range" min="1" max="10" value="5" class="ev-slider" id="daily-slider" oninput="dailyMood(this.value)">
+<div id="ev-daily" class="ev-view">
+  <div class="ev-checkin-wrap">
+    <div class="ev-checkin-topbar"><span class="ev-checkin-title">Daily Check-in</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+    <div class="ev-checkin-scroll">
+      <div class="ev-checkin-inner">
+        <div class="ev-checkin-head"><span class="ev-eyebrow" id="daily-date"></span><h2>How are you right now?</h2></div>
+        <div class="ev-block"><div class="ev-block-ttl">Mood</div>
+          <div class="ev-dim-hd"><div class="ev-dim-name">How are you feeling today?</div><div class="ev-dim-score" id="daily-mood-val">50%</div></div>
+          <input type="range" min="1" max="10" value="5" class="ev-slider" id="daily-slider" oninput="dailyMood(this.value)">
+        </div>
+        <div class="ev-block"><div class="ev-block-ttl">Write anything</div><textarea id="daily-journal" class="ev-textarea" style="min-height:140px;"></textarea></div>
+        <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="dailySave()">Save</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+      </div>
     </div>
-    <div class="ev-block"><div class="ev-block-ttl">Write anything</div><textarea id="daily-journal" class="ev-textarea" style="min-height:140px;"></textarea></div>
-    <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="dailySave()">Save</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
   </div>
 </div>
 
 <!-- END OF WEEK -->
-<div id="ev-end" class="ev-view ev-checkin-view">
-  <div class="ev-checkin-topbar"><span class="ev-checkin-title">End of Week</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-  <div class="ev-checkin-inner">
-    <div class="ev-checkin-head"><span class="ev-eyebrow">Week <span id="ew-num"></span> Reflection</span><h2>The week is done. What does it say?</h2></div>
-    <div id="ew-prev-block" class="ev-block" style="display:none;"><div class="ev-block-ttl">Last week's commitments</div><div id="ew-prev-list"></div></div>
-    <div class="ev-block"><div class="ev-block-ttl">How you showed up this week</div>
-      <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Alignment</div><div class="ev-dim-sub">How aligned am I with who I am becoming?</div></div><div class="ev-dim-score" id="ew-v-alignment">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-alignment" oninput="ewSl('alignment',this.value)"></div>
-      <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Clarity</div><div class="ev-dim-sub">How clear do I feel about my direction?</div></div><div class="ev-dim-score" id="ew-v-clarity">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-clarity" oninput="ewSl('clarity',this.value)"></div>
-      <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Mood and State</div><div class="ev-dim-sub">How has my overall state been?</div></div><div class="ev-dim-score" id="ew-v-mood">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-mood" oninput="ewSl('mood',this.value)"></div>
-      <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Productivity</div><div class="ev-dim-sub">How productive have I been?</div></div><div class="ev-dim-score" id="ew-v-productivity">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-productivity" oninput="ewSl('productivity',this.value)"></div>
-      <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Momentum</div><div class="ev-dim-sub">Am I moving forward?</div></div><div class="ev-dim-score" id="ew-v-momentum">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-momentum" oninput="ewSl('momentum',this.value)"></div>
+<div id="ev-end" class="ev-view">
+  <div class="ev-checkin-wrap">
+    <div class="ev-checkin-topbar"><span class="ev-checkin-title">End of Week</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+    <div class="ev-checkin-scroll">
+      <div class="ev-checkin-inner">
+        <div class="ev-checkin-head"><span class="ev-eyebrow">Week <span id="ew-num"></span> Reflection</span><h2>The week is done. What does it say?</h2></div>
+        <div id="ew-prev-block" class="ev-block" style="display:none;"><div class="ev-block-ttl">Last week's commitments</div><div id="ew-prev-list"></div></div>
+        <div class="ev-block"><div class="ev-block-ttl">How you showed up this week</div>
+          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Alignment</div><div class="ev-dim-sub">How aligned am I with who I am becoming?</div></div><div class="ev-dim-score" id="ew-v-alignment">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-alignment" oninput="ewSl('alignment',this.value)"></div>
+          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Clarity</div><div class="ev-dim-sub">How clear do I feel about my direction?</div></div><div class="ev-dim-score" id="ew-v-clarity">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-clarity" oninput="ewSl('clarity',this.value)"></div>
+          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Mood and State</div><div class="ev-dim-sub">How has my overall state been?</div></div><div class="ev-dim-score" id="ew-v-mood">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-mood" oninput="ewSl('mood',this.value)"></div>
+          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Productivity</div><div class="ev-dim-sub">How productive have I been?</div></div><div class="ev-dim-score" id="ew-v-productivity">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-productivity" oninput="ewSl('productivity',this.value)"></div>
+          <div class="ev-dim-row"><div class="ev-dim-hd"><div><div class="ev-dim-name">Momentum</div><div class="ev-dim-sub">Am I moving forward?</div></div><div class="ev-dim-score" id="ew-v-momentum">50%</div></div><input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-momentum" oninput="ewSl('momentum',this.value)"></div>
+        </div>
+        <div class="ev-block"><div class="ev-block-ttl">Act of self-worth this week</div><p class="ev-hint">What did you do for yourself?</p><input id="ew-self" type="text" class="ev-input"></div>
+        <div class="ev-block"><div class="ev-block-ttl">Act of service this week</div><p class="ev-hint">What did you give to someone else?</p><input id="ew-service" type="text" class="ev-input"></div>
+        <div class="ev-block"><div class="ev-block-ttl">One thing about yourself you are grateful for</div><p class="ev-hint">Not what you have. Something about you this week.</p><input id="ew-gratitude" type="text" class="ev-input" placeholder="I am grateful that I..."></div>
+        <div class="ev-block"><div class="ev-block-ttl">What shifted this week</div><p class="ev-hint">One sentence. The thing that moved.</p><input id="ew-shifted" type="text" class="ev-input" placeholder="This week..."></div>
+        <div class="ev-block">
+          <div class="ev-block-ttl" style="opacity:.5;font-size:9px;">The This</div>
+          <div class="ev-dim-hd" style="margin-bottom:10px;"><div><div class="ev-dim-name" style="font-size:13px;opacity:.6;">How loud is The This speaking?</div><div class="ev-dim-sub">1 = quiet and in control. 10 = loud and overcoming you.</div></div><div class="ev-dim-score" id="ew-v-this" style="font-size:22px;opacity:.7;">5</div></div>
+          <input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-this" oninput="thisSl(this.value)" style="opacity:.6;">
+        </div>
+        <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="endSave()">Save Week</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+      </div>
     </div>
-    <div class="ev-block"><div class="ev-block-ttl">Act of self-worth this week</div><p class="ev-hint">What did you do for yourself?</p><input id="ew-self" type="text" class="ev-input"></div>
-    <div class="ev-block"><div class="ev-block-ttl">Act of service this week</div><p class="ev-hint">What did you give to someone else?</p><input id="ew-service" type="text" class="ev-input"></div>
-    <div class="ev-block"><div class="ev-block-ttl">One thing about yourself you are grateful for</div><p class="ev-hint">Not what you have. Something about you this week.</p><input id="ew-gratitude" type="text" class="ev-input" placeholder="I am grateful that I..."></div>
-    <div class="ev-block"><div class="ev-block-ttl">What shifted this week</div><p class="ev-hint">One sentence. The thing that moved.</p><input id="ew-shifted" type="text" class="ev-input" placeholder="This week..."></div>
-    <div class="ev-block">
-      <div class="ev-block-ttl" style="opacity:.5;font-size:9px;">The This</div>
-      <div class="ev-dim-hd" style="margin-bottom:10px;"><div><div class="ev-dim-name" style="font-size:13px;opacity:.6;">How loud is The This speaking?</div><div class="ev-dim-sub">1 = quiet and in control. 10 = loud and overcoming you.</div></div><div class="ev-dim-score" id="ew-v-this" style="font-size:22px;opacity:.7;">5</div></div>
-      <input type="range" min="1" max="10" value="5" class="ev-slider" id="ew-s-this" oninput="thisSl(this.value)" style="opacity:.6;">
-    </div>
-    <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="endSave()">Save Week</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
   </div>
 </div>
 
 <!-- THE STANDARD -->
-<div id="ev-std" class="ev-view ev-checkin-view">
-  <div class="ev-checkin-topbar"><span class="ev-checkin-title">The Standard</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-  <div class="ev-checkin-inner">
-    <div class="ev-checkin-head"><h2>The Standard</h2><p>Hold the decision against who you said you are.</p></div>
-    <div class="ev-block"><div class="ev-block-ttl">What is the decision or situation?</div><textarea id="std-situation" class="ev-textarea" placeholder="Write what you are facing right now."></textarea></div>
-    <div class="ev-block"><div class="ev-block-ttl">The questions</div>
-      <div class="ev-q-block"><p class="ev-q-text">Does this align with who I am becoming?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q1','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q1','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q1','not-sure',this)">Not sure</button></div></div>
-      <div class="ev-q-block"><p class="ev-q-text">Does this reflect my worth?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q2','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q2','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q2','not-sure',this)">Not sure</button></div></div>
-      <div class="ev-q-block"><p class="ev-q-text">Would the person I am becoming do this?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q3','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q3','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q3','not-sure',this)">Not sure</button></div></div>
-      <div class="ev-q-block"><p class="ev-q-text">What is this moment actually asking you to face?</p><textarea id="std-q4" class="ev-textarea" style="min-height:80px;" placeholder="Write your answer here."></textarea></div>
-      <div class="ev-q-block"><p class="ev-q-text">Is this above, at, or below your standard?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q5','above',this)">Above</button><button class="ev-q-btn" onclick="qAns('q5','at',this)">At</button><button class="ev-q-btn" onclick="qAns('q5','below',this)">Below</button></div></div>
+<div id="ev-std" class="ev-view">
+  <div class="ev-checkin-wrap">
+    <div class="ev-checkin-topbar"><span class="ev-checkin-title">The Standard</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+    <div class="ev-checkin-scroll">
+      <div class="ev-checkin-inner">
+        <div class="ev-checkin-head"><h2>The Standard</h2><p>Hold the decision against who you said you are.</p></div>
+        <div class="ev-block"><div class="ev-block-ttl">What is the decision or situation?</div><textarea id="std-situation" class="ev-textarea" placeholder="Write what you are facing right now."></textarea></div>
+        <div class="ev-block"><div class="ev-block-ttl">The questions</div>
+          <div class="ev-q-block"><p class="ev-q-text">Does this align with who I am becoming?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q1','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q1','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q1','not-sure',this)">Not sure</button></div></div>
+          <div class="ev-q-block"><p class="ev-q-text">Does this reflect my worth?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q2','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q2','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q2','not-sure',this)">Not sure</button></div></div>
+          <div class="ev-q-block"><p class="ev-q-text">Would the person I am becoming do this?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q3','yes',this)">Yes</button><button class="ev-q-btn" onclick="qAns('q3','no',this)">No</button><button class="ev-q-btn" onclick="qAns('q3','not-sure',this)">Not sure</button></div></div>
+          <div class="ev-q-block"><p class="ev-q-text">What is this moment actually asking you to face?</p><textarea id="std-q4" class="ev-textarea" style="min-height:80px;" placeholder="Write your answer here."></textarea></div>
+          <div class="ev-q-block"><p class="ev-q-text">Is this above, at, or below your standard?</p><div class="ev-q-row"><button class="ev-q-btn" onclick="qAns('q5','above',this)">Above</button><button class="ev-q-btn" onclick="qAns('q5','at',this)">At</button><button class="ev-q-btn" onclick="qAns('q5','below',this)">Below</button></div></div>
+        </div>
+        <div class="ev-sentence-wrap">
+          <div class="ev-sentence-lbl">Name it.</div>
+          <div class="ev-sentence-line"><span>If I can overcome</span><input type="text" id="std-this-input" class="ev-sentence-input" placeholder="type your this here" oninput="sentUpd(this.value)"><span>I can overcome anything.</span></div>
+          <div class="ev-sentence-result" id="sentence-result"></div>
+        </div>
+        <div class="ev-checkback" style="margin-top:18px;"><input type="checkbox" id="std-checkback"><label for="std-checkback">Check back on this</label></div>
+        <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="stdSave()">Log This Moment</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+      </div>
     </div>
-    <div class="ev-sentence-wrap">
-      <div class="ev-sentence-lbl">Name it.</div>
-      <div class="ev-sentence-line"><span>If I can overcome</span><input type="text" id="std-this-input" class="ev-sentence-input" placeholder="type your this here" oninput="sentUpd(this.value)"><span>I can overcome anything.</span></div>
-      <div class="ev-sentence-result" id="sentence-result"></div>
-    </div>
-    <div class="ev-checkback" style="margin-top:18px;"><input type="checkbox" id="std-checkback"><label for="std-checkback">Check back on this</label></div>
-    <div class="ev-checkin-actions"><button class="ev-btn-primary" style="flex:1;" onclick="stdSave()">Log This Moment</button><button class="ev-btn-outline" style="min-width:80px;" onclick="goTo('ev-dashboard')">Cancel</button></div>
   </div>
 </div>
 
 <!-- STANDARD RESULT -->
 <div id="ev-std-result" class="ev-view">
-  <div class="ev-checkin-topbar" style="background:#0f2d42;"><span class="ev-checkin-title" style="font-size:14px;opacity:.6;">Logged</span></div>
   <div class="ev-std-result-inner">
     <p class="ev-std-result-quote" id="std-result-sentence"></p>
     <div class="ev-std-result-btns">
@@ -404,71 +468,79 @@ body{font-family:'Jost',sans-serif;background:#FAF8F4;color:#163E5B;}
   </div>
 </div>
 
-<!-- VIEW STANDARDS LIST -->
-<div id="ev-std-list" class="ev-view ev-checkin-view">
-  <div class="ev-checkin-topbar"><span class="ev-checkin-title">Standards</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-  <div class="ev-checkin-inner" style="padding-top:28px;"><div id="std-list-body"></div></div>
+<!-- VIEW STANDARDS -->
+<div id="ev-std-list" class="ev-view">
+  <div class="ev-checkin-wrap">
+    <div class="ev-checkin-topbar"><span class="ev-checkin-title">Standards</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+    <div class="ev-checkin-scroll">
+      <div class="ev-checkin-inner" style="padding-top:28px;"><div id="std-list-body"></div></div>
+    </div>
+  </div>
 </div>
 
 <!-- FOLLOW-UP -->
-<div id="ev-fu" class="ev-view ev-checkin-view">
-  <div class="ev-checkin-topbar"><span class="ev-checkin-title">Check Back</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">Skip</button></div>
-  <div class="ev-fu-inner">
-    <div class="ev-fu-lbl">You faced this</div>
-    <div class="ev-fu-sentence" id="fu-sentence"></div>
-    <div class="ev-fu-days" id="fu-days"></div>
-    <div class="ev-fu-q">How did it go?</div>
-    <div class="ev-fu-btns">
-      <button class="ev-fu-btn held" onclick="fuSave('held')">I held it.</button>
-      <button class="ev-fu-btn didnot" onclick="fuSave('did-not')">I did not hold it.</button>
-      <button class="ev-fu-btn ongoing" onclick="fuSave('ongoing')">It is still ongoing.</button>
+<div id="ev-fu" class="ev-view">
+  <div class="ev-checkin-wrap">
+    <div class="ev-checkin-topbar"><span class="ev-checkin-title">Check Back</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">Skip</button></div>
+    <div class="ev-checkin-scroll">
+      <div class="ev-fu-inner">
+        <div class="ev-fu-lbl">You faced this</div>
+        <div class="ev-fu-sentence" id="fu-sentence"></div>
+        <div class="ev-fu-days" id="fu-days"></div>
+        <div class="ev-fu-q">How did it go?</div>
+        <div class="ev-fu-btns">
+          <button class="ev-fu-btn held" onclick="fuSave('held')">I held it.</button>
+          <button class="ev-fu-btn didnot" onclick="fuSave('did-not')">I did not hold it.</button>
+          <button class="ev-fu-btn ongoing" onclick="fuSave('ongoing')">It is still ongoing.</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- EDIT FOUNDATIONS -->
-<div id="ev-edit-found" class="ev-view ev-checkin-view">
-  <div class="ev-checkin-topbar"><span class="ev-checkin-title">Edit Foundations</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-  <div class="ev-checkin-inner" style="padding-top:32px;">
-    <div class="ev-group"><label class="ev-label">Your Big Why</label><textarea id="ef-why" class="ev-textarea"></textarea></div>
-    <div class="ev-group"><label class="ev-label">Your Big Vision</label><textarea id="ef-vision" class="ev-textarea"></textarea></div>
-    <div class="ev-group"><label class="ev-label">The Identity You Are Becoming</label><div class="ev-id-row"><span class="ev-id-pre">I am</span><input id="ef-identity" type="text" class="ev-input"></div></div>
-    <div class="ev-group"><label class="ev-label">Your Non-Negotiables</label>
-      <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-nn1" type="text" class="ev-input"></div>
-      <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-nn2" type="text" class="ev-input"></div>
-      <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-nn3" type="text" class="ev-input"></div>
+<div id="ev-edit-found" class="ev-view">
+  <div class="ev-checkin-wrap">
+    <div class="ev-checkin-topbar"><span class="ev-checkin-title">Edit Foundations</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+    <div class="ev-checkin-scroll">
+      <div class="ev-checkin-inner" style="padding-top:32px;">
+        <div class="ev-group"><label class="ev-label">Your Big Why</label><textarea id="ef-why" class="ev-textarea"></textarea></div>
+        <div class="ev-group"><label class="ev-label">Your Big Vision</label><textarea id="ef-vision" class="ev-textarea"></textarea></div>
+        <div class="ev-group"><label class="ev-label">The Identity You Are Becoming</label><div class="ev-id-row"><span class="ev-id-pre">I am</span><input id="ef-identity" type="text" class="ev-input"></div></div>
+        <div class="ev-group"><label class="ev-label">Your Non-Negotiables</label>
+          <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-nn1" type="text" class="ev-input"></div>
+          <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-nn2" type="text" class="ev-input"></div>
+          <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-nn3" type="text" class="ev-input"></div>
+        </div>
+        <div class="ev-group"><label class="ev-label">Your Intentions</label><textarea id="ef-intentions" class="ev-textarea"></textarea></div>
+        <div class="ev-group"><label class="ev-label">Your This</label>
+          <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-this1" type="text" class="ev-input"></div>
+          <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-this2" type="text" class="ev-input"></div>
+          <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-this3" type="text" class="ev-input"></div>
+        </div>
+        <button class="ev-btn-primary" onclick="editFoundSave()">Update Foundations</button>
+        <div style="margin-top:12px;"><button class="ev-btn-outline" style="width:100%;" onclick="goTo('ev-dashboard')">Cancel</button></div>
+      </div>
     </div>
-    <div class="ev-group"><label class="ev-label">Your Intentions</label><textarea id="ef-intentions" class="ev-textarea"></textarea></div>
-    <div class="ev-group"><label class="ev-label">Your This</label>
-      <div class="ev-nn-row"><span class="ev-nn-n">1</span><input id="ef-this1" type="text" class="ev-input"></div>
-      <div class="ev-nn-row"><span class="ev-nn-n">2</span><input id="ef-this2" type="text" class="ev-input"></div>
-      <div class="ev-nn-row"><span class="ev-nn-n">3</span><input id="ef-this3" type="text" class="ev-input"></div>
-    </div>
-    <button class="ev-btn-primary" onclick="editFoundSave()">Update Foundations</button>
-    <div style="margin-top:12px;"><button class="ev-btn-outline" style="width:100%;" onclick="goTo('ev-dashboard')">Cancel</button></div>
   </div>
 </div>
 
 <!-- RESTORE FROM DASHBOARD -->
-<div id="ev-restore-dash" class="ev-view ev-checkin-view">
-  <div class="ev-checkin-topbar"><span class="ev-checkin-title">Restore Record</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
-  <div class="ev-checkin-inner" style="padding-top:40px;">
-    <p class="ev-hint" style="margin-bottom:20px;">Paste the restore code from the bottom of your downloaded PDF to recover a previous record.</p>
-    <textarea id="dash-restore" class="ev-textarea" style="min-height:80px;font-size:11px;font-family:monospace;" placeholder="Paste restore code here..."></textarea>
-    <button class="ev-btn-primary" style="margin-top:12px;" onclick="restoreFromDash()">Restore My Record</button>
-    <p class="ev-restore-err" id="dash-restore-err">That code did not work. Copy it exactly from the bottom of your PDF.</p>
+<div id="ev-restore-dash" class="ev-view">
+  <div class="ev-checkin-wrap">
+    <div class="ev-checkin-topbar"><span class="ev-checkin-title">Restore Record</span><button class="ev-btn-ghost" onclick="goTo('ev-dashboard')">&#8592; Back</button></div>
+    <div class="ev-checkin-scroll">
+      <div class="ev-checkin-inner" style="padding-top:40px;">
+        <p class="ev-hint" style="margin-bottom:20px;">Paste the restore code from the bottom of your downloaded PDF to recover a previous record.</p>
+        <textarea id="dash-restore" class="ev-textarea" style="min-height:80px;font-size:11px;font-family:monospace;" placeholder="Paste restore code here..."></textarea>
+        <button class="ev-btn-primary" style="margin-top:12px;" onclick="restoreFromDash()">Restore My Record</button>
+        <p class="ev-restore-err" id="dash-restore-err">That code did not work. Copy it exactly from the bottom of your PDF.</p>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- MILESTONE -->
-<div id="ev-milestone">
-  <div class="ev-ms-box">
-    <div class="ev-ms-tag" id="ms-tag"></div>
-    <div class="ev-ms-msg" id="ms-msg"></div>
-    <div class="ev-ms-sub" id="ms-sub"></div>
-    <button class="ev-btn-gold" style="width:100%;padding:13px;" onclick="msClose()">Continue</button>
-  </div>
-</div>
+</div><!-- end #ev-app -->
 
 <script>
 const KEY='ev3';
@@ -489,15 +561,18 @@ function fmtFull(iso){try{return new Date(iso).toLocaleDateString('en-GB',{weekd
 function uid(){return Date.now().toString(36)+Math.random().toString(36).substr(2);}
 function sl(el,val){const p=((val-1)/9)*100;el.style.background='linear-gradient(to right,#C8963E '+p+'%,rgba(22,62,91,0.12) '+p+'%)';}
 function toast(msg){const t=g('ev-toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2500);}
-
 function confirmDo(msg,cb){g('confirm-msg').textContent=msg;confirmCb=cb;g('ev-confirm').classList.add('show');}
 function confirmClose(){g('ev-confirm').classList.remove('show');confirmCb=null;}
 g('confirm-yes').onclick=function(){g('ev-confirm').classList.remove('show');if(confirmCb)confirmCb();confirmCb=null;};
 
 function goTo(id){
-  document.querySelectorAll('.ev-view').forEach(vv=>vv.classList.remove('active'));
-  g(id).classList.add('active');
-  window.scrollTo(0,0);
+  document.querySelectorAll('#ev-app .ev-view').forEach(vv=>{
+    vv.classList.remove('active');
+    // reset scroll position of each view when hidden
+    vv.scrollTop=0;
+  });
+  const target=g(id);
+  if(target){target.classList.add('active');target.scrollTop=0;}
   if(id==='ev-start')startPrep();
   if(id==='ev-daily')dailyPrep();
   if(id==='ev-end')endPrep();
@@ -539,7 +614,6 @@ function dashRender(){
   g('f-this').innerHTML=(s.yourThis||[]).map((t,i)=>'<div>'+(i+1)+'. '+esc(t)+'</div>').join('')||'-';
   statsRender();thisWeekRender();chartRender();histRender();nudgeRender();
 }
-
 function statsRender(){
   const c=S.weeks.filter(w=>w.endEntry);
   g('d-weeks').textContent=c.length;
@@ -547,7 +621,6 @@ function statsRender(){
   const stds=S.standards||[],cb=stds.filter(s=>s.checkBack&&s.followUpResult),held=cb.filter(s=>s.followUpResult==='held').length;
   g('d-stds').textContent=cb.length>0?held+'/'+cb.length:'-';
 }
-
 function thisWeekRender(){
   const open=S.weeks.find(w=>!w.endEntry);
   const strip=g('this-week-strip'),items=g('this-week-items');
@@ -561,15 +634,14 @@ function thisWeekRender(){
     '<span class="ev-tw-item '+(open&&open.endEntry?'ev-tw-done':'ev-tw-pending')+'">'+(open&&open.endEntry?'&#10003; ':'')+'End of Week</span>'
   ].join('');
 }
-
 function avgPct(e){if(!e||!e.dimensions)return 0;const d=e.dimensions;return Math.round((d.alignment+d.clarity+d.mood+d.productivity+d.momentum)/5*10);}
-function foundToggle(){const b=g('found-body');b.classList.toggle('open');g('found-chev').textContent=b.classList.contains('open')?'&#9650;':'&#9660;';}
+function foundToggle(){const b=g('found-body');b.classList.toggle('open');g('found-chev').textContent=b.classList.contains('open')?'▲':'▼';}
 function nudgeRender(){
   const a=g('nudge-area'),p=(S.standards||[]).find(s=>s.checkBack&&!s.followUpResult);
   if(p){const d=Math.floor((Date.now()-new Date(p.date).getTime())/86400000);if(d>=1)a.innerHTML='<div class="ev-nudge"><p><strong>'+d+' day'+(d!==1?'s':'')+' ago</strong> you logged a Standard moment. How did it go?</p><button onclick="fuOpen(\''+p.id+'\')">Check In</button></div>';}
   else a.innerHTML='';
 }
-function codeCopy(){try{navigator.clipboard.writeText(toCode(S)).then(()=>toast('Restore code copied'));}catch(e){toast('Copy failed. Use the PDF to find your restore code.');}}
+function codeCopy(){try{navigator.clipboard.writeText(toCode(S)).then(()=>toast('Restore code copied'));}catch(e){toast('Copy failed. Use the PDF instead.');}}
 
 function chartRender(){
   const completedWeeks=S.weeks.filter(w=>w.endEntry);
@@ -600,7 +672,6 @@ function histRender(){
   const hasOpenData=open&&(open.startEntry||(open.checkIns||[]).length>0);
   if(!completed.length&&!hasOpenData){list.innerHTML='';empty.style.display='block';return;}
   empty.style.display='none';list.innerHTML='';
-
   if(hasOpenData){
     let body='';
     if(open.startEntry){
@@ -608,8 +679,8 @@ function histRender(){
       if(open.startEntry.intentions)body+='<div class="ev-sow-entry-item"><strong>Intentions:</strong> '+esc(open.startEntry.intentions)+'</div>';
       const comms=(open.startEntry.commitments||[]).filter(Boolean);
       if(comms.length)body+='<div class="ev-sow-entry-item"><strong>Commitments:</strong> '+comms.map(c=>esc(c)).join(', ')+'</div>';
-      if(open.startEntry.plannedSelfWorth)body+='<div class="ev-sow-entry-item"><strong>Planned act of self-worth:</strong> '+esc(open.startEntry.plannedSelfWorth)+'</div>';
-      if(open.startEntry.plannedService)body+='<div class="ev-sow-entry-item"><strong>Planned act of service:</strong> '+esc(open.startEntry.plannedService)+'</div>';
+      if(open.startEntry.plannedSelfWorth)body+='<div class="ev-sow-entry-item"><strong>Planned self-worth:</strong> '+esc(open.startEntry.plannedSelfWorth)+'</div>';
+      if(open.startEntry.plannedService)body+='<div class="ev-sow-entry-item"><strong>Planned service:</strong> '+esc(open.startEntry.plannedService)+'</div>';
       body+='</div>';
     }
     const dailies=open.checkIns||[];
@@ -621,11 +692,8 @@ function histRender(){
     }
     list.innerHTML='<div class="ev-wk-card"><div class="ev-wk-hd" onclick="wkT(\'open\')"><div><div class="ev-wk-name">Week '+open.weekNumber+' <span style="font-size:9px;opacity:.4;font-weight:400;letter-spacing:1px;">(current)</span></div><div class="ev-wk-date">In progress</div></div><div style="display:flex;align-items:center;"><div class="ev-wk-chev" id="wk-c-open">&#9660;</div></div></div><div class="ev-wk-body open" id="wk-b-open">'+body+'</div></div>';
   }
-
   [...completed].reverse().forEach((week,ri)=>{
-    const ri2=completed.length-1-ri;
-    const weekIdx=S.weeks.indexOf(week);
-    const avg=avgPct(week.endEntry);
+    const ri2=completed.length-1-ri,weekIdx=S.weeks.indexOf(week),avg=avgPct(week.endEntry);
     let body='';
     if(week.startEntry){
       body+='<div class="ev-sow-entry"><div class="ev-sow-entry-lbl">Start of Week</div>';
@@ -649,15 +717,12 @@ function histRender(){
     list.innerHTML+='<div class="ev-wk-card"><div class="ev-wk-hd" onclick="wkT('+ri2+')"><div><div class="ev-wk-name">Week '+week.weekNumber+'</div><div class="ev-wk-date">'+fmt(week.endEntry.date)+'</div></div><div style="display:flex;align-items:center;"><div class="ev-wk-avg">'+avg+'%</div><div class="ev-wk-chev" id="wk-c-'+ri2+'">&#9660;</div></div></div><div class="ev-wk-body" id="wk-b-'+ri2+'">'+body+'</div></div>';
   });
 }
-
 function wkT(i){const b=g('wk-b-'+i);if(!b)return;b.classList.toggle('open');const c=g('wk-c-'+i);if(c)c.classList.toggle('open');}
-
 function delDaily(weekIdx,ciIdx){
   confirmDo('Delete this daily check-in? This cannot be undone.',function(){
     if(S.weeks[weekIdx]&&S.weeks[weekIdx].checkIns){S.weeks[weekIdx].checkIns.splice(ciIdx,1);save();toast('Check-in deleted');dashRender();}
   });
 }
-
 function stdListRender(){
   const body=g('std-list-body');
   const stds=(S.standards||[]).slice().reverse();
@@ -670,23 +735,18 @@ function stdListRender(){
     const badgeText=s.followUpResult?badgeMap[s.followUpResult]:'Pending';
     let answers='';
     if(s.answers){
-      Object.entries(qLabels).forEach(([k,lbl])=>{
-        const val=s.answers[k];
-        if(val)answers+='<div class="ev-std-record-q">'+lbl+'</div><div class="ev-std-record-a">'+esc(val)+'</div>';
-      });
-      if(s.answers.q4face)answers+='<div class="ev-std-record-q">What is this actually asking you to face?</div><div class="ev-std-record-a" style="font-style:italic;text-transform:none;opacity:.7;">'+esc(s.answers.q4face)+'</div>';
+      Object.entries(qLabels).forEach(([k,lbl])=>{const val=s.answers[k];if(val)answers+='<div class="ev-std-record-q">'+lbl+'</div><div class="ev-std-record-a">'+esc(val)+'</div>';});
+      if(s.answers.q4face)answers+='<div class="ev-std-record-q">What is this asking you to face?</div><div class="ev-std-record-a" style="font-style:italic;text-transform:none;opacity:.7;">'+esc(s.answers.q4face)+'</div>';
     }
     const sentence=s.sentence?'<div class="ev-std-record-sentence">'+esc(s.sentence).replace(esc(s.thisText||''),'<strong>'+esc(s.thisText||'')+'</strong>')+'</div>':'';
     return '<div class="ev-std-record"><div class="ev-std-record-hd"><div class="ev-std-record-date">'+fmtFull(s.date)+'</div><div class="ev-std-record-situation">'+esc(s.situation||'')+'</div></div>'+(answers||sentence?'<div class="ev-std-record-body"><div class="ev-std-record-answers">'+answers+'</div>'+sentence+'</div>':'')+'<div class="ev-std-record-footer"><span class="ev-std-held-badge '+badgeClass+'">'+badgeText+'</span><button class="ev-btn-danger" onclick="delStandard('+origIdx+')">Delete</button></div></div>';
   }).join('');
 }
-
 function delStandard(idx){
   confirmDo('Delete this standard? This cannot be undone.',function(){
     (S.standards||[]).splice(idx,1);save();toast('Standard deleted');stdListRender();statsRender();
   });
 }
-
 function startPrep(){g('sw-num').textContent=nextWk();['sw-intentions','sw-c1','sw-c2','sw-c3','sw-self','sw-service'].forEach(id=>g(id).value='');}
 function nextWk(){const o=S.weeks.find(w=>!w.endEntry);return o?o.weekNumber:S.weeks.length+1;}
 function startSave(){
@@ -695,7 +755,6 @@ function startSave(){
   if(o)o.startEntry=e;else S.weeks.push({weekNumber:wn,startEntry:e,checkIns:[],endEntry:null});
   save();toast('Week '+wn+' started');goTo('ev-dashboard');dashRender();
 }
-
 function dailyPrep(){
   g('daily-date').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
   g('daily-slider').value=5;g('daily-mood-val').textContent='50%';sl(g('daily-slider'),5);g('daily-journal').value='';
@@ -708,7 +767,6 @@ function dailySave(){
   if(!o.checkIns)o.checkIns=[];o.checkIns.push(e);
   save();toast('Check-in saved');goTo('ev-dashboard');dashRender();
 }
-
 function endPrep(){
   const o=S.weeks.find(w=>!w.endEntry);g('ew-num').textContent=o?o.weekNumber:S.weeks.length;
   DIMS.forEach(d=>{g('ew-s-'+d).value=5;g('ew-v-'+d).textContent='50%';sl(g('ew-s-'+d),5);});
@@ -727,7 +785,6 @@ function endSave(){
   let o=S.weeks.find(w=>!w.endEntry);if(!o){o={weekNumber:S.weeks.length+1,startEntry:null,checkIns:[],endEntry:null};S.weeks.push(o);}
   o.endEntry=e;save();toast('Week saved');goTo('ev-dashboard');dashRender();msCheck();
 }
-
 function stdPrep(){
   g('std-situation').value='';g('std-q4').value='';g('std-this-input').value='';
   g('sentence-result').style.display='none';g('sentence-result').innerHTML='';
@@ -744,7 +801,6 @@ function stdSave(){
   if(sentence){g('std-result-sentence').innerHTML='If I can overcome <strong>'+esc(tt)+'</strong> I can overcome anything.';goTo('ev-std-result');}
   else{toast('Standard logged');goTo('ev-dashboard');dashRender();}
 }
-
 function fuOpen(id){
   const s=(S.standards||[]).find(s=>s.id===id);if(!s)return;
   fuId=id;const d=Math.floor((Date.now()-new Date(s.date).getTime())/86400000);
@@ -755,7 +811,6 @@ function fuSave(r){
   const s=(S.standards||[]).find(s=>s.id===fuId);if(s){s.followUpResult=r;s.followUpDate=new Date().toISOString();}
   save();toast('Logged');goTo('ev-dashboard');dashRender();
 }
-
 function msCheck(){
   const c=S.weeks.filter(w=>w.endEntry),n=c.length;if(!S.milestones)S.milestones={};
   if(MS[n]&&!S.milestones['w'+n]){S.milestones['w'+n]=true;msShow(MS[n]);save();return;}
@@ -808,7 +863,7 @@ if(S.setup){
 }else{
   goTo('ev-setup');
 }
-setTimeout(()=>{sl(g('daily-slider'),5);DIMS.forEach(d=>sl(g('ew-s-'+d),5));sl(g('ew-s-this'),5);},100);
+setTimeout(()=>{try{sl(g('daily-slider'),5);DIMS.forEach(d=>sl(g('ew-s-'+d),5));sl(g('ew-s-this'),5);}catch(e){}},150);
 </script>
 </body>
 </html>
