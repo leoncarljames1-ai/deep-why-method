@@ -528,11 +528,13 @@
     </div>
 
     <div class="ts-cost-block">
-      <div class="ts-cost-label ts-green">What it looks like when you stop</div>
-      <textarea id="ts-vision" placeholder="Not a fantasy. Just what life actually looks like when this no longer has a hold on you..." rows="4"></textarea>
+      <div class="ts-cost-label ts-green">The life you are choosing instead</div>
+      <textarea id="ts-vision" placeholder="A year from now. Your relationship. How you feel when you wake up. What you are building. Where you are. Write it like it is already real." rows="5"></textarea>
     </div>
 
     <div class="ts-divider"></div>
+
+    <p style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;line-height:1.4;color:#163E5B;margin-bottom:32px;">That life is not out of reach. This is what is standing between you and it.</p>
 
     <div class="ts-name-it-label">Name it.</div>
     <p style="font-family:'Jost',sans-serif;font-size:14px;font-weight:300;color:#4a6478;margin-bottom:20px;">Name it. The thing you keep coming back to.</p>
@@ -664,7 +666,7 @@
       ? '<div class="ts-mirror-card ts-cost-card"><div class="ts-mirror-card-label">What it is costing you</div><div class="ts-mirror-card-text">' + tsEscape(tsState.cost) + '</div></div>'
       : '';
     var visionHTML = tsState.vision.length > 0
-      ? '<div class="ts-mirror-card ts-vision-card"><div class="ts-mirror-card-label">What it looks like when you stop</div><div class="ts-mirror-card-text">' + tsEscape(tsState.vision) + '</div></div>'
+      ? '<div class="ts-mirror-card ts-vision-card"><div class="ts-mirror-card-label">The life you are choosing instead</div><div class="ts-mirror-card-text">' + tsEscape(tsState.vision) + '</div></div>'
       : '';
     cards.innerHTML = costHTML + visionHTML;
 
