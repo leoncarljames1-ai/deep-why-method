@@ -600,6 +600,13 @@
     document.getElementById('ts-screen-' + screen).classList.add('ts-active');
     tsUpdateProgress(screen);
     window.scrollTo(0, 0);
+    // Report new height to parent after content renders
+    setTimeout(function() {
+      var h = document.body.scrollHeight;
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'ts-resize', height: h }, '*');
+      }
+    }, 100);
   }
 
   function tsUpdateProgress(screen) {
@@ -722,6 +729,14 @@
 
   // DOM-dependent listeners — wait for document ready
   document.addEventListener('DOMContentLoaded', function() {
+    // Report initial height to parent
+    setTimeout(function() {
+      var h = document.body.scrollHeight;
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'ts-resize', height: h }, '*');
+      }
+    }, 200);
+
     var facingTA = document.getElementById('ts-facing');
     if (facingTA) {
       facingTA.addEventListener('input', function() {
