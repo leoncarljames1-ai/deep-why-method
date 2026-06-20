@@ -1,1 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Standard — Check Yourself</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  body {
+    background: #FAF8F4;
+    font-family: 'Jost', sans-serif;
+    color: #163E5B;
+    min-height: 100vh;
+  }
+
+  .ts-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* SCREEN MANAGEMENT */
+  .ts-screen { display: none; }
+  .ts-screen.ts-active { display: block; }
+
+  /* PROGRESS BAR */
+  .ts-progress-bar {
+    width: 100%;
+    height: 3px;
+    background: #e8e2d9;
+    border-radius: 2px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+  .ts-progress-fill {
+    height: 100%;
+    background: #C8963E;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  /* STEP LABEL */
+  .ts-step-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #C8963E;
+    margin-bottom: 12px;
+  }
+
+  /* HEADLINES */
+  .ts-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1.15;
+    color: #163E5B;
+    margin-bottom: 16px;
+  }
+
+  .ts-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: #4a6478;
+    margin-bottom: 40px;
+  }
+
+  /* QUESTION */
+  .ts-question {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #163E5B;
+    margin-bottom: 28px;
+  }
+
+  /* TEXTAREA */
+  .ts-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 16px;
+    border: 1px solid #d4cdc4;
+    border-radius: 4px;
+    background: #FFFFFF;
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: #163E5B;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 28px;
+  }
+  .ts-textarea:focus { border-color: #C8963E; }
+  .ts-textarea::placeholder { color: #a0968c; }
+
+  /* CHOICE BUTTONS */
+  .ts-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .ts-choice {
+    width: 100%;
+    padding: 16px 20px;
+    background: #FFFFFF;
+    border: 1px solid #d4cdc4;
+    border-radius: 4px;
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: #163E5B;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+  }
+  .ts-choice:hover { border-color: #C8963E; background: #fffbf4; }
+  .ts-choice.ts-selected {
+    border-color: #163E5B;
+    background: #163E5B;
+    color: #FAF8F4;
+  }
+
+  /* THREE COLUMN CHOICES (for above/at/below) */
+  .ts-choices-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .ts-choices-row .ts-choice {
+    text-align: center;
+    padding: 16px 8px;
+  }
+
+  /* NEXT BUTTON */
+  .ts-btn {
+    display: block;
+    width: 100%;
+    padding: 18px 24px;
+    background: #163E5B;
+    color: #FAF8F4;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+  .ts-btn:hover { background: #0f2d42; }
+  .ts-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .ts-btn-ghost {
+    background: transparent;
+    color: #163E5B;
+    border: 1px solid #163E5B;
+    margin-top: 12px;
+  }
+  .ts-btn-ghost:hover { background: #163E5B; color: #FAF8F4; }
+
+  /* DIVIDER */
+  .ts-divider {
+    width: 40px;
+    height: 2px;
+    background: #C8963E;
+    margin: 32px 0;
+  }
+
+  /* NAME IT SECTION */
+  .ts-name-it-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #C8963E;
+    margin-bottom: 20px;
+  }
+
+  .ts-name-it-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-style: italic;
+    color: #163E5B;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .ts-name-it-input {
+    display: inline;
+    border: none;
+    border-bottom: 2px solid #C8963E;
+    background: transparent;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-style: italic;
+    color: #C8963E;
+    width: 220px;
+    outline: none;
+    padding: 0 4px;
+  }
+  .ts-name-it-input::placeholder { color: #c8963e99; }
+
+  .ts-name-it-result {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: #4a6478;
+    margin-top: 16px;
+    min-height: 32px;
+    transition: opacity 0.3s;
+  }
+
+  /* COST BLOCKS */
+  .ts-cost-block {
+    background: #FFFFFF;
+    border: 1px solid #d4cdc4;
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .ts-cost-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .ts-cost-label.ts-red { color: #b85c4a; }
+  .ts-cost-label.ts-green { color: #4a7c5c; }
+
+  .ts-cost-block textarea {
+    width: 100%;
+    min-height: 100px;
+    border: none;
+    background: transparent;
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #163E5B;
+    resize: none;
+    outline: none;
+  }
+  .ts-cost-block textarea::placeholder { color: #a0968c; }
+
+  /* RESULT SCREEN */
+  .ts-result-header {
+    background: #163E5B;
+    margin: -48px -24px 40px;
+    padding: 48px 24px 40px;
+  }
+
+  .ts-result-tag {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #C8963E;
+    margin-bottom: 16px;
+  }
+
+  .ts-result-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #FAF8F4;
+    margin-bottom: 12px;
+  }
+
+  .ts-result-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: #a8bfcf;
+  }
+
+  /* MIRROR CARDS */
+  .ts-mirror-card {
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .ts-mirror-card.ts-cost-card {
+    background: #fff5f3;
+    border-left: 3px solid #b85c4a;
+  }
+  .ts-mirror-card.ts-vision-card {
+    background: #f3fff7;
+    border-left: 3px solid #4a7c5c;
+  }
+  .ts-mirror-card-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .ts-mirror-card.ts-cost-card .ts-mirror-card-label { color: #b85c4a; }
+  .ts-mirror-card.ts-vision-card .ts-mirror-card-label { color: #4a7c5c; }
+
+  .ts-mirror-card-text {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #163E5B;
+    white-space: pre-wrap;
+  }
+
+  /* NAME IT RESULT DISPLAY */
+  .ts-name-it-display {
+    background: #163E5B;
+    border-radius: 4px;
+    padding: 28px 24px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .ts-name-it-display p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-style: italic;
+    color: #FAF8F4;
+    line-height: 1.4;
+  }
+  .ts-name-it-display span {
+    color: #F2BE54;
+  }
+
+  /* CLOSING COPY */
+  .ts-closing {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #4a6478;
+    margin-bottom: 32px;
+  }
+
+  .ts-closing strong {
+    color: #163E5B;
+    font-weight: 500;
+  }
+
+  /* CTA BLOCK */
+  .ts-cta-block {
+    background: #FFFFFF;
+    border: 1px solid #d4cdc4;
+    border-radius: 4px;
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .ts-cta-block p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #163E5B;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+  .ts-cta-btn {
+    display: inline-block;
+    padding: 16px 32px;
+    background: #C8963E;
+    color: #FFFFFF;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .ts-cta-btn:hover { background: #a87830; }
+
+  .ts-restart {
+    text-align: center;
+    margin-top: 24px;
+  }
+  .ts-restart button {
+    background: none;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #a0968c;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* QUESTION COUNTER */
+  .ts-q-counter {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #a0968c;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 480px) {
+    .ts-headline { font-size: 30px; }
+    .ts-question { font-size: 22px; }
+    .ts-result-headline { font-size: 28px; }
+    .ts-name-it-line { font-size: 22px; }
+    .ts-name-it-input { font-size: 22px; width: 160px; }
+  }
+</style>
+</head>
+<body>
+<div class="ts-wrap">
+
+  <!-- PROGRESS BAR (shown on all screens except intro and result) -->
+  <div class="ts-progress-bar" id="ts-progress-bar" style="display:none;">
+    <div class="ts-progress-fill" id="ts-progress-fill" style="width:0%"></div>
+  </div>
+
+  <!-- SCREEN 0: INTRO -->
+  <div class="ts-screen ts-active" id="ts-screen-0">
+    <div class="ts-step-label">The Standard</div>
+    <h1 class="ts-headline">You already know the answer.<br>This just makes you face it.</h1>
+    <p class="ts-sub">Write down what you are dealing with right now. A decision. A habit. Something you keep avoiding or keep going back to. Answer five honest questions. Then see the full cost of where you are, next to what you actually want.</p>
+    <div class="ts-divider"></div>
+    <p class="ts-sub" style="margin-bottom: 32px;">No sign-up. No judgement. Just clarity.</p>
+    <button class="ts-btn" onclick="tsGoTo(1)">Start</button>
+  </div>
+
+  <!-- SCREEN 1: WHAT ARE YOU FACING -->
+  <div class="ts-screen" id="ts-screen-1">
+    <div class="ts-step-label">Step 1 of 7</div>
+    <h2 class="ts-question">What are you facing right now?</h2>
+    <p class="ts-sub" style="margin-bottom: 20px;">A decision. A habit. Something you keep doing or keep avoiding. Write it plainly.</p>
+    <textarea class="ts-textarea" id="ts-facing" placeholder="Write it here..." rows="4"></textarea>
+    <button class="ts-btn" id="ts-btn-1" onclick="tsNext1()" disabled>Continue</button>
+  </div>
+
+  <!-- SCREEN 2: Q1 - Is this the person I want to be? -->
+  <div class="ts-screen" id="ts-screen-2">
+    <div class="ts-step-label">Step 2 of 7</div>
+    <div class="ts-q-counter">Question 1 of 5</div>
+    <h2 class="ts-question">Is this the person I want to be?</h2>
+    <div class="ts-choices" id="ts-choices-2">
+      <button class="ts-choice" onclick="tsSelectChoice(2, 'Yes', this)">Yes</button>
+      <button class="ts-choice" onclick="tsSelectChoice(2, 'No', this)">No</button>
+      <button class="ts-choice" onclick="tsSelectChoice(2, 'Not sure', this)">Not sure</button>
+    </div>
+    <button class="ts-btn" id="ts-btn-2" onclick="tsGoTo(3)" disabled>Continue</button>
+  </div>
+
+  <!-- SCREEN 3: Q2 - Does this reflect my worth? -->
+  <div class="ts-screen" id="ts-screen-3">
+    <div class="ts-step-label">Step 3 of 7</div>
+    <div class="ts-q-counter">Question 2 of 5</div>
+    <h2 class="ts-question">Does this reflect my worth?</h2>
+    <div class="ts-choices" id="ts-choices-3">
+      <button class="ts-choice" onclick="tsSelectChoice(3, 'Yes', this)">Yes</button>
+      <button class="ts-choice" onclick="tsSelectChoice(3, 'No', this)">No</button>
+      <button class="ts-choice" onclick="tsSelectChoice(3, 'Not sure', this)">Not sure</button>
+    </div>
+    <button class="ts-btn" id="ts-btn-3" onclick="tsGoTo(4)" disabled>Continue</button>
+  </div>
+
+  <!-- SCREEN 4: Q3 - Would the person I want to be do this? -->
+  <div class="ts-screen" id="ts-screen-4">
+    <div class="ts-step-label">Step 4 of 7</div>
+    <div class="ts-q-counter">Question 3 of 5</div>
+    <h2 class="ts-question">Would the person I want to be do this?</h2>
+    <div class="ts-choices" id="ts-choices-4">
+      <button class="ts-choice" onclick="tsSelectChoice(4, 'Yes', this)">Yes</button>
+      <button class="ts-choice" onclick="tsSelectChoice(4, 'No', this)">No</button>
+      <button class="ts-choice" onclick="tsSelectChoice(4, 'Not sure', this)">Not sure</button>
+    </div>
+    <button class="ts-btn" id="ts-btn-4" onclick="tsGoTo(5)" disabled>Continue</button>
+  </div>
+
+  <!-- SCREEN 5: Q4 - What is this really about? -->
+  <div class="ts-screen" id="ts-screen-5">
+    <div class="ts-step-label">Step 5 of 7</div>
+    <div class="ts-q-counter">Question 4 of 5</div>
+    <h2 class="ts-question">What is this really about?</h2>
+    <p class="ts-sub" style="margin-bottom: 20px;">Not the behaviour or the habit. Underneath that. What is the real thing here?</p>
+    <textarea class="ts-textarea" id="ts-moment" placeholder="Write your answer here..." rows="4"></textarea>
+    <button class="ts-btn" id="ts-btn-5" onclick="tsNext5()" disabled>Continue</button>
+  </div>
+
+  <!-- SCREEN 6: Q5 - Above, at or below your standard? -->
+  <div class="ts-screen" id="ts-screen-6">
+    <div class="ts-step-label">Step 6 of 7</div>
+    <div class="ts-q-counter">Question 5 of 5</div>
+    <h2 class="ts-question">Is this above, at, or below your standard?</h2>
+    <div class="ts-choices-row" id="ts-choices-6">
+      <button class="ts-choice" onclick="tsSelectChoice(6, 'Above', this)">Above</button>
+      <button class="ts-choice" onclick="tsSelectChoice(6, 'At', this)">At</button>
+      <button class="ts-choice" onclick="tsSelectChoice(6, 'Below', this)">Below</button>
+    </div>
+    <button class="ts-btn" id="ts-btn-6" onclick="tsGoTo(7)" disabled>Continue</button>
+  </div>
+
+  <!-- SCREEN 7: THE COST -->
+  <div class="ts-screen" id="ts-screen-7">
+    <div class="ts-step-label">Step 7 of 7</div>
+    <h2 class="ts-question">Now see both sides clearly.</h2>
+    <p class="ts-sub" style="margin-bottom: 28px;">Write your own words. This is for you, not for anyone else.</p>
+
+    <div class="ts-cost-block">
+      <div class="ts-cost-label ts-red">What keeping giving into this is costing you</div>
+      <textarea id="ts-cost" placeholder="Relationships. Time. Self-respect. Energy. Write what it is actually taking from you..." rows="4"></textarea>
+    </div>
+
+    <div class="ts-cost-block">
+      <div class="ts-cost-label ts-green">What it looks like when you stop</div>
+      <textarea id="ts-vision" placeholder="Not a fantasy. Just what life actually looks like when this no longer has a hold on you..." rows="4"></textarea>
+    </div>
+
+    <div class="ts-divider"></div>
+
+    <div class="ts-name-it-label">Name it.</div>
+    <p style="font-family:'Jost',sans-serif;font-size:14px;font-weight:300;color:#4a6478;margin-bottom:20px;">Name it. The thing you keep coming back to.</p>
+    <div style="margin-bottom: 8px;">
+      <span class="ts-name-it-line">If I can overcome </span><input class="ts-name-it-input" id="ts-this-input" type="text" placeholder="type it here" oninput="tsUpdateNameIt()">
+    </div>
+    <div class="ts-name-it-result" id="ts-name-it-result"></div>
+
+    <div style="margin-top: 36px;">
+      <button class="ts-btn" onclick="tsShowResult()">See my result</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 8: RESULT -->
+  <div class="ts-screen" id="ts-screen-8">
+    <div class="ts-result-header">
+      <div class="ts-result-tag">Check Yourself</div>
+      <h2 class="ts-result-headline" id="ts-result-headline">You can see it clearly now.</h2>
+      <p class="ts-result-sub" id="ts-result-sub">The question is what you do with that clarity.</p>
+    </div>
+
+    <div id="ts-name-it-display-wrap"></div>
+
+    <div id="ts-mirror-cards"></div>
+
+    <div class="ts-divider"></div>
+
+    <p class="ts-closing">
+      You wrote that yourself. Nobody told you what to put.<br><br>
+      <strong>Seeing it clearly is not the hard part.</strong> The hard part is that you have probably seen it clearly before and the pull still won. That pull has a root. Something underneath the behaviour or the habit that the moment keeps feeding. When you clear the root, the pull loses its reason to exist.<br><br>
+      That is what we do together.
+    </p>
+
+    <div class="ts-cta-block">
+      <p>If you are ready to clear what is underneath this, one session is enough to show you what is there.</p>
+      <a class="ts-cta-btn" href="mailto:mindshiftingwithleon@gmail.com">Book a Session</a>
+    </div>
+
+    <div class="ts-restart">
+      <button onclick="tsRestart()">Start again</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // STATE
+  var tsState = {
+    facing: '',
+    q1: '', q2: '', q3: '', q4: '', q5: '',
+    cost: '',
+    vision: '',
+    thisInput: ''
+  };
+
+  var tsCurrentScreen = 0;
+  var tsTotalSteps = 7;
+
+  function tsGoTo(screen) {
+    document.getElementById('ts-screen-' + tsCurrentScreen).classList.remove('ts-active');
+    tsCurrentScreen = screen;
+    document.getElementById('ts-screen-' + screen).classList.add('ts-active');
+    tsUpdateProgress(screen);
+    window.scrollTo(0, 0);
+  }
+
+  function tsUpdateProgress(screen) {
+    var bar = document.getElementById('ts-progress-bar');
+    var fill = document.getElementById('ts-progress-fill');
+    if (screen === 0 || screen === 8) {
+      bar.style.display = 'none';
+    } else {
+      bar.style.display = 'block';
+      var pct = Math.round(((screen) / tsTotalSteps) * 100);
+      fill.style.width = pct + '%';
+    }
+  }
+
+  // SCREEN 1: textarea enable button
+  var facingTA = document.getElementById('ts-facing');
+  facingTA.addEventListener('input', function() {
+    document.getElementById('ts-btn-1').disabled = this.value.trim().length < 3;
+  });
+
+  function tsNext1() {
+    tsState.facing = document.getElementById('ts-facing').value.trim();
+    tsGoTo(2);
+  }
+
+  // CHOICE SELECTION
+  function tsSelectChoice(screen, value, el) {
+    var choices = document.getElementById('ts-choices-' + screen).querySelectorAll('.ts-choice');
+    choices.forEach(function(c) { c.classList.remove('ts-selected'); });
+    el.classList.add('ts-selected');
+    var qMap = {2:'q1', 3:'q2', 4:'q3', 6:'q5'};
+    if (qMap[screen]) tsState[qMap[screen]] = value;
+    document.getElementById('ts-btn-' + screen).disabled = false;
+  }
+
+  // SCREEN 5: textarea
+  var momentTA = document.getElementById('ts-moment');
+  momentTA.addEventListener('input', function() {
+    document.getElementById('ts-btn-5').disabled = this.value.trim().length < 3;
+  });
+
+  function tsNext5() {
+    tsState.q4 = document.getElementById('ts-moment').value.trim();
+    tsGoTo(6);
+  }
+
+  // NAME IT
+  function tsUpdateNameIt() {
+    var val = document.getElementById('ts-this-input').value;
+    tsState.thisInput = val;
+    var result = document.getElementById('ts-name-it-result');
+    if (val.trim().length > 0) {
+      result.textContent = 'I can overcome anything.';
+      result.style.opacity = '1';
+    } else {
+      result.textContent = '';
+    }
+  }
+
+  // RESULT
+  function tsShowResult() {
+    tsState.cost = document.getElementById('ts-cost').value.trim();
+    tsState.vision = document.getElementById('ts-vision').value.trim();
+    tsState.thisInput = document.getElementById('ts-this-input').value.trim();
+
+    // Build headline based on answers
+    var headline = tsGetHeadline();
+    document.getElementById('ts-result-headline').textContent = headline.title;
+    document.getElementById('ts-result-sub').textContent = headline.sub;
+
+    // Name it display
+    var nameWrap = document.getElementById('ts-name-it
