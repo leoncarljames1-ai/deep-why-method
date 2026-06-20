@@ -579,7 +579,7 @@
 </div>
 
 <script>
-  // STATE
+  // STATE — global so all functions can access
   var tsState = {
     facing: '',
     q1: '', q2: '', q3: '', q4: '', q5: '',
@@ -591,6 +591,7 @@
   var tsCurrentScreen = 0;
   var tsTotalSteps = 7;
 
+  // All functions global so onclick= attributes can call them
   function tsGoTo(screen) {
     document.getElementById('ts-screen-' + tsCurrentScreen).classList.remove('ts-active');
     tsCurrentScreen = screen;
@@ -606,23 +607,16 @@
       bar.style.display = 'none';
     } else {
       bar.style.display = 'block';
-      var pct = Math.round(((screen) / tsTotalSteps) * 100);
+      var pct = Math.round((screen / tsTotalSteps) * 100);
       fill.style.width = pct + '%';
     }
   }
-
-  // SCREEN 1: textarea enable button
-  var facingTA = document.getElementById('ts-facing');
-  facingTA.addEventListener('input', function() {
-    document.getElementById('ts-btn-1').disabled = this.value.trim().length < 3;
-  });
 
   function tsNext1() {
     tsState.facing = document.getElementById('ts-facing').value.trim();
     tsGoTo(2);
   }
 
-  // CHOICE SELECTION
   function tsSelectChoice(screen, value, el) {
     var choices = document.getElementById('ts-choices-' + screen).querySelectorAll('.ts-choice');
     choices.forEach(function(c) { c.classList.remove('ts-selected'); });
@@ -632,18 +626,11 @@
     document.getElementById('ts-btn-' + screen).disabled = false;
   }
 
-  // SCREEN 5: textarea
-  var momentTA = document.getElementById('ts-moment');
-  momentTA.addEventListener('input', function() {
-    document.getElementById('ts-btn-5').disabled = this.value.trim().length < 3;
-  });
-
   function tsNext5() {
     tsState.q4 = document.getElementById('ts-moment').value.trim();
     tsGoTo(6);
   }
 
-  // NAME IT
   function tsUpdateNameIt() {
     var val = document.getElementById('ts-this-input').value;
     tsState.thisInput = val;
@@ -656,16 +643,97 @@
     }
   }
 
-  // RESULT
   function tsShowResult() {
     tsState.cost = document.getElementById('ts-cost').value.trim();
     tsState.vision = document.getElementById('ts-vision').value.trim();
     tsState.thisInput = document.getElementById('ts-this-input').value.trim();
 
-    // Build headline based on answers
     var headline = tsGetHeadline();
     document.getElementById('ts-result-headline').textContent = headline.title;
     document.getElementById('ts-result-sub').textContent = headline.sub;
 
-    // Name it display
-    var nameWrap = document.getElementById('ts-name-it
+    var nameWrap = document.getElementById('ts-name-it-display-wrap');
+    if (tsState.thisInput.length > 0) {
+      nameWrap.innerHTML = '<div class="ts-name-it-display"><p>If I can overcome <span>' + tsEscape(tsState.thisInput) + '</span>, I can overcome anything.</p></div>';
+    } else {
+      nameWrap.innerHTML = '';
+    }
+
+    var cards = document.getElementById('ts-mirror-cards');
+    var costHTML = tsState.cost.length > 0
+      ? '<div class="ts-mirror-card ts-cost-card"><div class="ts-mirror-card-label">What it is costing you</div><div class="ts-mirror-card-text">' + tsEscape(tsState.cost) + '</div></div>'
+      : '';
+    var visionHTML = tsState.vision.length > 0
+      ? '<div class="ts-mirror-card ts-vision-card"><div class="ts-mirror-card-label">What it looks like when you stop</div><div class="ts-mirror-card-text">' + tsEscape(tsState.vision) + '</div></div>'
+      : '';
+    cards.innerHTML = costHTML + visionHTML;
+
+    tsGoTo(8);
+  }
+
+  function tsGetHeadline() {
+    var belowCount = 0;
+    if (tsState.q1 === 'No' || tsState.q1 === 'Not sure') belowCount++;
+    if (tsState.q2 === 'No' || tsState.q2 === 'Not sure') belowCount++;
+    if (tsState.q3 === 'No' || tsState.q3 === 'Not sure') belowCount++;
+    if (tsState.q5 === 'Below') belowCount++;
+
+    if (belowCount >= 3) {
+      return {
+        title: 'You already knew the answer before you started.',
+        sub: 'The question is what you do with it now.'
+      };
+    } else if (belowCount >= 1) {
+      return {
+        title: 'Part of you knows this is not right for you.',
+        sub: 'That part deserves to win.'
+      };
+    } else {
+      return {
+        title: 'You can see it clearly now.',
+        sub: 'Hold that.'
+      };
+    }
+  }
+
+  function tsEscape(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+
+  function tsRestart() {
+    tsState = { facing:'', q1:'', q2:'', q3:'', q4:'', q5:'', cost:'', vision:'', thisInput:'' };
+    document.getElementById('ts-facing').value = '';
+    document.getElementById('ts-moment').value = '';
+    document.getElementById('ts-cost').value = '';
+    document.getElementById('ts-vision').value = '';
+    document.getElementById('ts-this-input').value = '';
+    document.getElementById('ts-name-it-result').textContent = '';
+    document.getElementById('ts-btn-1').disabled = true;
+    document.getElementById('ts-btn-5').disabled = true;
+    [2,3,4,6].forEach(function(s) {
+      document.getElementById('ts-btn-' + s).disabled = true;
+      var choices = document.getElementById('ts-choices-' + s);
+      if (choices) choices.querySelectorAll('.ts-choice').forEach(function(c){ c.classList.remove('ts-selected'); });
+    });
+    tsGoTo(0);
+  }
+
+  // DOM-dependent listeners — wait for document ready
+  document.addEventListener('DOMContentLoaded', function() {
+    var facingTA = document.getElementById('ts-facing');
+    if (facingTA) {
+      facingTA.addEventListener('input', function() {
+        document.getElementById('ts-btn-1').disabled = this.value.trim().length < 3;
+      });
+    }
+
+    var momentTA = document.getElementById('ts-moment');
+    if (momentTA) {
+      momentTA.addEventListener('input', function() {
+        document.getElementById('ts-btn-5').disabled = this.value.trim().length < 3;
+      });
+    }
+  });
+</script>
+</body>
+</html>
