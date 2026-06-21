@@ -347,18 +347,17 @@
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div><div class="progress-label">Feel your way into the answer. Do not think your way into it.</div></div>
   <div class="content">
 
-    <!-- READ-ONLY STACK: worst part image + why answers -->
+    <!-- READ-ONLY STACK: worst part image, notice prompt, then why answers -->
     <div class="exit-review-stack">
       <div id="exit-review-image-wrap">
         <div class="exit-review-image-label">The worst part</div>
         <div class="exit-review-image" id="exit-review-image-text"></div>
       </div>
+      <!-- NOTICE PROMPT sits between image and why answers -->
+      <div id="exit-notice-prompt" style="padding:12px 0 8px; border-top:1px solid #DFDFDF; border-bottom:1px solid #DFDFDF; margin:14px 0;">
+        <p style="font-size:13px; color:#888; font-style:italic; line-height:1.6; margin:0;">Notice where you feel it in your body. Notice what mental image comes up.</p>
+      </div>
       <div id="exit-review-whys-wrap" class="exit-review-whys"></div>
-    </div>
-
-    <!-- NOTICE PROMPT -->
-    <div class="notice-prompt">
-      <p>Notice where you feel it in your body. Notice what mental image comes up.</p>
     </div>
 
     <!-- FEEL THE PROBLEM -->
@@ -399,12 +398,11 @@
     <div id="phase-a-problem-block" style="display:none;">
       <div class="identity-display">
         <div class="identity-display-label">Step into this version of you</div>
-        <div class="identity-display-instruction">Say this out loud or clearly in your mind</div>
         <div class="identity-display-text" id="phase-a-identity-text"></div>
         <div class="identity-display-empty" id="phase-a-identity-empty" style="display:none;">Your answer from the exit question will appear here.</div>
       </div>
-      <div class="instruction"><p>Think of a future scene where this version of you is fully alive. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
-      <div class="instruction"><p>Now look at this version of you from the outside. Their posture. Their presence. Their expression. Then step inside. You are this person now.</p></div>
+      <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#C8963E;">A</strong> &nbsp;Think of a future scene where this version of you is fully alive. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
+      <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#C8963E;">B</strong> &nbsp;Now look at this version of you from the outside. Their posture. Their presence. Their expression. Then step inside. You are this person now.</p></div>
     </div>
 
     <!-- COGNITION ROUTE: show positive cognition -->
@@ -415,22 +413,22 @@
         <div id="pos-cog-display" class="pos-cog-display-box" style="display:none;"></div>
         <textarea id="pos-cog-input" class="short" placeholder="Write your positive belief here — the opposite of what you started with..." oninput="onPosCogInput()" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:#163E5B; display:none;"></textarea>
       </div>
-      <div class="instruction"><p>Think of a future or goal where this belief is fully alive in you. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
-      <div class="instruction"><p>Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p></div>
+      <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#C8963E;">A</strong> &nbsp;Think of a future or goal where this belief is fully alive in you. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
+      <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#C8963E;">B</strong> &nbsp;Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p></div>
     </div>
 
     <div class="field-group mt-4"><label class="field-label">What does it feel like?</label><textarea class="short" id="fi-feel" placeholder="Stay in it. Describe what you feel..."></textarea></div>
 
-    <!-- PROBLEM: "I am this version of me" -->
+    <!-- PROBLEM: affirm as the version they described -->
     <div id="phase-a-affirm-problem" style="display:none;">
-      <div class="prompt"><p id="affirm-prompt-problem">"I am this version of me."</p></div>
-      <p class="text-small" style="margin-top:8px;">Say it out loud. See it as true. Feel it as known, not hoped for. Where do you feel it in your body?</p>
+      <div class="prompt"><p id="affirm-prompt-problem">"I am a person who is free and present."</p></div>
+      <p class="text-small" style="margin-top:8px;">Say this out loud. See it as true. Feel it as known, not hoped for.</p>
     </div>
 
     <!-- COGNITION: "I am [positive cognition]" -->
     <div id="phase-a-affirm-cognition" style="display:none;">
       <div class="prompt"><p id="affirm-prompt-cognition">"I am [your positive cognition]."</p></div>
-      <p class="text-small" style="margin-top:8px;">Say it out loud. See it as true. Feel it as known, not hoped for. Where do you feel it in your body?</p>
+      <p class="text-small" style="margin-top:8px;">Say this out loud. See it as true. Feel it as known, not hoped for.</p>
     </div>
 
     <div class="field-group mt-4"><label class="field-label">Where do you feel it in your body?</label><textarea class="short" id="fi-body" placeholder="Chest, stomach, shoulders — wherever it lands..."></textarea></div>
@@ -449,22 +447,22 @@
   <div class="content">
     <div class="phase-badge"><span></span>Phase B</div>
 
-    <!-- PROBLEM ROUTE: show identity + why question -->
+    <!-- PROBLEM ROUTE: show identity + why question as heading only -->
     <div id="phase-b-problem-block" style="display:none;">
       <div class="phase-b-context">
         <div class="phase-b-context-label">Who you are without this problem</div>
         <div class="phase-b-context-text" id="phase-b-identity-text"></div>
       </div>
-      <div class="prompt"><p>Why is this true for me?</p></div>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:500; color:#163E5B; margin:20px 0 4px; line-height:1.2;">Why is this true for me?</h2>
     </div>
 
-    <!-- COGNITION ROUTE: why am I [positive cognition] -->
+    <!-- COGNITION ROUTE: why am I [positive cognition] as heading only -->
     <div id="phase-b-cognition-block" style="display:none;">
-      <div class="prompt"><p id="why-am-i-prompt">"Why am I [your positive cognition]?"</p></div>
+      <h2 id="why-am-i-heading" style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:500; color:#163E5B; margin:0 0 4px; line-height:1.2;">Why am I [your positive cognition]?</h2>
     </div>
 
     <div class="instruction"><p>See yourself as this. It might be a memory, a future version of you, or simply an image that comes. Whatever arises, stay with it. Amplify the feeling. Let it grow.</p></div>
-    <div class="field-group"><label class="field-label" id="why-am-i-label">Why is this true for me?</label><textarea id="fi-why" placeholder="What comes when you see yourself as this..."></textarea></div>
+    <div class="field-group"><textarea id="fi-why" placeholder="What comes when you see yourself as this..." style="min-height:100px;"></textarea></div>
     <div class="divider"></div>
     <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#C8963E; margin-bottom:16px;">Step out of the scene.</p>
 
@@ -617,27 +615,15 @@
     const whysWrap = document.getElementById('exit-review-whys-wrap');
     whysWrap.innerHTML = '';
     const whyIds = ['pwhy1','pwhy2','pwhy3','pwhy4','pwhy5','pwhy6','pwhy7'];
-    let hasWhys = false;
     whyIds.forEach((id, i) => {
       const v = val(id);
       if (v) {
-        hasWhys = true;
         const row = document.createElement('div');
         row.className = 'exit-review-why-row';
         row.innerHTML = '<div class="exit-review-why-num">' + (i+1) + '</div><div class="exit-review-why-text">' + escHtml(v) + '</div>';
         whysWrap.appendChild(row);
       }
     });
-
-    // Add top border to whys section if both image and whys exist
-    if (image && hasWhys) {
-      whysWrap.style.borderTop = '1px solid #DFDFDF';
-      whysWrap.style.paddingTop = '16px';
-      whysWrap.style.marginTop = '0';
-    } else {
-      whysWrap.style.borderTop = 'none';
-      whysWrap.style.paddingTop = '0';
-    }
   }
 
   function escHtml(str) {
@@ -717,9 +703,14 @@
         textEl.textContent = identity;
         textEl.style.display = 'block';
         emptyEl.style.display = 'none';
+        // Build affirm prompt from what they wrote
+        const affirmEl = document.getElementById('affirm-prompt-problem');
+        if (affirmEl) affirmEl.textContent = '"I am ' + identity.replace(/^(I am |i am )/i, '') + '."';
       } else {
         textEl.style.display = 'none';
         emptyEl.style.display = 'block';
+        const affirmEl = document.getElementById('affirm-prompt-problem');
+        if (affirmEl) affirmEl.textContent = '"I am this version of me."';
       }
     } else {
       // Cognition route
@@ -761,12 +752,10 @@
 
   function applyPosCog(pos) {
     const affirmEl = document.getElementById('affirm-prompt-cognition');
-    const whyEl = document.getElementById('why-am-i-prompt');
-    const whyLabelEl = document.getElementById('why-am-i-label');
+    const whyHeading = document.getElementById('why-am-i-heading');
     const whyPrompt = buildWhyPrompt(pos);
     if (affirmEl) affirmEl.textContent = '"' + pos + '"';
-    if (whyEl) whyEl.textContent = '"' + whyPrompt + '"';
-    if (whyLabelEl) whyLabelEl.textContent = whyPrompt;
+    if (whyHeading) whyHeading.textContent = whyPrompt;
     const phaseCCog = document.getElementById('phase-c-cog-text');
     if (phaseCCog) phaseCCog.textContent = pos;
   }
@@ -784,12 +773,9 @@
       if (textEl) textEl.textContent = identity || 'Your answer from the exit question will appear here.';
     } else {
       const pos = state.posCog;
-      const whyEl = document.getElementById('why-am-i-prompt');
-      const whyLabelEl = document.getElementById('why-am-i-label');
-      if (pos) {
-        const whyPrompt = buildWhyPrompt(pos);
-        if (whyEl) whyEl.textContent = '"' + whyPrompt + '"';
-        if (whyLabelEl) whyLabelEl.textContent = whyPrompt;
+      const whyHeading = document.getElementById('why-am-i-heading');
+      if (pos && whyHeading) {
+        whyHeading.textContent = buildWhyPrompt(pos);
       }
     }
   }
