@@ -7,100 +7,136 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --navy: #163E5B; --gold: #F2BE54; --gold-mid: #C8963E;
-    --cream: #FAF8F4; --charcoal: #1E1E24; --grey: #DFDFDF;
-    --light-blue: #A2B4C2; --white: #FFFFFF;
-  }
-  body { background: var(--cream); font-family: 'Jost', sans-serif; color: var(--charcoal); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  body { background: #FAF8F4; font-family: 'Jost', sans-serif; color: #1E1E24; font-size: 16px; line-height: 1.7; min-height: 100vh; }
   .screen { display: none; }
   .screen.active { display: block; }
-  .header { background: var(--navy); padding: 20px 24px; text-align: center; }
-  .header-eyebrow { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: var(--white); letter-spacing: 0.02em; }
-  .progress-wrap { background: var(--navy); padding: 0 24px 16px; }
+  .header { background: #163E5B; padding: 20px 24px; text-align: center; }
+  .header-eyebrow { font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #F2BE54; margin-bottom: 6px; }
+  .header-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 500; color: #FFFFFF; letter-spacing: 0.02em; }
+  .progress-wrap { background: #163E5B; padding: 0 24px 16px; }
   .progress-track { height: 2px; background: rgba(255,255,255,0.15); border-radius: 2px; }
-  .progress-fill { height: 2px; background: var(--gold); border-radius: 2px; transition: width 0.4s ease; }
-  .progress-label { font-size: 11px; color: var(--light-blue); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
-
-  /* ANCHOR BAR */
-  .anchor-bar { background: rgba(22,62,91,0.06); border-left: 3px solid var(--gold-mid); padding: 10px 16px; }
-  .anchor-bar-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; margin-bottom: 3px; font-family: 'Jost', sans-serif; }
-  .anchor-bar-text { font-size: 13px; color: var(--navy); font-style: italic; font-family: 'Cormorant Garamond', serif; line-height: 1.4; }
+  .progress-fill { height: 2px; background: #F2BE54; border-radius: 2px; transition: width 0.4s ease; }
+  .progress-label { font-size: 11px; color: #A2B4C2; margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
 
   .content { padding: 32px 24px 100px; max-width: 640px; margin: 0 auto; }
-  h1 { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 500; color: var(--navy); line-height: 1.2; margin-bottom: 20px; }
-  h2 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: var(--navy); line-height: 1.3; margin-bottom: 14px; }
-  h3 { font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-bottom: 10px; margin-top: 28px; }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 500; color: #163E5B; line-height: 1.2; margin-bottom: 20px; }
+  h2 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 500; color: #163E5B; line-height: 1.3; margin-bottom: 14px; }
+  h3 { font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #163E5B; margin-bottom: 10px; margin-top: 28px; }
   p { font-size: 15px; color: #3a3a44; margin-bottom: 14px; line-height: 1.75; }
   p:last-of-type { margin-bottom: 0; }
-  .instruction { background: var(--white); border-left: 3px solid var(--gold); padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+  .instruction { background: #FFFFFF; border-left: 3px solid #F2BE54; padding: 16px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
   .instruction p { font-size: 14px; color: #555; margin: 0; font-style: italic; }
   .note { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin: 16px 0; }
-  .note p { font-size: 13px; color: var(--navy); margin: 0; }
-  .divider { height: 1px; background: var(--grey); margin: 28px 0; }
+  .note p { font-size: 13px; color: #163E5B; margin: 0; }
+  .divider { height: 1px; background: #DFDFDF; margin: 28px 0; }
   .field-group { margin-bottom: 20px; }
-  .field-label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); margin-bottom: 8px; }
+  .field-label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #163E5B; margin-bottom: 8px; }
   .field-sub { display: block; font-size: 13px; color: #888; margin-bottom: 10px; font-style: italic; letter-spacing: 0; text-transform: none; font-weight: 400; }
-  textarea, input[type="text"], input[type="number"] { width: 100%; border: 1.5px solid var(--grey); border-radius: 8px; padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 15px; color: var(--charcoal); background: var(--white); resize: none; transition: border-color 0.2s; -webkit-appearance: none; }
-  textarea:focus, input[type="text"]:focus, input[type="number"]:focus { outline: none; border-color: var(--navy); }
+  textarea, input[type="text"], input[type="number"] { width: 100%; border: 1.5px solid #DFDFDF; border-radius: 8px; padding: 14px 16px; font-family: 'Jost', sans-serif; font-size: 15px; color: #1E1E24; background: #FFFFFF; resize: none; transition: border-color 0.2s; -webkit-appearance: none; }
+  textarea:focus, input[type="text"]:focus, input[type="number"]:focus { outline: none; border-color: #163E5B; }
   textarea { min-height: 90px; }
   textarea.short { min-height: 60px; }
   .why-chain { margin: 16px 0; }
   .why-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
-  .why-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 14px; font-family: 'Jost', sans-serif; }
+  .why-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #163E5B; color: #FFFFFF; font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 14px; font-family: 'Jost', sans-serif; }
   .why-row textarea { flex: 1; min-height: 56px; }
   .score-wrap { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-  .score-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--grey); background: var(--white); font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; color: #888; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
-  .score-btn.selected { background: var(--navy); border-color: var(--navy); color: var(--white); }
-  .phase-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 18px; }
-  .phase-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); display: block; }
-  .prompt { background: var(--navy); color: var(--white); padding: 18px 20px; border-radius: 10px; margin: 16px 0 12px; }
-  .prompt p { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--white); margin: 0; line-height: 1.4; }
+  .score-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid #DFDFDF; background: #FFFFFF; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; color: #888; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
+  .score-btn.selected { background: #163E5B; border-color: #163E5B; color: #FFFFFF; }
+  .phase-badge { display: inline-flex; align-items: center; gap: 8px; background: #163E5B; color: #FFFFFF; font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 18px; }
+  .phase-badge span { width: 6px; height: 6px; border-radius: 50%; background: #F2BE54; display: block; }
+  .prompt { background: #163E5B; color: #FFFFFF; padding: 18px 20px; border-radius: 10px; margin: 16px 0 12px; }
+  .prompt p { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: #FFFFFF; margin: 0; line-height: 1.4; }
   .cognition-section { margin-bottom: 24px; }
-  .cognition-section-title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); font-weight: 500; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--grey); }
+  .cognition-section-title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #C8963E; font-weight: 500; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #DFDFDF; }
   .cognition-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f0ede8; cursor: pointer; transition: background 0.15s; }
   .cognition-item:last-child { border-bottom: none; }
   .cognition-item:hover { background: #f5f2ed; margin: 0 -8px; padding: 12px 8px; border-radius: 6px; }
   .cognition-item.selected { background: #EEF3F7; margin: 0 -8px; padding: 12px 8px; border-radius: 6px; }
-  .cognition-select { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--grey); margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
-  .cognition-item.selected .cognition-select { background: var(--navy); border-color: var(--navy); }
-  .cognition-item.selected .cognition-select::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--white); display: block; }
+  .cognition-select { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid #DFDFDF; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .cognition-item.selected .cognition-select { background: #163E5B; border-color: #163E5B; }
+  .cognition-item.selected .cognition-select::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #FFFFFF; display: block; }
   .cognition-text { flex: 1; }
-  .cognition-neg { font-size: 14px; color: var(--charcoal); font-weight: 400; display: block; margin-bottom: 2px; }
-  .cognition-pos { font-size: 12px; color: var(--light-blue); display: block; }
-  .selected-display { background: var(--navy); border-radius: 10px; padding: 16px 18px; margin: 16px 0; }
-  .selected-display-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; font-family: 'Jost', sans-serif; }
-  .selected-display-neg { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--white); font-style: italic; }
-  .selected-display-pos { font-size: 13px; color: var(--light-blue); margin-top: 4px; }
-  .copy-box { background: var(--white); border: 1.5px solid var(--grey); border-radius: 10px; padding: 20px; margin: 16px 0; position: relative; }
-  .copy-box-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-mid); margin-bottom: 12px; font-weight: 500; }
-  .copy-btn { position: absolute; top: 16px; right: 16px; background: var(--navy); color: var(--white); border: none; border-radius: 6px; padding: 6px 12px; font-size: 11px; font-family: 'Jost', sans-serif; cursor: pointer; letter-spacing: 0.08em; }
-  .copy-content { font-size: 14px; color: var(--charcoal); line-height: 1.8; white-space: pre-wrap; word-break: break-word; }
-  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); border-top: 1px solid var(--grey); padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
+  .cognition-neg { font-size: 14px; color: #1E1E24; font-weight: 400; display: block; margin-bottom: 2px; }
+  .cognition-pos { font-size: 12px; color: #A2B4C2; display: block; }
+  .selected-display { background: #163E5B; border-radius: 10px; padding: 16px 18px; margin: 16px 0; }
+  .selected-display-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #F2BE54; margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .selected-display-neg { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #FFFFFF; font-style: italic; }
+  .selected-display-pos { font-size: 13px; color: #A2B4C2; margin-top: 4px; }
+  .copy-box { background: #FFFFFF; border: 1.5px solid #DFDFDF; border-radius: 10px; padding: 20px; margin: 16px 0; position: relative; }
+  .copy-box-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #C8963E; margin-bottom: 12px; font-weight: 500; }
+  .copy-btn { position: absolute; top: 16px; right: 16px; background: #163E5B; color: #FFFFFF; border: none; border-radius: 6px; padding: 6px 12px; font-size: 11px; font-family: 'Jost', sans-serif; cursor: pointer; letter-spacing: 0.08em; }
+  .copy-content { font-size: 14px; color: #1E1E24; line-height: 1.8; white-space: pre-wrap; word-break: break-word; }
+  .nav-fixed { position: fixed; bottom: 0; left: 0; right: 0; background: #FFFFFF; border-top: 1px solid #DFDFDF; padding: 16px 24px; display: flex; gap: 12px; z-index: 100; }
   .btn { flex: 1; padding: 15px; border-radius: 10px; border: none; font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s; }
-  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-primary { background: #163E5B; color: #FFFFFF; }
   .btn-primary:active { background: #0f2e44; }
-  .btn-secondary { background: transparent; color: var(--navy); border: 1.5px solid var(--grey); flex: 0 0 auto; padding: 15px 20px; }
-  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-secondary { background: transparent; color: #163E5B; border: 1.5px solid #DFDFDF; flex: 0 0 auto; padding: 15px 20px; }
+  .btn-gold { background: #F2BE54; color: #163E5B; }
   .start-screen { min-height: 100vh; display: flex; flex-direction: column; }
-  .start-hero { background: var(--navy); padding: 48px 24px 40px; text-align: center; }
-  .start-hero .eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-  .start-hero h1 { color: var(--white); font-size: 38px; margin-bottom: 12px; }
-  .start-hero p { color: var(--light-blue); font-size: 15px; max-width: 320px; margin: 0 auto; }
+  .start-hero { background: #163E5B; padding: 48px 24px 40px; text-align: center; }
+  .start-hero .eyebrow { font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #F2BE54; margin-bottom: 16px; }
+  .start-hero h1 { color: #FFFFFF; font-size: 38px; margin-bottom: 12px; }
+  .start-hero p { color: #A2B4C2; font-size: 15px; max-width: 320px; margin: 0 auto; }
   .start-body { padding: 32px 24px 120px; max-width: 640px; margin: 0 auto; width: 100%; }
-  .route-card { background: var(--white); border: 1.5px solid var(--grey); border-radius: 12px; padding: 22px 20px; margin-bottom: 14px; cursor: pointer; transition: all 0.2s; }
-  .route-card:hover, .route-card.selected { border-color: var(--navy); background: #f0f4f7; }
-  .route-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 4px; }
+  .route-card { background: #FFFFFF; border: 1.5px solid #DFDFDF; border-radius: 12px; padding: 22px 20px; margin-bottom: 14px; cursor: pointer; transition: all 0.2s; }
+  .route-card:hover, .route-card.selected { border-color: #163E5B; background: #f0f4f7; }
+  .route-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #163E5B; margin-bottom: 4px; }
   .route-card-sub { font-size: 13px; color: #888; }
-  .complete-hero { background: linear-gradient(160deg, var(--charcoal), var(--navy)); padding: 60px 24px 48px; text-align: center; }
-  .complete-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--gold); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+  .complete-hero { background: linear-gradient(160deg, #1E1E24, #163E5B); padding: 60px 24px 48px; text-align: center; }
+  .complete-icon { width: 56px; height: 56px; border-radius: 50%; background: #F2BE54; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
   .complete-icon svg { width: 28px; height: 28px; }
-  .complete-hero h1 { color: var(--white); font-size: 32px; margin-bottom: 10px; }
-  .complete-hero p { color: var(--light-blue); max-width: 300px; margin: 0 auto; }
+  .complete-hero h1 { color: #FFFFFF; font-size: 32px; margin-bottom: 10px; }
+  .complete-hero p { color: #A2B4C2; max-width: 300px; margin: 0 auto; }
   .mt-4 { margin-top: 16px; } .mt-6 { margin-top: 24px; } .mb-2 { margin-bottom: 8px; }
   .hidden { display: none; } .text-small { font-size: 13px; color: #888; }
-  .affirm { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-style: italic; color: var(--navy); text-align: center; padding: 20px 0; line-height: 1.4; }
+
+  /* EXIT QUESTION REVIEW STACK */
+  .exit-review-stack { background: #FFFFFF; border: 1.5px solid #DFDFDF; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+  .exit-review-image { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: #163E5B; line-height: 1.5; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #DFDFDF; }
+  .exit-review-image-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C8963E; font-weight: 500; margin-bottom: 6px; font-family: 'Jost', sans-serif; }
+  .exit-review-whys { }
+  .exit-review-why-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .exit-review-why-row:last-child { margin-bottom: 0; }
+  .exit-review-why-num { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: #EEF3F7; color: #163E5B; font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; margin-top: 1px; font-family: 'Jost', sans-serif; }
+  .exit-review-why-text { font-size: 14px; color: #3a3a44; line-height: 1.6; }
+
+  /* NOTICE PROMPT */
+  .notice-prompt { padding: 12px 0 4px; }
+  .notice-prompt p { font-size: 13px; color: #888; font-style: italic; line-height: 1.6; margin: 0; }
+
+  /* FEEL THE PROBLEM LINE */
+  .feel-line { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #163E5B; font-style: italic; padding: 16px 0 4px; line-height: 1.3; }
+
+  /* EXIT QUESTION HEADING */
+  .exit-question-heading { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 500; color: #163E5B; line-height: 1.2; margin: 8px 0 20px; }
+
+  /* ALTERNATIVE QUESTION */
+  .alt-question { margin: 8px 0 24px; }
+  .alt-question p { font-size: 12px; color: #aaa; font-style: italic; line-height: 1.5; margin: 0; }
+  .alt-question a { color: #A2B4C2; text-decoration: none; border-bottom: 1px solid #DFDFDF; }
+
+  /* PHASE A IDENTITY DISPLAY */
+  .identity-display { background: #163E5B; border-radius: 10px; padding: 20px; margin: 16px 0; }
+  .identity-display-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #F2BE54; margin-bottom: 10px; font-family: 'Jost', sans-serif; }
+  .identity-display-instruction { font-size: 12px; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-bottom: 8px; font-family: 'Jost', sans-serif; }
+  .identity-display-text { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #FFFFFF; font-style: italic; line-height: 1.4; }
+  .identity-display-empty { font-family: 'Jost', sans-serif; font-size: 13px; color: rgba(255,255,255,0.35); font-style: italic; }
+
+  /* PHASE B CONTEXT DISPLAY */
+  .phase-b-context { background: #EEF3F7; border-radius: 8px; padding: 14px 16px; margin-bottom: 4px; }
+  .phase-b-context-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C8963E; margin-bottom: 6px; font-family: 'Jost', sans-serif; font-weight: 500; }
+  .phase-b-context-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #163E5B; font-style: italic; line-height: 1.4; }
+
+  /* PHASE C SCENE REMINDER */
+  .scene-reminder { background: #FFFFFF; border: 1.5px solid #DFDFDF; border-radius: 10px; padding: 16px 18px; margin-bottom: 16px; }
+  .scene-reminder-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #C8963E; margin-bottom: 8px; font-family: 'Jost', sans-serif; font-weight: 500; }
+  .scene-reminder-identity { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #163E5B; font-style: italic; line-height: 1.4; margin-bottom: 10px; }
+  .scene-reminder-action { font-size: 13px; color: #3a3a44; line-height: 1.6; border-top: 1px solid #DFDFDF; padding-top: 10px; margin-top: 4px; }
+  .scene-reminder-action-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #A2B4C2; margin-bottom: 4px; font-family: 'Jost', sans-serif; }
+
+  /* COGNITION VERSION - Phase A positive cog display */
+  .pos-cog-display-box { background: #FFFFFF; border: 1.5px solid #DFDFDF; border-radius: 8px; padding: 14px 16px; font-family: 'Cormorant Garamond', serif; font-size: 19px; color: #163E5B; font-style: italic; }
 </style>
 </head>
 <body>
@@ -175,8 +211,6 @@
       <div class="cognition-item" onclick="selectCognition(this,'I cannot let it out','I can choose to let it out')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot let it out</span><span class="cognition-pos">I can choose to let it out</span></div></div>
       <div class="cognition-item" onclick="selectCognition(this,'I cannot succeed','I can succeed')"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I cannot succeed</span><span class="cognition-pos">I can succeed</span></div></div>
     </div>
-
-    <!-- CUSTOM COGNITION ENTRY -->
     <div class="cognition-section">
       <div class="cognition-section-title">Write your own</div>
       <div style="margin-bottom:12px;">
@@ -186,12 +220,11 @@
           <textarea id="custom-neg" class="short" placeholder="e.g. I am too much for people..." oninput="updateCustomCognition()"></textarea>
         </div>
         <div class="field-group" style="margin-bottom:0;">
-          <label class="field-label">The opposite belief <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:11px; color:#888;">(optional — you can write this later)</span></label>
+          <label class="field-label">The opposite belief <span style="font-weight:400; text-transform:none; letter-spacing:0; font-size:11px; color:#888;">(optional)</span></label>
           <textarea id="custom-pos" class="short" placeholder="e.g. I am the right amount for the right people..." oninput="updateCustomCognition()"></textarea>
         </div>
       </div>
     </div>
-
   </div>
   <div class="nav-fixed">
     <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
@@ -239,9 +272,8 @@
       <div class="selected-display-neg" id="disp-neg">...</div>
     </div>
     <div class="instruction"><p>Close your eyes. Hold the cognition. Ask "why is this true?" Feel the answer, then type it. Ask why again. Stop when you hit something raw that needs no further question. If the answer becomes about someone else, stop there too.</p></div>
-
     <div class="why-chain">
-      <div class="why-row"><div class="why-num">1</div><div style="flex:1;"><textarea class="short" id="why1" placeholder="Why..."></textarea><div style="font-size:12px; font-style:italic; color:var(--light-blue); margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div></div></div>
+      <div class="why-row"><div class="why-num">1</div><div style="flex:1;"><textarea class="short" id="why1" placeholder="Why..."></textarea><div style="font-size:12px; font-style:italic; color:#A2B4C2; margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div></div></div>
       <div class="why-row"><div class="why-num">2</div><textarea class="short" id="why2" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">3</div><textarea class="short" id="why3" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">4</div><textarea class="short" id="why4" placeholder="Why..."></textarea></div>
@@ -259,18 +291,12 @@
 
 <!-- SCREEN 2P: WHY CHAIN (PROBLEM) -->
 <div id="s2p" class="screen">
-  <div class="header"><div class="header-eyebrow">Step 3</div><div class="header-title">The Why Chain</div></div>
+  <div class="header"><div class="header-eyebrow">Step 2</div><div class="header-title">The Why Chain</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:30%"></div></div><div class="progress-label">Follow it down. Feel each answer before you type.</div></div>
-  <!-- ANCHOR BAR: worst part image stays visible throughout the why chain -->
-  <div class="anchor-bar" id="anchor-2p" style="display:none;">
-    <div class="anchor-bar-label">Holding</div>
-    <div class="anchor-bar-text" id="anchor-2p-text"></div>
-  </div>
   <div class="content">
     <div class="instruction"><p>Hold the image of the worst part of the problem. Ask "why does this affect me?" Feel the answer, then type it. Ask why again. Stop when it goes raw or points at someone else.</p></div>
-
     <div class="why-chain">
-      <div class="why-row"><div class="why-num">1</div><div style="flex:1;"><textarea class="short" id="pwhy1" placeholder="Why..."></textarea><div style="font-size:12px; font-style:italic; color:var(--light-blue); margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div></div></div>
+      <div class="why-row"><div class="why-num">1</div><div style="flex:1;"><textarea class="short" id="pwhy1" placeholder="Why..."></textarea><div style="font-size:12px; font-style:italic; color:#A2B4C2; margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div></div></div>
       <div class="why-row"><div class="why-num">2</div><textarea class="short" id="pwhy2" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">3</div><textarea class="short" id="pwhy3" placeholder="Why..."></textarea></div>
       <div class="why-row"><div class="why-num">4</div><textarea class="short" id="pwhy4" placeholder="Why..."></textarea></div>
@@ -290,12 +316,12 @@
 <div id="s3c" class="screen">
   <div class="header"><div class="header-eyebrow">Step 3</div><div class="header-title">The Exit Question</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div><div class="progress-label">Feel your way into the answer. Do not think your way into it.</div></div>
-  <!-- Belief anchor bar -->
-  <div class="anchor-bar" id="anchor-3c" style="display:none;">
-    <div class="anchor-bar-label">Your belief</div>
-    <div class="anchor-bar-text" id="anchor-3c-text"></div>
-  </div>
   <div class="content">
+    <!-- Belief anchor bar for cognition route -->
+    <div id="anchor-3c" style="display:none; background:rgba(22,62,91,0.06); border-left:3px solid #C8963E; padding:10px 16px; margin-bottom:20px; border-radius:0 6px 6px 0;">
+      <div style="font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:#C8963E; font-weight:500; margin-bottom:3px; font-family:'Jost',sans-serif;">Your belief</div>
+      <div id="anchor-3c-text" style="font-size:13px; color:#163E5B; font-style:italic; font-family:'Cormorant Garamond',serif; line-height:1.4;"></div>
+    </div>
     <div class="prompt"><p>"Who am I without this belief?"</p></div>
     <div class="instruction"><p>Close your eyes. Hold the question. Feel what comes before you write it. If the last answer in your why chain was itself a belief, hold that one instead. Whichever has the most weight is the right one.</p></div>
     <div class="field-group"><label class="field-label">a. Who am I without this belief?</label><textarea class="short" id="exit1" placeholder="Feel it first, then write..."></textarea></div>
@@ -303,7 +329,7 @@
     <div class="field-group"><label class="field-label">c. What does it feel like?</label><textarea class="short" id="exit3" placeholder="Describe the feeling..."></textarea></div>
     <div class="field-group"><label class="field-label">d. What does that feel like?</label><textarea class="short" id="exit4" placeholder="Go further into it..."></textarea></div>
     <div class="instruction"><p>Now bring all of that together. Feel it spreading through you in every direction — in front and behind, left and right, above and below.</p></div>
-    <p class="mt-4" style="font-weight:500; color:var(--navy);">Does the belief still have weight?</p>
+    <p class="mt-4" style="font-weight:500; color:#163E5B;">Does the belief still have weight?</p>
     <div style="display:flex; gap:12px; margin-top:12px;">
       <button class="btn btn-secondary" style="flex:1" onclick="goTo('s2c')">Yes, go again</button>
       <button class="btn btn-primary" style="flex:1" onclick="goTo('s4')">No, move on</button>
@@ -317,24 +343,43 @@
 
 <!-- SCREEN 3P: EXIT QUESTION (PROBLEM) -->
 <div id="s3p" class="screen">
-  <div class="header"><div class="header-eyebrow">Step 4</div><div class="header-title">The Exit Question</div></div>
+  <div class="header"><div class="header-eyebrow">Step 3</div><div class="header-title">The Exit Question</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:55%"></div></div><div class="progress-label">Feel your way into the answer. Do not think your way into it.</div></div>
-  <!-- ANCHOR BAR: worst part image stays visible at the exit question too -->
-  <div class="anchor-bar" id="anchor-3p" style="display:none;">
-    <div class="anchor-bar-label">Holding</div>
-    <div class="anchor-bar-text" id="anchor-3p-text"></div>
-  </div>
   <div class="content">
-    <div class="prompt"><p>"Who am I without this problem?"</p></div>
-    <div class="instruction"><p>Close your eyes. Hold the question. Feel what comes before you write it.</p></div>
-    <div class="field-group"><label class="field-label">a. Who am I without this problem?</label><textarea class="short" id="pexit1" placeholder="Feel it first, then write..."></textarea></div>
+
+    <!-- READ-ONLY STACK: worst part image + why answers -->
+    <div class="exit-review-stack">
+      <div id="exit-review-image-wrap">
+        <div class="exit-review-image-label">The worst part</div>
+        <div class="exit-review-image" id="exit-review-image-text"></div>
+      </div>
+      <div id="exit-review-whys-wrap" class="exit-review-whys"></div>
+    </div>
+
+    <!-- NOTICE PROMPT -->
+    <div class="notice-prompt">
+      <p>Notice where you feel it in your body. Notice what mental image comes up.</p>
+    </div>
+
+    <!-- FEEL THE PROBLEM -->
+    <div class="feel-line">Feel the problem.</div>
+
+    <!-- THE QUESTION -->
+    <div class="exit-question-heading">Who am I without this problem?</div>
+
+    <!-- ALTERNATIVE QUESTION - subtle -->
+    <div class="alt-question">
+      <p>Or: what would it feel like to let this go? <a href="#" onclick="scrollToField('pexit3'); return false;">Go to c</a></p>
+    </div>
+
+    <div class="field-group"><label class="field-label">a. Who am I without this problem?</label><textarea class="short" id="pexit1" placeholder="Feel it first, then write..." oninput="updateProblemIdentity()"></textarea></div>
     <div class="field-group"><label class="field-label">b. Who else?</label><textarea class="short" id="pexit2" placeholder="Go deeper..."></textarea></div>
-    <div class="field-group"><label class="field-label">c. What does it feel like?</label><textarea class="short" id="pexit3" placeholder="Describe the feeling..."></textarea></div>
+    <div class="field-group"><label class="field-label" id="pexit3-label">c. What does it feel like?</label><textarea class="short" id="pexit3" placeholder="Describe the feeling..."></textarea></div>
     <div class="field-group"><label class="field-label">d. What does that feel like?</label><textarea class="short" id="pexit4" placeholder="Go further into it..."></textarea></div>
     <div class="instruction"><p>Now bring all of that together. Feel it spreading through you in every direction — in front and behind, left and right, above and below.</p></div>
-    <p class="mt-4" style="font-weight:500; color:var(--navy);">Does the problem still have weight?</p>
+    <p class="mt-4" style="font-weight:500; color:#163E5B;">Does the problem still have weight?</p>
     <div style="display:flex; gap:12px; margin-top:12px;">
-      <button class="btn btn-secondary" style="flex:1" onclick="goTo('s2p')">Yes, go again</button>
+      <button class="btn btn-secondary" style="flex:1" onclick="resetWhyChainAndGoAgain()">Yes, go again</button>
       <button class="btn btn-primary" style="flex:1" onclick="goTo('s4')">No, move on</button>
     </div>
   </div>
@@ -345,23 +390,49 @@
 
 <!-- SCREEN 4: FUTURE IDENTITY — PHASE A -->
 <div id="s4" class="screen">
-  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase A — Enter the Scene</div></div>
-  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">You are stepping into who you are without it</div></div>
+  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase A</div></div>
+  <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:65%"></div></div><div class="progress-label">Stepping into the version of you on the other side</div></div>
   <div class="content">
     <div class="phase-badge"><span></span>Phase A</div>
-    <div class="field-group">
-      <label class="field-label" id="phase-a-cog-label">My positive cognition</label>
-      <span class="field-sub" id="phase-a-cog-sub">The opposite of what you started with. It is shown below — read it, feel it, then continue.</span>
-      <!-- Static display when positive cognition is known -->
-      <div id="pos-cog-display" style="background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--navy); font-style:italic; display:none;"></div>
-      <!-- Editable input shown when no positive cognition was set -->
-      <textarea id="pos-cog-input" class="short" placeholder="Write your positive belief here — the opposite of what you started with..." oninput="onPosCogInput()" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--navy); display:none;"></textarea>
+
+    <!-- PROBLEM ROUTE: show who they are without the problem (from exit Q) -->
+    <div id="phase-a-problem-block" style="display:none;">
+      <div class="identity-display">
+        <div class="identity-display-label">Step into this version of you</div>
+        <div class="identity-display-instruction">Say this out loud or clearly in your mind</div>
+        <div class="identity-display-text" id="phase-a-identity-text"></div>
+        <div class="identity-display-empty" id="phase-a-identity-empty" style="display:none;">Your answer from the exit question will appear here.</div>
+      </div>
+      <div class="instruction"><p>Think of a future scene where this version of you is fully alive. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
+      <div class="instruction"><p>Now look at this version of you from the outside. Their posture. Their presence. Their expression. Then step inside. You are this person now.</p></div>
     </div>
-    <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid);">A</strong> &nbsp;Think of a future or goal where this is fully alive in you. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
-    <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid);">B</strong> &nbsp;Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p></div>
-    <div class="field-group mt-4"><label class="field-label">What does it feel like?</label><textarea class="short" id="fi-feel" placeholder="Stay in it. Describe what you feel as him..."></textarea></div>
-    <div class="prompt"><p id="affirm-prompt">"I am [your positive cognition]."</p></div>
-    <p class="text-small" style="margin-top:8px;">Say it out loud. See it as true. Feel it as known, not hoped for. Where do you feel it in your body?</p>
+
+    <!-- COGNITION ROUTE: show positive cognition -->
+    <div id="phase-a-cognition-block" style="display:none;">
+      <div class="field-group">
+        <label class="field-label">My positive cognition</label>
+        <span class="field-sub">The opposite of what you started with. Read it, feel it, then continue.</span>
+        <div id="pos-cog-display" class="pos-cog-display-box" style="display:none;"></div>
+        <textarea id="pos-cog-input" class="short" placeholder="Write your positive belief here — the opposite of what you started with..." oninput="onPosCogInput()" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:#163E5B; display:none;"></textarea>
+      </div>
+      <div class="instruction"><p>Think of a future or goal where this belief is fully alive in you. Close your eyes and step into that scene. See where you are. Hear what is around you. Feel yourself already there.</p></div>
+      <div class="instruction"><p>Now look at the future version of you from the outside. His posture. His presence. His expression. Then step inside him. You are him now.</p></div>
+    </div>
+
+    <div class="field-group mt-4"><label class="field-label">What does it feel like?</label><textarea class="short" id="fi-feel" placeholder="Stay in it. Describe what you feel..."></textarea></div>
+
+    <!-- PROBLEM: "I am this version of me" -->
+    <div id="phase-a-affirm-problem" style="display:none;">
+      <div class="prompt"><p id="affirm-prompt-problem">"I am this version of me."</p></div>
+      <p class="text-small" style="margin-top:8px;">Say it out loud. See it as true. Feel it as known, not hoped for. Where do you feel it in your body?</p>
+    </div>
+
+    <!-- COGNITION: "I am [positive cognition]" -->
+    <div id="phase-a-affirm-cognition" style="display:none;">
+      <div class="prompt"><p id="affirm-prompt-cognition">"I am [your positive cognition]."</p></div>
+      <p class="text-small" style="margin-top:8px;">Say it out loud. See it as true. Feel it as known, not hoped for. Where do you feel it in your body?</p>
+    </div>
+
     <div class="field-group mt-4"><label class="field-label">Where do you feel it in your body?</label><textarea class="short" id="fi-body" placeholder="Chest, stomach, shoulders — wherever it lands..."></textarea></div>
     <div class="note mt-4"><p>If anything negative interrupts: ask "what do I need to feel right now?" Feel it. Reinforce it. Return to the scene.</p></div>
   </div>
@@ -373,18 +444,43 @@
 
 <!-- SCREEN 5: FUTURE IDENTITY — PHASE B -->
 <div id="s5" class="screen">
-  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase B — Build the Conviction</div></div>
+  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase B</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:78%"></div></div><div class="progress-label">Amplify it. Let it grow.</div></div>
   <div class="content">
     <div class="phase-badge"><span></span>Phase B</div>
-    <div class="prompt"><p id="why-am-i-prompt">"Why am I [your positive cognition]?"</p></div>
-    <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid);">A</strong> &nbsp;See yourself as this. It might be a memory, a future version of you, or simply an image that comes. Whatever arises, stay with it. Amplify the feeling.</p></div>
-    <div class="field-group"><label class="field-label" id="why-am-i-label">Why am I this?</label><textarea id="fi-why" placeholder="What comes when you see yourself as this..."></textarea></div>
+
+    <!-- PROBLEM ROUTE: show identity + why question -->
+    <div id="phase-b-problem-block" style="display:none;">
+      <div class="phase-b-context">
+        <div class="phase-b-context-label">Who you are without this problem</div>
+        <div class="phase-b-context-text" id="phase-b-identity-text"></div>
+      </div>
+      <div class="prompt"><p>Why is this true for me?</p></div>
+    </div>
+
+    <!-- COGNITION ROUTE: why am I [positive cognition] -->
+    <div id="phase-b-cognition-block" style="display:none;">
+      <div class="prompt"><p id="why-am-i-prompt">"Why am I [your positive cognition]?"</p></div>
+    </div>
+
+    <div class="instruction"><p>See yourself as this. It might be a memory, a future version of you, or simply an image that comes. Whatever arises, stay with it. Amplify the feeling. Let it grow.</p></div>
+    <div class="field-group"><label class="field-label" id="why-am-i-label">Why is this true for me?</label><textarea id="fi-why" placeholder="What comes when you see yourself as this..."></textarea></div>
     <div class="divider"></div>
-    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:16px;">B &nbsp;Step out of the scene.</p>
-    <div class="field-group"><label class="field-label">What has this already cost me?</label><span class="field-sub">Let this land fully. Feel the real cost.</span><textarea id="fi-cost1" placeholder="What has it cost you..."></textarea></div>
-    <div class="field-group"><label class="field-label">What will it keep costing me if I do not change this now?</label><span class="field-sub">Let this land fully before moving on.</span><textarea id="fi-cost2" placeholder="What will it keep costing you..."></textarea></div>
-    <div class="instruction"><p><strong style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid);">C</strong> &nbsp;Close your eyes. What becomes possible when this is fully yours? See it, hear it, feel it. This is not a writing question. Feel the answer. Then continue.</p></div>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#C8963E; margin-bottom:16px;">Step out of the scene.</p>
+
+    <!-- PROBLEM: cost of old problem -->
+    <div id="phase-b-cost-problem" style="display:none;">
+      <div class="field-group"><label class="field-label">What has this problem already cost me?</label><span class="field-sub">Let this land fully. Feel the real cost.</span><textarea id="fi-cost1" placeholder="What has it cost you..."></textarea></div>
+      <div class="field-group"><label class="field-label">What will it keep costing me if I do not change this now?</label><span class="field-sub">Let this land fully before moving on.</span><textarea id="fi-cost2" placeholder="What will it keep costing you..."></textarea></div>
+    </div>
+
+    <!-- COGNITION: cost of old belief -->
+    <div id="phase-b-cost-cognition" style="display:none;">
+      <div class="field-group"><label class="field-label">What has holding this belief already cost me?</label><span class="field-sub">Let this land fully. Feel the real cost.</span><textarea id="fi-cost1-cog" placeholder="What has it cost you..."></textarea></div>
+      <div class="field-group"><label class="field-label">What will it keep costing me if I do not change this now?</label><span class="field-sub">Let this land fully before moving on.</span><textarea id="fi-cost2-cog" placeholder="What will it keep costing you..."></textarea></div>
+    </div>
+
+    <div class="instruction"><p>Close your eyes. What becomes possible when this is fully yours? See it, hear it, feel it. This is not a writing question. Feel the answer. Then continue.</p></div>
   </div>
   <div class="nav-fixed">
     <button class="btn btn-secondary" onclick="goTo('s4')">Back</button>
@@ -394,7 +490,7 @@
 
 <!-- SCREEN 6: FUTURE IDENTITY — PHASE C -->
 <div id="s6" class="screen">
-  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase C — Ground and Rehearse</div></div>
+  <div class="header"><div class="header-eyebrow">Future Identity</div><div class="header-title">Phase C</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:90%"></div></div><div class="progress-label">Every action you take from here deepens the conviction</div></div>
   <div class="content">
     <div class="phase-badge"><span></span>Phase C</div>
@@ -403,11 +499,34 @@
     <div class="field-group"><label class="field-label">What will make this first action easier?</label><span class="field-sub">Remove the friction before it appears.</span><textarea class="short" id="fi-easier" placeholder="What removes the resistance..."></textarea></div>
     <div class="field-group"><label class="field-label">What standards do I need to set?</label><span class="field-sub">How you show up, what you allow, what you no longer accept.</span><textarea class="short" id="fi-standards" placeholder="The standards I am holding myself to..."></textarea></div>
     <div class="divider"></div>
-    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">A &nbsp;Return to the scene.</p>
-    <div id="phase-c-cog" style="font-family:'Cormorant Garamond',serif; font-size:20px; font-style:italic; color:var(--navy); background:var(--white); border:1.5px solid var(--grey); border-radius:8px; padding:14px 16px; margin-bottom:16px;"></div>
-    <div class="instruction"><p>Read the belief above and your first action. Close your eyes. Step back into the scene. See yourself living from this. This is who you are.</p></div>
+
+    <!-- SECTION A: Return to scene -->
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#C8963E; margin-bottom:12px;">A. Return to the scene</p>
+
+    <!-- PROBLEM ROUTE: scene reminder -->
+    <div id="phase-c-scene-problem" style="display:none;">
+      <div class="scene-reminder">
+        <div class="scene-reminder-label">The version of you without this problem</div>
+        <div class="scene-reminder-identity" id="phase-c-identity-text"></div>
+        <div class="scene-reminder-action-label">Your first action</div>
+        <div class="scene-reminder-action" id="phase-c-action-text">Your first action will appear here once you write it above.</div>
+      </div>
+      <div class="instruction"><p>Read who you are without this problem and your first action. Close your eyes. Step back into the scene you created in Phase A. This is you — already.</p></div>
+    </div>
+
+    <!-- COGNITION ROUTE: positive cognition reminder -->
+    <div id="phase-c-scene-cognition" style="display:none;">
+      <div class="scene-reminder">
+        <div class="scene-reminder-label">Your positive belief</div>
+        <div class="scene-reminder-identity" id="phase-c-cog-text"></div>
+        <div class="scene-reminder-action-label">Your first action</div>
+        <div class="scene-reminder-action" id="phase-c-cog-action-text">Your first action will appear here once you write it above.</div>
+      </div>
+      <div class="instruction"><p>Read your positive belief and your first action. Close your eyes. Step back into the scene. See yourself living from this belief. This is who you are.</p></div>
+    </div>
+
     <div class="divider"></div>
-    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold-mid); margin-bottom:12px;">B &nbsp;Test it.</p>
+    <p style="font-family:'Jost',sans-serif; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#C8963E; margin-bottom:12px;">B. Test it.</p>
     <div class="instruction"><p>Bring in a real obstacle. Something that could actually get in the way. See it clearly. Feel the weight of it — the resistance, the doubt, the moment you might want to stop. Now see yourself choosing to move through it anyway. Watch yourself come out the other side. Run it twice. Return to your future scene. End on success.</p></div>
     <div class="field-group mt-4"><label class="field-label">The obstacle I rehearsed moving through</label><textarea class="short" id="fi-obstacle" placeholder="Name the obstacle you tested..."></textarea></div>
   </div>
@@ -434,13 +553,13 @@
       <div class="copy-content" id="summary-output">Generating...</div>
     </div>
     <div class="note mt-4"><p>If the same thing surfaces again, come back and run the method again. It will not go to the same place twice.</p></div>
-    <div style="margin-top:28px; padding:20px; background:var(--navy); border-radius:12px; text-align:center;">
-      <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;">Want to go deeper?</div>
+    <div style="margin-top:28px; padding:20px; background:#163E5B; border-radius:12px; text-align:center;">
+      <div style="font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:#F2BE54; margin-bottom:8px;">Want to go deeper?</div>
       <p style="color:rgba(255,255,255,0.8); font-size:14px; margin-bottom:16px;">In a 1:1 session the method works differently. Someone can track what you cannot track alone.</p>
-      <a href="mailto:mindshiftingwithleon@gmail.com" style="display:inline-block; background:var(--gold); color:var(--navy); font-family:'Jost',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.08em; padding:12px 24px; border-radius:8px; text-decoration:none;">Book a conversation with Leon</a>
+      <a href="mailto:mindshiftingwithleon@gmail.com" style="display:inline-block; background:#F2BE54; color:#163E5B; font-family:'Jost',sans-serif; font-size:13px; font-weight:500; letter-spacing:0.08em; padding:12px 24px; border-radius:8px; text-decoration:none;">Book a conversation with Leon</a>
     </div>
-    <button class="btn btn-secondary" style="width:100%; margin-top:16px; border:1.5px solid var(--grey);" onclick="resetAll()">Start a new session</button>
-    <button class="btn btn-secondary" style="width:100%; margin-top:10px; border:1.5px solid var(--grey);" onclick="goTo('s6')">Back to Phase C</button>
+    <button class="btn btn-secondary" style="width:100%; margin-top:16px; border:1.5px solid #DFDFDF;" onclick="resetAll()">Start a new session</button>
+    <button class="btn btn-secondary" style="width:100%; margin-top:10px; border:1.5px solid #DFDFDF;" onclick="goTo('s6')">Back to Phase C</button>
   </div>
 </div>
 
@@ -462,14 +581,14 @@
     document.getElementById(id).classList.add('active');
     window.scrollTo(0, 0);
     if (id === 's2c') updateCogDisplay();
-    if (id === 's2p') showAnchorBar('anchor-2p', 'anchor-2p-text');
     if (id === 's3c') showBeliefAnchor();
-    if (id === 's3p') showAnchorBar('anchor-3p', 'anchor-3p-text');
+    if (id === 's3p') buildExitReviewStack();
     if (id === 's4') updateFutureIdentity();
+    if (id === 's5') updatePhaseB();
+    if (id === 's6') updatePhaseC();
     if (id === 's7') generateSummary();
   }
 
-  // Shows the selected/custom belief on the cognition exit question screen
   function showBeliefAnchor() {
     const bar = document.getElementById('anchor-3c');
     const textEl = document.getElementById('anchor-3c-text');
@@ -481,18 +600,76 @@
     }
   }
 
-  // Reads the worst part image from step 1 and populates the anchor bar
-  function showAnchorBar(barId, textId) {
-    const imageField = document.getElementById('p-image');
-    const image = imageField ? imageField.value.trim() : '';
-    const bar = document.getElementById(barId);
-    const textEl = document.getElementById(textId);
-    if (image && bar && textEl) {
-      textEl.textContent = image;
-      bar.style.display = 'block';
-    } else if (bar) {
-      bar.style.display = 'none';
+  // Build the read-only stack on the problem exit question screen
+  function buildExitReviewStack() {
+    // Image
+    const image = val('p-image');
+    const imageWrap = document.getElementById('exit-review-image-wrap');
+    const imageText = document.getElementById('exit-review-image-text');
+    if (image) {
+      imageText.textContent = image;
+      imageWrap.style.display = 'block';
+    } else {
+      imageWrap.style.display = 'none';
     }
+
+    // Why answers
+    const whysWrap = document.getElementById('exit-review-whys-wrap');
+    whysWrap.innerHTML = '';
+    const whyIds = ['pwhy1','pwhy2','pwhy3','pwhy4','pwhy5','pwhy6','pwhy7'];
+    let hasWhys = false;
+    whyIds.forEach((id, i) => {
+      const v = val(id);
+      if (v) {
+        hasWhys = true;
+        const row = document.createElement('div');
+        row.className = 'exit-review-why-row';
+        row.innerHTML = '<div class="exit-review-why-num">' + (i+1) + '</div><div class="exit-review-why-text">' + escHtml(v) + '</div>';
+        whysWrap.appendChild(row);
+      }
+    });
+
+    // Add top border to whys section if both image and whys exist
+    if (image && hasWhys) {
+      whysWrap.style.borderTop = '1px solid #DFDFDF';
+      whysWrap.style.paddingTop = '16px';
+      whysWrap.style.marginTop = '0';
+    } else {
+      whysWrap.style.borderTop = 'none';
+      whysWrap.style.paddingTop = '0';
+    }
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function scrollToField(id) {
+    const el = document.getElementById(id + '-label') || document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const field = document.getElementById(id);
+    if (field) setTimeout(() => field.focus(), 400);
+  }
+
+  // Clear why answers and rebuild stack when going again
+  function resetWhyChainAndGoAgain() {
+    const whyIds = ['pwhy1','pwhy2','pwhy3','pwhy4','pwhy5','pwhy6','pwhy7'];
+    whyIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    // Also clear exit question answers so they start fresh
+    ['pexit1','pexit2','pexit3','pexit4'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    goTo('s2p');
+  }
+
+  // Update the problem identity display when exit Q field A is typed
+  function updateProblemIdentity() {
+    const v = val('pexit1');
+    state.problemIdentity = v;
   }
 
   function selectCognition(el, neg, pos) {
@@ -500,7 +677,6 @@
     el.classList.add('selected');
     state.negCog = neg;
     state.posCog = pos;
-    // Clear custom fields when a list item is selected
     const cn = document.getElementById('custom-neg');
     const cp = document.getElementById('custom-pos');
     if (cn) cn.value = '';
@@ -511,10 +687,9 @@
     const neg = document.getElementById('custom-neg') ? document.getElementById('custom-neg').value.trim() : '';
     const pos = document.getElementById('custom-pos') ? document.getElementById('custom-pos').value.trim() : '';
     if (neg) {
-      // Deselect any list item
       document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
       state.negCog = neg;
-      state.posCog = pos; // may be empty — Phase A handles this
+      state.posCog = pos;
     }
   }
 
@@ -525,44 +700,44 @@
   }
 
   function updateFutureIdentity() {
-    const pos = state.posCog;
-    const staticEl = document.getElementById('pos-cog-display');
-    const inputEl = document.getElementById('pos-cog-input');
-    const labelEl = document.getElementById('phase-a-cog-label');
-    const subEl = document.getElementById('phase-a-cog-sub');
     const isProb = state.route === 'problem';
 
-    // Adjust label wording based on route
-    if (labelEl) labelEl.textContent = isProb ? 'Step into who you are without this problem' : 'My positive cognition';
-    if (subEl) subEl.textContent = isProb
-      ? 'You are no longer defined by it. Read this, feel it, then continue.'
-      : 'The opposite of what you started with. Read it, feel it, then continue.';
+    // Show/hide blocks
+    document.getElementById('phase-a-problem-block').style.display = isProb ? 'block' : 'none';
+    document.getElementById('phase-a-cognition-block').style.display = isProb ? 'none' : 'block';
+    document.getElementById('phase-a-affirm-problem').style.display = isProb ? 'block' : 'none';
+    document.getElementById('phase-a-affirm-cognition').style.display = isProb ? 'none' : 'block';
 
-    if (pos) {
-      staticEl.textContent = pos;
-      staticEl.style.display = 'block';
-      inputEl.style.display = 'none';
-      applyPosCog(pos);
-    } else if (isProb) {
-      // Problem route with no positive — pull from exit question answer as anchor
-      const exitAns = val('pexit1') || '';
-      staticEl.style.display = 'none';
-      inputEl.placeholder = exitAns
-        ? 'e.g. ' + exitAns + '...'
-        : 'Write who you are without this problem...';
-      inputEl.style.display = 'block';
-      const typed = inputEl.value.trim();
-      if (typed) applyPosCog(typed);
-      else if (exitAns) applyPosCog(exitAns);
-      else applyPosCog('who I am without this problem');
+    if (isProb) {
+      // Pull from exit question field A
+      const identity = val('pexit1');
+      const textEl = document.getElementById('phase-a-identity-text');
+      const emptyEl = document.getElementById('phase-a-identity-empty');
+      if (identity) {
+        textEl.textContent = identity;
+        textEl.style.display = 'block';
+        emptyEl.style.display = 'none';
+      } else {
+        textEl.style.display = 'none';
+        emptyEl.style.display = 'block';
+      }
     } else {
-      // Cognition route with no positive written
-      staticEl.style.display = 'none';
-      inputEl.placeholder = 'Write your positive belief here — the opposite of what you started with...';
-      inputEl.style.display = 'block';
-      const typed = inputEl.value.trim();
-      if (typed) applyPosCog(typed);
-      else applyPosCog('your positive belief');
+      // Cognition route
+      const pos = state.posCog;
+      const staticEl = document.getElementById('pos-cog-display');
+      const inputEl = document.getElementById('pos-cog-input');
+      if (pos) {
+        staticEl.textContent = pos;
+        staticEl.style.display = 'block';
+        inputEl.style.display = 'none';
+        applyPosCog(pos);
+      } else {
+        staticEl.style.display = 'none';
+        inputEl.style.display = 'block';
+        const typed = inputEl.value.trim();
+        if (typed) applyPosCog(typed);
+        else applyPosCog('your positive belief');
+      }
     }
   }
 
@@ -571,49 +746,89 @@
     if (typed) {
       state.posCog = typed;
       applyPosCog(typed);
-      const phaseC = document.getElementById('phase-c-cog');
-      if (phaseC) phaseC.textContent = typed;
     }
   }
 
   function buildWhyPrompt(pos) {
-    // Build a grammatically correct "Why" question from the positive cognition
-    // Strip semicolons — take only the first clause for the prompt
     const firstClause = pos.split(';')[0].trim();
-    const lower = firstClause.toLowerCase();
-    if (/^i am /i.test(firstClause)) {
-      const rest = firstClause.replace(/^I am /i, '');
-      return 'Why am I ' + rest + '?';
-    } else if (/^i can /i.test(firstClause)) {
-      const rest = firstClause.replace(/^I can /i, '');
-      return 'Why can I ' + rest + '?';
-    } else if (/^i deserve /i.test(firstClause)) {
-      const rest = firstClause.replace(/^I deserve /i, '');
-      return 'Why do I deserve ' + rest + '?';
-    } else if (/^i now /i.test(firstClause)) {
-      const rest = firstClause.replace(/^I now /i, '');
-      return 'Why do I now ' + rest + '?';
-    } else if (/^i /i.test(firstClause)) {
-      const rest = firstClause.replace(/^I /i, '');
-      return 'Why do I ' + rest + '?';
-    } else {
-      return 'Why is this true for me?';
-    }
+    if (/^i am /i.test(firstClause)) return 'Why am I ' + firstClause.replace(/^I am /i, '') + '?';
+    if (/^i can /i.test(firstClause)) return 'Why can I ' + firstClause.replace(/^I can /i, '') + '?';
+    if (/^i deserve /i.test(firstClause)) return 'Why do I deserve ' + firstClause.replace(/^I deserve /i, '') + '?';
+    if (/^i now /i.test(firstClause)) return 'Why do I now ' + firstClause.replace(/^I now /i, '') + '?';
+    if (/^i /i.test(firstClause)) return 'Why do I ' + firstClause.replace(/^I /i, '') + '?';
+    return 'Why is this true for me?';
   }
 
   function applyPosCog(pos) {
-    const affirmEl = document.getElementById('affirm-prompt');
+    const affirmEl = document.getElementById('affirm-prompt-cognition');
     const whyEl = document.getElementById('why-am-i-prompt');
     const whyLabelEl = document.getElementById('why-am-i-label');
     const whyPrompt = buildWhyPrompt(pos);
-    // Show the cognition exactly as written in the affirm prompt
     if (affirmEl) affirmEl.textContent = '"' + pos + '"';
-    // Use smart verb detection for the why prompt
     if (whyEl) whyEl.textContent = '"' + whyPrompt + '"';
-    // Update Phase B field label to match
     if (whyLabelEl) whyLabelEl.textContent = whyPrompt;
-    const phaseC = document.getElementById('phase-c-cog');
-    if (phaseC) phaseC.textContent = pos;
+    const phaseCCog = document.getElementById('phase-c-cog-text');
+    if (phaseCCog) phaseCCog.textContent = pos;
+  }
+
+  function updatePhaseB() {
+    const isProb = state.route === 'problem';
+    document.getElementById('phase-b-problem-block').style.display = isProb ? 'block' : 'none';
+    document.getElementById('phase-b-cognition-block').style.display = isProb ? 'none' : 'block';
+    document.getElementById('phase-b-cost-problem').style.display = isProb ? 'block' : 'none';
+    document.getElementById('phase-b-cost-cognition').style.display = isProb ? 'none' : 'block';
+
+    if (isProb) {
+      const identity = val('pexit1');
+      const textEl = document.getElementById('phase-b-identity-text');
+      if (textEl) textEl.textContent = identity || 'Your answer from the exit question will appear here.';
+    } else {
+      const pos = state.posCog;
+      const whyEl = document.getElementById('why-am-i-prompt');
+      const whyLabelEl = document.getElementById('why-am-i-label');
+      if (pos) {
+        const whyPrompt = buildWhyPrompt(pos);
+        if (whyEl) whyEl.textContent = '"' + whyPrompt + '"';
+        if (whyLabelEl) whyLabelEl.textContent = whyPrompt;
+      }
+    }
+  }
+
+  function updatePhaseC() {
+    const isProb = state.route === 'problem';
+    document.getElementById('phase-c-scene-problem').style.display = isProb ? 'block' : 'none';
+    document.getElementById('phase-c-scene-cognition').style.display = isProb ? 'none' : 'block';
+
+    if (isProb) {
+      const identity = val('pexit1');
+      const identityEl = document.getElementById('phase-c-identity-text');
+      if (identityEl) identityEl.textContent = identity || 'Your answer from the exit question will appear here.';
+      // Wire up live action display
+      const actionField = document.getElementById('fi-action');
+      const actionDisplay = document.getElementById('phase-c-action-text');
+      if (actionField && actionDisplay) {
+        const updateAction = () => {
+          actionDisplay.textContent = actionField.value.trim() || 'Your first action will appear here once you write it above.';
+        };
+        actionField.removeEventListener('input', updateAction);
+        actionField.addEventListener('input', updateAction);
+        updateAction();
+      }
+    } else {
+      const pos = state.posCog;
+      const cogEl = document.getElementById('phase-c-cog-text');
+      if (cogEl) cogEl.textContent = pos || 'Your positive belief will appear here.';
+      const actionField = document.getElementById('fi-action');
+      const actionDisplay = document.getElementById('phase-c-cog-action-text');
+      if (actionField && actionDisplay) {
+        const updateAction = () => {
+          actionDisplay.textContent = actionField.value.trim() || 'Your first action will appear here once you write it above.';
+        };
+        actionField.removeEventListener('input', updateAction);
+        actionField.addEventListener('input', updateAction);
+        updateAction();
+      }
+    }
   }
 
   function selectScore(btn, num) {
@@ -654,9 +869,11 @@
     lines.push('\nFUTURE IDENTITY');
     if (val('fi-feel')) lines.push('In the scene: ' + val('fi-feel'));
     if (val('fi-body')) lines.push('In my body: ' + val('fi-body'));
-    if (val('fi-why')) lines.push('Why I am this: ' + val('fi-why'));
-    if (val('fi-cost1')) lines.push('Cost of old belief: ' + val('fi-cost1'));
-    if (val('fi-cost2')) lines.push('Future cost if unchanged: ' + val('fi-cost2'));
+    if (val('fi-why')) lines.push('Why this is true: ' + val('fi-why'));
+    const cost1 = isProb ? val('fi-cost1') : val('fi-cost1-cog');
+    const cost2 = isProb ? val('fi-cost2') : val('fi-cost2-cog');
+    if (cost1) lines.push('Cost so far: ' + cost1);
+    if (cost2) lines.push('Future cost if unchanged: ' + cost2);
     if (val('fi-towards')) lines.push('Moving towards: ' + val('fi-towards'));
     if (val('fi-action')) lines.push('First action: ' + val('fi-action'));
     if (val('fi-easier')) lines.push('What makes it easier: ' + val('fi-easier'));
@@ -686,7 +903,6 @@
     document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
     document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
     document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
-    // Reset Phase A display
     const staticEl = document.getElementById('pos-cog-display');
     const inputEl = document.getElementById('pos-cog-input');
     if (staticEl) { staticEl.textContent = ''; staticEl.style.display = 'none'; }
