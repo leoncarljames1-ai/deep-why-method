@@ -251,7 +251,7 @@
       </div>
     </div>
     <div class="field-group">
-      <label class="field-label">What image represents the worst part?</label>
+      <label class="field-label">What image represents the most disturbing part?</label>
       <span class="field-sub">Picture the moment it felt most intense. The way someone looked, what was said, the moment it happened. Hold it fully, then describe it.</span>
       <textarea id="p-image" placeholder="Describe the image or moment..."></textarea>
     </div>
@@ -294,7 +294,15 @@
   <div class="header"><div class="header-eyebrow">Step 2</div><div class="header-title">The Why Chain</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:30%"></div></div><div class="progress-label">Follow it down. Feel each answer before you type.</div></div>
   <div class="content">
-    <div class="instruction"><p>Hold the image of the worst part of the problem. Ask "why does this affect me?" Feel the answer, then type it. Ask why again. Stop when it goes raw or points at someone else.</p></div>
+
+    <!-- DISTURBING IMAGE DISPLAY -->
+    <div id="s2p-image-display" style="background:#FFFFFF; border:1.5px solid #DFDFDF; border-radius:10px; padding:18px 20px; margin-bottom:20px; display:none;">
+      <div style="font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#C8963E; font-weight:500; margin-bottom:8px; font-family:'Jost',sans-serif;">The most disturbing part</div>
+      <div id="s2p-image-text" style="font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; color:#163E5B; line-height:1.5;"></div>
+    </div>
+
+    <div class="instruction"><p>Hold that image. Notice what it feels like. Notice what comes up. It may show up somewhere in your body too. Then ask why.</p></div>
+
     <div class="why-chain">
       <div class="why-row"><div class="why-num">1</div><div style="flex:1;"><textarea class="short" id="pwhy1" placeholder="Why..."></textarea><div style="font-size:12px; font-style:italic; color:#A2B4C2; margin-top:4px; padding-left:2px;">Optional — why can't I let this go?</div></div></div>
       <div class="why-row"><div class="why-num">2</div><textarea class="short" id="pwhy2" placeholder="Why..."></textarea></div>
@@ -350,7 +358,7 @@
     <!-- READ-ONLY STACK: worst part image, notice prompt, then why answers -->
     <div class="exit-review-stack">
       <div id="exit-review-image-wrap">
-        <div class="exit-review-image-label">The worst part</div>
+        <div class="exit-review-image-label">The most disturbing part</div>
         <div class="exit-review-image" id="exit-review-image-text"></div>
       </div>
       <!-- NOTICE PROMPT sits between image and why answers -->
@@ -579,6 +587,7 @@
     document.getElementById(id).classList.add('active');
     window.scrollTo(0, 0);
     if (id === 's2c') updateCogDisplay();
+    if (id === 's2p') populateS2pImage();
     if (id === 's3c') showBeliefAnchor();
     if (id === 's3p') buildExitReviewStack();
     if (id === 's4') updateFutureIdentity();
@@ -595,6 +604,18 @@
       bar.style.display = 'block';
     } else if (bar) {
       bar.style.display = 'none';
+    }
+  }
+
+  function populateS2pImage() {
+    const image = val('p-image');
+    const display = document.getElementById('s2p-image-display');
+    const text = document.getElementById('s2p-image-text');
+    if (image && display && text) {
+      text.textContent = image;
+      display.style.display = 'block';
+    } else if (display) {
+      display.style.display = 'none';
     }
   }
 
