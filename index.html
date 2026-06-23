@@ -325,7 +325,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('s2c')">Continue</button>
   </div>
 </div>
@@ -357,7 +357,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('s2p')">Continue</button>
   </div>
 </div>
@@ -381,6 +381,16 @@
       <textarea id="rf-image" class="short" placeholder="Describe it..."></textarea>
     </div>
     <div class="field-group">
+      <label class="field-label">What emotion comes up when you hold that?</label>
+      <span class="field-sub">Name what arises. Do not judge it.</span>
+      <textarea id="rf-emotion" class="short" placeholder="Fear, shame, anger, sadness..."></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Where do you feel it in your body?</label>
+      <span class="field-sub">Notice the sensation. This is the thread that leads back.</span>
+      <textarea id="rf-body-entry" class="short" placeholder="Chest, stomach, throat, jaw..."></textarea>
+    </div>
+    <div class="field-group">
       <label class="field-label">Disturbance score</label>
       <span class="field-sub">How much does it still bother you right now?</span>
       <div class="score-wrap" id="score-wrap-rf">
@@ -389,7 +399,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s0')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('s1rf2')">Continue</button>
   </div>
 </div>
@@ -449,7 +459,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s1rf')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('s1rf3')">Continue</button>
   </div>
 </div>
@@ -459,26 +469,39 @@
   <div class="header"><div class="header-eyebrow">The Root Finder</div><div class="header-title">Float Back</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:30%"></div></div><div class="progress-label">Find where this belief began</div></div>
   <div class="content">
+
     <div id="rf-cog-display" style="display:none; margin-bottom:20px;">
       <div class="selected-display">
         <div class="selected-display-label">The belief activated</div>
         <div class="selected-display-neg" id="rf-cog-display-text"></div>
       </div>
     </div>
-    <div class="instruction"><p>Close your eyes. Hold the event and this belief together. Notice where you feel it in your body. Stay with it for a moment. Then choose the path that feels most natural.</p></div>
+
+    <div id="rf-floatback-anchors" style="display:none; margin-bottom:20px;">
+      <div style="background:#FAF8F4; border:1px solid #DFDFDF; border-radius:8px; padding:14px 16px; margin-bottom:10px;">
+        <div style="font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#C8963E; font-weight:500; margin-bottom:4px; font-family:'Jost',sans-serif;">Emotion</div>
+        <div id="rf-floatback-emotion" style="font-size:14px; color:#1E1E24;"></div>
+      </div>
+      <div style="background:#FAF8F4; border:1px solid #DFDFDF; border-radius:8px; padding:14px 16px;">
+        <div style="font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#C8963E; font-weight:500; margin-bottom:4px; font-family:'Jost',sans-serif;">Where you feel it</div>
+        <div id="rf-floatback-body" style="font-size:14px; color:#1E1E24;"></div>
+      </div>
+    </div>
+
+    <div class="instruction"><p>Close your eyes. Hold the event, the belief, and what you feel in your body together. That sensation is a thread. Let it lead you back. Choose the path that feels most natural.</p></div>
 
     <div class="rf-path-choice">
       <button class="rf-path-btn" id="rf-path-a-btn" onclick="selectRFPath('cognitive')">
         <div class="rf-path-title">Through the belief</div>
-        <div class="rf-path-sub">Ask yourself: when is the earliest time you remember feeling this same belief about yourself?</div>
+        <div class="rf-path-sub">When is the earliest time you remember feeling this same belief about yourself?</div>
       </button>
       <button class="rf-path-btn" id="rf-path-b-btn" onclick="selectRFPath('body')">
         <div class="rf-path-title">Through the body</div>
-        <div class="rf-path-sub">Notice where you feel this in your body. Let that sensation lead you back to an earlier memory.</div>
+        <div class="rf-path-sub">Hold the sensation. Let your mind follow it back to an earlier time you felt this same feeling.</div>
       </button>
     </div>
 
-    <!-- COGNITIVE PATH -->
+    <!-- COGNITIVE PATH - appears inline when tapped -->
     <div id="rf-cognitive-path" style="display:none;">
       <div class="field-group">
         <label class="field-label">When is the earliest time you remember feeling this same belief?</label>
@@ -491,16 +514,12 @@
       </div>
     </div>
 
-    <!-- BODY PATH -->
+    <!-- BODY PATH - appears inline when tapped -->
     <div id="rf-body-path" style="display:none;">
+      <div class="instruction"><p>Stay with that sensation. Now let your mind float back. Do not direct it. Let it go where it goes.</p></div>
       <div class="field-group">
-        <label class="field-label">Where do you feel this in your body?</label>
-        <span class="field-sub">Tightness, pressure, heaviness, heat. Notice it without pushing it away.</span>
-        <textarea id="rf-body-sensation" class="short" placeholder="Chest, stomach, throat..."></textarea>
-      </div>
-      <div class="instruction"><p>Hold the body sensation, the emotional feeling, and the belief together. Let your mind float back to an earlier time when you felt this same feeling. Allow it to go where it goes.</p></div>
-      <div class="field-group">
-        <label class="field-label">What memory surfaces?</label>
+        <label class="field-label">What memory or image surfaces?</label>
+        <span class="field-sub">It may be clear or vague. A fragment is enough. Go with whatever comes first.</span>
         <textarea id="rf-body-memory" placeholder="Describe what comes up..."></textarea>
       </div>
       <div class="field-group">
@@ -519,7 +538,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s1rf2')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('se2e_b')">Continue to healing</button>
   </div>
 </div>
@@ -557,7 +576,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s1')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('s3c')">Continue</button>
   </div>
 </div>
@@ -595,7 +614,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s1p')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('s3p')">Continue</button>
   </div>
 </div>
@@ -635,7 +654,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goBackFromE2EPrompt()">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
   </div>
 </div>
 
@@ -672,12 +691,14 @@
     </div>
     <div class="field-group">
       <label class="field-label">What does your younger self need in this moment?</label>
-      <span class="field-sub">This might be a hug, words of reassurance, permission to feel what he is feeling, someone to sit with him. If you find it hard to give it yourself, picture someone who could, and let them give it on his behalf.</span>
-      <textarea id="e2e_b_need" placeholder="What is missing for him right now..."></textarea>
+      <textarea id="e2e_b_need" placeholder="A hug, words of reassurance, permission to feel what he is feeling, someone to sit with him..."></textarea>
     </div>
 
+    <div style="height:1px; background:#DFDFDF; margin:20px 0;"></div>
+    <div style="font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#C8963E; font-weight:500; margin-bottom:12px; font-family:'Jost',sans-serif;">Now do this</div>
+
     <div class="instruction" style="background:#163E5B; border-left:none; border-radius:10px; padding:18px 20px;">
-      <p style="color:#FFFFFF; font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; line-height:1.5;">Go to him. Give him everything he needs. Tell him what he needs to hear. Let him feel what he needs to feel. Take as long as you need. When you are ready, continue.</p>
+      <p style="color:#FFFFFF; font-family:'Cormorant Garamond',serif; font-size:18px; font-style:italic; line-height:1.5;">Go to him. Give him everything he needs. Tell him what he needs to hear. Let him feel what he needs to feel. If you find it hard to give it yourself, picture someone who could, and let them give it on his behalf. Take as long as you need. When you are ready, continue.</p>
     </div>
 
     <div class="field-group mt-4">
@@ -690,7 +711,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goBackFromE2E()">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('se2e_return')">Continue</button>
   </div>
 </div>
@@ -736,7 +757,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('se2e_prompt')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('se2e_return')">Continue</button>
   </div>
 </div>
@@ -754,7 +775,8 @@
 
       <div id="e2e_return_original_display" style="display:none; margin-bottom:16px;">
         <div style="font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:#C8963E; font-weight:500; margin-bottom:6px; font-family:'Jost',sans-serif;">What you started with</div>
-        <div id="e2e_return_original_text" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:#163E5B; line-height:1.5; padding:14px 16px; background:#FAF8F4; border-radius:8px; border:1px solid #DFDFDF;"></div>
+        <div id="e2e_return_original_text" style="font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:#163E5B; line-height:1.5; padding:14px 16px; background:#FAF8F4; border-radius:8px; border:1px solid #DFDFDF; margin-bottom:8px;"></div>
+        <div id="e2e_return_original_score" style="display:none; font-size:12px; color:#888; font-family:'Jost',sans-serif; padding:0 4px;">Starting score: <span id="e2e_return_score_val" style="color:#C8963E; font-weight:500;"></span>/10</div>
       </div>
 
       <div class="field-group" style="margin-bottom:20px;">
@@ -770,13 +792,17 @@
         <div class="score-wrap" id="score-wrap-e2e-return">
           <button class="score-btn" onclick="selectScore(this,'e2ereturn',0)">0</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',1)">1</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',2)">2</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',3)">3</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',4)">4</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',5)">5</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',6)">6</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',7)">7</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',8)">8</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',9)">9</button><button class="score-btn" onclick="selectScore(this,'e2ereturn',10)">10</button>
         </div>
-        <div class="note" style="margin-top:12px;"><p>Not at zero? Repeat the Eye to Eye process from the beginning until the score reaches zero or near zero.</p></div>
+        <div class="note" style="margin-top:12px;"><p>Not at zero? Repeat the Eye to Eye process until the score reaches zero or near zero.</p></div>
+        <div style="display:flex; gap:12px; margin-top:14px;">
+          <button class="btn btn-secondary" style="flex:1" onclick="repeatEyeToEye()">Go again</button>
+          <button class="btn btn-primary" style="flex:1" onclick="document.getElementById('e2e-integration-section').scrollIntoView({behavior:'smooth'})">This has cleared</button>
+        </div>
       </div>
     </div>
 
     <div class="divider"></div>
 
-    <div class="integration-block">
+    <div class="integration-block" id="e2e-integration-section">
       <div class="integration-label">Integration and Future Self</div>
       <div class="field-group" style="margin-bottom:20px;">
         <label class="field-label">19. Meet the version of you who no longer holds that old belief or thought. Place him in a scenario similar to the original event. What is he like now?</label>
@@ -797,7 +823,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goBackFromE2EReturn()">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('s4')">Continue to Future Identity</button>
   </div>
 </div>
@@ -871,7 +897,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s2c')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
   </div>
 </div>
 
@@ -950,7 +976,7 @@
     </div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s2p')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
   </div>
 </div>
 
@@ -1017,7 +1043,7 @@
 
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goBackFromPhaseA()">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('s5')">Continue to Phase B</button>
   </div>
 </div>
@@ -1070,7 +1096,7 @@
     <div class="instruction"><p>Close your eyes. What becomes possible when this is fully yours? See it, hear it, feel it. This is not a writing question. Feel the answer. Then continue.</p></div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s4')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-primary" onclick="goTo('s6')">Continue to Phase C</button>
   </div>
 </div>
@@ -1124,7 +1150,7 @@
     <div class="field-group mt-4"><label class="field-label">The obstacle I rehearsed moving through</label><textarea class="short" id="fi-obstacle" placeholder="Name the obstacle you tested..."></textarea></div>
   </div>
   <div class="nav-fixed">
-    <button class="btn btn-secondary" onclick="goTo('s5')">Back</button>
+    <button class="btn btn-secondary" onclick="goBack()">Back</button>
     <button class="btn btn-gold" onclick="goTo('s7')">Complete the session</button>
   </div>
 </div>
@@ -1258,19 +1284,32 @@
 
   // ── ROUTING ───────────────────────────────────────────
   function selectRoute(route) {
+    if (state.route !== route) {
+      clearSessionFields();
+      state.negCog = '';
+      state.posCog = '';
+    }
     state.route = route;
     document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
     document.getElementById('route-' + route).classList.add('selected');
   }
 
   function startMethod() {
+    navHistory = [];
     if (state.route === 'cognition') goTo('s1');
     else if (state.route === 'problem') goTo('s1p');
     else goTo('s1rf');
   }
 
   // ── NAVIGATION ────────────────────────────────────────
-  function goTo(id) {
+  // ── NAVIGATION HISTORY ────────────────────────────────
+  let navHistory = [];
+
+  function goTo(id, addToHistory = true) {
+    const currentActive = document.querySelector('.screen.active');
+    if (addToHistory && currentActive && currentActive.id !== id) {
+      navHistory.push(currentActive.id);
+    }
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     window.scrollTo(0, 0);
@@ -1287,6 +1326,38 @@
     if (id === 's5') updatePhaseB();
     if (id === 's6') updatePhaseC();
     if (id === 's7') generateSummary();
+  }
+
+  function goBack() {
+    if (navHistory.length > 0) {
+      const prev = navHistory.pop();
+      goTo(prev, false);
+    } else {
+      goTo('s0', false);
+    }
+  }
+
+  function clearSessionFields() {
+    document.querySelectorAll('textarea').forEach(t => t.value = '');
+    document.querySelectorAll('input[type="text"]').forEach(t => t.value = '');
+    document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+    document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
+    document.querySelectorAll('.rf-path-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('rf-cognitive-path').style.display = 'none';
+    document.getElementById('rf-body-path').style.display = 'none';
+    document.getElementById('rf-memory-score-wrap').style.display = 'none';
+    document.getElementById('identity-block-c').style.display = 'none';
+    document.getElementById('identity-block-p').style.display = 'none';
+    state.e2ePath = null;
+    state.rfPath = null;
+    state.problemIdentity = '';
+    state.loopCount = { c: 0, p: 0 };
+    state.score = { p: null, rf: null, rfmem: null, e2ereturn: null };
+    const staticEl = document.getElementById('pos-cog-display');
+    const inputEl = document.getElementById('pos-cog-input');
+    if (staticEl) { staticEl.textContent = ''; staticEl.style.display = 'none'; }
+    if (inputEl) { inputEl.value = ''; inputEl.style.display = 'none'; }
+    navHistory = [];
   }
 
   function showWeightAnchorC() {
@@ -1320,6 +1391,25 @@
     const original = val('p-problem') || val('rf-event') || state.negCog || '';
     if (original) { text.textContent = original; wrap.style.display = 'block'; }
     else wrap.style.display = 'none';
+
+    const scoreWrap = document.getElementById('e2e_return_original_score');
+    const scoreVal = document.getElementById('e2e_return_score_val');
+    const startScore = state.score.p !== null ? state.score.p : state.score.rf !== null ? state.score.rf : null;
+    if (scoreWrap && scoreVal && startScore !== null) {
+      scoreVal.textContent = startScore;
+      scoreWrap.style.display = 'block';
+    }
+  }
+
+  function repeatEyeToEye() {
+    ['e2e_b_image','e2e_b_eyes','e2e_b_more','e2e_b_need','e2e_b_knows','e2e_b_knowsyou',
+     'e2e_a_image','e2e_a_outside','e2e_a_more','e2e_a_need','e2e_a_knows','e2e_a_possible',
+     'e2e_return_notice','e2e_return_feel'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.value = '';
+    });
+    document.querySelectorAll('#score-wrap-e2e-return .score-btn').forEach(b => b.classList.remove('selected'));
+    state.score.e2ereturn = null;
+    goTo('se2e_prompt');
   }
 
   function loopCognition() {
@@ -1338,29 +1428,10 @@
     if (!val('exit1') && !val('exit3')) state.cognitionIdentity = val('alt-exit-c3');
   }
 
-  function goBackFromE2EPrompt() {
-    if (state.route === 'cognition') goTo('s2c');
-    else if (state.route === 'problem') goTo('s2p');
-    else goTo('s1rf3');
-  }
-
-  function goBackFromE2E() {
-    if (state.e2ePath === 'past') goTo('se2e_prompt');
-    else goTo('se2e_prompt');
-  }
-
-  function goBackFromE2EReturn() {
-    if (state.e2ePath === 'past') goTo('se2e_b');
-    else if (state.e2ePath === 'recent') goTo('se2e_a');
-    else goTo('se2e_prompt');
-  }
-
-  function goBackFromPhaseA() {
-    if (state.e2ePath && state.route !== 'rootfinder') goTo('se2e_return');
-    else if (state.route === 'cognition') goTo('s3c');
-    else if (state.route === 'problem') goTo('s3p');
-    else goTo('se2e_return');
-  }
+  function goBackFromE2EPrompt() { goBack(); }
+  function goBackFromE2E() { goBack(); }
+  function goBackFromE2EReturn() { goBack(); }
+  function goBackFromPhaseA() { goBack(); }
 
   // ── E2E PATH SELECTION ────────────────────────────────
   function selectE2EPath(path) {
@@ -1391,6 +1462,17 @@
     const wrap = document.getElementById('rf-cog-display');
     const text = document.getElementById('rf-cog-display-text');
     if (neg && wrap && text) { text.textContent = neg; wrap.style.display = 'block'; }
+
+    const emotion = val('rf-emotion');
+    const bodyEntry = val('rf-body-entry');
+    const anchors = document.getElementById('rf-floatback-anchors');
+    if (anchors && (emotion || bodyEntry)) {
+      const emotionEl = document.getElementById('rf-floatback-emotion');
+      const bodyEl = document.getElementById('rf-floatback-body');
+      if (emotionEl) emotionEl.textContent = emotion || 'Not recorded';
+      if (bodyEl) bodyEl.textContent = bodyEntry || 'Not recorded';
+      anchors.style.display = 'block';
+    }
   }
 
   function selectRFCognition(el, neg, pos) {
@@ -1439,7 +1521,8 @@
 
   // ── SCORE SELECTION ───────────────────────────────────
   function selectScore(btn, group, num) {
-    document.querySelectorAll('#score-wrap-' + group + ' .score-btn').forEach(b => b.classList.remove('selected'));
+    const wrap = btn.closest('.score-wrap');
+    if (wrap) wrap.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     state.score[group] = num;
   }
@@ -1678,8 +1761,10 @@
       ['why1','why2','why3','why4','why5','why6','why7'].forEach((id,i) => { const v = val(id); if (v) lines.push((i+1) + '. ' + v); });
     } else if (isRF) {
       lines.push('ROUTE: Root Finder');
-      if (val('rf-event')) lines.push('Recent event: ' + val('rf-event'));
+      if (val('rf-event')) lines.push('Event: ' + val('rf-event'));
       if (val('rf-image')) lines.push('Most disturbing part: ' + val('rf-image'));
+      if (val('rf-emotion')) lines.push('Emotion: ' + val('rf-emotion'));
+      if (val('rf-body-entry')) lines.push('Where felt in body: ' + val('rf-body-entry'));
       if (state.score.rf !== null) lines.push('Starting disturbance: ' + state.score.rf + '/10');
       if (state.negCog) lines.push('Belief activated: ' + state.negCog);
     }
@@ -1748,19 +1833,9 @@
   // ── RESET ─────────────────────────────────────────────
   function resetAll() {
     state = { route: 'cognition', negCog: '', posCog: '', score: { p: null, rf: null, rfmem: null, e2ereturn: null }, e2ePath: null, rfPath: null, problemIdentity: '', loopCount: { c: 0, p: 0 }, e2eSource: null };
-    document.querySelectorAll('textarea').forEach(t => t.value = '');
-    document.querySelectorAll('input[type="text"]').forEach(t => t.value = '');
-    document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
-    document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
     document.querySelectorAll('.route-card').forEach(c => c.classList.remove('selected'));
-    document.querySelectorAll('.rf-path-btn').forEach(b => b.classList.remove('selected'));
-    document.getElementById('identity-block-c').style.display = 'none';
-    document.getElementById('identity-block-p').style.display = 'none';
-    const staticEl = document.getElementById('pos-cog-display');
-    const inputEl = document.getElementById('pos-cog-input');
-    if (staticEl) { staticEl.textContent = ''; staticEl.style.display = 'none'; }
-    if (inputEl) { inputEl.value = ''; inputEl.style.display = 'none'; }
-    goTo('s0');
+    clearSessionFields();
+    goTo('s0', false);
   }
 
   // ── UTILITIES ─────────────────────────────────────────
