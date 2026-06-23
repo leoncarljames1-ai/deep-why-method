@@ -103,19 +103,53 @@
   .tracker-input:focus { border-color: #163E5B; }
   .tracker-add-btn { background: #163E5B; color: #FFFFFF; border: none; border-radius: 8px; padding: 10px 16px; font-family: 'Jost', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
   .tracker-list { list-style: none; }
-  .tracker-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0ede8; }
+  .tracker-item { padding: 10px 0; border-bottom: 1px solid #f0ede8; }
   .tracker-item:last-child { border-bottom: none; }
+  .tracker-item-main { display: flex; align-items: flex-start; gap: 12px; }
   .tracker-check { flex-shrink: 0; width: 20px; height: 20px; border-radius: 4px; border: 1.5px solid #DFDFDF; background: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 0.15s; }
   .tracker-check.done { background: #163E5B; border-color: #163E5B; }
   .tracker-check.done::after { content: '✓'; font-size: 11px; color: #FFFFFF; }
-  .tracker-item-text { flex: 1; font-size: 14px; color: #1E1E24; line-height: 1.5; }
+  .tracker-item-body { flex: 1; }
+  .tracker-item-text { font-size: 14px; color: #1E1E24; line-height: 1.5; }
   .tracker-item-text.done { text-decoration: line-through; color: #aaa; }
-  .tracker-del { background: none; border: none; font-size: 16px; color: #ddd; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0; }
+  .tracker-item-meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+  .tracker-cat-tag { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; }
+  .tracker-cat-problem { background: rgba(200,150,62,0.12); color: #C8963E; }
+  .tracker-cat-belief { background: rgba(22,62,91,0.1); color: #163E5B; }
+  .tracker-cat-event { background: rgba(162,180,194,0.2); color: #4a6a7a; }
+  .tracker-item-int { font-size: 11px; color: #aaa; }
+  .tracker-item-detail-toggle { font-size: 11px; color: #A2B4C2; background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; font-family: 'Jost', sans-serif; }
+  .tracker-detail-form { display: none; margin-top: 10px; padding: 12px 14px; background: #FAF8F4; border-radius: 8px; border: 1px solid #DFDFDF; }
+  .tracker-detail-form.open { display: block; }
+  .tracker-detail-label { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #163E5B; margin-bottom: 6px; display: block; }
+  .tracker-cat-select { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .tracker-cat-btn { border: 1.5px solid #DFDFDF; background: #FFFFFF; border-radius: 6px; padding: 5px 10px; font-family: 'Jost', sans-serif; font-size: 12px; color: #888; cursor: pointer; transition: all 0.15s; }
+  .tracker-cat-btn.active { border-color: #163E5B; background: #163E5B; color: #FFFFFF; }
+  .tracker-detail-input { width: 100%; border: 1.5px solid #DFDFDF; border-radius: 6px; padding: 8px 12px; font-family: 'Jost', sans-serif; font-size: 13px; color: #1E1E24; background: #FFFFFF; outline: none; margin-bottom: 10px; }
+  .tracker-detail-input:focus { border-color: #163E5B; }
+  .tracker-int-row { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+  .tracker-int-btn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #DFDFDF; background: #FFFFFF; font-family: 'Jost', sans-serif; font-size: 12px; color: #888; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
+  .tracker-int-btn.active { background: #163E5B; border-color: #163E5B; color: #FFFFFF; }
+  .tracker-detail-save { background: #163E5B; color: #FFFFFF; border: none; border-radius: 6px; padding: 7px 14px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; }
+  .tracker-del { background: none; border: none; font-size: 16px; color: #ddd; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0; margin-top: 1px; }
   .tracker-del:hover { color: #c0392b; }
   .tracker-copy-row { margin-top: 14px; padding-top: 14px; border-top: 1px solid #DFDFDF; display: flex; justify-content: flex-end; }
   .tracker-copy-btn { background: none; border: 1px solid #DFDFDF; border-radius: 6px; padding: 6px 14px; font-family: 'Jost', sans-serif; font-size: 12px; color: #888; cursor: pointer; }
   .tracker-copy-btn:hover { border-color: #163E5B; color: #163E5B; }
   .tracker-empty { font-size: 13px; color: #aaa; font-style: italic; text-align: center; padding: 12px 0; }
+
+  /* TRACKER SHORTCUT (on method screens) */
+  .tracker-shortcut { border: 1px solid #DFDFDF; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+  .tracker-shortcut-header { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; background: #FFFFFF; }
+  .tracker-shortcut-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #C8963E; }
+  .tracker-shortcut-toggle { font-size: 14px; color: #DFDFDF; }
+  .tracker-shortcut-body { display: none; padding: 0 16px 14px; background: #FFFFFF; }
+  .tracker-shortcut-body.open { display: block; }
+  .tracker-shortcut-item { padding: 9px 0; border-bottom: 1px solid #f5f2ed; cursor: pointer; font-size: 13px; color: #163E5B; display: flex; align-items: center; gap: 8px; }
+  .tracker-shortcut-item:last-child { border-bottom: none; }
+  .tracker-shortcut-item:hover { color: #C8963E; }
+  .tracker-shortcut-arrow { font-size: 11px; color: #DFDFDF; }
+  .tracker-shortcut-empty { font-size: 13px; color: #aaa; font-style: italic; padding: 8px 0; }
 
   /* BREATHING TOOL */
   .breath-section { background: #EEF3F7; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
@@ -231,7 +265,7 @@
         </div>
         <div class="tracker-body" id="tracker-body">
           <div class="tracker-add-row">
-            <input type="text" class="tracker-input" id="tracker-input" placeholder="Add a problem, belief, or behaviour..." onkeydown="if(event.key==='Enter')addTrackerItem()">
+            <input type="text" class="tracker-input" id="tracker-input" placeholder="Add a problem, belief, or event..." onkeydown="if(event.key==='Enter')addTrackerItem()">
             <button class="tracker-add-btn" onclick="addTrackerItem()">Add</button>
           </div>
           <ul class="tracker-list" id="tracker-list">
@@ -275,6 +309,15 @@
   <div class="header"><div class="header-eyebrow">Step 1</div><div class="header-title">Find Your Cognition</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:10%"></div></div><div class="progress-label">Read slowly. Tap the one that lands in your body.</div></div>
   <div class="content">
+    <div class="tracker-shortcut" id="shortcut-belief">
+      <div class="tracker-shortcut-header" onclick="toggleShortcut('shortcut-belief-body','shortcut-belief-toggle')">
+        <span class="tracker-shortcut-label">From your list: Beliefs</span>
+        <span class="tracker-shortcut-toggle" id="shortcut-belief-toggle">+</span>
+      </div>
+      <div class="tracker-shortcut-body" id="shortcut-belief-body">
+        <div id="shortcut-belief-items"></div>
+      </div>
+    </div>
     <div class="cognition-section">
       <div class="cognition-section-title">Responsibility / Self-Worth</div>
       <div class="cognition-item" onclick="selectCognition(this,&quot;I don't deserve love&quot;,&quot;I deserve love; I can have love&quot;)"><div class="cognition-select"></div><div class="cognition-text"><span class="cognition-neg">I don't deserve love</span><span class="cognition-pos">I deserve love; I can have love</span></div></div>
@@ -337,6 +380,15 @@
   <div class="header"><div class="header-eyebrow">Step 1</div><div class="header-title">Name the Problem</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:10%"></div></div><div class="progress-label">Starting from a problem or behaviour</div></div>
   <div class="content">
+    <div class="tracker-shortcut" id="shortcut-problem">
+      <div class="tracker-shortcut-header" onclick="toggleShortcut('shortcut-problem-body','shortcut-problem-toggle')">
+        <span class="tracker-shortcut-label">From your list: Problems and behaviours</span>
+        <span class="tracker-shortcut-toggle" id="shortcut-problem-toggle">+</span>
+      </div>
+      <div class="tracker-shortcut-body" id="shortcut-problem-body">
+        <div id="shortcut-problem-items"></div>
+      </div>
+    </div>
     <div class="instruction"><p>Close your eyes. Bring the problem to mind. Feel it for a moment before you write it down.</p></div>
     <div class="field-group mt-4">
       <label class="field-label">My problem / behaviour / event</label>
@@ -345,7 +397,7 @@
     </div>
     <div class="field-group">
       <label class="field-label">Intensity score</label>
-      <span class="field-sub">How strongly does this feel right now?</span>
+      <span class="field-sub">How intense does this feel right now?</span>
       <div class="score-wrap" id="score-wrap-p">
         <button class="score-btn" onclick="selectScore(this,'p',0)">0</button><button class="score-btn" onclick="selectScore(this,'p',1)">1</button><button class="score-btn" onclick="selectScore(this,'p',2)">2</button><button class="score-btn" onclick="selectScore(this,'p',3)">3</button><button class="score-btn" onclick="selectScore(this,'p',4)">4</button><button class="score-btn" onclick="selectScore(this,'p',5)">5</button><button class="score-btn" onclick="selectScore(this,'p',6)">6</button><button class="score-btn" onclick="selectScore(this,'p',7)">7</button><button class="score-btn" onclick="selectScore(this,'p',8)">8</button><button class="score-btn" onclick="selectScore(this,'p',9)">9</button><button class="score-btn" onclick="selectScore(this,'p',10)">10</button>
       </div>
@@ -369,6 +421,15 @@
   <div class="header"><div class="header-eyebrow">The Root Finder</div><div class="header-title">The Event</div></div>
   <div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:10%"></div></div><div class="progress-label">Start with what happened</div></div>
   <div class="content">
+    <div class="tracker-shortcut" id="shortcut-event">
+      <div class="tracker-shortcut-header" onclick="toggleShortcut('shortcut-event-body','shortcut-event-toggle')">
+        <span class="tracker-shortcut-label">From your list: Events and memories</span>
+        <span class="tracker-shortcut-toggle" id="shortcut-event-toggle">+</span>
+      </div>
+      <div class="tracker-shortcut-body" id="shortcut-event-body">
+        <div id="shortcut-event-items"></div>
+      </div>
+    </div>
     <div class="instruction"><p>Think of something that happened, or keeps happening, that is still sitting with you. It might be something you overreacted to, something that keeps replaying, or something that does not seem to match how much weight it is carrying.</p></div>
     <div class="field-group mt-4">
       <label class="field-label">The event</label>
@@ -391,8 +452,8 @@
       <textarea id="rf-body-entry" class="short" placeholder="Chest, stomach, throat, jaw..."></textarea>
     </div>
     <div class="field-group">
-      <label class="field-label">Disturbance score</label>
-      <span class="field-sub">How much does it still bother you right now?</span>
+      <label class="field-label">Intensity score</label>
+      <span class="field-sub">How intense does this feel right now?</span>
       <div class="score-wrap" id="score-wrap-rf">
         <button class="score-btn" onclick="selectScore(this,'rf',0)">0</button><button class="score-btn" onclick="selectScore(this,'rf',1)">1</button><button class="score-btn" onclick="selectScore(this,'rf',2)">2</button><button class="score-btn" onclick="selectScore(this,'rf',3)">3</button><button class="score-btn" onclick="selectScore(this,'rf',4)">4</button><button class="score-btn" onclick="selectScore(this,'rf',5)">5</button><button class="score-btn" onclick="selectScore(this,'rf',6)">6</button><button class="score-btn" onclick="selectScore(this,'rf',7)">7</button><button class="score-btn" onclick="selectScore(this,'rf',8)">8</button><button class="score-btn" onclick="selectScore(this,'rf',9)">9</button><button class="score-btn" onclick="selectScore(this,'rf',10)">10</button>
       </div>
@@ -488,58 +549,50 @@
       </div>
     </div>
 
-    <div class="instruction"><p>Close your eyes. Hold the event, the belief, and what you feel in your body together. That sensation is a thread. Let it lead you back. Choose the path that feels most natural.</p></div>
+    <div class="instruction"><p>Close your eyes. Hold the event, the belief, and what you feel in your body together. That sensation is a thread. Let it lead you back.</p></div>
 
-    <div class="rf-path-choice">
-      <button class="rf-path-btn" id="rf-path-a-btn" onclick="selectRFPath('cognitive')">
-        <div class="rf-path-title">Through the belief</div>
-        <div class="rf-path-sub">When is the earliest time you remember feeling this same belief about yourself?</div>
-      </button>
-      <button class="rf-path-btn" id="rf-path-b-btn" onclick="selectRFPath('body')">
-        <div class="rf-path-title">Through the body</div>
-        <div class="rf-path-sub">Hold the sensation. Let your mind follow it back to an earlier time you felt this same feeling.</div>
-      </button>
+    <div class="field-group mt-4">
+      <label class="field-label">When is the earliest time you remember feeling this same belief?</label>
+      <span class="field-sub">Let your mind scan back. Do not force it. Go with the first thing that surfaces.</span>
+      <textarea id="rf-cog-memory" placeholder="I first remember feeling this when..."></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">How old were you?</label>
+      <input type="text" id="rf-cog-age" placeholder="Approximate age...">
     </div>
 
-    <!-- COGNITIVE PATH - appears inline when tapped -->
-    <div id="rf-cognitive-path" style="display:none;">
-      <div class="field-group">
-        <label class="field-label">When is the earliest time you remember feeling this same belief?</label>
-        <span class="field-sub">Let your mind scan back. Do not force it. Go with the first thing that surfaces.</span>
-        <textarea id="rf-cog-memory" placeholder="I first remember feeling this when..."></textarea>
-      </div>
-      <div class="field-group">
-        <label class="field-label">How old were you?</label>
-        <input type="text" id="rf-cog-age" placeholder="Approximate age...">
-      </div>
-    </div>
-
-    <!-- BODY PATH - appears inline when tapped -->
-    <div id="rf-body-path" style="display:none;">
-      <div class="instruction"><p>Stay with that sensation. Now let your mind float back. Do not direct it. Let it go where it goes.</p></div>
-      <div class="field-group">
-        <label class="field-label">What memory or image surfaces?</label>
-        <span class="field-sub">It may be clear or vague. A fragment is enough. Go with whatever comes first.</span>
-        <textarea id="rf-body-memory" placeholder="Describe what comes up..."></textarea>
-      </div>
-      <div class="field-group">
-        <label class="field-label">How old were you?</label>
-        <input type="text" id="rf-body-age" placeholder="Approximate age...">
-      </div>
-    </div>
-
-    <div id="rf-memory-score-wrap" style="display:none;">
+    <div id="rf-memory-score-wrap">
       <div class="field-group mt-4">
-        <label class="field-label">How disturbing does this memory feel now? (0-10)</label>
-        <div class="score-wrap" id="score-wrap-rfmem">
-          <button class="score-btn" onclick="selectScore(this,'rfmem',0)">0</button><button class="score-btn" onclick="selectScore(this,'rfmem',1)">1</button><button class="score-btn" onclick="selectScore(this,'rfmem',2)">2</button><button class="score-btn" onclick="selectScore(this,'rfmem',3)">3</button><button class="score-btn" onclick="selectScore(this,'rfmem',4)">4</button><button class="score-btn" onclick="selectScore(this,'rfmem',5)">5</button><button class="score-btn" onclick="selectScore(this,'rfmem',6)">6</button><button class="score-btn" onclick="selectScore(this,'rfmem',7)">7</button><button class="score-btn" onclick="selectScore(this,'rfmem',8)">8</button><button class="score-btn" onclick="selectScore(this,'rfmem',9)">9</button><button class="score-btn" onclick="selectScore(this,'rfmem',10)">10</button>
+        <label class="field-label">How intense does this memory feel now? (0-10)</label>
+        <div class="score-wrap" id="score-wrap-rfint">
+          <button class="score-btn" onclick="selectScore(this,'rfint',0)">0</button><button class="score-btn" onclick="selectScore(this,'rfint',1)">1</button><button class="score-btn" onclick="selectScore(this,'rfint',2)">2</button><button class="score-btn" onclick="selectScore(this,'rfint',3)">3</button><button class="score-btn" onclick="selectScore(this,'rfint',4)">4</button><button class="score-btn" onclick="selectScore(this,'rfint',5)">5</button><button class="score-btn" onclick="selectScore(this,'rfint',6)">6</button><button class="score-btn" onclick="selectScore(this,'rfint',7)">7</button><button class="score-btn" onclick="selectScore(this,'rfint',8)">8</button><button class="score-btn" onclick="selectScore(this,'rfint',9)">9</button><button class="score-btn" onclick="selectScore(this,'rfint',10)">10</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px; padding-top:20px; border-top:1px solid #DFDFDF;">
+      <div style="font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:#aaa; margin-bottom:10px; font-family:'Jost',sans-serif;">Nothing came up?</div>
+      <button onclick="toggleRFBodyPath()" style="width:100%; background:transparent; border:1px solid #DFDFDF; border-radius:8px; padding:12px 16px; font-family:'Jost',sans-serif; font-size:13px; color:#888; cursor:pointer; text-align:left; display:flex; align-items:center; justify-content:space-between;" id="rf-body-toggle-btn">
+        <span>Try through the body sensation instead</span>
+        <span style="font-size:14px; color:#DFDFDF;" id="rf-body-toggle-icon">+</span>
+      </button>
+      <div id="rf-body-path" style="display:none; margin-top:14px;">
+        <div class="instruction"><p>Hold the belief, the emotion, and the body sensation all together. Do not direct it. Let your mind scan back to an earlier time when you felt this same feeling.</p></div>
+        <div class="field-group">
+          <label class="field-label">What memory or image surfaces?</label>
+          <span class="field-sub">It may be clear or vague. A fragment is enough. Go with whatever comes first.</span>
+          <textarea id="rf-body-memory" placeholder="Describe what comes up..."></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">How old were you?</label>
+          <input type="text" id="rf-body-age" placeholder="Approximate age...">
         </div>
       </div>
     </div>
   </div>
   <div class="nav-fixed">
     <button class="btn btn-secondary" onclick="goBack()">Back</button>
-    <button class="btn btn-primary" onclick="goTo('se2e_b')">Continue to healing</button>
+    <button class="btn btn-primary" onclick="state.e2ePath='past'; goTo('se2e_b')">Continue to healing</button>
   </div>
 </div>
 
@@ -816,10 +869,6 @@
         <label class="field-label">21. What message does he have for you?</label>
         <textarea id="e2e_int_21" placeholder="What does he want you to know..."></textarea>
       </div>
-    </div>
-
-    <div class="note" style="margin-top:16px; background:#163E5B; border-radius:8px; padding:14px 16px;">
-      <p style="color:rgba(255,255,255,0.8); font-family:'Cormorant Garamond',serif; font-size:16px; font-style:italic; text-align:center;">See it &nbsp;·&nbsp; Hear it &nbsp;·&nbsp; Feel it<br>Emotion → Identity → Behaviour</p>
     </div>
   </div>
   <div class="nav-fixed">
@@ -1206,31 +1255,133 @@
     localStorage.setItem('dw-tracker', JSON.stringify(trackerItems));
   }
 
+  const CAT_LABELS = { problem: 'Problem / Behaviour', belief: 'Belief', event: 'Event / Memory' };
+  const CAT_CLASSES = { problem: 'tracker-cat-problem', belief: 'tracker-cat-belief', event: 'tracker-cat-event' };
+
   function renderTracker() {
     const list = document.getElementById('tracker-list');
-    const empty = document.getElementById('tracker-empty');
     list.innerHTML = '';
     if (trackerItems.length === 0) {
-      empty && list.appendChild(empty);
+      list.innerHTML = '<li class="tracker-empty">Nothing added yet. Add the first thing you want to work on.</li>';
+      renderShortcuts();
       return;
     }
     trackerItems.forEach((item, i) => {
       const li = document.createElement('li');
       li.className = 'tracker-item';
+      const cat = item.cat || '';
+      const catTag = cat ? `<span class="tracker-cat-tag ${CAT_CLASSES[cat] || ''}">${CAT_LABELS[cat] || cat}</span>` : '';
+      const intTag = item.sud !== undefined && item.sud !== null ? `<span class="tracker-item-int">Intensity ${item.sud}/10</span>` : '';
+      const emotionTag = item.emotion ? `<span class="tracker-item-int" style="color:#C8963E;">${escHtml(item.emotion)}</span>` : '';
+      const showCognition = cat === 'problem' || cat === 'event' || cat === '';
+      const cognitionField = showCognition ? `
+          <span class="tracker-detail-label">Negative cognition connected to this</span>
+          <input type="text" class="tracker-detail-input" placeholder="e.g. I am not good enough..." value="${escHtml(item.cognition || '')}" oninput="updateTrackerCognition(${i},this.value)">` : '';
       li.innerHTML = `
-        <div class="tracker-check ${item.done ? 'done' : ''}" onclick="toggleTrackerItem(${i})"></div>
-        <div class="tracker-item-text ${item.done ? 'done' : ''}">${escHtml(item.text)}</div>
-        <button class="tracker-del" onclick="deleteTrackerItem(${i})">×</button>
+        <div class="tracker-item-main">
+          <div class="tracker-check ${item.done ? 'done' : ''}" onclick="toggleTrackerItem(${i})"></div>
+          <div class="tracker-item-body">
+            <div class="tracker-item-text ${item.done ? 'done' : ''}">${escHtml(item.text)}</div>
+            <div class="tracker-item-meta">
+              ${catTag}${emotionTag}${intTag}
+              <button class="tracker-item-detail-toggle" onclick="toggleTrackerDetail(${i})">+ add detail</button>
+            </div>
+          </div>
+          <button class="tracker-del" onclick="deleteTrackerItem(${i})">×</button>
+        </div>
+        <div class="tracker-detail-form" id="tracker-detail-${i}">
+          <div style="margin-bottom:10px;">
+            <span class="tracker-detail-label">Category</span>
+            <div class="tracker-cat-select">
+              <button class="tracker-cat-btn ${item.cat === 'problem' ? 'active' : ''}" onclick="setTrackerCat(${i},'problem')">Problem / Behaviour</button>
+              <button class="tracker-cat-btn ${item.cat === 'belief' ? 'active' : ''}" onclick="setTrackerCat(${i},'belief')">Belief</button>
+              <button class="tracker-cat-btn ${item.cat === 'event' ? 'active' : ''}" onclick="setTrackerCat(${i},'event')">Event / Memory</button>
+            </div>
+          </div>
+          <span class="tracker-detail-label">Emotion that comes up</span>
+          <input type="text" class="tracker-detail-input" placeholder="e.g. Shame, fear, anger, sadness..." value="${escHtml(item.emotion || '')}" oninput="updateTrackerEmotion(${i},this.value)">
+          ${cognitionField}
+          <span class="tracker-detail-label">Intensity (0-10)</span>
+          <div class="tracker-int-row">
+            ${[0,1,2,3,4,5,6,7,8,9,10].map(n => `<button class="tracker-int-btn ${item.sud === n ? 'active' : ''}" onclick="setTrackerSud(${i},${n})">${n}</button>`).join('')}
+          </div>
+        </div>
       `;
       list.appendChild(li);
     });
+    renderShortcuts();
+  }
+
+  function renderShortcuts() {
+    const categories = { belief: 'shortcut-belief-items', problem: 'shortcut-problem-items', event: 'shortcut-event-items' };
+    Object.entries(categories).forEach(([cat, elId]) => {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const items = trackerItems.filter(item => item.cat === cat && !item.done);
+      if (items.length === 0) {
+        el.innerHTML = '<div class="tracker-shortcut-empty">No ' + CAT_LABELS[cat].toLowerCase() + 's in your list yet.</div>';
+        return;
+      }
+      el.innerHTML = items.map(item => {
+        const targetField = cat === 'belief' ? 'custom-neg' : cat === 'problem' ? 'p-problem' : 'rf-event';
+        return `<div class="tracker-shortcut-item" onclick="prefillFromTracker('${targetField}','${escHtml(item.text).replace(/'/g, "\\'")}')">
+          <span>${escHtml(item.text)}</span>
+          <span class="tracker-shortcut-arrow">→</span>
+        </div>`;
+      }).join('');
+    });
+  }
+
+  function prefillFromTracker(fieldId, text) {
+    const el = document.getElementById(fieldId);
+    if (el) {
+      el.value = text;
+      el.focus();
+      if (fieldId === 'custom-neg') updateCustomCognition();
+    }
+  }
+
+  function toggleShortcut(bodyId, iconId) {
+    const body = document.getElementById(bodyId);
+    const icon = document.getElementById(iconId);
+    if (!body) return;
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open');
+    if (icon) icon.textContent = isOpen ? '+' : '−';
+  }
+
+  function toggleTrackerDetail(i) {
+    const form = document.getElementById('tracker-detail-' + i);
+    if (form) form.classList.toggle('open');
+  }
+
+  function setTrackerCat(i, cat) {
+    trackerItems[i].cat = cat;
+    saveTracker();
+    renderTracker();
+  }
+
+  function updateTrackerCognition(i, val) {
+    trackerItems[i].cognition = val;
+    saveTracker();
+  }
+
+  function updateTrackerEmotion(i, val) {
+    trackerItems[i].emotion = val;
+    saveTracker();
+  }
+
+  function setTrackerSud(i, sud) {
+    trackerItems[i].sud = sud;
+    saveTracker();
+    renderTracker();
   }
 
   function addTrackerItem() {
     const input = document.getElementById('tracker-input');
     const text = input.value.trim();
     if (!text) return;
-    trackerItems.push({ text, done: false });
+    trackerItems.push({ text, done: false, cat: null, cognition: '', sud: null });
     input.value = '';
     saveTracker();
     renderTracker();
@@ -1249,7 +1400,14 @@
   }
 
   function copyTrackerList() {
-    const lines = trackerItems.map(item => (item.done ? '[x] ' : '[ ] ') + item.text);
+    const lines = trackerItems.map(item => {
+      let line = (item.done ? '[x] ' : '[ ] ') + item.text;
+      if (item.cat) line += ' [' + CAT_LABELS[item.cat] + ']';
+      if (item.emotion) line += ' · Emotion: ' + item.emotion;
+      if (item.cognition) line += ' · Cognition: ' + item.cognition;
+      if (item.sud !== null && item.sud !== undefined) line += ' · Intensity: ' + item.sud + '/10';
+      return line;
+    });
     const text = 'WHAT I AM CARRYING\n' + lines.join('\n');
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text);
@@ -1266,6 +1424,20 @@
     const isOpen = body.classList.contains('open');
     body.classList.toggle('open');
     icon.textContent = isOpen ? '+' : '−';
+  }
+
+  function toggleRFBodyPath() {
+    const path = document.getElementById('rf-body-path');
+    const icon = document.getElementById('rf-body-toggle-icon');
+    if (!path) return;
+    const isOpen = path.style.display !== 'none';
+    path.style.display = isOpen ? 'none' : 'block';
+    if (icon) icon.textContent = isOpen ? '+' : '−';
+  }
+
+  // Also need to remove selectRFPath function references
+  function selectRFPath(path) {
+    // No longer used - belief path is default, body is optional toggle
   }
 
   renderTracker();
@@ -1314,6 +1486,9 @@
     document.getElementById(id).classList.add('active');
     window.scrollTo(0, 0);
 
+    if (id === 's1') renderShortcuts();
+    if (id === 's1p') renderShortcuts();
+    if (id === 's1rf') renderShortcuts();
     if (id === 's2c') updateCogDisplay();
     if (id === 's2p') populateS2pImage();
     if (id === 's1rf2') populateRFEventDisplay();
@@ -1343,11 +1518,14 @@
     document.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
     document.querySelectorAll('.cognition-item').forEach(i => i.classList.remove('selected'));
     document.querySelectorAll('.rf-path-btn').forEach(b => b.classList.remove('selected'));
-    document.getElementById('rf-cognitive-path').style.display = 'none';
-    document.getElementById('rf-body-path').style.display = 'none';
-    document.getElementById('rf-memory-score-wrap').style.display = 'none';
-    document.getElementById('identity-block-c').style.display = 'none';
-    document.getElementById('identity-block-p').style.display = 'none';
+    const bodyPath = document.getElementById('rf-body-path');
+    if (bodyPath) bodyPath.style.display = 'none';
+    const bodyToggleIcon = document.getElementById('rf-body-toggle-icon');
+    if (bodyToggleIcon) bodyToggleIcon.textContent = '+';
+    const identityC = document.getElementById('identity-block-c');
+    const identityP = document.getElementById('identity-block-p');
+    if (identityC) identityC.style.display = 'none';
+    if (identityP) identityP.style.display = 'none';
     state.e2ePath = null;
     state.rfPath = null;
     state.problemIdentity = '';
@@ -1609,24 +1787,47 @@
   }
 
   // ── FUTURE IDENTITY ───────────────────────────────────
+  function getE2EIdentityText() {
+    // Step 19 is "what is he like now" - the primary source for Phase A identity
+    const s19 = val('e2e_int_19');
+    const s20 = val('e2e_int_20');
+    const s21 = val('e2e_int_21');
+    const aKnows = val('e2e_a_knows');
+    const bKnows = val('e2e_b_knows');
+    // Return the first non-empty value in priority order
+    return s19 || aKnows || bKnows || s20 || s21 || '';
+  }
+
   function updateFutureIdentity() {
     const isProb = state.route === 'problem';
     const isCog = state.route === 'cognition';
-    const isE2E = state.e2ePath && !isProb && !isCog; // e2e path from any route
     const hasE2E = !!state.e2ePath;
-
-    // For problem/cognition routes that went through e2e, use integration text
-    const e2eText = val('e2e_int_19') || val('e2e_a_knows') || val('e2e_b_knows') || '';
 
     document.getElementById('phase-a-problem-block').style.display = (isProb && !hasE2E) ? 'block' : 'none';
     document.getElementById('phase-a-cognition-block').style.display = (isCog && !hasE2E) ? 'block' : 'none';
     document.getElementById('phase-a-e2e-block').style.display = hasE2E ? 'block' : 'none';
 
     if (hasE2E) {
+      const e2eText = getE2EIdentityText();
       const e2eEl = document.getElementById('phase-a-e2e-text');
-      if (e2eEl) e2eEl.textContent = e2eText || 'The version from your integration work.';
+      if (e2eEl) {
+        if (e2eText) {
+          e2eEl.textContent = e2eText;
+          e2eEl.style.color = '#FFFFFF';
+        } else {
+          e2eEl.textContent = 'Complete the integration steps on the previous screen first.';
+          e2eEl.style.color = 'rgba(255,255,255,0.4)';
+        }
+      }
       const affirmEl = document.getElementById('affirm-prompt-e2e');
-      if (affirmEl) affirmEl.textContent = '"I am ' + (e2eText.replace(/^(I am |i am )/i, '') || 'this version of me') + '."';
+      if (affirmEl) {
+        if (e2eText) {
+          const stripped = e2eText.replace(/^(I am |i am )/i, '');
+          affirmEl.textContent = '"I am ' + stripped + '."';
+        } else {
+          affirmEl.textContent = '"I am this version of me."';
+        }
+      }
     } else if (isProb) {
       const identity = getEffectiveProblemIdentity();
       const textEl = document.getElementById('phase-a-identity-text');
@@ -1689,7 +1890,7 @@
     document.getElementById('phase-b-cost-e2e').style.display = hasE2E ? 'block' : 'none';
 
     if (hasE2E) {
-      const e2eText = val('e2e_int_19') || val('e2e_a_knows') || val('e2e_b_knows') || '';
+      const e2eText = getE2EIdentityText();
       const el = document.getElementById('phase-b-e2e-text');
       if (el) el.textContent = e2eText || 'The version from your integration work.';
     } else if (isProb) {
@@ -1724,7 +1925,7 @@
     };
 
     if (hasE2E) {
-      const e2eText = val('e2e_int_19') || val('e2e_a_knows') || val('e2e_b_knows') || '';
+      const e2eText = getE2EIdentityText();
       const el = document.getElementById('phase-c-e2e-text');
       if (el) el.textContent = e2eText || 'The version from your integration work.';
       wireAction('phase-c-e2e-action-text');
@@ -1765,7 +1966,7 @@
       if (val('rf-image')) lines.push('Most disturbing part: ' + val('rf-image'));
       if (val('rf-emotion')) lines.push('Emotion: ' + val('rf-emotion'));
       if (val('rf-body-entry')) lines.push('Where felt in body: ' + val('rf-body-entry'));
-      if (state.score.rf !== null) lines.push('Starting disturbance: ' + state.score.rf + '/10');
+      if (state.score.rf !== null) lines.push('Starting intensity: ' + state.score.rf + '/10');
       if (state.negCog) lines.push('Belief activated: ' + state.negCog);
     }
 
