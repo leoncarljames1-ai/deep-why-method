@@ -122,7 +122,7 @@
   .map-key strong { color: #FAF8F4; font-weight: 500; }
 
   /* SCALE */
-  #screen-scale { background: #060e15; padding: 100px 28px 80px; align-items: center; text-align: center; }
+  #screen-scale { background: #060e15; padding: 80px 20px 60px; align-items: center; text-align: center; overflow: visible; }
   .scale-w { max-width: 480px; width: 100%; }
   .scale-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(200,150,62,0.5); margin-bottom: 24px; display: block; }
   .scale-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 5vw, 46px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 40px; }
@@ -792,7 +792,9 @@
     const outer = document.getElementById('sc-outer');
     const lcb = document.getElementById('sc-lcb');
     const rcb = document.getElementById('sc-rcb');
+    if (!lcb || !rcb) return;
     const outerRect = outer.getBoundingClientRect();
+    if (!outerRect.width) { setTimeout(drawScaleSVG, 200); return; }
     const lcbRect = lcb.getBoundingClientRect();
     const rcbRect = rcb.getBoundingClientRect();
 
@@ -842,6 +844,7 @@
   function showResult() {
     go('screen-result', 10);
     setTimeout(buildResult, 450);
+    setTimeout(postHeight, 1000);
   }
 
   function buildResult() {
@@ -894,10 +897,15 @@
 
   // Send height to parent so iframe auto-expands
   function postHeight() {
-    window.parent.postMessage({ type: 'sc-resize', height: document.body.scrollHeight }, '*');
+    var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    window.parent.postMessage({ type: 'sc-resize', height: h }, '*');
   }
 
-  setTimeout(postHeight, 300);
+  // Fire multiple times to catch late renders
+  setTimeout(postHeight, 200);
+  setTimeout(postHeight, 600);
+  setTimeout(postHeight, 1200);
+  setTimeout(postHeight, 2500);
   window.addEventListener('resize', postHeight);
 </script>
 </body>
