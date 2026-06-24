@@ -122,10 +122,10 @@
   .map-key strong { color: #FAF8F4; font-weight: 500; }
 
   /* SCALE */
-  #screen-scale { background: #060e15; padding: 100px 28px 80px; align-items: center; text-align: center; overflow: hidden; }
-  .scale-w { max-width: 560px; width: 100%; overflow: hidden; }
+  #screen-scale { background: #060e15; padding: 100px 28px 80px; align-items: center; text-align: center; }
+  .scale-w { max-width: 480px; width: 100%; }
   .scale-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(200,150,62,0.5); margin-bottom: 24px; display: block; }
-  .scale-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 5vw, 46px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 52px; }
+  .scale-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 5vw, 46px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 40px; }
   .scale-h em { font-style: italic; color: #F2BE54; }
 
   /* SCALE - flexbox, no overflow */
@@ -233,11 +233,8 @@
     .cta-block { padding: 28px 18px; }
     .cost-summary { flex-direction: column; gap: 12px; text-align: center; }
     .cost-summary-costs { justify-content: center; }
-    .scale-visual { max-width: 260px; }
-    .scale-pan-left { left: -36px; width: 80px; }
-    .scale-pan-right { right: -36px; width: 80px; }
-    .scale-pan-label { font-size: 9px; letter-spacing: 1px; }
-    .scale-pan-item { font-size: 10px; padding: 3px 6px; }
+    .sc-outer { width: 280px; }
+    .sc-plate { font-size: 10px; padding: 6px 6px; }
   }
 </style>
 </head>
@@ -505,26 +502,35 @@
     <span class="scale-eye">The imbalance</span>
     <h2 class="scale-h">This is what you have<br>been <em>feeding.</em></h2>
 
-    <div class="scale-visual">
-      <div class="scale-pans-row">
-        <div class="scale-pan-left">
-          <div class="scale-pan-dish"></div>
-          <span class="scale-pan-label">What you have fed</span>
-          <div class="scale-pan-items" id="pan-left-items"></div>
+    <div class="sc-outer" id="sc-outer">
+      <div class="sc-stacks" id="sc-stacks">
+
+        <div class="sc-stack sc-stack-left" id="sc-left">
+          <div class="sc-label">What it has<br>cost you</div>
+          <div class="sc-cap" id="sc-lct"></div>
+          <div class="sc-plates" id="sc-left-plates">
+            <div class="sc-rod" id="sc-rod-l"></div>
+          </div>
+          <div class="sc-cap-b" id="sc-lcb"></div>
         </div>
-        <div class="scale-pan-right">
-          <div class="scale-pan-dish"></div>
-          <span class="scale-pan-label">What has been starved</span>
-          <div class="scale-pan-items" id="pan-right-items"></div>
+
+        <div class="sc-stack sc-stack-right" id="sc-right">
+          <div class="sc-label">What has been<br>waiting</div>
+          <div class="sc-cap" id="sc-rct"></div>
+          <div class="sc-plates" id="sc-right-plates">
+            <div class="sc-rod" id="sc-rod-r"></div>
+          </div>
+          <div class="sc-cap-b" id="sc-rcb"></div>
         </div>
+
       </div>
-      <div class="scale-beam-row">
-        <div class="scale-beam-line" id="scale-beam"></div>
-        <div class="scale-pivot"></div>
-        <div class="scale-beam-line"></div>
+
+      <div class="sc-cost" id="sc-cost">This is what you chose<br>every single day.</div>
+      <svg class="sc-svg" id="sc-svg" style="overflow:visible;"></svg>
+      <div class="sc-pole-base">
+        <div class="sc-pole"></div>
+        <div class="sc-base"></div>
       </div>
-      <div class="scale-pole"></div>
-      <div class="scale-base"></div>
     </div>
 
     <p class="scale-statement" id="scale-statement"></p>
@@ -699,73 +705,138 @@
   }
 
   function buildScale() {
-    // Short punchy left items - feel heavy
-    const leftItems = [];
     const yearsMap = {less:'Less than a year',few:'A few years',five:'5+ years',decade:'Over a decade'};
-    if(S.years) leftItems.push(yearsMap[S.years]);
-
-    // Shorten cost labels
     const shortCosts = {
-      'Relationships': 'Relationships',
-      'Self respect': 'Self respect',
-      'Career or ambition': 'Career',
-      'Money': 'Money',
-      'Friends': 'Friends',
-      'Hobbies or passions I used to have': 'Passions',
-      'My confidence': 'Confidence',
-      'My ability to be present': 'Presence',
-      'The person I could have been': 'Who you could have been'
+      'Relationships':'Relationships lost','Self respect':'Self respect lost',
+      'Career or ambition':'Career lost','Money':'Money lost','Friends':'Friends lost',
+      'Hobbies or passions I used to have':'Passions lost','My confidence':'Confidence lost',
+      'My ability to be present':'Presence lost','The person I could have been':'Who you could have been'
     };
-    S.costs.slice(0,3).forEach(c => leftItems.push(shortCosts[c] || c));
+    const shortTriggers = {stress:'Stress',lonely:'Loneliness',bored:'Emptiness',anxious:'Anxiety',numb:'Numbness',auto:'Autopilot'};
+
+    const leftItems = [];
+    if(S.years) leftItems.push(yearsMap[S.years]);
+    S.costs.slice(0,3).forEach(c => leftItems.push(shortCosts[c]||c));
     if(S.extraCost) leftItems.push(S.extraCost.split(' ').slice(0,3).join(' '));
+    if(S.triggers.length>0) leftItems.push(shortTriggers[S.triggers[0]]||S.triggers[0]);
 
-    // Shorten trigger
-    const shortTriggers = {
-      'stress': 'Stress',
-      'lonely': 'Loneliness',
-      'bored': 'Emptiness',
-      'anxious': 'Anxiety',
-      'numb': 'Numbness',
-      'auto': 'Autopilot'
-    };
-    if(S.triggers.length>0) leftItems.push(shortTriggers[S.triggers[0]] || S.triggers[0]);
-
-    // Right side - sharp loss labels
     const rightItems = ['Your vision','Who you are becoming','Real connection','Your purpose','Your goals'];
 
-    const leftEl=document.getElementById('pan-left-items');
-    const rightEl=document.getElementById('pan-right-items');
-    leftEl.innerHTML=''; rightEl.innerHTML='';
-
-    leftItems.forEach((item,i)=>{
-      const div=document.createElement('div');
-      div.className='scale-pan-item';
-      div.textContent=item;
-      leftEl.appendChild(div);
-      setTimeout(()=>div.classList.add('show'),i*150);
+    // Build plate elements
+    const lPlates = document.getElementById('sc-left-plates');
+    const rPlates = document.getElementById('sc-right-plates');
+    leftItems.forEach(item => {
+      const d = document.createElement('div');
+      d.className = 'sc-plate';
+      d.textContent = item;
+      lPlates.appendChild(d);
+    });
+    rightItems.forEach(item => {
+      const d = document.createElement('div');
+      d.className = 'sc-plate';
+      d.textContent = item;
+      rPlates.appendChild(d);
     });
 
-    rightItems.forEach((item,i)=>{
-      const div=document.createElement('div');
-      div.className='scale-pan-item';
-      div.textContent=item;
-      rightEl.appendChild(div);
-      setTimeout(()=>div.classList.add('show'),(leftItems.length*150)+(i*120));
-    });
+    // Step 1 — rods and top caps
+    setTimeout(() => {
+      document.getElementById('sc-rod-l').classList.add('show');
+      document.getElementById('sc-rod-r').classList.add('show');
+      document.getElementById('sc-lct').classList.add('show');
+      document.getElementById('sc-rct').classList.add('show');
+    }, 300);
 
-    // Tilt after items appear
-    setTimeout(()=>{
-      const beam = document.getElementById('scale-beam');
-      if(beam) beam.classList.add('tilt');
-    }, leftItems.length*150 + 400);
+    // Step 2 — left plates load on
+    const lps = lPlates.querySelectorAll('.sc-plate');
+    lps.forEach((p,i) => setTimeout(() => p.classList.add('show'), 600 + i*200));
+    const afterLeft = 600 + lps.length * 200;
 
-    const stmts={
+    // Step 3 — bottom caps lock
+    setTimeout(() => {
+      document.getElementById('sc-lcb').classList.add('show');
+      document.getElementById('sc-rcb').classList.add('show');
+    }, afterLeft + 100);
+
+    // Step 4 — draw SVG with real measurements then show
+    setTimeout(() => {
+      drawScaleSVG();
+      setTimeout(() => {
+        ['sc-svg-beam','sc-svg-pivot','sc-svg-sl','sc-svg-sr'].forEach(id => {
+          const el = document.getElementById(id);
+          if(el) el.setAttribute('opacity','1');
+        });
+      }, 200);
+    }, afterLeft + 300);
+
+    // Step 5 — cost line
+    setTimeout(() => document.getElementById('sc-cost').classList.add('show'), afterLeft + 600);
+
+    // Step 6 — right plates
+    const rps = rPlates.querySelectorAll('.sc-plate');
+    const afterBeam = afterLeft + 800;
+    rps.forEach((p,i) => setTimeout(() => p.classList.add('show'), afterBeam + i*150));
+
+    // Step 7 — statement
+    const stmts = {
       less:'Less than a year. Already more than it has given.',
       few:'A few years feeding one side. The other has been waiting.',
       five:'Five or more years going in one direction.',
       decade:'Over a decade. This is where the energy has been going.'
     };
-    document.getElementById('scale-statement').innerHTML='<em>'+(stmts[S.years]||'This is where the energy has been going.')+'</em>';
+    setTimeout(() => {
+      document.getElementById('scale-statement').innerHTML = '<em>'+(stmts[S.years]||'This is where the energy has been going.')+'</em>';
+    }, afterBeam + rps.length*150 + 200);
+  }
+
+  function drawScaleSVG() {
+    const outer = document.getElementById('sc-outer');
+    const lcb = document.getElementById('sc-lcb');
+    const rcb = document.getElementById('sc-rcb');
+    const outerRect = outer.getBoundingClientRect();
+    const lcbRect = lcb.getBoundingClientRect();
+    const rcbRect = rcb.getBoundingClientRect();
+
+    const lx = lcbRect.left - outerRect.left + lcbRect.width / 2;
+    const ly = lcbRect.top - outerRect.top + lcbRect.height;
+    const rx = rcbRect.left - outerRect.left + rcbRect.width / 2;
+    const ry = rcbRect.top - outerRect.top + rcbRect.height;
+
+    const pivotX = outerRect.width / 2;
+    const pivotY = Math.max(ly, ry) + 50;
+    const halfW = outerRect.width * 0.42;
+    const tilt = 18;
+    const bLX = pivotX - halfW, bLY = pivotY + tilt;
+    const bRX = pivotX + halfW, bRY = pivotY - tilt;
+
+    const svgH = pivotY + 12;
+    const svg = document.getElementById('sc-svg');
+    svg.setAttribute('viewBox', `0 0 ${outerRect.width} ${svgH}`);
+    svg.style.height = svgH + 'px';
+
+    // Position cost line below left cap
+    const cost = document.getElementById('sc-cost');
+    cost.style.top = (ly + 8) + 'px';
+
+    svg.innerHTML = `
+      <defs>
+        <linearGradient id="scbg" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#C8963E" stop-opacity="0.4"/>
+          <stop offset="50%" stop-color="#C8963E" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#C8963E" stop-opacity="0.4"/>
+        </linearGradient>
+      </defs>
+      <line id="sc-svg-beam" x1="${bLX}" y1="${bLY}" x2="${bRX}" y2="${bRY}"
+        stroke="url(#scbg)" stroke-width="4" stroke-linecap="round" opacity="0"
+        style="transition:opacity 0.5s ease"/>
+      <circle id="sc-svg-pivot" cx="${pivotX}" cy="${pivotY}" r="7"
+        fill="#C8963E" opacity="0" style="transition:opacity 0.5s ease;filter:drop-shadow(0 0 8px rgba(200,150,62,0.8))"/>
+      <line id="sc-svg-sl" x1="${lx}" y1="${ly}" x2="${bLX}" y2="${bLY}"
+        stroke="#C8963E" stroke-width="2.5" stroke-linecap="round" opacity="0"
+        style="transition:opacity 0.5s ease"/>
+      <line id="sc-svg-sr" x1="${rx}" y1="${ry}" x2="${bRX}" y2="${bRY}"
+        stroke="rgba(200,150,62,0.8)" stroke-width="2.5" stroke-linecap="round" opacity="0"
+        style="transition:opacity 0.5s ease"/>
+    `;
   }
 
   function showResult() {
