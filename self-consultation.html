@@ -1,1 +1,213 @@
+<!-- ============================================================
+     LEON JAMES — SELF CONSULTATION PAGE
+     mindshiftingwithleon.com/self-consultation
+     Replaces the Check Yourself page entirely
+     REMINDER: Zero out row padding AND element padding in GHL row settings
+     ============================================================ -->
 
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  .sc-page {
+    background: #163E5B;
+    font-family: 'Jost', sans-serif;
+    color: #FAF8F4;
+  }
+
+  /* HERO */
+  .sc-hero {
+    background: linear-gradient(160deg, #0e2a3d 0%, #163E5B 60%, #1a4a6e 100%);
+    padding: 80px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sc-hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,150,62,0.07);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+
+  .sc-hero::after {
+    content: '';
+    position: absolute;
+    width: 960px; height: 960px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,150,62,0.03);
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+
+  .sc-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #C8963E;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .sc-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 7vw, 72px);
+    font-weight: 300;
+    line-height: 1.0;
+    color: #FAF8F4;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .sc-headline em {
+    font-style: italic;
+    color: #F2BE54;
+    display: block;
+  }
+
+  .sc-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: rgba(250,248,244,0.5);
+    max-width: 420px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* TOOL WRAP */
+  .sc-tool-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .sc-iframe-wrap {
+    overflow: hidden;
+  }
+
+  .sc-iframe-wrap iframe {
+    display: block;
+    width: 100%;
+    border: none;
+    min-height: 100vh;
+  }
+
+  /* BELOW */
+  .sc-below {
+    background: #FAF8F4;
+    padding: 72px 24px 80px;
+    text-align: center;
+  }
+
+  .sc-below-inner {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .sc-below-rule {
+    width: 40px;
+    height: 2px;
+    background: #C8963E;
+    margin: 0 auto 32px;
+  }
+
+  .sc-below-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #163E5B;
+    margin-bottom: 20px;
+  }
+
+  .sc-below-headline em {
+    font-style: italic;
+    color: #C8963E;
+  }
+
+  .sc-below-body {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: #4a6478;
+    margin-bottom: 36px;
+  }
+
+  .sc-below-btn {
+    display: inline-block;
+    padding: 18px 48px;
+    background: #163E5B;
+    color: #FAF8F4;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background 0.2s ease;
+  }
+
+  .sc-below-btn:hover { background: #C8963E; }
+
+  @media (max-width: 600px) {
+    .sc-hero { padding: 64px 20px 56px; }
+    .sc-below { padding: 56px 20px 64px; }
+  }
+</style>
+
+<div class="sc-page">
+
+  <div class="sc-hero">
+    <p class="sc-eyebrow">Self Consultation</p>
+    <h1 class="sc-headline">Something keeps<br><em>pulling you back.</em></h1>
+    <p class="sc-sub">Eight questions. No generic advice. By the end you will see something about what is running this that most people never get shown.</p>
+  </div>
+
+  <div class="sc-tool-wrap">
+    <div class="sc-iframe-wrap">
+      <iframe
+        src="https://leoncarljames1-ai.github.io/deep-why-method/self-consultation.html"
+        id="sc-iframe"
+        allow="clipboard-write"
+        title="Self Consultation — Mind Shifting With Leon">
+      </iframe>
+    </div>
+  </div>
+
+  <div class="sc-below">
+    <div class="sc-below-inner">
+      <div class="sc-below-rule"></div>
+      <h2 class="sc-below-headline">Ready to clear what is<br><em>actually running this?</em></h2>
+      <p class="sc-below-body">The self consultation shows you what is underneath. The session is where it gets cleared. Most men feel a shift in the first 90 minutes that years of trying could not produce.</p>
+      <a href="mailto:mindshiftingwithleon@gmail.com?subject=I%20want%20to%20book%20a%20session" class="sc-below-btn">Book a Session With Leon</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    var iframe = document.getElementById('sc-iframe');
+
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'sc-resize') {
+        iframe.style.height = (e.data.height + 40) + 'px';
+      }
+    });
+
+    // Fallback: auto-expand to full viewport height
+    iframe.style.height = '100vh';
+  })();
+</script>
