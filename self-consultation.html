@@ -122,13 +122,13 @@
   .map-key strong { color: #FAF8F4; font-weight: 500; }
 
   /* SCALE */
-  #screen-scale { background: #060e15; padding: 100px 28px 80px; align-items: center; text-align: center; }
-  .scale-w { max-width: 560px; width: 100%; }
+  #screen-scale { background: #060e15; padding: 100px 28px 80px; align-items: center; text-align: center; overflow: hidden; }
+  .scale-w { max-width: 560px; width: 100%; overflow: hidden; }
   .scale-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(200,150,62,0.5); margin-bottom: 24px; display: block; }
   .scale-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 5vw, 46px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 52px; }
   .scale-h em { font-style: italic; color: #F2BE54; }
 
-  .scale-visual { position: relative; margin: 0 auto 48px; width: 100%; max-width: 480px; }
+  .scale-visual { position: relative; margin: 0 auto 48px; width: 100%; max-width: 320px; overflow: visible; }
   .scale-pole { width: 2px; height: 120px; background: linear-gradient(to bottom, rgba(200,150,62,0.6), rgba(200,150,62,0.15)); margin: 0 auto; border-radius: 2px; position: relative; }
   .scale-pivot { width: 12px; height: 12px; border-radius: 50%; background: #C8963E; position: absolute; top: -6px; left: 50%; transform: translateX(-50%); box-shadow: 0 0 10px rgba(200,150,62,0.4); }
   .scale-beam-wrap { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 100%; display: flex; align-items: flex-start; justify-content: center; }
@@ -136,8 +136,8 @@
   .scale-beam.tilt { transform: rotate(18deg); }
   .scale-string-left { position: absolute; left: 0; top: 1px; width: 1px; height: 50px; background: rgba(200,150,62,0.3); }
   .scale-string-right { position: absolute; right: 0; top: 1px; width: 1px; height: 50px; background: rgba(200,150,62,0.3); }
-  .scale-pan-left { position: absolute; left: -60px; top: 51px; width: 120px; }
-  .scale-pan-right { position: absolute; right: -60px; top: 51px; width: 120px; }
+  .scale-pan-left { position: absolute; left: -50px; top: 51px; width: 100px; }
+  .scale-pan-right { position: absolute; right: -50px; top: 51px; width: 100px; }
   .scale-pan-dish { height: 3px; border-radius: 2px; margin-bottom: 10px; }
   .scale-pan-left .scale-pan-dish { background: rgba(220,80,80,0.5); }
   .scale-pan-right .scale-pan-dish { background: rgba(100,180,100,0.35); }
@@ -200,8 +200,11 @@
     .cta-block { padding: 28px 18px; }
     .cost-summary { flex-direction: column; gap: 12px; text-align: center; }
     .cost-summary-costs { justify-content: center; }
-    .scale-pan-left { left: -44px; width: 88px; }
-    .scale-pan-right { right: -44px; width: 88px; }
+    .scale-visual { max-width: 260px; }
+    .scale-pan-left { left: -36px; width: 80px; }
+    .scale-pan-right { right: -36px; width: 80px; }
+    .scale-pan-label { font-size: 9px; letter-spacing: 1px; }
+    .scale-pan-item { font-size: 10px; padding: 3px 6px; }
   }
 </style>
 </head>
