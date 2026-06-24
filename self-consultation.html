@@ -10,14 +10,18 @@
 
   body {
     font-family: 'Jost', sans-serif;
-    background: #163E5B;
-    color: #FAF8F4;
+    background: #163E5B !important;
+    color: #FAF8F4 !important;
     min-height: 100vh;
     font-weight: 300;
     overflow-x: hidden;
   }
 
-  .screen { display: none; min-height: 100vh; }
+  /* Force all inherited styles to reset so GHL cannot bleed in */
+  html { background: #163E5B !important; }
+  * { -webkit-tap-highlight-color: transparent; }
+
+  .screen { display: none; min-height: 100vh; background: #163E5B !important; }
   .screen.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
 
   .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.06); z-index: 100; }
@@ -61,7 +65,7 @@
   .intro-note { margin-top: 24px; font-size: 11px; color: rgba(250,248,244,0.18); letter-spacing: 1px; position: relative; }
 
   /* QUESTION SCREENS */
-  .qw { max-width: 560px; width: 100%; padding: 110px 28px 80px; }
+  .qw { max-width: 560px; width: 100%; padding: 110px 28px 80px; background: #163E5B !important; }
   .ql { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(200,150,62,0.6); margin-bottom: 28px; display: block; }
   .qt { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 5.5vw, 44px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 14px; }
   .qt em { font-style: italic; color: #F2BE54; }
@@ -497,45 +501,48 @@
 </div>
 
 <!-- SCALE -->
-<div class="screen" id="screen-scale">
-  <div class="scale-w">
+<div class="screen" id="screen-scale" style="background:#060e15 !important;">
+  <div class="scale-w" style="width:100%;max-width:480px;text-align:center;">
     <span class="scale-eye">The imbalance</span>
     <h2 class="scale-h">This is what you have<br>been <em>feeding.</em></h2>
 
-    <div class="sc-outer" id="sc-outer">
-      <div class="sc-stacks" id="sc-stacks">
+    <!-- EXACT MOCKUP11 STRUCTURE -->
+    <div id="sc-outer" style="position:relative;width:300px;margin:0 auto 32px;">
 
-        <div class="sc-stack sc-stack-left" id="sc-left">
-          <div class="sc-label">What it has<br>cost you</div>
-          <div class="sc-cap" id="sc-lct"></div>
-          <div class="sc-plates" id="sc-left-plates">
-            <div class="sc-rod" id="sc-rod-l"></div>
+      <div id="sc-stacks" style="display:flex !important;flex-direction:row !important;justify-content:space-between;align-items:flex-end;width:100%;position:relative;z-index:2;">
+
+        <div id="sc-left" style="width:118px;display:flex;flex-direction:column;align-items:center;margin-top:60px;">
+          <div style="font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:6px;line-height:1.4;color:rgba(230,80,80,0.95);">What it has<br>cost you</div>
+          <div id="sc-lct" style="width:18px;height:5px;border-radius:3px;margin:0 auto;opacity:0;transition:opacity 0.4s ease;background:#C8963E;box-shadow:0 0 6px rgba(200,150,62,0.5);"></div>
+          <div id="sc-left-plates" style="width:100%;position:relative;display:flex;flex-direction:column;gap:0;border-radius:2px;overflow:hidden;">
+            <div id="sc-rod-l" style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:3px;z-index:1;opacity:0;transition:opacity 0.4s ease;background:rgba(200,150,62,0.4);"></div>
           </div>
-          <div class="sc-cap-b" id="sc-lcb"></div>
+          <div id="sc-lcb" style="width:18px;height:5px;border-radius:3px;margin:0 auto;opacity:0;transition:opacity 0.4s ease;background:#C8963E;box-shadow:0 0 6px rgba(200,150,62,0.5);"></div>
         </div>
 
-        <div class="sc-stack sc-stack-right" id="sc-right">
-          <div class="sc-label">What has been<br>waiting</div>
-          <div class="sc-cap" id="sc-rct"></div>
-          <div class="sc-plates" id="sc-right-plates">
-            <div class="sc-rod" id="sc-rod-r"></div>
+        <div id="sc-right" style="width:118px;display:flex;flex-direction:column;align-items:center;margin-bottom:60px;">
+          <div style="font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:6px;line-height:1.4;color:rgba(80,200,120,0.85);">What has been<br>waiting</div>
+          <div id="sc-rct" style="width:18px;height:5px;border-radius:3px;margin:0 auto;opacity:0;transition:opacity 0.4s ease;background:rgba(200,150,62,0.75);"></div>
+          <div id="sc-right-plates" style="width:100%;position:relative;display:flex;flex-direction:column;gap:0;border-radius:2px;overflow:hidden;">
+            <div id="sc-rod-r" style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:3px;z-index:1;opacity:0;transition:opacity 0.4s ease;background:rgba(200,150,62,0.3);"></div>
           </div>
-          <div class="sc-cap-b" id="sc-rcb"></div>
+          <div id="sc-rcb" style="width:18px;height:5px;border-radius:3px;margin:0 auto;opacity:0;transition:opacity 0.4s ease;background:rgba(200,150,62,0.75);"></div>
         </div>
 
       </div>
 
-      <div class="sc-cost" id="sc-cost">This is what you chose<br>every single day.</div>
-      <svg class="sc-svg" id="sc-svg" style="overflow:visible;"></svg>
-      <div class="sc-pole-base">
-        <div class="sc-pole"></div>
-        <div class="sc-base"></div>
+      <div id="sc-cost" style="position:absolute;left:0;width:118px;text-align:center;padding-top:8px;font-size:10px;font-weight:500;color:rgba(230,80,80,0.85);line-height:1.5;opacity:0;transition:opacity 0.6s ease;z-index:10;"></div>
+      <svg id="sc-svg" style="position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:1;overflow:visible;"></svg>
+
+      <div style="display:flex;flex-direction:column;align-items:center;position:relative;z-index:2;">
+        <div style="width:3px;height:48px;background:linear-gradient(to bottom,rgba(200,150,62,0.7),rgba(200,150,62,0.1));border-radius:2px;"></div>
+        <div style="width:80px;height:6px;background:rgba(200,150,62,0.3);border-radius:3px;"></div>
       </div>
     </div>
 
-    <p class="scale-statement" id="scale-statement"></p>
+    <p class="scale-statement" id="scale-statement" style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(250,248,244,0.55);line-height:1.5;margin-bottom:40px;text-align:center;"></p>
 
-    <div class="scale-nav">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0;width:100%;max-width:480px;">
       <button class="btn-b" onclick="go('screen-map', 8.5)">Back</button>
       <button class="btn-g" onclick="showResult()">What this means for you</button>
     </div>
@@ -722,39 +729,46 @@
 
     const rightItems = ['Your vision','Who you are becoming','Real connection','Your purpose','Your goals'];
 
-    // Build plate elements
+    // Build plate elements with inline styles so GHL cannot override
     const lPlates = document.getElementById('sc-left-plates');
     const rPlates = document.getElementById('sc-right-plates');
+    const leftStyle = 'font-size:11px;font-weight:400;line-height:1.35;padding:7px 8px;text-align:center;position:relative;z-index:2;opacity:0;transform:translateY(-5px);transition:opacity 0.35s ease,transform 0.35s ease;background:rgba(220,60,60,0.2);color:rgba(255,150,150,0.95);border-bottom:1px solid rgba(220,60,60,0.28);display:block;';
+    const rightStyle = 'font-size:11px;font-weight:400;line-height:1.35;padding:7px 8px;text-align:center;position:relative;z-index:2;opacity:0;transform:translateY(-5px);transition:opacity 0.35s ease,transform 0.35s ease;background:rgba(80,200,120,0.1);color:rgba(120,230,160,0.9);border-bottom:1px solid rgba(80,200,120,0.18);font-style:italic;display:block;';
     leftItems.forEach(item => {
       const d = document.createElement('div');
-      d.className = 'sc-plate';
+      d.setAttribute('style', leftStyle);
       d.textContent = item;
       lPlates.appendChild(d);
     });
     rightItems.forEach(item => {
       const d = document.createElement('div');
-      d.className = 'sc-plate';
+      d.setAttribute('style', rightStyle);
       d.textContent = item;
       rPlates.appendChild(d);
     });
 
     // Step 1 — rods and top caps
     setTimeout(() => {
-      document.getElementById('sc-rod-l').classList.add('show');
-      document.getElementById('sc-rod-r').classList.add('show');
-      document.getElementById('sc-lct').classList.add('show');
-      document.getElementById('sc-rct').classList.add('show');
+      ['sc-rod-l','sc-rod-r','sc-lct','sc-rct'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.style.opacity = '1';
+      });
     }, 300);
 
     // Step 2 — left plates load on
-    const lps = lPlates.querySelectorAll('.sc-plate');
-    lps.forEach((p,i) => setTimeout(() => p.classList.add('show'), 600 + i*200));
+    const lps = lPlates.querySelectorAll('div:not(#sc-rod-l)');
+    lps.forEach((p,i) => setTimeout(() => {
+      p.style.opacity = '1';
+      p.style.transform = 'translateY(0)';
+    }, 600 + i*200));
     const afterLeft = 600 + lps.length * 200;
 
     // Step 3 — bottom caps lock
     setTimeout(() => {
-      document.getElementById('sc-lcb').classList.add('show');
-      document.getElementById('sc-rcb').classList.add('show');
+      ['sc-lcb','sc-rcb'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.style.opacity = '1';
+      });
     }, afterLeft + 100);
 
     // Step 4 — draw SVG with real measurements then show
@@ -769,12 +783,18 @@
     }, afterLeft + 300);
 
     // Step 5 — cost line
-    setTimeout(() => document.getElementById('sc-cost').classList.add('show'), afterLeft + 600);
+    setTimeout(() => {
+      const cost = document.getElementById('sc-cost');
+      if(cost) { cost.style.opacity = '1'; cost.textContent = 'This is what you chose every single day.'; }
+    }, afterLeft + 600);
 
     // Step 6 — right plates
-    const rps = rPlates.querySelectorAll('.sc-plate');
+    const rps = rPlates.querySelectorAll('div:not(#sc-rod-r)');
     const afterBeam = afterLeft + 800;
-    rps.forEach((p,i) => setTimeout(() => p.classList.add('show'), afterBeam + i*150));
+    rps.forEach((p,i) => setTimeout(() => {
+      p.style.opacity = '1';
+      p.style.transform = 'translateY(0)';
+    }, afterBeam + i*150));
 
     // Step 7 — statement
     const stmts = {
