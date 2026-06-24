@@ -1,944 +1,222 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="dark">
-<title>Self Consultation | Mind Shifting With Leon</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<!-- SELF CONSULTATION PAGE — mindshiftingwithleon.com -->
+<!-- Paste this as a single custom code block on a new GHL page -->
+<!-- Set row padding to 0 and element padding to 0 in GHL row settings -->
 
-  body {
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  .sc-page {
+    background: #FAF8F4;
     font-family: 'Jost', sans-serif;
-    background: #163E5B !important;
-    color: #FAF8F4 !important;
-    min-height: 100vh;
-    font-weight: 300;
-    overflow-x: hidden;
+    color: #163E5B;
   }
 
-  /* Force all inherited styles to reset so GHL cannot bleed in */
-  html { background: #163E5B !important; }
-  * { -webkit-tap-highlight-color: transparent; }
-
-  .screen { display: none; min-height: 100vh; background: #163E5B !important; }
-  .screen.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
-
-  .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.06); z-index: 100; }
-  .progress-fill { height: 100%; background: #C8963E; transition: width 0.7s ease; width: 0%; }
-
-  .logo-bar {
-    position: fixed; top: 0; left: 0; right: 0;
-    padding: 22px 28px;
-    display: flex; align-items: center; justify-content: space-between;
-    z-index: 99;
-    background: linear-gradient(to bottom, rgba(22,62,91,0.97) 60%, transparent);
-  }
-
-  .logo { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 400; color: rgba(250,248,244,0.45); letter-spacing: 1px; }
-  .logo strong { color: #FAF8F4; font-weight: 600; }
-  .ctr { font-size: 10px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: rgba(250,248,244,0.2); }
-
-  .ov { position: fixed; inset: 0; background: #163E5B; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-  .ov.on { opacity: 1; pointer-events: all; }
-
-  /* INTRO */
-  #screen-intro {
+  /* HERO STRIP */
+  .sc-hero {
+    background: #163E5B;
+    padding: 72px 24px 64px;
     text-align: center;
-    padding: 120px 28px 80px;
-    background: radial-gradient(ellipse at 50% 30%, rgba(200,150,62,0.1) 0%, transparent 58%), #163E5B;
-    position: relative; overflow: hidden;
   }
 
-  .ring { position: absolute; border-radius: 50%; border: 1px solid rgba(200,150,62,0.055); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
-  .r1 { width: 480px; height: 480px; }
-  .r2 { width: 820px; height: 820px; border-color: rgba(200,150,62,0.025); }
-  .r3 { width: 1160px; height: 1160px; border-color: rgba(200,150,62,0.012); }
+  .sc-hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #C8963E;
+    margin-bottom: 20px;
+  }
 
-  .intro-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #C8963E; margin-bottom: 28px; position: relative; }
-  .intro-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(46px, 10vw, 96px); font-weight: 300; line-height: 0.95; color: #FAF8F4; margin-bottom: 32px; position: relative; letter-spacing: -2px; }
-  .intro-h1 em { font-style: italic; color: #F2BE54; display: block; }
-  .intro-sub { font-size: 16px; font-weight: 300; color: rgba(250,248,244,0.45); max-width: 380px; margin: 0 auto 52px; line-height: 1.9; position: relative; }
+  .sc-hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #FAF8F4;
+    margin-bottom: 24px;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-  .btn-g { background: #C8963E; color: #FAF8F4; border: none; padding: 18px 56px; font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s ease; position: relative; }
-  .btn-g:hover { background: #b8843a; transform: translateY(-2px); }
-  .intro-note { margin-top: 24px; font-size: 11px; color: rgba(250,248,244,0.18); letter-spacing: 1px; position: relative; }
+  .sc-hero-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #a8bfcf;
+    max-width: 520px;
+    margin: 0 auto;
+  }
 
-  /* QUESTION SCREENS */
-  .qw { max-width: 560px; width: 100%; padding: 110px 28px 80px; background: #163E5B !important; }
-  .ql { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(200,150,62,0.6); margin-bottom: 28px; display: block; }
-  .qt { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 5.5vw, 44px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 14px; }
-  .qt em { font-style: italic; color: #F2BE54; }
-  .qh { font-size: 14px; color: rgba(250,248,244,0.35); margin-bottom: 36px; line-height: 1.75; font-style: italic; }
+  /* TOOL WRAPPER */
+  .sc-tool-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 24px 0;
+  }
 
-  .qcs { display: flex; flex-direction: column; gap: 10px; }
-  .qc { background: rgba(255,255,255,0.03); border: 1px solid rgba(250,248,244,0.08); border-radius: 3px; padding: 17px 20px; font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: rgba(250,248,244,0.65); cursor: pointer; text-align: left; transition: all 0.2s ease; line-height: 1.5; }
-  .qc:hover { background: rgba(200,150,62,0.08); border-color: rgba(200,150,62,0.28); color: #FAF8F4; }
-  .qc.sel { background: rgba(200,150,62,0.1); border-color: #C8963E; color: #FAF8F4; }
+  .sc-tool-intro {
+    text-align: center;
+    margin-bottom: 40px;
+  }
 
-  .q-extra { margin-top: 14px; }
-  .q-extra-label { font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(250,248,244,0.25); margin-bottom: 10px; display: block; }
-  .q-extra-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(250,248,244,0.12); padding: 12px 4px; font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; color: #FAF8F4; outline: none; transition: border-color 0.2s; caret-color: #C8963E; }
-  .q-extra-input:focus { border-bottom-color: #C8963E; }
-  .q-extra-input::placeholder { color: rgba(250,248,244,0.18); font-style: italic; }
+  .sc-tool-intro-tag {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #C8963E;
+    margin-bottom: 14px;
+  }
 
-  .qnav { display: flex; align-items: center; justify-content: space-between; margin-top: 40px; }
-  .btn-n { background: #C8963E; color: #FAF8F4; border: none; padding: 14px 40px; font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s ease; opacity: 0.22; pointer-events: none; }
-  .btn-n.on { opacity: 1; pointer-events: all; }
-  .btn-n.on:hover { background: #b8843a; transform: translateY(-1px); }
-  .btn-b { background: transparent; border: none; color: rgba(250,248,244,0.28); font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; padding: 0; transition: color 0.2s; }
-  .btn-b:hover { color: rgba(250,248,244,0.55); }
+  .sc-tool-intro p {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #4a6478;
+    max-width: 500px;
+    margin: 0 auto;
+  }
 
-  /* MAP */
-  #screen-map { padding: 100px 28px 80px; background: #0a1e2d; align-items: center; }
-  .map-w { max-width: 580px; width: 100%; }
-  .map-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #C8963E; margin-bottom: 20px; display: block; }
-  .map-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 5vw, 42px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 12px; }
-  .map-h em { font-style: italic; color: #F2BE54; }
-  .map-intro { font-size: 15px; color: rgba(250,248,244,0.6); line-height: 1.85; margin-bottom: 36px; }
-  .map-intro strong { color: #FAF8F4; font-weight: 500; }
+  /* IFRAME */
+  .sc-iframe-wrap {
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(22,62,91,0.10);
+  }
 
-  .explain-block { margin-bottom: 3px; border-radius: 3px; overflow: hidden; opacity: 0; transform: translateY(8px); transition: opacity 0.5s ease, transform 0.5s ease; }
-  .explain-block.vis { opacity: 1; transform: translateY(0); }
-  .explain-header { display: flex; align-items: center; gap: 16px; padding: 16px 20px; }
-  .explain-block.top .explain-header { background: rgba(242,190,84,0.12); border: 1px solid rgba(242,190,84,0.25); }
-  .explain-block.mid .explain-header { background: rgba(200,150,62,0.08); border: 1px solid rgba(200,150,62,0.18); }
-  .explain-block.bot .explain-header { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); }
-  .explain-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .explain-block.top .explain-dot { background: #F2BE54; box-shadow: 0 0 8px rgba(242,190,84,0.4); }
-  .explain-block.mid .explain-dot { background: #C8963E; }
-  .explain-block.bot .explain-dot { background: rgba(255,255,255,0.2); }
-  .explain-name { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 400; flex: 1; }
-  .explain-block.top .explain-name { color: #F2BE54; }
-  .explain-block.mid .explain-name { color: #FAF8F4; }
-  .explain-block.bot .explain-name { color: rgba(250,248,244,0.45); }
-  .explain-tag { font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; }
-  .explain-block.top .explain-tag { color: rgba(242,190,84,0.6); }
-  .explain-block.mid .explain-tag { color: rgba(200,150,62,0.55); }
-  .explain-block.bot .explain-tag { color: rgba(255,255,255,0.2); }
-  .explain-body { padding: 14px 20px 18px; font-size: 14px; line-height: 1.85; }
-  .explain-block.top .explain-body { background: rgba(242,190,84,0.05); color: rgba(250,248,244,0.72); border: 1px solid rgba(242,190,84,0.12); border-top: none; }
-  .explain-block.mid .explain-body { background: rgba(200,150,62,0.04); color: rgba(250,248,244,0.65); border: 1px solid rgba(200,150,62,0.1); border-top: none; }
-  .explain-block.bot .explain-body { background: rgba(255,255,255,0.02); color: rgba(250,248,244,0.42); border: 1px solid rgba(255,255,255,0.04); border-top: none; }
-
-  .map-key { margin-top: 20px; padding: 18px 20px; background: rgba(200,150,62,0.06); border-left: 2px solid #C8963E; border-radius: 2px; font-size: 15px; color: rgba(250,248,244,0.75); line-height: 1.85; opacity: 0; transition: opacity 0.6s ease; }
-  .map-key.vis { opacity: 1; }
-  .map-key strong { color: #FAF8F4; font-weight: 500; }
-
-  /* SCALE */
-  #screen-scale { background: #060e15; padding: 80px 20px 60px; align-items: center; text-align: center; overflow: visible; }
-  .scale-w { max-width: 480px; width: 100%; }
-  .scale-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(200,150,62,0.5); margin-bottom: 24px; display: block; }
-  .scale-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 5vw, 46px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 40px; }
-  .scale-h em { font-style: italic; color: #F2BE54; }
-
-  /* SCALE - flexbox, no overflow */
-  .scale-visual { width: 100%; margin: 0 auto 40px; }
-
-  .scale-pans-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
+  .sc-iframe-wrap iframe {
+    display: block;
     width: 100%;
-    margin-bottom: 8px;
+    border: none;
+    height: calc(100vh - 100px);
+    min-height: 600px;
+    max-height: calc(100vh - 100px);
   }
 
-  .scale-pan-left, .scale-pan-right {
-    flex: 1;
-    min-width: 0;
+  @media (max-width: 768px) {
+    .sc-iframe-wrap {
+      border-radius: 0;
+      box-shadow: none;
+      overflow: hidden;
+    }
+    .sc-iframe-wrap iframe {
+      height: 90vh;
+      max-height: 750px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
   }
 
-  .scale-pan-dish { height: 2px; border-radius: 2px; margin-bottom: 8px; }
-  .scale-pan-left .scale-pan-dish { background: rgba(220,80,80,0.5); }
-  .scale-pan-right .scale-pan-dish { background: rgba(100,180,100,0.35); }
-
-  .scale-pan-label { font-size: 9px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; display: block; }
-  .scale-pan-left .scale-pan-label { color: rgba(220,100,100,0.7); }
-  .scale-pan-right .scale-pan-label { color: rgba(100,180,100,0.5); }
-
-  .scale-pan-items { display: flex; flex-direction: column; gap: 4px; }
-  .scale-pan-item { font-size: 11px; line-height: 1.4; padding: 4px 8px; border-radius: 2px; opacity: 0; transform: translateY(4px); transition: opacity 0.4s ease, transform 0.4s ease; word-break: break-word; }
-  .scale-pan-item.show { opacity: 1; transform: translateY(0); }
-  .scale-pan-left .scale-pan-item { background: rgba(220,80,80,0.14); border: 1px solid rgba(220,80,80,0.3); color: rgba(250,160,160,0.9); font-weight: 400; }
-  .scale-pan-right .scale-pan-item { background: rgba(100,180,100,0.03); border: 1px solid rgba(100,180,100,0.08); color: rgba(150,220,150,0.25); font-style: italic; }
-
-  /* Simple beam below pans */
-  .scale-beam-row {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-    margin-bottom: 4px;
+  /* BELOW TOOL */
+  .sc-below {
+    max-width: 560px;
+    margin: 56px auto 0;
+    padding: 0 24px 80px;
+    text-align: center;
   }
 
-  .scale-beam-line {
-    flex: 1;
+  .sc-below-divider {
+    width: 40px;
     height: 2px;
-    background: linear-gradient(to right, rgba(200,150,62,0.8), rgba(200,150,62,0.3), rgba(200,150,62,0.8));
-    position: relative;
-    transition: transform 1.8s cubic-bezier(0.34,1.56,0.64,1);
-    transform-origin: center;
+    background: #C8963E;
+    margin: 0 auto 32px;
   }
 
-  .scale-beam-line.tilt { transform: rotate(22deg); }
+  .sc-below-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: #163E5B;
+    margin-bottom: 16px;
+  }
 
-  .scale-pivot { width: 10px; height: 10px; border-radius: 50%; background: #C8963E; flex-shrink: 0; box-shadow: 0 0 8px rgba(200,150,62,0.4); }
+  .sc-below-body {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #4a6478;
+    margin-bottom: 36px;
+  }
 
-  .scale-pole { width: 2px; height: 60px; background: linear-gradient(to bottom, rgba(200,150,62,0.6), rgba(200,150,62,0.15)); margin: 0 auto; border-radius: 2px; }
-  .scale-base { width: 60px; height: 4px; background: rgba(200,150,62,0.2); border-radius: 3px; margin: 0 auto; }
-  .scale-statement { font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 3.5vw, 26px); font-weight: 300; font-style: italic; color: rgba(250,248,244,0.5); line-height: 1.4; margin-bottom: 48px; }
-  .scale-statement em { color: #F2BE54; font-style: normal; }
+  .sc-below-btn {
+    display: inline-block;
+    padding: 18px 40px;
+    background: #163E5B;
+    color: #FAF8F4;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .sc-below-btn:hover { background: #0f2d42; }
 
-  .scale-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 0; }
-
-  /* RESULT */
-  #screen-result { padding: 90px 28px 80px; align-items: center; background: linear-gradient(170deg, #060e15 0%, #163E5B 100%); }
-  .res-w { max-width: 580px; width: 100%; }
-  .res-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #C8963E; margin-bottom: 24px; display: block; }
-  .res-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 6vw, 54px); font-weight: 300; line-height: 1.08; color: #FAF8F4; margin-bottom: 20px; }
-  .res-h1 em { font-style: italic; color: #F2BE54; }
-  .res-rule { width: 40px; height: 2px; background: #C8963E; margin-bottom: 32px; }
-
-  .cost-summary { background: rgba(0,0,0,0.3); border-radius: 3px; padding: 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 20px; }
-  .cost-summary-num { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 300; color: #F2BE54; line-height: 1; flex-shrink: 0; }
-  .cost-summary-right { flex: 1; }
-  .cost-summary-label { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(250,248,244,0.3); margin-bottom: 8px; display: block; }
-  .cost-summary-text { font-size: 14px; color: rgba(250,248,244,0.6); line-height: 1.7; }
-  .cost-summary-costs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .cost-tag { font-size: 11px; color: rgba(200,150,62,0.8); background: rgba(200,150,62,0.08); border: 1px solid rgba(200,150,62,0.18); border-radius: 2px; padding: 3px 10px; }
-
-  .means-block { background: rgba(255,255,255,0.03); border: 1px solid rgba(250,248,244,0.07); border-radius: 3px; padding: 26px 24px; margin-bottom: 24px; }
-  .means-label { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(250,248,244,0.25); margin-bottom: 14px; display: block; }
-  .means-text { font-size: 15px; color: rgba(250,248,244,0.65); line-height: 1.9; }
-  .means-text strong { color: #FAF8F4; font-weight: 500; }
-
-  .open-q { padding: 26px 0; border-top: 1px solid rgba(250,248,244,0.07); border-bottom: 1px solid rgba(250,248,244,0.07); margin-bottom: 36px; }
-  .open-q-label { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(200,150,62,0.5); margin-bottom: 14px; display: block; }
-  .open-q-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(20px, 3.5vw, 30px); font-weight: 300; line-height: 1.3; color: #FAF8F4; }
-  .open-q-text em { font-style: italic; color: #F2BE54; }
-
-  .res-back { margin-top: 24px; text-align: center; }
-
-  .cta-block { background: rgba(200,150,62,0.07); border: 1px solid rgba(200,150,62,0.18); border-radius: 3px; padding: 36px 28px; text-align: center; }
-  .cta-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #C8963E; margin-bottom: 18px; display: block; }
-  .cta-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 4vw, 38px); font-weight: 300; color: #FAF8F4; line-height: 1.2; margin-bottom: 16px; }
-  .cta-h2 em { font-style: italic; color: #F2BE54; }
-  .cta-p { font-size: 15px; color: rgba(250,248,244,0.45); line-height: 1.8; max-width: 380px; margin: 0 auto 28px; }
-  .cta-feats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; text-align: left; }
-  .cta-feat { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: rgba(250,248,244,0.6); line-height: 1.5; }
-  .cta-feat::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: #C8963E; flex-shrink: 0; margin-top: 7px; }
-  .btn-cta { display: block; width: 100%; background: #C8963E; color: #FAF8F4; border: none; padding: 18px 28px; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; cursor: pointer; border-radius: 2px; transition: all 0.2s ease; text-decoration: none; text-align: center; margin-bottom: 14px; }
-  .btn-cta:hover { background: #b8843a; }
-  .cta-sub { font-size: 12px; color: rgba(250,248,244,0.18); letter-spacing: 1px; }
-
-  @media (max-width: 480px) {
-    .qw { padding: 100px 20px 70px; }
-    .cta-block { padding: 28px 18px; }
-    .cost-summary { flex-direction: column; gap: 12px; text-align: center; }
-    .cost-summary-costs { justify-content: center; }
-    .sc-outer { width: 280px; }
-    .sc-plate { font-size: 10px; padding: 6px 6px; }
+  @media (max-width: 600px) {
+    .sc-hero-headline { font-size: 36px; }
+    .sc-hero-sub { font-size: 15px; }
+    .sc-below-headline { font-size: 26px; }
   }
 </style>
-</head>
-<body>
-<style>
-  /* Override any parent styles bleeding in */
-  html, body {
-    background: #163E5B !important;
-    background-color: #163E5B !important;
-    color: #FAF8F4 !important;
-  }
-  /* Target GHL's common overriding classes */
-  .page-wrapper, .section-wrapper, .container { background: transparent !important; }
-</style>
-<!-- Full page cover div so nothing bleeds through -->
-<div id="app-root" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#163E5B;z-index:0;pointer-events:none;"></div>
 
-<div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
-<div class="ov" id="ov"></div>
+<div class="sc-page">
 
-<div class="logo-bar">
-  <div class="logo">Mind Shifting <strong>with Leon</strong></div>
-  <div class="ctr" id="ctr"></div>
-</div>
+  <!-- HERO -->
+  <div class="sc-hero">
+    <div class="sc-hero-eyebrow">Self Consultation</div>
+    <h1 class="sc-hero-headline">Something keeps pulling you back.<br>Find out what is running it.</h1>
+    <p class="sc-hero-sub">Eight questions. No generic advice. By the end you will see something about what is driving this that most people never get shown.</p>
+  </div>
 
-<!-- INTRO -->
-<!-- Q1 -->
-<div class="screen active" id="screen-q1">
-  <div class="qw">
-    <span class="ql">Question 1 of 8</span>
-    <h2 class="qt">How many years has <em>this taken from you?</em></h2>
-    <p class="qh">Be honest with yourself.</p>
-    <div class="qcs" id="c1">
-      <button class="qc" onclick="single('c1','n1',this,'less','Less than a year')">Less than a year</button>
-      <button class="qc" onclick="single('c1','n1',this,'few','A few years')">A few years</button>
-      <button class="qc" onclick="single('c1','n1',this,'five','Five or more years')">Five or more years</button>
-      <button class="qc" onclick="single('c1','n1',this,'decade','Over a decade')">Over a decade</button>
+  <!-- TOOL -->
+  <div class="sc-tool-wrap">
+    <div class="sc-tool-intro">
+      <div class="sc-tool-intro-tag">Free</div>
+      <p>No sign-up required. Takes around four minutes.</p>
     </div>
-    <div class="qnav">
-      <span></span>
-      <button class="btn-n" id="n1" onclick="go('screen-q2',2)">Continue</button>
+    <div class="sc-iframe-wrap">
+      <iframe
+        src="https://leoncarljames1-ai.github.io/deep-why-method/self-consultation.html"
+        height="700"
+        allow="clipboard-write"
+        id="sc-iframe"
+        style="display:block;width:100%;border:none;overflow-y:auto;"
+        title="Self Consultation — Mind Shifting With Leon">
+      </iframe>
     </div>
   </div>
-</div>
 
-<!-- Q2 -->
-<div class="screen" id="screen-q2">
-  <div class="qw">
-    <span class="ql">Question 2 of 8</span>
-    <h2 class="qt">What else has <em>it cost you?</em></h2>
-    <p class="qh">Select everything that feels true.</p>
-    <div class="qcs" id="c2">
-      <button class="qc" onclick="multi(this,'Relationships')">Relationships</button>
-      <button class="qc" onclick="multi(this,'Self respect')">Self respect</button>
-      <button class="qc" onclick="multi(this,'Career or ambition')">Career or ambition</button>
-      <button class="qc" onclick="multi(this,'Money')">Money</button>
-      <button class="qc" onclick="multi(this,'Friends')">Friends</button>
-      <button class="qc" onclick="multi(this,'Hobbies or passions I used to have')">Hobbies or passions I used to have</button>
-      <button class="qc" onclick="multi(this,'My confidence')">My confidence</button>
-      <button class="qc" onclick="multi(this,'My ability to be present')">My ability to be present</button>
-      <button class="qc" onclick="multi(this,'The person I could have been')">The person I could have been</button>
-    </div>
-    <div class="q-extra">
-      <span class="q-extra-label">Anything else</span>
-      <input type="text" class="q-extra-input" id="extra-q2" placeholder="Something not listed above...">
-    </div>
-    <div class="qnav">
-      <button class="btn-b" onclick="go('screen-q1',1)">Back</button>
-      <button class="btn-n on" id="n2" onclick="go('screen-q3',3)">Continue</button>
-    </div>
+  <!-- BELOW TOOL CTA -->
+  <div class="sc-below">
+    <div class="sc-below-divider"></div>
+    <h2 class="sc-below-headline">Ready to clear what is actually running this?</h2>
+    <p class="sc-below-body">The consultation shows you what is underneath. The session is where it gets cleared. Most men feel a shift in the first 90 minutes that years of trying could not produce.</p>
+    <a href="mailto:mindshiftingwithleon@gmail.com?subject=I%20want%20to%20book%20a%20session" class="sc-below-btn">Book a Session With Leon</a>
   </div>
-</div>
 
-<!-- Q3 -->
-<div class="screen" id="screen-q3">
-  <div class="qw">
-    <span class="ql">Question 3 of 8</span>
-    <h2 class="qt">Have you ever <em>told anyone</em> about this?</h2>
-    <p class="qh">There is no wrong answer here.</p>
-    <div class="qcs" id="c3">
-      <button class="qc" onclick="single('c3','n3',this,'never','Never')">Never. Nobody knows.</button>
-      <button class="qc" onclick="single('c3','n3',this,'notfully','Not fully')">Not fully. People know something but not the whole picture.</button>
-      <button class="qc" onclick="single('c3','n3',this,'tried','Tried to get help')">I have tried to get help before.</button>
-      <button class="qc" onclick="single('c3','n3',this,'someone','One or two know')">One or two people know.</button>
-    </div>
-    <div class="qnav">
-      <button class="btn-b" onclick="go('screen-q2',2)">Back</button>
-      <button class="btn-n" id="n3" onclick="go('screen-q4',4)">Continue</button>
-    </div>
-  </div>
-</div>
-
-<!-- Q4 -->
-<div class="screen" id="screen-q4">
-  <div class="qw">
-    <span class="ql">Question 4 of 8</span>
-    <h2 class="qt">In the moment just before it happens, <em>what are you feeling?</em></h2>
-    <p class="qh">Not during. Not after. The moment just before. Select all that feel true.</p>
-    <div class="qcs" id="c4">
-      <button class="qc" onclick="multi4(this,'stress','Stressed or overwhelmed')">Stressed or overwhelmed</button>
-      <button class="qc" onclick="multi4(this,'lonely','Lonely or disconnected')">Lonely or disconnected</button>
-      <button class="qc" onclick="multi4(this,'bored','Bored and empty')">Bored and empty</button>
-      <button class="qc" onclick="multi4(this,'anxious','Anxious and like I cannot settle')">Anxious and like I cannot settle</button>
-      <button class="qc" onclick="multi4(this,'numb','Numb. Nothing in particular.')">Numb. Nothing in particular.</button>
-      <button class="qc" onclick="multi4(this,'auto','Like I am already on autopilot and it has already started')">Like I am already on autopilot and it has already started</button>
-    </div>
-    <div class="q-extra">
-      <span class="q-extra-label">Anything else</span>
-      <input type="text" class="q-extra-input" id="extra-q4" placeholder="Something not listed above...">
-    </div>
-    <div class="qnav">
-      <button class="btn-b" onclick="go('screen-q3',3)">Back</button>
-      <button class="btn-n on" id="n4" onclick="go('screen-q5',5)">Continue</button>
-    </div>
-  </div>
-</div>
-
-<!-- Q5 -->
-<div class="screen" id="screen-q5">
-  <div class="qw">
-    <span class="ql">Question 5 of 8</span>
-    <h2 class="qt">After it happens, <em>what stays with you?</em></h2>
-    <p class="qh">Select everything that is honest.</p>
-    <div class="qcs" id="c5">
-      <button class="qc" onclick="multi5(this,'shame','Shame and disgust with myself')">Shame and disgust with myself</button>
-      <button class="qc" onclick="multi5(this,'failed','The feeling that I have failed again')">The feeling that I have failed again</button>
-      <button class="qc" onclick="multi5(this,'empty','Emptiness. Like nothing actually changed.')">Emptiness. Like nothing actually changed.</button>
-      <button class="qc" onclick="multi5(this,'promise','A promise to myself that this was the last time')">A promise to myself that this was the last time</button>
-      <button class="qc" onclick="multi5(this,'nothing','Nothing really. It just happens.')">Nothing really. It just happens.</button>
-    </div>
-    <div class="q-extra">
-      <span class="q-extra-label">Anything else</span>
-      <input type="text" class="q-extra-input" id="extra-q5" placeholder="Something not listed above...">
-    </div>
-    <div class="qnav">
-      <button class="btn-b" onclick="go('screen-q4',4)">Back</button>
-      <button class="btn-n on" id="n5" onclick="go('screen-q6',6)">Continue</button>
-    </div>
-  </div>
-</div>
-
-<!-- Q6 -->
-<div class="screen" id="screen-q6">
-  <div class="qw">
-    <span class="ql">Question 6 of 8</span>
-    <h2 class="qt">Does this feel like something you <em>do</em> or something you <em>are?</em></h2>
-    <p class="qh">Take a moment with this one before you answer.</p>
-    <div class="qcs" id="c6">
-      <button class="qc" onclick="single('c6','n6',this,'partofme','Part of who I am')">It feels like part of who I am</button>
-      <button class="qc" onclick="single('c6','n6',this,'dontknow','Don\'t know who I am without it')">I do not know who I am without it</button>
-      <button class="qc" onclick="single('c6','n6',this,'cantstop','Something I do but cannot stop')">It feels like something I do but I cannot seem to stop</button>
-      <button class="qc" onclick="single('c6','n6',this,'morethan','Started to feel like more')">It has started to feel like more than just something I do</button>
-    </div>
-    <div class="qnav">
-      <button class="btn-b" onclick="go('screen-q5',5)">Back</button>
-      <button class="btn-n" id="n6" onclick="go('screen-q7',7)">Continue</button>
-    </div>
-  </div>
-</div>
-
-<!-- Q7 -->
-<div class="screen" id="screen-q7">
-  <div class="qw">
-    <span class="ql">Question 7 of 8</span>
-    <h2 class="qt">When you imagine life without this, <em>what is the first thing that comes up?</em></h2>
-    <p class="qh">Do not think about it. First thing.</p>
-    <div class="qcs" id="c7">
-      <button class="qc" onclick="single('c7','n7',this,'relief','Relief')">Relief</button>
-      <button class="qc" onclick="single('c7','n7',this,'fear','Fear of who I would be without it')">Fear of who I would be without it</button>
-      <button class="qc" onclick="single('c7','n7',this,'cantpicture','I cannot picture it')">I cannot picture it</button>
-      <button class="qc" onclick="single('c7','n7',this,'excited','Excitement but I do not know how to get there')">Excitement but I do not know how to get there</button>
-      <button class="qc" onclick="single('c7','n7',this,'emptiness','I would not know what to do with myself')">Emptiness. I would not know what to do with myself.</button>
-      <button class="qc" onclick="single('c7','n7',this,'neverthought','I have never really let myself think about it')">Something I have never really let myself think about</button>
-    </div>
-    <div class="qnav">
-      <button class="btn-b" onclick="go('screen-q6',6)">Back</button>
-      <button class="btn-n" id="n7" onclick="go('screen-q8',8)">Continue</button>
-    </div>
-  </div>
-</div>
-
-<!-- Q8 -->
-<div class="screen" id="screen-q8">
-  <div class="qw">
-    <span class="ql">Question 8 of 8</span>
-    <h2 class="qt">What do you think has <em>been keeping you stuck?</em></h2>
-    <p class="qh">The most honest answer, not the easiest one.</p>
-    <div class="qcs" id="c8">
-      <button class="qc" onclick="single('c8','n8',this,'willpower','Not enough willpower')">I do not have enough willpower</button>
-      <button class="qc" onclick="single('c8','n8',this,'knowbutcant','Know why but cannot change it')">I know why but I cannot seem to change it</button>
-      <button class="qc" onclick="single('c8','n8',this,'deeper','Something deeper I have not worked out')">Something deeper I have not worked out yet</button>
-      <button class="qc" onclick="single('c8','n8',this,'dontknow','Honestly do not know')">I honestly do not know</button>
-      <button class="qc" onclick="single('c8','n8',this,'whoiam','Just who I am')">I think it is just who I am</button>
-    </div>
-    <div class="qnav">
-      <button class="btn-b" onclick="go('screen-q7',7)">Back</button>
-      <button class="btn-n" id="n8" onclick="showMap()">See what this reveals</button>
-    </div>
-  </div>
-</div>
-
-<!-- MAP -->
-<div class="screen" id="screen-map">
-  <div class="map-w">
-    <span class="map-eye">Here is what is actually happening</span>
-    <h2 class="map-h">You have been working <em>back to front.</em></h2>
-    <p class="map-intro" id="map-intro-text"></p>
-
-    <div class="explain-block top" id="eb1">
-      <div class="explain-header">
-        <div class="explain-dot"></div>
-        <div class="explain-name">Vision &amp; Purpose</div>
-        <div class="explain-tag">The most powerful level</div>
-      </div>
-      <div class="explain-body">You are stuck because you have no picture of who you are becoming that is powerful enough to compete with the pull of the moment. Not a goal. Not a reason to be better. A vision. Something you are living for. Something you are building. Something bigger than stopping a habit. When that is real and felt, the pattern becomes incompatible with where you are going. It starts to lose its grip on its own. Without it, every attempt runs out of fuel. You are pushing against something with nothing on the other side pulling back. Without it, you will still be having this same fight five years from now.</div>
-    </div>
-
-    <div class="explain-block top" id="eb2">
-      <div class="explain-header">
-        <div class="explain-dot"></div>
-        <div class="explain-name">Identity</div>
-        <div class="explain-tag">Runs deeper than the habit</div>
-      </div>
-      <div class="explain-body">You do not have a habit problem. You have an identity problem. You are acting perfectly consistent with who you believe you are. The pattern keeps coming back because it belongs. It fits the person you believe yourself to be. Until that changes, nothing else will.</div>
-    </div>
-
-    <div class="explain-block top" id="eb3">
-      <div class="explain-header">
-        <div class="explain-dot"></div>
-        <div class="explain-name">What you believe about yourself</div>
-        <div class="explain-tag">The instructions the behaviour follows</div>
-      </div>
-      <div class="explain-body">Underneath the pattern is usually something a man believes about himself that he has never said out loud. Something about whether he is enough. Whether he deserves more than this. Whether things can actually be different. Those beliefs are what the behaviour is built on. Remove the belief and the behaviour has nothing left to stand on.</div>
-    </div>
-
-    <div class="explain-block mid" id="eb4">
-      <div class="explain-header">
-        <div class="explain-dot"></div>
-        <div class="explain-name">Capabilities</div>
-        <div class="explain-tag"></div>
-      </div>
-      <div class="explain-body">Learning techniques and strategies can help. But they cannot override what is running above them.</div>
-    </div>
-
-    <div class="explain-block bot" id="eb5">
-      <div class="explain-header">
-        <div class="explain-dot"></div>
-        <div class="explain-name">Behaviour</div>
-        <div class="explain-tag">Where everything you tried was aimed</div>
-      </div>
-      <div class="explain-body">Willpower. Promises to yourself. Trying harder. All of it aimed directly at the behaviour. While everything above it, the beliefs, the identity, the lack of direction, sits completely untouched.</div>
-    </div>
-
-    <div class="explain-block bot" id="eb6">
-      <div class="explain-header">
-        <div class="explain-dot"></div>
-        <div class="explain-name">Environment</div>
-        <div class="explain-tag">Where everything you tried was aimed</div>
-      </div>
-      <div class="explain-body">Blockers. Removing access. Changing your environment. None of it travels to what is actually running this. You take it with you wherever you go.</div>
-    </div>
-
-    <div class="map-key" id="map-key">
-      <p id="map-key-text"></p>
-    </div>
-
-    <div class="qnav" style="margin-top:24px">
-      <button class="btn-b" onclick="go('screen-q8',8)">Back</button>
-      <button class="btn-n on" onclick="showScale()" style="opacity:1;pointer-events:all">See where your energy has been going</button>
-    </div>
-  </div>
-</div>
-
-<!-- SCALE -->
-<div class="screen" id="screen-scale" style="background:#060e15 !important;">
-  <div class="scale-w" style="width:100%;max-width:480px;text-align:center;">
-    <span class="scale-eye">The imbalance</span>
-    <h2 class="scale-h">This is what you have<br>been <em>feeding.</em></h2>
-
-    <!-- EXACT MOCKUP11 STRUCTURE -->
-    <div id="sc-outer" style="position:relative;width:300px;margin:0 auto 32px;">
-
-      <div id="sc-stacks" style="display:flex !important;flex-direction:row !important;justify-content:space-between;align-items:flex-end;width:100%;position:relative;z-index:2;">
-
-        <div id="sc-left" style="width:118px;display:flex;flex-direction:column;align-items:center;margin-top:60px;">
-          <div style="font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:6px;line-height:1.4;color:rgba(230,80,80,0.95);">What it has<br>cost you</div>
-          <div id="sc-lct" style="width:18px;height:5px;border-radius:3px;margin:0 auto;opacity:0;transition:opacity 0.4s ease;background:#C8963E;box-shadow:0 0 6px rgba(200,150,62,0.5);"></div>
-          <div id="sc-left-plates" style="width:100%;position:relative;display:flex;flex-direction:column;gap:0;border-radius:2px;overflow:hidden;">
-            <div id="sc-rod-l" style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:3px;z-index:1;opacity:0;transition:opacity 0.4s ease;background:rgba(200,150,62,0.4);"></div>
-          </div>
-          <div id="sc-lcb" style="width:18px;height:5px;border-radius:3px;margin:0 auto;opacity:0;transition:opacity 0.4s ease;background:#C8963E;box-shadow:0 0 6px rgba(200,150,62,0.5);"></div>
-        </div>
-
-        <div id="sc-right" style="width:118px;display:flex;flex-direction:column;align-items:center;margin-bottom:60px;">
-          <div style="font-size:8px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:6px;line-height:1.4;color:rgba(80,200,120,0.85);">What has been<br>waiting</div>
-          <div id="sc-rct" style="width:18px;height:5px;border-radius:3px;margin:0 auto;opacity:0;transition:opacity 0.4s ease;background:rgba(200,150,62,0.75);"></div>
-          <div id="sc-right-plates" style="width:100%;position:relative;display:flex;flex-direction:column;gap:0;border-radius:2px;overflow:hidden;">
-            <div id="sc-rod-r" style="position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:3px;z-index:1;opacity:0;transition:opacity 0.4s ease;background:rgba(200,150,62,0.3);"></div>
-          </div>
-          <div id="sc-rcb" style="width:18px;height:5px;border-radius:3px;margin:0 auto;opacity:0;transition:opacity 0.4s ease;background:rgba(200,150,62,0.75);"></div>
-        </div>
-
-      </div>
-
-      <!-- cost line moved below scale -->
-      <svg id="sc-svg" style="position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:1;overflow:visible;"></svg>
-
-      <div style="display:flex;flex-direction:column;align-items:center;position:relative;z-index:2;">
-        <div style="width:3px;height:48px;background:linear-gradient(to bottom,rgba(200,150,62,0.7),rgba(200,150,62,0.1));border-radius:2px;"></div>
-        <div style="width:80px;height:6px;background:rgba(200,150,62,0.3);border-radius:3px;"></div>
-      </div>
-    </div>
-
-    <p id="sc-cost" style="font-size:13px;font-weight:500;color:rgba(230,80,80,0.85);text-align:center;line-height:1.5;opacity:0;transition:opacity 0.6s ease;margin-bottom:16px;font-family:'Jost',sans-serif;"></p>
-    <p class="scale-statement" id="scale-statement" style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:rgba(250,248,244,0.55);line-height:1.5;margin-bottom:40px;text-align:center;"></p>
-
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0;width:100%;max-width:480px;">
-      <button class="btn-b" onclick="go('screen-map', 8.5)">Back</button>
-      <button class="btn-g" onclick="showResult()">What this means for you</button>
-    </div>
-  </div>
-</div>
-
-<!-- RESULT -->
-<div class="screen" id="screen-result">
-  <div class="res-w">
-    <span class="res-eye">What your answers reveal</span>
-    <h1 class="res-h1" id="res-h">The behaviour is not<br>the <em>problem.</em></h1>
-    <div class="res-rule"></div>
-
-    <div class="cost-summary">
-      <div class="cost-summary-num" id="res-years"></div>
-      <div class="cost-summary-right">
-        <span class="cost-summary-label">Already taken</span>
-        <div class="cost-summary-text" id="res-years-text"></div>
-        <div class="cost-summary-costs" id="res-costs"></div>
-      </div>
-    </div>
-
-    <div class="means-block">
-      <span class="means-label">What is actually driving this</span>
-      <div class="means-text" id="means-text"></div>
-    </div>
-
-    <div class="open-q">
-      <span class="open-q-label">The question that remains</span>
-      <div class="open-q-text" id="open-q-text"></div>
-    </div>
-
-    <div class="cta-block">
-      <span class="cta-eye">The OTOA Programme</span>
-      <h2 class="cta-h2">Three sessions.<br><em>One driver cleared.</em></h2>
-      <p class="cta-p">Not coaching. Not therapy. Work that goes directly to where this is running and clears it there. Then builds what has been missing above it.</p>
-      <div class="cta-feats">
-        <div class="cta-feat">3 x 90 minute 1:1 sessions with Leon</div>
-        <div class="cta-feat">Goes to the root, not the behaviour</div>
-        <div class="cta-feat">If the target is not reached by session 3, two extra sessions free</div>
-        <div class="cta-feat">£180 total &nbsp;|&nbsp; Single session £70</div>
-      </div>
-      <a href="mailto:mindshiftingwithleon@gmail.com?subject=I%20just%20completed%20the%20self%20consultation" class="btn-cta">Book a session with Leon</a>
-      <div class="cta-sub">mindshiftingwithleon@gmail.com</div>
-    </div>
-
-    <div class="res-back">
-      <button class="btn-b" onclick="go('screen-scale', 9)">Back</button>
-    </div>
-  </div>
 </div>
 
 <script>
-  const S = {
-    years:'', yearsLabel:'',
-    costs:[], extraCost:'',
-    told:'',
-    triggers:[], triggerLabels:[], extraTrigger:'',
-    after:[], afterLabels:[], extraAfter:'',
-    identity:'', vision:'', stuck:''
-  };
+  var scIframe = document.getElementById('sc-iframe');
 
-  // Set initial progress for Q1
-  document.getElementById('prog').style.width = '12.5%';
-  document.getElementById('ctr').textContent = '1 of 8';
-
-  function go(id, step) {
-    const o = document.getElementById('ov');
-    o.classList.add('on');
-    setTimeout(() => {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      window.scrollTo(0,0);
-      const pct = Math.min((step/8)*100,100);
-      document.getElementById('prog').style.width = pct+'%';
-      document.getElementById('ctr').textContent = (step>=1&&step<=8) ? step+' of 8' : '';
-      setTimeout(() => o.classList.remove('on'), 60);
-      setTimeout(postHeight, 450);
-    }, 300);
-  }
-
-  function single(cId, bId, el, val, label) {
-    const map = {c1:'years',c3:'told',c6:'identity',c7:'vision',c8:'stuck'};
-    const key = map[cId];
-    if(key) S[key]=val;
-    if(cId==='c1') S.yearsLabel=label;
-    document.getElementById(cId).querySelectorAll('.qc').forEach(b=>b.classList.remove('sel'));
-    el.classList.add('sel');
-    document.getElementById(bId).classList.add('on');
-  }
-
-  function multi(el, val) {
-    el.classList.toggle('sel');
-    el.classList.contains('sel') ? (!S.costs.includes(val)&&S.costs.push(val)) : (S.costs=S.costs.filter(v=>v!==val));
-  }
-
-  function multi4(el, val, label) {
-    el.classList.toggle('sel');
-    if(el.classList.contains('sel')) {
-      if(!S.triggers.includes(val)){S.triggers.push(val);S.triggerLabels.push(label);}
-    } else {
-      const i=S.triggers.indexOf(val);
-      if(i>-1){S.triggers.splice(i,1);S.triggerLabels.splice(i,1);}
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'sc-resize') {
+      if (window.innerWidth > 768) {
+        // Desktop: expand but cap at viewport height to prevent scroll
+        var maxH = window.innerHeight - 100;
+        var newH = Math.min(Math.max(e.data.height + 40, 700), maxH);
+        scIframe.style.height = newH + 'px';
+        scIframe.style.overflowY = newH < e.data.height + 40 ? 'auto' : 'hidden';
+      }
     }
-  }
-
-  function multi5(el, val, label) {
-    el.classList.toggle('sel');
-    if(el.classList.contains('sel')) {
-      if(!S.after.includes(val)){S.after.push(val);S.afterLabels.push(label);}
-    } else {
-      const i=S.after.indexOf(val);
-      if(i>-1){S.after.splice(i,1);S.afterLabels.splice(i,1);}
-    }
-  }
-
-  function showMap() {
-    S.extraCost = document.getElementById('extra-q2').value.trim();
-    S.extraTrigger = document.getElementById('extra-q4').value.trim();
-    S.extraAfter = document.getElementById('extra-q5').value.trim();
-    go('screen-map', 8.5);
-    document.getElementById('ctr').textContent='';
-    setTimeout(animateMap, 420);
-    buildMapIntro();
-  }
-
-  function buildMapIntro() {
-    const m = {
-      willpower: 'You have been trying to push through this on willpower. And it keeps coming back. That is not because you do not have enough of it. It is because willpower only works at the level of the behaviour. Everything above it, what you believe about yourself and where your life is going, has never been touched.',
-      knowbutcant: 'You already know what is happening but knowing it has not changed it. That is because understanding something in your head and clearing it at the root are two different things. Here is what the root actually looks like.',
-      deeper: 'You are right. There is something deeper. Here is what it is.',
-      dontknow: 'Most people do not know. What has been running this operates below the level of everyday thinking. Here is what it actually looks like.',
-      whoiam: 'That feeling, that this is just who you are, is the single most important thing you said. Not because it is true. Because it tells you exactly where the real problem sits. Not in the behaviour. In the identity. And identity is exactly the level where this needs to change.'
-    };
-    document.getElementById('map-intro-text').innerHTML = m[S.stuck] || m['dontknow'];
-  }
-
-  function animateMap() {
-    document.querySelectorAll('.explain-block').forEach((b,i)=>setTimeout(()=>b.classList.add('vis'),i*160));
-    setTimeout(()=>{
-      const k=document.getElementById('map-key');
-      k.classList.add('vis');
-      buildMapKey();
-    }, 6*160+300);
-  }
-
-  function buildMapKey() {
-    const vi = ['fear','cantpicture','emptiness','neverthought'].includes(S.vision);
-    const id = ['partofme','dontknow','morethan'].includes(S.identity);
-    let t = '';
-    if(vi&&id) {
-      t='Your answers point to two things. <strong>You have no clear picture of who you are becoming.</strong> And this pattern has become part of how you see yourself. Those two things together are why the battle feels like it never ends. There is nothing pulling you forward and nothing telling you that you are someone different to this.';
-    } else if(vi) {
-      t='You have no clear picture of who you are becoming. <strong>Without that, there is nothing above the behaviour pulling you in another direction.</strong> When the pull comes, you are trying to resist it with nothing on the other side. Every time you give in is not failure. It is what happens when one side is heavy and the other side is empty.';
-    } else if(id) {
-      t='This pattern has become part of how you see yourself. <strong>You cannot permanently take away something that belongs.</strong> Until who you believe you are changes at the root, the behaviour keeps finding its way back. That is not about trying harder. It is about changing at a different level.';
-    } else {
-      t='What you believe about yourself is what has been keeping this alive. <strong>The behaviour is following instructions.</strong> Instructions that have probably been there longer than the behaviour itself. Change what is underneath it and the behaviour has nothing left to stand on.';
-    }
-    document.getElementById('map-key-text').innerHTML = t;
-  }
-
-  function showScale() {
-    go('screen-scale', 9);
-    document.getElementById('ctr').textContent='';
-    setTimeout(buildScale, 500);
-  }
-
-  function buildScale() {
-    const yearsMap = {less:'Less than a year',few:'A few years',five:'5+ years',decade:'Over a decade'};
-    const shortCosts = {
-      'Relationships':'Relationships lost','Self respect':'Self respect lost',
-      'Career or ambition':'Career lost','Money':'Money lost','Friends':'Friends lost',
-      'Hobbies or passions I used to have':'Passions lost','My confidence':'Confidence lost',
-      'My ability to be present':'Presence lost','The person I could have been':'Who you could have been'
-    };
-    const shortTriggers = {stress:'Stress',lonely:'Loneliness',bored:'Emptiness',anxious:'Anxiety',numb:'Numbness',auto:'Autopilot'};
-
-    const leftItems = [];
-    if(S.years) leftItems.push(yearsMap[S.years]);
-    S.costs.slice(0,3).forEach(c => leftItems.push(shortCosts[c]||c));
-    if(S.extraCost) leftItems.push(S.extraCost.split(' ').slice(0,3).join(' '));
-    if(S.triggers.length>0) leftItems.push(shortTriggers[S.triggers[0]]||S.triggers[0]);
-
-    const rightItems = ['Your vision','Who you are becoming','Real connection','Your purpose','Your goals'];
-
-    // Build plate elements with inline styles so GHL cannot override
-    const lPlates = document.getElementById('sc-left-plates');
-    const rPlates = document.getElementById('sc-right-plates');
-    const leftStyle = 'font-size:11px;font-weight:400;line-height:1.35;padding:7px 8px;text-align:center;position:relative;z-index:2;opacity:0;transform:translateY(-5px);transition:opacity 0.35s ease,transform 0.35s ease;background:rgba(220,60,60,0.2);color:rgba(255,150,150,0.95);border-bottom:1px solid rgba(220,60,60,0.28);display:block;';
-    const rightStyle = 'font-size:11px;font-weight:400;line-height:1.35;padding:7px 8px;text-align:center;position:relative;z-index:2;opacity:0;transform:translateY(-5px);transition:opacity 0.35s ease,transform 0.35s ease;background:rgba(80,200,120,0.1);color:rgba(120,230,160,0.9);border-bottom:1px solid rgba(80,200,120,0.18);font-style:italic;display:block;';
-    leftItems.forEach(item => {
-      const d = document.createElement('div');
-      d.setAttribute('style', leftStyle);
-      d.textContent = item;
-      lPlates.appendChild(d);
-    });
-    rightItems.forEach(item => {
-      const d = document.createElement('div');
-      d.setAttribute('style', rightStyle);
-      d.textContent = item;
-      rPlates.appendChild(d);
-    });
-
-    // Step 1 — rods and top caps
-    setTimeout(() => {
-      ['sc-rod-l','sc-rod-r','sc-lct','sc-rct'].forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.style.opacity = '1';
-      });
-    }, 300);
-
-    // Step 2 — left plates load on
-    const lps = lPlates.querySelectorAll('div:not(#sc-rod-l)');
-    lps.forEach((p,i) => setTimeout(() => {
-      p.style.opacity = '1';
-      p.style.transform = 'translateY(0)';
-    }, 600 + i*200));
-    const afterLeft = 600 + lps.length * 200;
-
-    // Step 3 — bottom caps lock
-    setTimeout(() => {
-      ['sc-lcb','sc-rcb'].forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.style.opacity = '1';
-      });
-    }, afterLeft + 100);
-
-    // Step 4 — draw SVG with real measurements then show
-    setTimeout(() => {
-      drawScaleSVG();
-      setTimeout(() => {
-        ['sc-svg-beam','sc-svg-pivot','sc-svg-sl','sc-svg-sr'].forEach(id => {
-          const el = document.getElementById(id);
-          if(el) el.setAttribute('opacity','1');
-        });
-      }, 200);
-    }, afterLeft + 300);
-
-    // Step 5 — cost line
-    setTimeout(() => {
-      const cost = document.getElementById('sc-cost');
-      if(cost) { cost.style.opacity = '1'; cost.textContent = 'This is what you chose every single day.'; }
-    }, afterLeft + 600);
-
-    // Step 6 — right plates
-    const rps = rPlates.querySelectorAll('div:not(#sc-rod-r)');
-    const afterBeam = afterLeft + 800;
-    rps.forEach((p,i) => setTimeout(() => {
-      p.style.opacity = '1';
-      p.style.transform = 'translateY(0)';
-    }, afterBeam + i*150));
-
-    // Step 7 — statement
-    const stmts = {
-      less:'Less than a year. Already more than it has given.',
-      few:'A few years feeding one side. The other has been waiting.',
-      five:'Five or more years going in one direction.',
-      decade:'Over a decade. This is where the energy has been going.'
-    };
-    setTimeout(() => {
-      document.getElementById('scale-statement').innerHTML = '<em>'+(stmts[S.years]||'This is where the energy has been going.')+'</em>';
-    }, afterBeam + rps.length*150 + 200);
-  }
-
-  function drawScaleSVG() {
-    const outer = document.getElementById('sc-outer');
-    const lcb = document.getElementById('sc-lcb');
-    const rcb = document.getElementById('sc-rcb');
-    if (!lcb || !rcb) return;
-    const outerRect = outer.getBoundingClientRect();
-    if (!outerRect.width) { setTimeout(drawScaleSVG, 200); return; }
-    const lcbRect = lcb.getBoundingClientRect();
-    const rcbRect = rcb.getBoundingClientRect();
-
-    const lx = lcbRect.left - outerRect.left + lcbRect.width / 2;
-    const ly = lcbRect.top - outerRect.top + lcbRect.height;
-    const rx = rcbRect.left - outerRect.left + rcbRect.width / 2;
-    const ry = rcbRect.top - outerRect.top + rcbRect.height;
-
-    const pivotX = outerRect.width / 2;
-    const pivotY = Math.max(ly, ry) + 50;
-    const halfW = outerRect.width * 0.42;
-    const tilt = 18;
-    const bLX = pivotX - halfW, bLY = pivotY + tilt;
-    const bRX = pivotX + halfW, bRY = pivotY - tilt;
-
-    const svgH = pivotY + 12;
-    const svg = document.getElementById('sc-svg');
-    svg.setAttribute('viewBox', `0 0 ${outerRect.width} ${svgH}`);
-    svg.style.height = svgH + 'px';
-
-    // cost line is now below scale, no positioning needed
-
-    svg.innerHTML = `
-      <defs>
-        <linearGradient id="scbg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#C8963E" stop-opacity="0.4"/>
-          <stop offset="50%" stop-color="#C8963E" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#C8963E" stop-opacity="0.4"/>
-        </linearGradient>
-      </defs>
-      <line id="sc-svg-beam" x1="${bLX}" y1="${bLY}" x2="${bRX}" y2="${bRY}"
-        stroke="url(#scbg)" stroke-width="4" stroke-linecap="round" opacity="0"
-        style="transition:opacity 0.5s ease"/>
-      <circle id="sc-svg-pivot" cx="${pivotX}" cy="${pivotY}" r="7"
-        fill="#C8963E" opacity="0" style="transition:opacity 0.5s ease;filter:drop-shadow(0 0 8px rgba(200,150,62,0.8))"/>
-      <line id="sc-svg-sl" x1="${lx}" y1="${ly}" x2="${bLX}" y2="${bLY}"
-        stroke="#C8963E" stroke-width="2.5" stroke-linecap="round" opacity="0"
-        style="transition:opacity 0.5s ease"/>
-      <line id="sc-svg-sr" x1="${rx}" y1="${ry}" x2="${bRX}" y2="${bRY}"
-        stroke="rgba(200,150,62,0.8)" stroke-width="2.5" stroke-linecap="round" opacity="0"
-        style="transition:opacity 0.5s ease"/>
-    `;
-  }
-
-  function showResult() {
-    go('screen-result', 10);
-    setTimeout(buildResult, 450);
-    setTimeout(postHeight, 1000);
-  }
-
-  function buildResult() {
-    const yearsDisplay={less:'&lt;1',few:'2-4',five:'5+',decade:'10+'};
-    const yearsText={
-      less:'Less than a year. Even so, the pattern is already established enough to keep bringing you back.',
-      few:'A few years of this. The pattern is not the problem.',
-      five:'Five or more years. That says everything about how deep the root goes.',
-      decade:'Over a decade. Nothing you have tried has touched what is actually running this.'
-    };
-    document.getElementById('res-years').innerHTML=yearsDisplay[S.years]||'?';
-    document.getElementById('res-years-text').textContent=yearsText[S.years]||'';
-
-    const costsEl=document.getElementById('res-costs');
-    costsEl.innerHTML='';
-    [...S.costs, ...(S.extraCost ? [S.extraCost] : [])].forEach(c=>{
-      const tag=document.createElement('span');
-      tag.className='cost-tag';
-      tag.textContent=c;
-      costsEl.appendChild(tag);
-    });
-
-    const vi=['fear','cantpicture','emptiness','neverthought'].includes(S.vision);
-    const id=['partofme','dontknow','morethan'].includes(S.identity);
-    const allTriggers=[...S.triggerLabels,...(S.extraTrigger ? [S.extraTrigger] : [])];
-    const triggerStr=allTriggers.length>0?allTriggers.map(t=>t.toLowerCase()).join(', '):'a feeling underneath it';
-
-    let means='';
-    if(vi&&id){
-      means=`The pattern gets triggered by <strong>${triggerStr}</strong>. Underneath that is a behaviour that has become part of how you see yourself. And there is no picture of who you are becoming strong enough to pull you in another direction. <strong>One side has been heavy for years. The other side has been empty.</strong> Until both of those things change, the pattern keeps its grip.`;
-    } else if(id){
-      means=`The pattern gets triggered by <strong>${triggerStr}</strong>. But the behaviour is not the issue. <strong>It has become part of who you believe you are.</strong> You cannot permanently remove something that belongs. That is the level where this needs to change.`;
-    } else if(vi){
-      means=`The pattern gets triggered by <strong>${triggerStr}</strong>. And when it comes, there is nothing pulling you in a different direction. <strong>No clear picture of who you are becoming. No life on the other side strong enough to pull you toward it.</strong> Willpower keeps running out because it is fighting on its own.`;
-    } else {
-      means=`The pattern gets triggered by <strong>${triggerStr}</strong>. Underneath that is something you believe about yourself that has been there longer than the behaviour has. <strong>The behaviour is following those instructions.</strong> Change what is underneath and the behaviour loses its reason to exist.`;
-    }
-    document.getElementById('means-text').innerHTML=means;
-
-    const openQMap={
-      fear:'What would it mean to want the life on the other side <em>more than you fear who you would be without this?</em>',
-      cantpicture:'What if building the picture is <em>exactly where the work starts?</em>',
-      emptiness:'What if the emptiness on the other side is not a reason to stay here, <em>but the thing that needs to be built?</em>',
-      neverthought:'What would change if you finally <em>let yourself think about it?</em>',
-      relief:'You already know what you want. <em>What has been standing between you and it?</em>',
-      excited:'The pull toward something better is real. <em>What would it take to finally move toward it?</em>'
-    };
-    document.getElementById('open-q-text').innerHTML=openQMap[S.vision]||'What would change if you finally <em>worked at the right level?</em>';
-  }
-
-  // Send height to parent so iframe auto-expands
-  function postHeight() {
-    var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-    window.parent.postMessage({ type: 'sc-resize', height: h }, '*');
-  }
-
-  // Fire multiple times to catch late renders
-  setTimeout(postHeight, 200);
-  setTimeout(postHeight, 600);
-  setTimeout(postHeight, 1200);
-  setTimeout(postHeight, 2500);
-  window.addEventListener('resize', postHeight);
+  });
 </script>
-</body>
-</html>
