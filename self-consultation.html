@@ -570,6 +570,7 @@
       document.getElementById('prog').style.width = pct+'%';
       document.getElementById('ctr').textContent = (step>=1&&step<=8) ? step+' of 8' : '';
       setTimeout(() => o.classList.remove('on'), 60);
+      setTimeout(postHeight, 450);
     }, 300);
   }
 
@@ -756,6 +757,14 @@
     };
     document.getElementById('open-q-text').innerHTML=openQMap[S.vision]||'What would change if you finally <em>worked at the right level?</em>';
   }
+
+  // Send height to parent so iframe auto-expands
+  function postHeight() {
+    window.parent.postMessage({ type: 'sc-resize', height: document.body.scrollHeight }, '*');
+  }
+
+  setTimeout(postHeight, 300);
+  window.addEventListener('resize', postHeight);
 </script>
 </body>
 </html>
