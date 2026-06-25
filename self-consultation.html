@@ -1,4 +1,4 @@
-<!-- SELF CONSULTATION PAGE — mindshiftingwithleon.com -->
+<!-- SELF CONSULTATION PAGE - mindshiftingwithleon.com -->
 <!-- Paste this as a single custom code block on a new GHL page -->
 <!-- Set row padding to 0 and element padding to 0 in GHL row settings -->
 
@@ -161,7 +161,7 @@
         allow="clipboard-write"
         id="sc-iframe"
         style="display:block;width:100%;border:none;overflow-y:auto;"
-        title="Self Consultation — Mind Shifting With Leon">
+        title="Self Consultation - Mind Shifting With Leon">
       </iframe>
     </div>
   </div>
@@ -182,7 +182,6 @@
   window.addEventListener('message', function(e) {
     if (e.data && e.data.type === 'sc-resize') {
       if (window.innerWidth > 768) {
-        // Desktop: expand but cap at viewport height to prevent scroll
         var maxH = window.innerHeight - 100;
         var newH = Math.min(Math.max(e.data.height + 40, 700), maxH);
         scIframe.style.height = newH + 'px';
