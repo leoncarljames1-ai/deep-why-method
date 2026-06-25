@@ -1,192 +1,979 @@
-<!-- SELF CONSULTATION PAGE - mindshiftingwithleon.com -->
-<!-- Paste this as a single custom code block on a new GHL page -->
-<!-- Set row padding to 0 and element padding to 0 in GHL row settings -->
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Self Consultation | Mind Shifting With Leon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  .sc-page {
-    background: #FAF8F4;
-    font-family: 'Jost', sans-serif;
-    color: #163E5B;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #163E5B; }
+body {
+  font-family: 'Jost', sans-serif;
+  background: #163E5B;
+  color: #FAF8F4;
+  min-height: 100vh;
+  font-weight: 300;
+  overflow-x: hidden;
+}
 
-  /* HERO STRIP */
-  .sc-hero {
-    background: #163E5B;
-    padding: 72px 24px 64px;
-    text-align: center;
-  }
+.sc-screen { display: none; min-height: 100vh; background: #163E5B; }
+.sc-screen.sc-active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+#sc-screen-scale.sc-active { background: #060e15; }
 
-  .sc-hero-eyebrow {
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #C8963E;
-    margin-bottom: 20px;
-  }
+/* PROGRESS BAR */
+.sc-progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.06); z-index: 100; }
+.sc-progress-fill { height: 100%; background: #C8963E; transition: width 0.7s ease; width: 0%; }
 
-  .sc-hero-headline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 52px;
-    font-weight: 500;
-    line-height: 1.1;
-    color: #FAF8F4;
-    margin-bottom: 24px;
-    max-width: 640px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+/* COUNTER */
+.sc-topbar {
+  position: fixed; top: 2px; left: 0; right: 0;
+  padding: 12px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 99;
+  background: linear-gradient(to bottom, rgba(22,62,91,0.98) 70%, transparent);
+}
+.sc-topbar-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; font-weight: 400;
+  color: rgba(250,248,244,0.35); letter-spacing: 0.5px;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.sc-topbar-logo strong { color: rgba(250,248,244,0.65); font-weight: 600; }
+.sc-ctr-label { font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: rgba(250,248,244,0.28); }
 
-  .sc-hero-sub {
-    font-family: 'Jost', sans-serif;
-    font-size: 17px;
-    font-weight: 300;
-    line-height: 1.7;
-    color: #a8bfcf;
-    max-width: 520px;
-    margin: 0 auto;
-  }
+.sc-burger {
+  background: none; border: none; cursor: pointer;
+  padding: 4px; display: flex; flex-direction: column; gap: 5px; z-index: 1;
+}
+.sc-burger span {
+  display: block; width: 22px; height: 2px;
+  background: rgba(250,248,244,0.6); border-radius: 2px;
+  transition: background 0.2s;
+}
+.sc-burger:hover span { background: #C8963E; }
 
-  /* TOOL WRAPPER */
-  .sc-tool-wrap {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 40px 24px 0;
-  }
+.sc-menu-panel {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: #0d1f2d;
+  padding: 70px 28px 36px;
+  z-index: 98;
+  display: flex; flex-direction: column; gap: 6px;
+  transform: translateY(-110%);
+  transition: transform 0.3s ease;
+  border-bottom: 1px solid rgba(200,150,62,0.2);
+}
+.sc-menu-panel.sc-open { transform: translateY(0); }
 
-  /* IFRAME */
-  .sc-iframe-wrap {
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 4px 32px rgba(22,62,91,0.10);
-  }
+.sc-menu-link {
+  display: block; padding: 14px 0;
+  font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 400;
+  color: rgba(250,248,244,0.7); text-decoration: none; letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: color 0.18s;
+}
+.sc-menu-link:hover { color: #F2BE54; }
+.sc-menu-link:last-child { border-bottom: none; }
 
-  .sc-iframe-wrap iframe {
-    display: block;
-    width: 100%;
-    border: none;
-    height: calc(100vh - 100px);
-    min-height: 600px;
-    max-height: calc(100vh - 100px);
-  }
+/* OVERLAY */
+.sc-ov { position: fixed; inset: 0; background: #163E5B; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
+.sc-ov.sc-on { opacity: 1; pointer-events: all; }
 
-  @media (max-width: 768px) {
-    .sc-iframe-wrap {
-      border-radius: 0;
-      box-shadow: none;
-      overflow: hidden;
-    }
-    .sc-iframe-wrap iframe {
-      height: 90vh;
-      max-height: 750px;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-  }
+/* QUESTION WRAP */
+.sc-qw { max-width: 540px; width: 100%; padding: 80px 28px 60px; }
+.sc-ql { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: rgba(200,150,62,0.6); margin-bottom: 24px; display: block; }
+.sc-qt { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 5.5vw, 44px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 12px; }
+.sc-qt em { font-style: italic; color: #F2BE54; }
+.sc-qh { font-size: 13px; color: rgba(250,248,244,0.55); margin-bottom: 32px; line-height: 1.75; font-style: italic; }
 
-  /* BELOW TOOL */
-  .sc-below {
-    max-width: 560px;
-    margin: 56px auto 0;
-    padding: 0 24px 80px;
-    text-align: center;
-  }
+.sc-qcs { display: flex; flex-direction: column; gap: 9px; }
+.sc-qc {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(250,248,244,0.14);
+  border-radius: 3px;
+  padding: 15px 18px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(250,248,244,0.80);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.18s ease;
+  line-height: 1.5;
+  width: 100%;
+}
+.sc-qc:hover { background: rgba(200,150,62,0.08); border-color: rgba(200,150,62,0.3); color: #FAF8F4; }
+.sc-qc.sc-sel { background: rgba(200,150,62,0.1); border-color: #C8963E; color: #FAF8F4; }
 
-  .sc-below-divider {
-    width: 40px;
-    height: 2px;
-    background: #C8963E;
-    margin: 0 auto 32px;
-  }
+.sc-extra { margin-top: 10px; }
+.sc-extra-label { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(250,248,244,0.2); margin-bottom: 8px; display: block; }
+.sc-extra-input {
+  width: 100%; background: transparent; border: none;
+  border-bottom: 1px solid rgba(250,248,244,0.12);
+  padding: 10px 4px;
+  font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300; color: #FAF8F4;
+  outline: none; transition: border-color 0.2s; caret-color: #C8963E;
+}
+.sc-extra-input:focus { border-bottom-color: #C8963E; }
+.sc-extra-input::placeholder { color: rgba(250,248,244,0.16); font-style: italic; }
 
-  .sc-below-headline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px;
-    font-weight: 500;
-    line-height: 1.25;
-    color: #163E5B;
-    margin-bottom: 16px;
-  }
+.sc-qnav { display: flex; align-items: center; justify-content: space-between; margin-top: 36px; }
+.sc-btn-n {
+  background: #C8963E; color: #FAF8F4; border: none;
+  padding: 14px 38px;
+  font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
+  cursor: pointer; border-radius: 2px; transition: all 0.18s ease;
+  opacity: 0.2; pointer-events: none;
+}
+.sc-btn-n.sc-on { opacity: 1; pointer-events: all; }
+.sc-btn-n.sc-on:hover { background: #b8843a; transform: translateY(-1px); }
+.sc-btn-b {
+  background: transparent; border: none; color: rgba(250,248,244,0.22);
+  font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+  cursor: pointer; padding: 0; transition: color 0.18s;
+}
+.sc-btn-b:hover { color: rgba(250,248,244,0.48); }
 
-  .sc-below-body {
-    font-family: 'Jost', sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 1.7;
-    color: #4a6478;
-    margin-bottom: 36px;
-  }
+/* MAP SCREEN */
+#sc-screen-map { padding: 60px 28px 60px; background: #0d1f2d; align-items: flex-start; }
+.sc-map-w { max-width: 560px; width: 100%; margin: 0 auto; }
+.sc-map-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #C8963E; margin-bottom: 18px; display: block; }
+.sc-map-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 5vw, 42px); font-weight: 300; line-height: 1.15; color: #FAF8F4; margin-bottom: 20px; }
+.sc-map-h em { font-style: italic; color: #F2BE54; }
+.sc-map-intro { font-size: 14px; color: rgba(250,248,244,0.82); line-height: 1.9; margin-bottom: 28px; }
 
-  .sc-below-btn {
-    display: inline-block;
-    padding: 18px 40px;
-    background: #163E5B;
-    color: #FAF8F4;
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background 0.2s;
-  }
-  .sc-below-btn:hover { background: #0f2d42; }
+.sc-lvl {
+  margin-bottom: 3px; border-radius: 3px; overflow: hidden;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.sc-lvl.sc-vis { opacity: 1; transform: translateY(0); }
 
-  @media (max-width: 600px) {
-    .sc-hero-headline { font-size: 36px; }
-    .sc-hero-sub { font-size: 15px; }
-    .sc-below-headline { font-size: 26px; }
-  }
+.sc-lvl-hd { display: flex; align-items: center; gap: 14px; padding: 13px 18px; }
+.sc-lvl-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.sc-lvl-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 400; flex: 1; }
+.sc-lvl-tag { font-size: 9px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; }
+.sc-lvl-body { padding: 11px 18px 15px; font-size: 13px; line-height: 1.85; }
+
+/* L1 Vision */
+.sc-l1 .sc-lvl-hd { background: rgba(242,190,84,0.14); border: 1px solid rgba(242,190,84,0.3); }
+.sc-l1 .sc-lvl-dot { background: #F2BE54; box-shadow: 0 0 9px rgba(242,190,84,0.5); }
+.sc-l1 .sc-lvl-name { color: #F2BE54; }
+.sc-l1 .sc-lvl-tag { color: rgba(242,190,84,0.55); }
+.sc-l1 .sc-lvl-body { background: rgba(242,190,84,0.05); color: rgba(250,248,244,0.72); border: 1px solid rgba(242,190,84,0.1); border-top: none; }
+/* L2 Identity */
+.sc-l2 .sc-lvl-hd { background: rgba(200,150,62,0.1); border: 1px solid rgba(200,150,62,0.22); }
+.sc-l2 .sc-lvl-dot { background: #C8963E; }
+.sc-l2 .sc-lvl-name { color: #FAF8F4; }
+.sc-l2 .sc-lvl-tag { color: rgba(200,150,62,0.5); }
+.sc-l2 .sc-lvl-body { background: rgba(200,150,62,0.04); color: rgba(250,248,244,0.65); border: 1px solid rgba(200,150,62,0.1); border-top: none; }
+/* L3 Beliefs */
+.sc-l3 .sc-lvl-hd { background: rgba(242,190,84,0.08); border: 1px solid rgba(242,190,84,0.2); }
+.sc-l3 .sc-lvl-dot { background: #F2BE54; }
+.sc-l3 .sc-lvl-name { color: #F2BE54; }
+.sc-l3 .sc-lvl-tag { color: rgba(242,190,84,0.5); }
+.sc-l3 .sc-lvl-body { background: rgba(242,190,84,0.04); color: rgba(250,248,244,0.82); border: 1px solid rgba(242,190,84,0.1); border-top: none; }
+/* L4 Capabilities */
+.sc-l4 .sc-lvl-hd { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.16); }
+.sc-l4 .sc-lvl-dot { background: rgba(250,248,244,0.9); }
+.sc-l4 .sc-lvl-name { color: #FAF8F4; }
+.sc-l4 .sc-lvl-tag { color: rgba(250,248,244,0.5); }
+.sc-l4 .sc-lvl-body { background: rgba(255,255,255,0.04); color: rgba(250,248,244,0.82); border: 1px solid rgba(255,255,255,0.12); border-top: none; }
+/* L5 Behaviour */
+.sc-l5 .sc-lvl-hd { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.16); }
+.sc-l5 .sc-lvl-dot { background: rgba(250,248,244,0.9); }
+.sc-l5 .sc-lvl-name { color: #FAF8F4; }
+.sc-l5 .sc-lvl-tag { color: rgba(250,248,244,0.5); }
+.sc-l5 .sc-lvl-body { background: rgba(255,255,255,0.04); color: rgba(250,248,244,0.82); border: 1px solid rgba(255,255,255,0.12); border-top: none; }
+/* L6 Environment */
+.sc-l6 .sc-lvl-hd { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.16); }
+.sc-l6 .sc-lvl-dot { background: rgba(250,248,244,0.9); }
+.sc-l6 .sc-lvl-name { color: #FAF8F4; }
+.sc-l6 .sc-lvl-tag { color: rgba(250,248,244,0.5); }
+.sc-l6 .sc-lvl-body { background: rgba(255,255,255,0.04); color: rgba(250,248,244,0.82); border: 1px solid rgba(255,255,255,0.12); border-top: none; }
+
+.sc-map-key {
+  margin-top: 20px; padding: 16px 18px;
+  background: rgba(200,150,62,0.06); border-left: 2px solid #C8963E;
+  border-radius: 2px; font-size: 14px; color: #FAF8F4;
+  line-height: 1.9; opacity: 0; transition: opacity 0.6s ease 0.3s;
+}
+.sc-map-key.sc-vis { opacity: 1; }
+.sc-map-key strong { color: #FAF8F4; font-weight: 500; }
+.sc-map-nav { display: flex; justify-content: flex-end; margin-top: 28px; }
+
+/* SCALE SCREEN */
+#sc-screen-scale { padding: 60px 20px 50px; text-align: center; }
+#sc-screen-scale .sc-screen-inner { max-width: 480px; width: 100%; margin: 0 auto; }
+.sc-scale-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #C8963E; margin-bottom: 20px; display: block; }
+.sc-scale-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px, 5vw, 42px); font-weight: 300; line-height: 1.12; color: #FAF8F4; margin-bottom: 36px; }
+.sc-scale-h em { font-style: italic; color: #F2BE54; }
+
+/* SCALE visual container */
+.sc-scale-vis { width: 100%; max-width: 440px; margin: 0 auto 12px; position: relative; }
+.sc-scale-vis svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+/* Below scale captions */
+.sc-scale-caps { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 32px; max-width: 440px; margin-left: auto; margin-right: auto; }
+.sc-cap-left { font-size: 11px; color: rgba(230,80,80,0.85); line-height: 1.5; text-align: left; width: 44%; }
+.sc-cap-right { font-size: 11px; color: rgba(80,200,120,0.75); line-height: 1.5; text-align: right; font-style: italic; width: 44%; }
+
+.sc-scale-stmt { font-family: 'Cormorant Garamond', serif; font-size: clamp(17px, 3.5vw, 24px); font-weight: 300; font-style: italic; color: rgba(250,248,244,0.45); line-height: 1.45; margin-bottom: 40px; max-width: 400px; margin-left: auto; margin-right: auto; }
+.sc-scale-stmt em { color: #F2BE54; font-style: normal; }
+
+.sc-scale-nav { display: flex; align-items: center; justify-content: space-between; max-width: 440px; margin: 0 auto; }
+
+/* RESULT SCREEN */
+#sc-screen-result { padding: 60px 28px 70px; align-items: flex-start; background: linear-gradient(170deg, #060e15 0%, #163E5B 100%); }
+.sc-res-w { max-width: 540px; width: 100%; margin: 0 auto; }
+.sc-res-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #C8963E; margin-bottom: 22px; display: block; }
+.sc-res-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 5.5vw, 50px); font-weight: 300; line-height: 1.08; color: #FAF8F4; margin-bottom: 18px; }
+.sc-res-h em { font-style: italic; color: #F2BE54; }
+.sc-res-rule { width: 36px; height: 2px; background: #C8963E; margin-bottom: 28px; }
+
+.sc-years-block { background: rgba(0,0,0,0.3); border-radius: 3px; padding: 20px; margin-bottom: 18px; display: flex; align-items: center; gap: 18px; }
+.sc-years-num { font-family: 'Cormorant Garamond', serif; font-size: 50px; font-weight: 300; color: #F2BE54; line-height: 1; flex-shrink: 0; }
+.sc-years-right { flex: 1; }
+.sc-years-label { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(250,248,244,0.25); margin-bottom: 6px; display: block; }
+.sc-cost-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.sc-cost-tag { font-size: 11px; color: rgba(200,150,62,0.8); background: rgba(200,150,62,0.08); border: 1px solid rgba(200,150,62,0.18); border-radius: 2px; padding: 3px 9px; }
+
+.sc-means-block { background: rgba(255,255,255,0.03); border: 1px solid rgba(250,248,244,0.07); border-radius: 3px; padding: 22px; margin-bottom: 18px; }
+.sc-means-label { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(250,248,244,0.2); margin-bottom: 12px; display: block; }
+.sc-means-text { font-size: 14px; color: rgba(250,248,244,0.62); line-height: 1.9; }
+.sc-means-text strong { color: #FAF8F4; font-weight: 500; }
+
+.sc-open-q { padding: 22px 0; border-top: 1px solid rgba(250,248,244,0.07); border-bottom: 1px solid rgba(250,248,244,0.07); margin-bottom: 30px; }
+.sc-open-q-lbl { font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; color: rgba(200,150,62,0.45); margin-bottom: 12px; display: block; }
+.sc-open-q-txt { font-family: 'Cormorant Garamond', serif; font-size: clamp(19px, 3.5vw, 28px); font-weight: 300; line-height: 1.3; color: #FAF8F4; }
+.sc-open-q-txt em { font-style: italic; color: #F2BE54; }
+
+.sc-cta-block { background: rgba(200,150,62,0.07); border: 1px solid rgba(200,150,62,0.18); border-radius: 3px; padding: 30px 24px; text-align: center; }
+.sc-cta-eye { font-size: 10px; font-weight: 500; letter-spacing: 5px; text-transform: uppercase; color: #C8963E; margin-bottom: 16px; display: block; }
+.sc-cta-h { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 4vw, 36px); font-weight: 300; color: #FAF8F4; line-height: 1.2; margin-bottom: 14px; }
+.sc-cta-h em { font-style: italic; color: #F2BE54; }
+.sc-cta-p { font-size: 14px; color: rgba(250,248,244,0.42); line-height: 1.8; max-width: 360px; margin: 0 auto 22px; }
+.sc-cta-feats { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; text-align: left; }
+.sc-cta-feat { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: rgba(250,248,244,0.55); line-height: 1.5; }
+.sc-cta-feat::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: #C8963E; flex-shrink: 0; margin-top: 6px; }
+.sc-btn-cta {
+  display: block; width: 100%; background: #C8963E; color: #FAF8F4; border: none;
+  padding: 17px 24px;
+  font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
+  cursor: pointer; border-radius: 2px; text-decoration: none; text-align: center; margin-bottom: 12px;
+  transition: background 0.18s ease;
+}
+.sc-btn-cta:hover { background: #b8843a; }
+.sc-cta-sub { font-size: 11px; color: rgba(250,248,244,0.15); letter-spacing: 1px; }
+
+@media (max-width: 480px) {
+  .sc-qw { padding: 55px 18px 50px; }
+  .sc-map-w { padding: 0 4px; }
+  .sc-scale-caps { margin-bottom: 24px; }
+  .sc-cta-block { padding: 24px 16px; }
+  .sc-years-block { flex-direction: column; gap: 10px; }
+}
 </style>
+</head>
+<body>
 
-<div class="sc-page">
+<div class="sc-progress-bar"><div class="sc-progress-fill" id="sc-prog"></div></div>
 
-  <!-- HERO -->
-  <div class="sc-hero">
-    <div class="sc-hero-eyebrow">Self Consultation</div>
-    <h1 class="sc-hero-headline">Something keeps pulling you back.<br>Find out what is running it.</h1>
-    <p class="sc-hero-sub">Eight questions. No generic advice. By the end you will see something about what is driving this that most people never get shown.</p>
-  </div>
+<div class="sc-topbar" id="sc-topbar">
+  <button class="sc-burger" onclick="scToggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="sc-topbar-logo">Mind Shifting <strong>with Leon</strong></div>
+  <span class="sc-ctr-label" id="sc-ctr"></span>
+</div>
 
-  <!-- TOOL -->
-  <div class="sc-tool-wrap">
-    <div class="sc-iframe-wrap">
-      <iframe
-        src="https://leoncarljames1-ai.github.io/deep-why-method/self-consultation.html"
-        height="700"
-        allow="clipboard-write"
-        id="sc-iframe"
-        style="display:block;width:100%;border:none;overflow-y:auto;"
-        title="Self Consultation - Mind Shifting With Leon">
-      </iframe>
+<div class="sc-menu-panel" id="sc-menu-panel">
+  <a href="https://mindshiftingwithleon.com" class="sc-menu-link" target="_parent">Home</a>
+  <a href="https://mindshiftingwithleon.com/otoa" class="sc-menu-link" target="_parent">The Programme</a>
+  <a href="https://mindshiftingwithleon.com/about" class="sc-menu-link" target="_parent">About Leon</a>
+  <a href="mailto:mindshiftingwithleon@gmail.com" class="sc-menu-link" target="_parent">Book a Session</a>
+</div>
+
+<div class="sc-ov" id="sc-ov"></div>
+
+<!-- Q1 -->
+<div class="sc-screen sc-active" id="sc-q1">
+  <div class="sc-qw">
+    <span class="sc-ql">Question 1 of 8</span>
+    <h2 class="sc-qt">How many years has <em>this taken from you?</em></h2>
+    <p class="sc-qh">Be honest with yourself.</p>
+    <div class="sc-qcs" id="sc-c1">
+      <button class="sc-qc" onclick="scS('sc-c1','sc-n1',this,'q1','less','Less than a year')">Less than a year</button>
+      <button class="sc-qc" onclick="scS('sc-c1','sc-n1',this,'q1','few','A few years')">A few years</button>
+      <button class="sc-qc" onclick="scS('sc-c1','sc-n1',this,'q1','five','Five or more years')">Five or more years</button>
+      <button class="sc-qc" onclick="scS('sc-c1','sc-n1',this,'q1','decade','Over a decade')">Over a decade</button>
+    </div>
+    <div class="sc-qnav">
+      <span></span>
+      <button class="sc-btn-n" id="sc-n1" onclick="scGo('sc-q2',2)">Continue</button>
     </div>
   </div>
+</div>
 
-  <!-- BELOW TOOL CTA -->
-  <div class="sc-below">
-    <div class="sc-below-divider"></div>
-    <h2 class="sc-below-headline">Ready to clear what is actually running this?</h2>
-    <p class="sc-below-body">The consultation shows you what is underneath. The session is where it gets cleared. Most men feel a shift in the first 90 minutes that years of trying could not produce.</p>
-    <a href="mailto:mindshiftingwithleon@gmail.com?subject=I%20want%20to%20book%20a%20session" class="sc-below-btn">Book a Session With Leon</a>
+<!-- Q2 -->
+<div class="sc-screen" id="sc-q2">
+  <div class="sc-qw">
+    <span class="sc-ql">Question 2 of 8</span>
+    <h2 class="sc-qt">What else has <em>it cost you?</em></h2>
+    <p class="sc-qh">Select everything that feels true.</p>
+    <div class="sc-qcs" id="sc-c2">
+      <button class="sc-qc" onclick="scM(this,'Relationships','sc-n2')">Relationships</button>
+      <button class="sc-qc" onclick="scM(this,'Self respect','sc-n2')">Self respect</button>
+      <button class="sc-qc" onclick="scM(this,'Career or ambition','sc-n2')">Career or ambition</button>
+      <button class="sc-qc" onclick="scM(this,'Money','sc-n2')">Money</button>
+      <button class="sc-qc" onclick="scM(this,'Friends','sc-n2')">Friends</button>
+      <button class="sc-qc" onclick="scM(this,'Hobbies or passions I used to have','sc-n2')">Hobbies or passions I used to have</button>
+      <button class="sc-qc" onclick="scM(this,'My confidence','sc-n2')">My confidence</button>
+      <button class="sc-qc" onclick="scM(this,'My ability to be present','sc-n2')">My ability to be present</button>
+      <button class="sc-qc" onclick="scM(this,'The person I could have been','sc-n2')">The person I could have been</button>
+    </div>
+    <div class="sc-extra">
+      <span class="sc-extra-label">Anything else</span>
+      <input class="sc-extra-input" id="sc-q2-other" type="text" placeholder="Type here..." oninput="scCheckMulti('sc-n2','sc-c2')">
+    </div>
+    <div class="sc-qnav">
+      <button class="sc-btn-b" onclick="scGo('sc-q1',1)">Back</button>
+      <button class="sc-btn-n" id="sc-n2" onclick="scGo('sc-q3',3)">Continue</button>
+    </div>
   </div>
+</div>
 
+<!-- Q3 -->
+<div class="sc-screen" id="sc-q3">
+  <div class="sc-qw">
+    <span class="sc-ql">Question 3 of 8</span>
+    <h2 class="sc-qt">Have you ever <em>told anyone</em> about this?</h2>
+    <p class="sc-qh">There is no wrong answer here.</p>
+    <div class="sc-qcs" id="sc-c3">
+      <button class="sc-qc" onclick="scS('sc-c3','sc-n3',this,'q3','nobody','Never. Nobody knows.')">Never. Nobody knows.</button>
+      <button class="sc-qc" onclick="scS('sc-c3','sc-n3',this,'q3','partial','Not fully. People know something but not the whole picture.')">Not fully. People know something but not the whole picture.</button>
+      <button class="sc-qc" onclick="scS('sc-c3','sc-n3',this,'q3','tried','I have tried to get help before.')">I have tried to get help before.</button>
+      <button class="sc-qc" onclick="scS('sc-c3','sc-n3',this,'q3','one','One or two people know.')">One or two people know.</button>
+    </div>
+    <div class="sc-qnav">
+      <button class="sc-btn-b" onclick="scGo('sc-q2',2)">Back</button>
+      <button class="sc-btn-n" id="sc-n3" onclick="scGo('sc-q4',4)">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="sc-screen" id="sc-q4">
+  <div class="sc-qw">
+    <span class="sc-ql">Question 4 of 8</span>
+    <h2 class="sc-qt">In the moment just before it happens, <em>what are you feeling?</em></h2>
+    <p class="sc-qh">Not during. Not after. The moment just before. Select all that feel true.</p>
+    <div class="sc-qcs" id="sc-c4">
+      <button class="sc-qc" onclick="scM(this,'Stressed or overwhelmed','sc-n4')">Stressed or overwhelmed</button>
+      <button class="sc-qc" onclick="scM(this,'Lonely or disconnected','sc-n4')">Lonely or disconnected</button>
+      <button class="sc-qc" onclick="scM(this,'Bored and empty','sc-n4')">Bored and empty</button>
+      <button class="sc-qc" onclick="scM(this,'Anxious and like I cannot settle','sc-n4')">Anxious and like I cannot settle</button>
+      <button class="sc-qc" onclick="scM(this,'Numb. Nothing in particular.','sc-n4')">Numb. Nothing in particular.</button>
+      <button class="sc-qc" onclick="scM(this,'Like I am already on autopilot and it has already started','sc-n4')">Like I am already on autopilot and it has already started</button>
+    </div>
+    <div class="sc-extra">
+      <span class="sc-extra-label">Anything else</span>
+      <input class="sc-extra-input" id="sc-q4-other" type="text" placeholder="Type here..." oninput="scCheckMulti('sc-n4','sc-c4')">
+    </div>
+    <div class="sc-qnav">
+      <button class="sc-btn-b" onclick="scGo('sc-q3',3)">Back</button>
+      <button class="sc-btn-n" id="sc-n4" onclick="scGo('sc-q5',5)">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="sc-screen" id="sc-q5">
+  <div class="sc-qw">
+    <span class="sc-ql">Question 5 of 8</span>
+    <h2 class="sc-qt">After it happens, <em>what stays with you?</em></h2>
+    <p class="sc-qh">Select everything that is honest.</p>
+    <div class="sc-qcs" id="sc-c5">
+      <button class="sc-qc" onclick="scM(this,'Shame and disgust with myself','sc-n5')">Shame and disgust with myself</button>
+      <button class="sc-qc" onclick="scM(this,'The feeling that I have failed again','sc-n5')">The feeling that I have failed again</button>
+      <button class="sc-qc" onclick="scM(this,'Emptiness. Like nothing actually changed.','sc-n5')">Emptiness. Like nothing actually changed.</button>
+      <button class="sc-qc" onclick="scM(this,'A promise to myself that this was the last time','sc-n5')">A promise to myself that this was the last time</button>
+      <button class="sc-qc" onclick="scM(this,'Nothing really. It just happens.','sc-n5')">Nothing really. It just happens.</button>
+    </div>
+    <div class="sc-extra">
+      <span class="sc-extra-label">Anything else</span>
+      <input class="sc-extra-input" id="sc-q5-other" type="text" placeholder="Type here..." oninput="scCheckMulti('sc-n5','sc-c5')">
+    </div>
+    <div class="sc-qnav">
+      <button class="sc-btn-b" onclick="scGo('sc-q4',4)">Back</button>
+      <button class="sc-btn-n" id="sc-n5" onclick="scGo('sc-q6',6)">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Q6 -->
+<div class="sc-screen" id="sc-q6">
+  <div class="sc-qw">
+    <span class="sc-ql">Question 6 of 8</span>
+    <h2 class="sc-qt">Does this feel like something you <em>do</em> or something you <em>are?</em></h2>
+    <p class="sc-qh">Take a moment with this one before you answer.</p>
+    <div class="sc-qcs" id="sc-c6">
+      <button class="sc-qc" onclick="scS('sc-c6','sc-n6',this,'q6','partofme','It feels like part of who I am')">It feels like part of who I am</button>
+      <button class="sc-qc" onclick="scS('sc-c6','sc-n6',this,'q6','withoutit','I do not know who I am without it')">I do not know who I am without it</button>
+      <button class="sc-qc" onclick="scS('sc-c6','sc-n6',this,'q6','docant','It feels like something I do but I cannot seem to stop')">It feels like something I do but I cannot seem to stop</button>
+      <button class="sc-qc" onclick="scS('sc-c6','sc-n6',this,'q6','morethan','It has started to feel like more than just something I do')">It has started to feel like more than just something I do</button>
+    </div>
+    <div class="sc-qnav">
+      <button class="sc-btn-b" onclick="scGo('sc-q5',5)">Back</button>
+      <button class="sc-btn-n" id="sc-n6" onclick="scGo('sc-q7',7)">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="sc-screen" id="sc-q7">
+  <div class="sc-qw">
+    <span class="sc-ql">Question 7 of 8</span>
+    <h2 class="sc-qt">When you imagine life without this, <em>what is the first thing that comes up?</em></h2>
+    <p class="sc-qh">Do not think about it. First thing.</p>
+    <div class="sc-qcs" id="sc-c7">
+      <button class="sc-qc" onclick="scS('sc-c7','sc-n7',this,'q7','relief','Relief')">Relief</button>
+      <button class="sc-qc" onclick="scS('sc-c7','sc-n7',this,'q7','fearwho','Fear of who I would be without it')">Fear of who I would be without it</button>
+      <button class="sc-qc" onclick="scS('sc-c7','sc-n7',this,'q7','cantpic','I cannot picture it')">I cannot picture it</button>
+      <button class="sc-qc" onclick="scS('sc-c7','sc-n7',this,'q7','excited','Excitement but I do not know how to get there')">Excitement but I do not know how to get there</button>
+      <button class="sc-qc" onclick="scS('sc-c7','sc-n7',this,'q7','empty','Emptiness. I would not know what to do with myself.')">Emptiness. I would not know what to do with myself.</button>
+      <button class="sc-qc" onclick="scS('sc-c7','sc-n7',this,'q7','neverthought','Something I have never really let myself think about')">Something I have never really let myself think about</button>
+    </div>
+    <div class="sc-qnav">
+      <button class="sc-btn-b" onclick="scGo('sc-q6',6)">Back</button>
+      <button class="sc-btn-n" id="sc-n7" onclick="scGo('sc-q8',8)">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="sc-screen" id="sc-q8">
+  <div class="sc-qw">
+    <span class="sc-ql">Question 8 of 8</span>
+    <h2 class="sc-qt">What do you think has <em>been keeping you stuck?</em></h2>
+    <p class="sc-qh">The most honest answer, not the easiest one.</p>
+    <div class="sc-qcs" id="sc-c8">
+      <button class="sc-qc" onclick="scS('sc-c8','sc-n8',this,'q8','willpower','I do not have enough willpower')">I do not have enough willpower</button>
+      <button class="sc-qc" onclick="scS('sc-c8','sc-n8',this,'q8','knowbutcant','I know why but I cannot seem to change it')">I know why but I cannot seem to change it</button>
+      <button class="sc-qc" onclick="scS('sc-c8','sc-n8',this,'q8','deeper','Something deeper I have not worked out yet')">Something deeper I have not worked out yet</button>
+      <button class="sc-qc" onclick="scS('sc-c8','sc-n8',this,'q8','dontknow','I honestly do not know')">I honestly do not know</button>
+      <button class="sc-qc" onclick="scS('sc-c8','sc-n8',this,'q8','whoiam','I think it is just who I am')">I think it is just who I am</button>
+    </div>
+    <div class="sc-qnav">
+      <button class="sc-btn-b" onclick="scGo('sc-q7',7)">Back</button>
+      <button class="sc-btn-n" id="sc-n8" onclick="scGo('sc-screen-map',9)">See what this reveals</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAP SCREEN -->
+<div class="sc-screen" id="sc-screen-map">
+  <div class="sc-map-w">
+    <span class="sc-map-eye">Here is what is actually happening</span>
+    <h2 class="sc-map-h">You have been working <em>back to front.</em></h2>
+    <p class="sc-map-intro" id="sc-map-intro"></p>
+
+    <div class="sc-lvl sc-l1" id="sc-l1">
+      <div class="sc-lvl-hd"><div class="sc-lvl-dot"></div><div class="sc-lvl-name">Vision &amp; Purpose</div><div class="sc-lvl-tag">The most powerful level</div></div>
+      <div class="sc-lvl-body">You are stuck because you have no picture of who you are becoming that is powerful enough to compete with the pull of the moment. Not a goal. Not a reason to be better. A vision. Something you are living for. Something you are building. Something bigger than stopping a habit. When that is real and felt, the pattern becomes incompatible with where you are going. It starts to lose its grip on its own. Without it, every attempt runs out of fuel. You are pushing against something with nothing on the other side pulling back.</div>
+    </div>
+    <div class="sc-lvl sc-l2" id="sc-l2">
+      <div class="sc-lvl-hd"><div class="sc-lvl-dot"></div><div class="sc-lvl-name">Identity</div><div class="sc-lvl-tag">Runs deeper than the habit</div></div>
+      <div class="sc-lvl-body">You do not have a habit problem. You have an identity problem. You are acting perfectly consistent with who you believe you are. The pattern keeps coming back because it belongs. It fits the person you believe yourself to be. Until that changes, nothing else will.</div>
+    </div>
+    <div class="sc-lvl sc-l3" id="sc-l3">
+      <div class="sc-lvl-hd"><div class="sc-lvl-dot"></div><div class="sc-lvl-name">Beliefs</div><div class="sc-lvl-tag">The instructions the behaviour follows</div></div>
+      <div class="sc-lvl-body">A belief is not a fact. It is a conclusion you drew about yourself at some point and never questioned. I am not enough. I will always be like this. Things cannot change for me. Most men carrying a pattern like this have a belief underneath it they have never said out loud. That belief is what built the pattern. It is the foundation everything else stands on.</div>
+    </div>
+    <div class="sc-lvl sc-l4" id="sc-l4">
+      <div class="sc-lvl-hd"><div class="sc-lvl-dot"></div><div class="sc-lvl-name">Capabilities</div><div class="sc-lvl-tag"></div></div>
+      <div class="sc-lvl-body">Learning techniques and strategies can help. But they cannot override what is running above them.</div>
+    </div>
+    <div class="sc-lvl sc-l5" id="sc-l5">
+      <div class="sc-lvl-hd"><div class="sc-lvl-dot"></div><div class="sc-lvl-name">Behaviour</div><div class="sc-lvl-tag">Where everything you tried was aimed</div></div>
+      <div class="sc-lvl-body">Willpower. Promises to yourself. Trying harder. All of it aimed directly at the behaviour. While everything above it, the beliefs, the identity, the lack of direction, sits completely untouched.</div>
+    </div>
+    <div class="sc-lvl sc-l6" id="sc-l6">
+      <div class="sc-lvl-hd"><div class="sc-lvl-dot"></div><div class="sc-lvl-name">Environment</div><div class="sc-lvl-tag">Where everything you tried was aimed</div></div>
+      <div class="sc-lvl-body">Blockers. Removing access. Changing your environment. None of it travels to what is actually running this. You take it with you wherever you go.</div>
+    </div>
+
+    <div class="sc-map-key" id="sc-map-key"></div>
+    <div class="sc-map-nav" style="justify-content:space-between;">
+      <button class="sc-btn-b" onclick="scGo('sc-q8',8)">Back</button>
+      <button class="sc-btn-n sc-on" onclick="scGo('sc-screen-scale',10)">See where your energy has been going</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCALE SCREEN -->
+<div class="sc-screen" id="sc-screen-scale">
+  <div class="sc-screen-inner">
+    <span class="sc-scale-eye">THE IMBALANCE</span>
+    <h2 class="sc-scale-h">This is what you have been <em>feeding.</em></h2>
+
+    <div class="sc-scale-vis">
+      <svg id="sc-svg" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;overflow:visible;"></svg>
+    </div>
+
+    <div class="sc-scale-caps">
+      <div class="sc-cap-left" id="sc-cap-left" style="opacity:0">This is what you chose every single day.</div>
+      <div class="sc-cap-right" id="sc-cap-right" style="opacity:0">Still waiting for you.</div>
+    </div>
+
+    <p class="sc-scale-stmt" id="sc-scale-stmt" style="opacity:0"></p>
+
+    <div class="sc-scale-nav">
+      <button class="sc-btn-b" onclick="scGo('sc-screen-map',9)">Back</button>
+      <button class="sc-btn-n sc-on" onclick="scGo('sc-screen-result',11)">What this means for you</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div class="sc-screen" id="sc-screen-result">
+  <div class="sc-res-w">
+    <span class="sc-res-eye">What your answers reveal</span>
+    <h1 class="sc-res-h">The behaviour is not the <em>problem.</em></h1>
+    <div class="sc-res-rule"></div>
+
+    <div class="sc-years-block">
+      <div class="sc-years-num" id="sc-ynum">5+</div>
+      <div class="sc-years-right">
+        <span class="sc-years-label">Years Carrying This</span>
+        <div class="sc-cost-tags" id="sc-cost-tags"></div>
+      </div>
+    </div>
+
+    <div class="sc-means-block">
+      <span class="sc-means-label">What Is Actually Running This</span>
+      <div class="sc-means-text" id="sc-means-text"></div>
+    </div>
+
+    <div class="sc-open-q">
+      <span class="sc-open-q-lbl">One Question Worth Sitting With</span>
+      <p class="sc-open-q-txt" id="sc-open-q"></p>
+    </div>
+
+    <div class="sc-cta-block">
+      <span class="sc-cta-eye">The OTOA Programme</span>
+      <h2 class="sc-cta-h">Three sessions. <em>Root cleared.</em></h2>
+      <p class="sc-cta-p">This is not talk therapy. Not accountability. Three 90-minute sessions working at identity, belief and root. That is what makes it different.</p>
+      <div class="sc-cta-feats">
+        <div class="sc-cta-feat">Three 90-minute 1:1 sessions online with Leon</div>
+        <div class="sc-cta-feat">Works at identity and belief, not the behaviour</div>
+        <div class="sc-cta-feat">Six years working with men on exactly this</div>
+        <div class="sc-cta-feat">180 for the programme. Single session from 70.</div>
+      </div>
+      <a class="sc-btn-cta" href="mailto:mindshiftingwithleon@gmail.com?subject=I%20want%20to%20book%20a%20session">Book a Session With Leon</a>
+      <p class="sc-cta-sub">Direct email. No form. Confidential.</p>
+    </div>
+  </div>
 </div>
 
 <script>
-  var scIframe = document.getElementById('sc-iframe');
+var A = {};
 
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.type === 'sc-resize') {
-      if (window.innerWidth > 768) {
-        var maxH = window.innerHeight - 100;
-        var newH = Math.min(Math.max(e.data.height + 40, 700), maxH);
-        scIframe.style.height = newH + 'px';
-        scIframe.style.overflowY = newH < e.data.height + 40 ? 'auto' : 'hidden';
-      }
-    }
+// ---- NAVIGATION ----
+function scGo(id, step) {
+  var ov = document.getElementById('sc-ov');
+  ov.classList.add('sc-on');
+  setTimeout(function() {
+    document.querySelectorAll('.sc-screen').forEach(function(s) { s.classList.remove('sc-active'); });
+    var t = document.getElementById(id);
+    if (t) { t.classList.add('sc-active'); window.scrollTo(0,0); }
+    var pct = Math.round((step / 11) * 100);
+    document.getElementById('sc-prog').style.width = pct + '%';
+    var ctr = document.getElementById('sc-ctr');
+    ctr.textContent = (step <= 8) ? (step + ' of 8') : '';
+    if (id === 'sc-screen-map') scBuildMap();
+    if (id === 'sc-screen-scale') scBuildScale();
+    if (id === 'sc-screen-result') scBuildResult();
+    scEmit();
+    setTimeout(function() { ov.classList.remove('sc-on'); }, 60);
+  }, 240);
+}
+
+// ---- SINGLE SELECT ----
+function scS(cid, nid, el, key, val, label) {
+  document.getElementById(cid).querySelectorAll('.sc-qc').forEach(function(b) { b.classList.remove('sc-sel'); });
+  el.classList.add('sc-sel');
+  A[key] = val;
+  var nb = document.getElementById(nid);
+  if (nb) nb.classList.add('sc-on');
+}
+
+// ---- MULTI SELECT ----
+function scM(el, val, nid) {
+  el.classList.toggle('sc-sel');
+  if (!A.multi) A.multi = {};
+  if (el.classList.contains('sc-sel')) A.multi[val] = true;
+  else delete A.multi[val];
+  scCheckMulti(nid, el.closest('.sc-qcs').id);
+}
+
+function scCheckMulti(nid, cid) {
+  var qw = document.getElementById(cid) ? document.getElementById(cid).closest('.sc-qw') : null;
+  var nb = document.getElementById(nid);
+  if (!nb) return;
+  var hasSel = document.getElementById(cid) && document.getElementById(cid).querySelectorAll('.sc-sel').length > 0;
+  var inputId = cid === 'sc-c2' ? 'sc-q2-other' : cid === 'sc-c4' ? 'sc-q4-other' : 'sc-q5-other';
+  var inp = document.getElementById(inputId);
+  var hasText = inp && inp.value.trim().length > 0;
+  if (hasSel || hasText) nb.classList.add('sc-on');
+  else nb.classList.remove('sc-on');
+}
+
+// ---- MAP ----
+function scBuildMap() {
+  // Personalised intro by Q8
+  var intros = {
+    willpower: "You have been trying to push through this on willpower. And it keeps coming back. That is not because you do not have enough of it. It is because willpower only works at the level of the behaviour. Everything above it, what you believe about yourself and where your life is going, has never been touched.",
+    knowbutcant: "You already know what is happening but knowing it has not changed it. That is because understanding something in your head and clearing it at the root are two different things. Here is what the root actually looks like.",
+    deeper: "You are right. There is something deeper. Here is what it is.",
+    dontknow: "Most people do not know. What has been running this operates below the level of everyday thinking. Here is what it actually looks like.",
+    whoiam: "That feeling, that this is just who you are, is the single most important thing you said. Not because it is true. Because it tells you exactly where the real problem sits. Not in the behaviour. In the identity. And identity is exactly the level where this needs to change."
+  };
+  var q8 = A.q8 || 'dontknow';
+  document.getElementById('sc-map-intro').textContent = intros[q8] || intros.dontknow;
+
+  // Animate levels
+  var lvls = document.querySelectorAll('.sc-lvl');
+  lvls.forEach(function(l, i) {
+    l.classList.remove('sc-vis');
+    setTimeout(function() { l.classList.add('sc-vis'); }, 80 + i * 110);
   });
+
+  // Map key by Q6 + Q7
+  var isIdentity = (A.q6 === 'partofme' || A.q6 === 'withoutit' || A.q6 === 'morethan');
+  var isVision = (A.q7 === 'cantpic' || A.q7 === 'fearwho' || A.q7 === 'empty' || A.q7 === 'neverthought');
+  var keyText = '';
+  if (isIdentity && isVision) keyText = "Your answers point to two things. You have no clear picture of who you are becoming. And this pattern has become part of how you see yourself. Those two things together are why the battle feels like it never ends.";
+  else if (isVision) keyText = "You have no clear picture of who you are becoming. Without that, there is nothing above the behaviour pulling you in another direction.";
+  else if (isIdentity) keyText = "This pattern has become part of how you see yourself. You cannot permanently take away something that belongs.";
+  else keyText = "What you believe about yourself is what has been keeping this alive. The behaviour is following instructions.";
+
+  var keyEl = document.getElementById('sc-map-key');
+  keyEl.textContent = keyText;
+  keyEl.classList.remove('sc-vis');
+  setTimeout(function() { keyEl.classList.add('sc-vis'); }, 900);
+}
+
+// ---- SCALE ----
+function scBuildScale() {
+  var svg = document.getElementById('sc-svg');
+  svg.innerHTML = '';
+
+  // CONSTANTS - all geometry defined here
+  // Two stacks side by side. Left is heavy (more plates, sits lower).
+  // Right is light (fixed 5 plates, sits higher).
+  // Both centred in a 360px wide viewBox.
+  // Left stack centre X = 110, Right stack centre X = 250
+  var LX = 110;  // left stack centre x
+  var RX = 250;  // right stack centre x
+  var PW = 80;   // plate width
+  var PH = 19;   // plate height
+  var PG = 3;    // gap between plates
+  var CAP_W = 90; var CAP_H = 8;
+  var ROD_W = 6;
+
+  // Collect left plate items from answers
+  var leftItems = [];
+  var yearsMap = { less: 'Less than a year', few: 'A few years', five: '5+ years', decade: 'Over a decade' };
+  if (A.q1) leftItems.push(yearsMap[A.q1] || 'Years');
+  var costShort = {
+    'Relationships':'Relationships lost','Self respect':'Self respect lost',
+    'Career or ambition':'Career lost','Money':'Money lost','Friends':'Friends lost',
+    'Hobbies or passions I used to have':'Passions lost','My confidence':'Confidence lost',
+    'My ability to be present':'Presence lost','The person I could have been':'Who you could have been'
+  };
+  var trigShort = {
+    'Stressed or overwhelmed':'Stress','Lonely or disconnected':'Loneliness',
+    'Bored and empty':'Emptiness','Anxious and like I cannot settle':'Anxiety',
+    'Numb. Nothing in particular.':'Numbness','Like I am already on autopilot and it has already started':'Autopilot'
+  };
+  if (A.multi) {
+    Object.keys(A.multi).forEach(function(k) {
+      if (costShort[k]) leftItems.push(costShort[k]);
+      else if (trigShort[k]) leftItems.push(trigShort[k]);
+    });
+  }
+  leftItems = leftItems.slice(0, 6);
+  if (leftItems.length === 0) leftItems = ['Years', 'Time', 'Energy'];
+
+  var rightItems = ['Your vision','Who you are becoming','Real connection','Your purpose','Your goals'];
+
+  // Calculate heights
+  var L_LABEL_Y = 42; // left label y - left stack sits LOWER
+  var L_TOPCAP_Y = 48; // left top cap starts much lower than right
+  var L_PLATES_Y = L_TOPCAP_Y + CAP_H + 2; // left plates start
+  var L_STACK_H = leftItems.length * (PH + PG) - PG;
+  var L_BOTCAP_Y = L_PLATES_Y + L_STACK_H + 2;
+  var L_STR_BOTTOM = L_BOTCAP_Y + CAP_H; // bottom of left bottom cap = top of string
+
+  var R_LABEL_Y = 10; // right label y - right stack sits HIGHER
+  var R_TOPCAP_Y = 16; // right top cap starts near top
+  var R_PLATES_Y = R_TOPCAP_Y + CAP_H + 2;
+  var R_STACK_H = rightItems.length * (PH + PG) - PG;
+  var R_BOTCAP_Y = R_PLATES_Y + R_STACK_H + 2;
+  var R_STR_BOTTOM = R_BOTCAP_Y + CAP_H;
+
+  // Beam: connects directly under each stack
+  // Left end is lower (left stack has more plates), right end is higher
+  var BEAM_LX = LX; var BEAM_LY = L_STR_BOTTOM + 28; // string drops 28px below left cap
+  var BEAM_RX = RX; var BEAM_RY = R_STR_BOTTOM + 28; // string drops 28px below right cap
+  var PIVOT_X = (BEAM_LX + BEAM_RX) / 2;
+  var PIVOT_Y = (BEAM_LY + BEAM_RY) / 2;
+  var POLE_TOP = PIVOT_Y + 8;
+  var POLE_H = 40;
+  var BASE_Y = POLE_TOP + POLE_H;
+  var TOTAL_H = BASE_Y + 12;
+
+  // Set viewBox dynamically
+  svg.setAttribute('viewBox', '0 0 360 ' + TOTAL_H);
+
+  // Helper: create SVG element
+  function el(tag, attrs) {
+    var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.keys(attrs).forEach(function(k) { e.setAttribute(k, attrs[k]); });
+    return e;
+  }
+  function fadeIn(element, delayMs) {
+    element.style.opacity = '0';
+    element.style.transition = 'opacity 0.4s ease';
+    setTimeout(function() { element.style.opacity = '1'; }, delayMs);
+  }
+
+  // DEFS
+  var defs = el('defs', {});
+  var grad = el('linearGradient', { id:'sc-bg', x1: BEAM_LX, y1:'0', x2: BEAM_RX, y2:'0', gradientUnits:'userSpaceOnUse' });
+  grad.appendChild(el('stop', { offset:'0%', 'stop-color':'#C8963E' }));
+  grad.appendChild(el('stop', { offset:'50%', 'stop-color':'#F2BE54' }));
+  grad.appendChild(el('stop', { offset:'100%', 'stop-color':'#C8963E' }));
+  defs.appendChild(grad);
+  var filt = el('filter', { id:'sc-gl' });
+  var blur = el('feGaussianBlur', { stdDeviation:'3', result:'blur' });
+  var merge = el('feMerge', {});
+  merge.appendChild(el('feMergeNode', { in:'blur' }));
+  merge.appendChild(el('feMergeNode', { in:'SourceGraphic' }));
+  filt.appendChild(blur); filt.appendChild(merge);
+  defs.appendChild(filt);
+  svg.appendChild(defs);
+
+  // LEFT LABEL
+  var llbl = el('text', { x: LX, y: L_LABEL_Y, 'font-family':'Jost,sans-serif', 'font-size':'7', fill:'rgba(220,80,80,0)', 'text-anchor':'middle', 'font-weight':'600', 'letter-spacing':'1.5' });
+  llbl.textContent = 'WHAT IT HAS COST YOU';
+  svg.appendChild(llbl);
+  fadeIn(llbl, 300); llbl.setAttribute('fill','rgba(220,80,80,0.75)');
+
+  // LEFT TOP CAP
+  var lcapT = el('rect', { x: LX - CAP_W/2, y: L_TOPCAP_Y, width: CAP_W, height: CAP_H, rx:'4', fill:'#C8963E', opacity:'0' });
+  svg.appendChild(lcapT);
+
+  // LEFT ROD (behind plates)
+  var lrod = el('rect', { x: LX - ROD_W/2, y: L_TOPCAP_Y, width: ROD_W, height: L_BOTCAP_Y - L_TOPCAP_Y + CAP_H, rx:'3', fill:'rgba(200,150,62,0.4)', opacity:'0' });
+  svg.appendChild(lrod);
+
+  // LEFT PLATES
+  var lplateEls = [];
+  leftItems.forEach(function(item, i) {
+    var y = L_PLATES_Y + i * (PH + PG);
+    var rect = el('rect', { x: LX - PW/2, y: y, width: PW, height: PH, rx:'3', fill:'rgba(220,60,60,0.22)', stroke:'rgba(220,60,60,0.35)', 'stroke-width':'1', opacity:'0' });
+    var txt = el('text', { x: LX, y: y + PH*0.68, 'font-family':'Jost,sans-serif', 'font-size':'8.5', fill:'rgba(255,150,150,0.95)', 'text-anchor':'middle', opacity:'0' });
+    txt.textContent = item;
+    svg.appendChild(rect);
+    svg.appendChild(txt);
+    lplateEls.push({ rect: rect, txt: txt });
+  });
+
+  // LEFT BOTTOM CAP
+  var lcapB = el('rect', { x: LX - CAP_W/2, y: L_BOTCAP_Y, width: CAP_W, height: CAP_H, rx:'4', fill:'#C8963E', opacity:'0' });
+  svg.appendChild(lcapB);
+
+  // RIGHT LABEL
+  var rlbl = el('text', { x: RX, y: R_LABEL_Y, 'font-family':'Jost,sans-serif', 'font-size':'7', fill:'rgba(80,200,120,0)', 'text-anchor':'middle', 'font-weight':'600', 'letter-spacing':'1.5' });
+  rlbl.textContent = 'WHAT HAS BEEN WAITING';
+  svg.appendChild(rlbl);
+  fadeIn(rlbl, 300); rlbl.setAttribute('fill','rgba(80,200,120,0.7)');
+
+  // RIGHT TOP CAP
+  var rcapT = el('rect', { x: RX - CAP_W/2, y: R_TOPCAP_Y, width: CAP_W, height: CAP_H, rx:'4', fill:'rgba(200,150,62,0.75)', opacity:'0' });
+  svg.appendChild(rcapT);
+
+  // RIGHT ROD
+  var rrod = el('rect', { x: RX - ROD_W/2, y: R_TOPCAP_Y, width: ROD_W, height: R_BOTCAP_Y - R_TOPCAP_Y + CAP_H, rx:'3', fill:'rgba(200,150,62,0.3)', opacity:'0' });
+  svg.appendChild(rrod);
+
+  // RIGHT PLATES
+  var rplateEls = [];
+  rightItems.forEach(function(item, i) {
+    var y = R_PLATES_Y + i * (PH + PG);
+    var rect = el('rect', { x: RX - PW/2, y: y, width: PW, height: PH, rx:'3', fill:'rgba(80,200,120,0.1)', stroke:'rgba(80,200,120,0.22)', 'stroke-width':'1', opacity:'0' });
+    var txt = el('text', { x: RX, y: y + PH*0.68, 'font-family':'Jost,sans-serif', 'font-size':'8.5', fill:'rgba(120,230,160,0.9)', 'text-anchor':'middle', 'font-style':'italic', opacity:'0' });
+    txt.textContent = item;
+    svg.appendChild(rect);
+    svg.appendChild(txt);
+    rplateEls.push({ rect: rect, txt: txt });
+  });
+
+  // RIGHT BOTTOM CAP
+  var rcapB = el('rect', { x: RX - CAP_W/2, y: R_BOTCAP_Y, width: CAP_W, height: CAP_H, rx:'4', fill:'rgba(200,150,62,0.75)', opacity:'0' });
+  svg.appendChild(rcapB);
+
+  // LEFT STRING - straight down from bottom of left cap to beam left end
+  var lstr = el('line', { x1: LX, y1: L_STR_BOTTOM, x2: BEAM_LX, y2: BEAM_LY, stroke:'#C8963E', 'stroke-width':'2.5', 'stroke-linecap':'round', opacity:'0' });
+  svg.appendChild(lstr);
+
+  // RIGHT STRING - straight down from bottom of right cap to beam right end
+  var rstr = el('line', { x1: RX, y1: R_STR_BOTTOM, x2: BEAM_RX, y2: BEAM_RY, stroke:'rgba(200,150,62,0.8)', 'stroke-width':'2.5', 'stroke-linecap':'round', opacity:'0' });
+  svg.appendChild(rstr);
+
+  // BEAM
+  var beam = el('line', { x1: BEAM_LX, y1: BEAM_LY, x2: BEAM_RX, y2: BEAM_RY, stroke:'url(#sc-bg)', 'stroke-width':'4', 'stroke-linecap':'round', opacity:'0' });
+  svg.appendChild(beam);
+
+  // PIVOT
+  var pivot = el('circle', { cx: PIVOT_X, cy: PIVOT_Y, r:'7', fill:'#C8963E', opacity:'0', filter:'url(#sc-gl)' });
+  svg.appendChild(pivot);
+
+  // POLE
+  var pole = el('rect', { x: PIVOT_X - 3, y: POLE_TOP, width:'6', height: POLE_H, rx:'3', fill:'rgba(200,150,62,0.4)', opacity:'0' });
+  svg.appendChild(pole);
+
+  // BASE
+  var base = el('rect', { x: PIVOT_X - 30, y: BASE_Y, width:'60', height:'6', rx:'3', fill:'rgba(200,150,62,0.22)', opacity:'0' });
+  svg.appendChild(base);
+
+  // ANIMATION SEQUENCE
+  function anim(els, delay) {
+    els.forEach(function(e) {
+      e.style.transition = 'opacity 0.35s ease';
+      setTimeout(function() { e.setAttribute('opacity','1'); }, delay);
+    });
+  }
+
+  var d = 0;
+  anim([lrod, rrod], d); d += 200;
+  anim([lcapT, rcapT], d); d += 180;
+  lplateEls.forEach(function(p, i) {
+    var dt = d + i * 180;
+    setTimeout(function() {
+      p.rect.style.transition = 'opacity 0.35s ease';
+      p.txt.style.transition = 'opacity 0.35s ease';
+      p.rect.setAttribute('opacity','1');
+      p.txt.setAttribute('opacity','1');
+    }, dt);
+  });
+  d += leftItems.length * 180 + 80;
+  anim([lcapB, rcapB], d); d += 180;
+  anim([lstr, rstr, beam, pivot, pole, base], d); d += 320;
+
+  // Left caption
+  setTimeout(function() {
+    var cl = document.getElementById('sc-cap-left');
+    cl.style.transition = 'opacity 0.5s ease'; cl.style.opacity = '1';
+  }, d); d += 280;
+
+  // Right plates
+  rplateEls.forEach(function(p, i) {
+    var dt = d + i * 160;
+    setTimeout(function() {
+      p.rect.style.transition = 'opacity 0.35s ease';
+      p.txt.style.transition = 'opacity 0.35s ease';
+      p.rect.setAttribute('opacity','1');
+      p.txt.setAttribute('opacity','1');
+    }, dt);
+  });
+  d += rightItems.length * 160 + 80;
+
+  // Right caption
+  setTimeout(function() {
+    var cr = document.getElementById('sc-cap-right');
+    cr.style.transition = 'opacity 0.5s ease'; cr.style.opacity = '1';
+  }, d); d += 280;
+
+  // Statement
+  var stmts = {
+    less: 'Less than a year. Already more than it has given.',
+    few: 'A few years feeding one side. The other has been waiting.',
+    five: 'Five or more years going in one direction.',
+    decade: 'Over a decade. This is where the energy has been going.'
+  };
+  document.getElementById('sc-scale-stmt').textContent = stmts[A.q1] || stmts.few;
+  setTimeout(function() {
+    var s = document.getElementById('sc-scale-stmt');
+    s.style.transition = 'opacity 0.6s ease'; s.style.opacity = '1';
+  }, d);
+}
+
+// ---- RESULT ----
+function scBuildResult() {
+  var yearsDisplay = { less: 'Under 1', few: '3+', five: '5+', decade: '10+' };
+  document.getElementById('sc-ynum').textContent = yearsDisplay[A.q1] || '5+';
+
+  var tags = document.getElementById('sc-cost-tags');
+  tags.innerHTML = '';
+  if (A.multi) {
+    Object.keys(A.multi).slice(0,6).forEach(function(item) {
+      var t = document.createElement('span');
+      t.className = 'sc-cost-tag';
+      t.textContent = item;
+      tags.appendChild(t);
+    });
+  }
+
+  // Means text personalised by Q4 trigger + Q6 identity + Q7 vision
+  var prefix = '';
+  if (A.q6 === 'partofme' || A.q6 === 'withoutit') prefix = "You said this feels like part of who you are. That is the most important thing in everything you answered. A pattern that belongs to your identity cannot be removed by trying harder. It has to be replaced at the level it exists. ";
+  else if (A.q6 === 'morethan') prefix = "You already sense there is more to this than a habit. You are right. ";
+
+  document.getElementById('sc-means-text').innerHTML = prefix + "What you described before this happens, the feeling that triggers it, is not a weakness. It is information. It points directly to what the behaviour has been filling. <strong>The work that clears this does not target the behaviour. It targets what the behaviour has been answering.</strong>";
+
+  // Open question by Q7
+  var openQs = {
+    relief: 'You said relief. <em>What would you do with that relief if it stayed?</em>',
+    fearwho: 'You said fear of who you would be without it. <em>Who is that person, and what are they actually afraid of?</em>',
+    cantpic: 'You said you cannot picture it. <em>What would have to be true about you for you to be able to picture it?</em>',
+    excited: 'You said excitement. <em>What is the first thing you would go after if this was no longer in the way?</em>',
+    empty: 'You said emptiness. <em>What would need to be there instead for the space not to feel empty?</em>',
+    neverthought: 'You said you have never really let yourself think about it. <em>What happens when you let yourself think about it now?</em>'
+  };
+  document.getElementById('sc-open-q').innerHTML = openQs[A.q7] || 'If this was gone tomorrow, <em>who would you discover that you already are?</em>';
+}
+
+// ---- MENU ----
+function scToggleMenu() {
+  var panel = document.getElementById('sc-menu-panel');
+  if (panel) panel.classList.toggle('sc-open');
+}
+// Close menu on overlay click
+document.addEventListener('click', function(e) {
+  var panel = document.getElementById('sc-menu-panel');
+  var burger = document.querySelector('.sc-burger');
+  if (panel && panel.classList.contains('sc-open')) {
+    if (!panel.contains(e.target) && !burger.contains(e.target)) {
+      panel.classList.remove('sc-open');
+    }
+  }
+});
+
+// ---- HEIGHT EMIT ----
+function scEmit() {
+  try {
+    var h = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    window.parent.postMessage({ type: 'sc-resize', height: h }, '*');
+  } catch(e) {}
+}
+if (window.ResizeObserver) {
+  new ResizeObserver(scEmit).observe(document.body);
+}
+setTimeout(scEmit, 500);
 </script>
+</body>
+</html>
