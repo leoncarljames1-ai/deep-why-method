@@ -114,7 +114,7 @@ body {
 .sc-btn-start:hover { background: #b8843a; transform: translateY(-1px); }
 .sc-intro-meta {
   font-size: 11px;
-  color: rgba(250,248,244,0.22);
+  color: rgba(250,248,244,0.55);
   letter-spacing: 1px;
   display: block;
   margin-bottom: 36px;
@@ -128,13 +128,13 @@ body {
   font-weight: 500;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(250,248,244,0.2);
+  color: rgba(250,248,244,0.55);
   display: block;
   margin-bottom: 12px;
 }
 .sc-intro-book-text {
   font-size: 13px;
-  color: rgba(250,248,244,0.45);
+  color: rgba(250,248,244,0.78);
   line-height: 1.8;
   margin-bottom: 14px;
 }
@@ -379,6 +379,17 @@ body {
 .sc-cta-feats { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; text-align: left; }
 .sc-cta-feat { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: rgba(250,248,244,0.55); line-height: 1.5; }
 .sc-cta-feat::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: #C8963E; flex-shrink: 0; margin-top: 6px; }
+.sc-cta-tiers { display: flex; flex-direction: column; gap: 0; margin-bottom: 24px; text-align: left; }
+.sc-cta-tier { padding: 14px 0; border-bottom: 1px solid rgba(250,248,244,0.08); }
+.sc-cta-tier:first-child { border-top: 1px solid rgba(250,248,244,0.08); }
+.sc-cta-tier-mid { background: rgba(200,150,62,0.06); padding: 14px 12px; margin: 0 -12px; border-bottom: 1px solid rgba(200,150,62,0.15); border-top: 1px solid rgba(200,150,62,0.15) !important; }
+.sc-cta-tier-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.sc-cta-tier-name { font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: rgba(250,248,244,0.7); }
+.sc-cta-tier-mid .sc-cta-tier-name { color: #F2BE54; }
+.sc-cta-tier-price { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 300; color: #F2BE54; line-height: 1; }
+.sc-cta-tier-desc { font-size: 13px; color: rgba(250,248,244,0.5); line-height: 1.7; }
+.sc-cta-tier-mid .sc-cta-tier-desc { color: rgba(250,248,244,0.65); }
+.sc-cta-call { font-size: 13px; color: rgba(250,248,244,0.4); margin-bottom: 10px; }
 .sc-btn-cta {
   display: block; width: 100%; background: #C8963E; color: #FAF8F4; border: none;
   padding: 17px 24px;
@@ -407,7 +418,6 @@ body {
   <button class="sc-burger" onclick="scToggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-  <div class="sc-topbar-logo">Mind Shifting <strong>with Leon</strong></div>
   <span class="sc-ctr-label" id="sc-ctr"></span>
 </div>
 
@@ -709,15 +719,33 @@ body {
 
     <div class="sc-cta-block">
       <span class="sc-cta-eye">The OTOA Programme</span>
-      <h2 class="sc-cta-h">Three sessions. <em>Root cleared.</em></h2>
-      <p class="sc-cta-p">This is not talk therapy. Not accountability. Three 90-minute sessions working at identity, belief and root. That is what makes it different.</p>
-      <div class="sc-cta-feats">
-        <div class="sc-cta-feat">Three 90-minute 1:1 sessions online with Leon</div>
-        <div class="sc-cta-feat">Works at identity and belief, not the behaviour</div>
-        <div class="sc-cta-feat">Six years working with men on exactly this</div>
-        <div class="sc-cta-feat">180 for the programme. Single session from 70.</div>
+      <h2 class="sc-cta-h">This is where it <em>gets cleared.</em></h2>
+      <p class="sc-cta-p">What you just saw is what the session works on. Three options depending on where you are.</p>
+      <div class="sc-cta-tiers">
+        <div class="sc-cta-tier">
+          <div class="sc-cta-tier-top">
+            <span class="sc-cta-tier-name">Single Session</span>
+            <span class="sc-cta-tier-price">£70</span>
+          </div>
+          <p class="sc-cta-tier-desc">One 1.5 hour session. Most men feel a clear shift in the first 90 minutes.</p>
+        </div>
+        <div class="sc-cta-tier sc-cta-tier-mid">
+          <div class="sc-cta-tier-top">
+            <span class="sc-cta-tier-name">OTOA Programme</span>
+            <span class="sc-cta-tier-price">£180</span>
+          </div>
+          <p class="sc-cta-tier-desc">Three 1.5 hour sessions. WhatsApp support between sessions. Access to the Deep Why Method to keep clearing between sessions.</p>
+        </div>
+        <div class="sc-cta-tier">
+          <div class="sc-cta-tier-top">
+            <span class="sc-cta-tier-name">OTOA Extended</span>
+            <span class="sc-cta-tier-price">£360</span>
+          </div>
+          <p class="sc-cta-tier-desc">Six sessions. For the man who knows there is more than one layer to clear.</p>
+        </div>
       </div>
       <a class="sc-btn-cta" href="mailto:mindshiftingwithleon@gmail.com?subject=I%20want%20to%20book%20a%20session">Book a Session With Leon</a>
+      <p class="sc-cta-call">Or call <a href="tel:07830657043" style="color:#F2BE54;text-decoration:none;font-weight:400;">07830 657043</a></p>
       <p class="sc-cta-sub">Direct email. No form. Confidential.</p>
     </div>
   </div>
